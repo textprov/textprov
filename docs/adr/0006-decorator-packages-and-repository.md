@@ -1,21 +1,20 @@
-# 0006. Protocol repository and ecosystem packages
+# 0006. Decorator packages per ecosystem; protocol in its own repository
 
 Status: accepted. Date: 2026-09-11. Accepted: 2026-09-12.
 
-Amended by [ADR 0011](0011-the-producer-is-text-processing.md): the producer
-boundary below is wrong. The marker is text processing and belongs here; the
-font patcher is a renderer, not a producer. Read 0011 with the "What moved" and
-"What stayed in the fork" sections.
+Amended by [ADR 0011](0011-the-producer-is-text-processing.md): this record's
+producer boundary is superseded. The marker is text processing and belongs in
+this repository; the font patcher is a renderer. Read ADR 0011 alongside the
+"What moved" and "What stayed in the fork" sections below.
 
 ## Context
 
 The decorator has implementations in more than one language. ADR 0004 makes the
-shared fixture the conformance test. The protocol material and the reference
-implementations that consume it were held inside a Nerd Fonts fork, beside the
-font patcher that produces marked text. Producer and consumer have different
-audiences, different release cadences, and different dependencies: the patcher
-needs FontForge and builds fonts, while a decorator is a few hundred lines of
-text processing with no dependencies at all.
+shared fixture the conformance test. At the time, the protocol material and
+reference implementations were held inside a Nerd Fonts fork beside the font
+patcher. The patcher needs FontForge and builds fonts, while a decorator is a
+few hundred lines of dependency-free text processing. ADR 0011 later corrected
+the record's classification of the marker and the font patcher.
 
 ## Decision
 
@@ -25,8 +24,9 @@ implementations. The fork keeps everything that builds or verifies fonts.
 
 ### Naming
 
-Open until 2026-09-12. `nfprov` could not be the protocol name: the protocol is
-not font-specific and must not imply a Nerd Fonts affiliation. `prov` was
+The naming decision remained open until 2026-09-12. `nfprov` was not suitable
+as the protocol name because the protocol is not font-specific and should not
+imply a Nerd Fonts affiliation. `prov` was
 rejected as the public name because it collides with an existing GitHub
 organisation, an unrelated npm package, and PyPI's `prov`, an active W3C PROV
 data-model library; that collision would make the protocol hard to find and
@@ -45,7 +45,7 @@ The class prefix stays `prov`. Changing it would break every stylesheet already
 written against the shipped decorator, and the prefix is a local CSS name, not a
 discovery surface: nobody searches a package index for a class. The repository,
 organisation, and package names carry the identity instead. A consumer that
-wants a different prefix passes the option; `data-prov` does not move with it.
+wants a different prefix passes the option; `data-prov` remains unchanged.
 
 `nfprov` remains the in-fork Python tool name for the encoder and font
 workflow, where it is correctly scoped.
@@ -117,8 +117,9 @@ reassigned or removed.
    `src/glyphs/provenance/mapping.json`. Until then the fork's copies are
    downstream duplicates of the files here, and this repository is canonical.
 
-Every package exposes `runs` and either `to_html` or `decorate`. The only
-options are `strip`, `merge_whitespace`, and a class prefix.
+The JavaScript and Python decoder/renderer implementations expose `runs` and
+either `to_html` or `render`. Their shared options are `strip`,
+`merge_whitespace`, and a class prefix.
 
 A browser extension based on the client-side decorator is the proposed route
 for pages whose author cannot add a decorator pass. It does not exist.

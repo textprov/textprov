@@ -10,8 +10,9 @@ tested.
 
 ## Decision
 
-Span text keeps the original selectors. A `strip` option removes them for
-integrators who need find-in-page, at the cost of copy round-trip. Default off.
+Span text keeps the original selectors. The optional `strip` setting removes
+them for integrators that need plain text, at the cost of copy round-trip.
+`strip` defaults to `false`.
 
 ## Evidence
 

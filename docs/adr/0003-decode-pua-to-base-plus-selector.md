@@ -11,12 +11,13 @@ zero selectors in the selection of a PUA-decoded section.
 ## Decision
 
 A PUA code point becomes its base character followed by the selector for its
-state. With `strip`, the bare base character.
+state. When `strip` is enabled, it becomes the bare base character.
 
 ## Evidence
 
-Both prototypes were changed and pass the PUA cases in
-`src/glyphs/provenance/decorator/fixtures.json`.
+Both prototypes were changed and passed the PUA cases in
+`src/glyphs/provenance/decorator/fixtures.json`. The fixture's canonical
+successor is this repository's `fixtures.json`.
 
 ## Consequences
 

@@ -4,9 +4,10 @@ Status: accepted. Date: 2026-09-11.
 
 ## Context
 
-A mark is one code point after one grapheme cluster. It says what kind of
-author produced that cluster: explicit human, AI, unknown, edited, or mixed
-(`mapping.json` `variation_selectors`). Unmarked text is assumed human.
+A mark is one code point after a grapheme cluster. It identifies the state of
+that cluster: explicit human, AI, unknown, edited, or mixed
+(`mapping.json` `variation_selectors`). Unmarked text has no in-band state;
+consumers may treat it as human by default.
 
 The question was whether the protocol could name contributors instead:
 H1, H2, AI1, AI2, and so on. The capacity to do so exists in one place and
@@ -21,7 +22,7 @@ not in the others.
 | Decorator, `data-prov`, CSS | 5 states | unbounded |
 
 Two facts decide it. First, a numbered contributor is an identity, not a
-state. The table that says who AI2 is cannot fit in a code point and would
+state. The table that identifies AI2 cannot fit in a code point and would
 have to live outside the text. Second, the protocol's value is that a mark is
 self-describing and survives copy and paste. An ordinal slot loses that at the
 document boundary: AI2 in one file is not AI2 in another.
@@ -34,12 +35,12 @@ document boundary: AI2 in one file is not AI2 in another.
 2. Identity, when wanted, is carried out of band by the container: an
    attribute on a wrapping element in HTML, a header line or sidecar in plain
    text, a field in an editor's metadata. The protocol does not define that
-   channel. It defines only that unmarked text is assumed human and marked
-   text has the state its selector names.
+   channel. It defines the state carried by a mark; unmarked text has no in-band
+   state.
 3. If per-contributor granularity is ever needed in band, it is added as
    slots, not states: an optional `mapping.json` section in which each slot
    selector names the state it belongs to. A decoder that does not know the
-   slot table reports the state. A decoder that does reports the state and
+   slot table reports the state. A decoder that recognizes the slot table reports the state and
    the slot ordinal. The meaning of an ordinal is declared by the container
    under point 2. This is a contract version bump and is not scheduled.
 
@@ -58,14 +59,16 @@ several selectors to the same variant glyph.
 
 ## Consequences
 
-- `human`, `ai`, `unknown`, `edited`, and `mixed` remain the whole in-band
-  set. `edited` and `mixed` still need glyphs (README, reserved selectors).
+- `human`, `ai`, `unknown`, `edited`, and `mixed` remain the complete in-band
+  set. Font renderers still need glyphs for `edited` and `mixed`; their
+  selectors are reserved.
 - A page that wants per-contributor colour styles by container, not by
   mark. The decorator's `data-prov` stays a state name.
 - Selector allocation for slots would raise collisions with registered
-  ideographic variation sequences on Han bases, the same exposure issue #20
-  already carries. Slots would not reach CoreText through PUA; only the ccmp
-  route in issue #24 applies.
+  ideographic variation sequences on Han bases, an exposure tracked in
+  [issue #20](https://github.com/delano/nerd-fonts/issues/20). Slots would not
+  reach CoreText through PUA; only the `ccmp` route in
+  [issue #24](https://github.com/delano/nerd-fonts/issues/24) applies.
 - Copy and paste carries state and drops identity. That is by design.
 
 ## Related: document-level defaults
@@ -76,8 +79,9 @@ a statement about the container.
 
 - In band there is no code point for a default, and there will not be one. A
   default marker would have to persist until the next marker, which
-  `CRITERIA.md` rejected because a partial copy would carry the wrong state
-  or none. Unmarked text is assumed human wherever it lands.
+  [`CRITERIA.md`](https://github.com/delano/nerd-fonts/blob/main/src/glyphs/provenance/CRITERIA.md)
+  rejects because a partial copy would carry the wrong state or none. Unmarked
+  text has no in-band state wherever it lands.
 - Out of band a container may declare a default, for example an attribute on
   the wrapping element in HTML. Presentation may style unmarked text inside
   it accordingly. The decorator does not read it: runs with no state stay

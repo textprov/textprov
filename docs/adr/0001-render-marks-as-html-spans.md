@@ -4,22 +4,26 @@ Status: accepted. Date: 2026-09-11.
 
 ## Context
 
-Marked text is visible only in a P+ font under a shaper that honours the
-format 14 cmap. Mobile browsers do not let readers install or override fonts,
-and every iOS browser shapes through CoreText, which drops the selectors.
+Marked text is visible only with a provenance-enabled (P+) font and a shaper
+that honours the font's format-14 character map. Mobile browsers do not let
+readers install or override fonts, and every iOS browser shapes through
+CoreText, which drops the selectors.
 
 ## Decision
 
 A decorator pass finds marked runs in the text and wraps them in
 `<span class="prov prov-STATE" data-prov="STATE">`. CSS styles the spans.
-The producer and the in-band encoding are unchanged. The contract is
-`src/glyphs/provenance/decorator/DECORATOR.md`.
+The producer and the in-band encoding are unchanged. At the time, the contract
+was `src/glyphs/provenance/decorator/DECORATOR.md` in the Nerd Fonts fork; its
+canonical successor is this repository's `SPEC.md`.
 
 ## Evidence
 
-Chromium and WebKit 26.5, system font, no P+ font: server-side and
-client-side passes produced identical runs and visible marks. Measurements in
-`src/glyphs/provenance/decorator/HTML-RENDERING.md`.
+With Chromium and WebKit 26.5, the system font, and no P+ font, server-side
+and client-side passes produced identical runs and visible marks. The
+measurements were originally recorded in
+`src/glyphs/provenance/decorator/HTML-RENDERING.md`; see this repository's
+`docs/HTML-RENDERING.md` for the current record.
 
 ## Choosing a pass
 

@@ -57,8 +57,10 @@ renderer's repository with no protocol code in it.
 
 ## Consequences
 
-- A user who wants to mark text installs one package with no dependencies.
-- Producer conformance is a fixture, not a claim.
+- Once the package is published, a user who wants to mark text installs one
+  package with no dependencies.
+- Producer conformance is defined by fixtures and required properties, not a
+  claim.
 - The Nerd Fonts fork is one renderer among three, which is what it always was.
 - The JavaScript package still reads marks only. A browser producer would need
   a reason to exist; a DOM decorator does not imply one.
