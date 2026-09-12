@@ -15,9 +15,14 @@ It does not define how marks are produced or how they look.
 
 | Role | Does |
 | --- | --- |
-| Producer | Adds marks to text. Out of scope here. |
+| Producer | Adds marks to text. |
 | Decoder | Splits marked text into runs, each carrying at most one state. |
-| Renderer | Turns runs into markup, editor decorations, or a font's own variants. |
+| Renderer | Shows the states: markup, editor decorations, or a font's own variants. |
+
+Producing is text processing: it needs the registry and nothing else. Rendering
+is where the toolchains differ — a span renderer needs a DOM, a font renderer
+needs a font editor. A font is one renderer among three, not the producer
+([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)).
 
 ## States
 
@@ -105,6 +110,51 @@ An implementation that embeds must check its copy against `mapping.json` in its
 test suite, so drift fails the build rather than shipping. Both reference
 implementations here do that ([ADR 0006](docs/adr/0006-decorator-packages-and-repository.md)).
 
+## Producer
+
+A producer marks text. It must hold the following.
+
+1. **One mark per cluster.** Split the text into clusters the same way a
+   decoder does, and mark each one once, after the whole cluster: after
+   combining marks, emoji variation selectors, skin-tone modifiers, ZWJ joins,
+   and the second half of a regional-indicator pair.
+2. **Never mark whitespace.** A decoder relies on this: whitespace is what it
+   is allowed to absorb between two runs of the same state.
+3. **Be idempotent.** Marking text that is already marked returns it
+   unchanged. A cluster that already carries a selector keeps the state it has,
+   and a PUA character is left alone; a producer does not overwrite a state it
+   did not set.
+4. **Leave everything else alone.** `strip` must return exactly the text the
+   producer was given.
+
+In the PUA encoding, a producer replaces a base character with its PUA
+counterpart only when the cluster is exactly one code point and the registry
+allocates it for that state. Registry version 1 allocates `U+0021`-`U+00FF` and
+the `ai` state only, so every other cluster keeps the selector encoding. The
+two encodings therefore mix freely in one document, and converting between them
+changes only the clusters that have a counterpart.
+
+A producer that marks an edit rather than a whole document marks what the edit
+added: the text between the common prefix and the common suffix of the old and
+new versions. That is a convenience, not a requirement, and it is deliberately
+naive — it does not try to infer authorship of text it cannot see changing.
+
+Nothing here says *how* a producer decides which state applies. That is the
+integration's problem: an editor watching who typed, a pipeline that knows a
+model wrote a paragraph, a marker run over a file by hand.
+
+### Producer conformance
+
+`fixtures.json` carries `producer_cases` and `convert_cases` beside the decoder
+`cases`. Each producer case records an input, the state and mode, and the exact
+output. An implementation conforms when it reproduces every output, and when
+the four properties above hold for text of its own choosing — the reference
+suite tests them as properties, not only as recorded cases, because the cases
+cannot cover every input.
+
+Producer conformance is defined at contract version 1. It documents what the
+reference producer already did; no behaviour changed when it was written down.
+
 ## Decoder
 
 ### Options
@@ -173,13 +223,18 @@ instead ([ADR 0009](docs/adr/0009-editor-decoration-apis.md)).
 ```json
 { "contract_version": 1,
   "mapping_version": 1,
-  "cases": [ { "name": "...", "input": "...", "options": {}, "runs": [ { "state": "ai", "text": "..." } ] } ] }
+  "cases":          [ { "name": "...", "input": "...", "options": {}, "runs": [ { "state": "ai", "text": "..." } ] } ],
+  "producer_cases": [ { "name": "...", "input": "...", "options": { "state": "ai", "mode": "vs" }, "output": "..." } ],
+  "convert_cases":  [ { "name": "...", "input": "...", "options": { "from": "vs", "to": "pua" }, "output": "..." } ] }
 ```
 
-`state` is a string from `variation_selectors` or `null`. `options` uses the
-option names in this document. An implementation conforms when, for every
-case, `runs(input, options)` equals `runs` exactly, and when the two versions
-it implements equal `contract_version` and `mapping_version`. Strings are
+`cases` is the decoder suite: `state` is a string from `variation_selectors` or
+`null`, and `options` uses the option names in this document. An implementation
+conforms when, for every case, `runs(input, options)` equals `runs` exactly, and
+when the two versions it implements equal `contract_version` and
+`mapping_version`. An implementation that also produces marks must reproduce
+`producer_cases` and `convert_cases`; one that only reads marks ignores them.
+A `note` on a case is prose for a human and carries no requirement. Strings are
 stored with ASCII escapes; compare code points, not bytes.
 
 ## Versioning
@@ -190,10 +245,10 @@ implementation states both versions it implements.
 
 ## Not specified
 
+- How a producer decides which state applies to a given run of text.
 - Visual style. The contract defines classes and an attribute; CSS is an
   integration choice. `js/textprov.css` is one such choice, not part of this
   document.
-- How marks are produced.
 - Inferring provenance from text that has no marks.
 - Behaviour on text nodes inside `pre` or `code`. Implementations may skip
   them; the fixture does not cover it.

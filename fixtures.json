@@ -331,5 +331,191 @@
     }
    ]
   }
+ ],
+ "producer_cases": [
+  {
+   "name": "mark ascii words, selector encoding",
+   "input": "Hi there",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "H\udb40\udd01i\udb40\udd01 t\udb40\udd01h\udb40\udd01e\udb40\udd01r\udb40\udd01e\udb40\udd01",
+   "note": "one selector per cluster; the space is left alone"
+  },
+  {
+   "name": "whitespace is never marked",
+   "input": "a\r\nb",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "a\udb40\udd01\r\nb\udb40\udd01",
+   "note": "CR and LF are whitespace, so they stay bare and line endings survive"
+  },
+  {
+   "name": "marking marked text is idempotent",
+   "input": "a\udb40\udd01",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "a\udb40\udd01",
+   "note": "a cluster that already carries a selector is left alone"
+  },
+  {
+   "name": "a mark goes after combining marks",
+   "input": "e\u0301x",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "e\u0301\udb40\udd01x\udb40\udd01",
+   "note": "the cluster is base plus combining mark, marked once"
+  },
+  {
+   "name": "a flag is one cluster",
+   "input": "\ud83c\udde8\ud83c\udde6",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\ud83c\udde8\ud83c\udde6\udb40\udd01",
+   "note": "a regional-indicator pair takes one mark, not two"
+  },
+  {
+   "name": "a ZWJ sequence is one cluster",
+   "input": "\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\udb40\udd01"
+  },
+  {
+   "name": "a skin-tone modifier stays with its base",
+   "input": "\ud83d\udc4d\ud83c\udffd",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\ud83d\udc4d\ud83c\udffd\udb40\udd01"
+  },
+  {
+   "name": "VS16 presentation stays with its base",
+   "input": "\u2764\ufe0f",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\u2764\ufe0f\udb40\udd01"
+  },
+  {
+   "name": "human state",
+   "input": "Hi",
+   "options": {
+    "state": "human",
+    "mode": "vs"
+   },
+   "output": "H\udb40\udd00i\udb40\udd00"
+  },
+  {
+   "name": "pua encoding for single-code-point bases",
+   "input": "Hi",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\udbc0\udc48\udbc0\udc69",
+   "note": "H and i are both in the registry"
+  },
+  {
+   "name": "pua mode falls back to the selector for a multi-code-point cluster",
+   "input": "\ud83c\udde8\ud83c\udde6",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\ud83c\udde8\ud83c\udde6\udb40\udd01",
+   "note": "only single-code-point bases have a PUA counterpart"
+  },
+  {
+   "name": "pua mode falls back to the selector for an unallocated base",
+   "input": "\u4e2d",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\u4e2d\udb40\udd01",
+   "note": "registry version 1 allocates U+0021-U+00FF only"
+  },
+  {
+   "name": "pua mode with a non-ai state uses the selector",
+   "input": "Hi",
+   "options": {
+    "state": "human",
+    "mode": "pua"
+   },
+   "output": "H\udb40\udd00i\udb40\udd00",
+   "note": "registry version 1 allocates PUA for the ai state only"
+  },
+  {
+   "name": "pua characters are not re-marked",
+   "input": "\udbc0\udc48",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\udbc0\udc48",
+   "note": "a PUA character is already a mark"
+  }
+ ],
+ "convert_cases": [
+  {
+   "name": "vs to pua",
+   "input": "H\udb40\udd01",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "\udbc0\udc48"
+  },
+  {
+   "name": "pua to vs",
+   "input": "\udbc0\udc48",
+   "options": {
+    "from": "pua",
+    "to": "vs"
+   },
+   "output": "H\udb40\udd01"
+  },
+  {
+   "name": "vs to pua leaves other states alone",
+   "input": "H\udb40\udd00",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "H\udb40\udd00",
+   "note": "only the ai state has a PUA allocation in registry version 1"
+  },
+  {
+   "name": "vs to pua leaves unallocated bases alone",
+   "input": "\u4e2d\udb40\udd01",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "\u4e2d\udb40\udd01"
+  },
+  {
+   "name": "a lone selector is not a mark",
+   "input": "\udb40\udd01",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "\udb40\udd01"
+  }
  ]
 }

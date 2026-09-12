@@ -16,8 +16,8 @@ approach.
 
 - Defining a visual style. The contract defines classes and an attribute; CSS
   is an integration choice.
-- Adding marks to text. The producer is out of scope; see the repository
-  README.
+- Adding marks to text. That is the producer's job, which lives in this
+  repository too but is a separate role (ADR 0011); a decorator only reads.
 - Inferring provenance from text that has no marks.
 
 ## What comes next

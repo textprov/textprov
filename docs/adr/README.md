@@ -14,6 +14,7 @@ place with a pointer to their replacement.
 | [0008](0008-do-not-publish-pua-to-the-web.md) | proposed | Do not publish PUA-encoded text to the web |
 | [0009](0009-editor-decoration-apis.md) | proposed | Editor decoration APIs as a third consumer path |
 | [0010](0010-contributor-identity-is-out-of-band.md) | accepted | Contributor identity is out of band; states stay the in-band vocabulary |
+| [0011](0011-the-producer-is-text-processing.md) | accepted | The producer is text processing, and a font is a renderer |
 
 0005 and 0007 are font-build decisions and stay in the
 [producer fork](https://github.com/delano/nerd-fonts/tree/main/docs/adr):

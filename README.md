@@ -6,15 +6,15 @@ travels in the text as Unicode code points, so it survives copy, paste, and
 plain-text storage.
 
 This repository is the protocol: the specification, the canonical code-point
-registry, the conformance fixture, and reference implementations that read
-marked text and render it.
+registry, the conformance fixture, and reference implementations that put marks
+in text and read them back out.
 
 ```
 SPEC.md         the protocol
 mapping.json    the canonical code-point registry
 fixtures.json   the conformance suite; an implementation passes it or it is not TextProv
 js/             @textprov/decorator — browser DOM decorator and optional stylesheet
-python/         textprov — decoder and HTML renderer
+python/         textprov — producer, decoder, HTML renderer, and CLI
 docs/           goals, HTML rendering measurements, architecture decision records
 ```
 
@@ -47,11 +47,36 @@ bundled stylesheet is one choice of style, not part of the protocol.
 
 ## Producing marked text
 
-Not here. This repository defines the marks and reads them back. The reference
-producer today is the `--provenance` option of a
+Also here. Marking text needs the registry and nothing else — no font, no
+shaping engine, no build step — so the reference producer ships in the Python
+package and its CLI:
+
+```sh
+python3 -m textprov mark --ai draft.txt -o marked.txt   # or: textprov mark ...
+python3 -m textprov mark-added old.txt new.txt          # mark only what changed
+python3 -m textprov convert --from vs --to pua marked.txt
+python3 -m textprov inspect marked.txt
+```
+
+```python
+textprov.mark("Hi", state="ai")        # 'H\U000E0101i\U000E0101'
+textprov.mark_added("abc", "abXc")     # mark what an edit added
+textprov.convert(marked, "vs", "pua")  # change encoding, same states
+```
+
+`fixtures.json` carries `producer_cases` and `convert_cases` beside the decoder
+cases, so a producer either conforms or it does not; `SPEC.md` states the four
+properties those cases exist to pin down. The JavaScript package reads marks
+only.
+
+What a producer does *not* decide here is which state applies to which text.
+That belongs to the integration: an editor that knows who typed, a pipeline
+that knows a model wrote a paragraph, or a person running the CLI.
+
+Showing marks in a *font* is a different job with a different toolchain, and it
+is a renderer, not a producer: that is the `--provenance` option of a
 [Nerd Fonts fork](https://github.com/delano/nerd-fonts), which patches a font
-with provenance variants and ships the marker that adds the code points. A
-producer is conforming when a decoder in this repository reproduces its intent.
+with provenance variants of its own glyphs.
 
 ## Conformance
 
@@ -62,9 +87,10 @@ cd python && python3 -m unittest discover -s tests -t .
 
 Each runner checks every case in `fixtures.json`, checks the contract and
 registry versions it implements, and checks the registry tables it embeds
-against `mapping.json`. An implementation in a new language is conforming when
-it reproduces every recorded `runs` result; add fixtures rather than reading
-either reference implementation as the definition.
+against `mapping.json`. The Python suite also runs the producer cases and the
+properties behind them. An implementation in a new language is conforming when
+it reproduces every recorded result for the roles it implements; add fixtures
+rather than reading either reference implementation as the definition.
 
 ## Status
 

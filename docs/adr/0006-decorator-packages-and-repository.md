@@ -2,6 +2,11 @@
 
 Status: accepted. Date: 2026-09-11. Accepted: 2026-09-12.
 
+Amended by [ADR 0011](0011-the-producer-is-text-processing.md): the producer
+boundary below is wrong. The marker is text processing and belongs here; the
+font patcher is a renderer, not a producer. Read 0011 with the "What moved" and
+"What stayed in the fork" sections.
+
 ## Context
 
 The decorator has implementations in more than one language. ADR 0004 makes the
