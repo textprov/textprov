@@ -18,14 +18,18 @@ class TestCli(unittest.TestCase):
         self.addCleanup(self.dir.cleanup)
 
     def write(self, name, text):
+        # open() rather than Path.write_text: the newline argument to
+        # Path.write_text is Python 3.10+, and this package supports 3.9.
         path = Path(self.dir.name) / name
-        path.write_text(text, encoding="utf-8", newline="")
+        with open(path, "w", encoding="utf-8", newline="") as handle:
+            handle.write(text)
         return str(path)
 
     def run_cli(self, *argv):
         out = Path(self.dir.name) / "out.txt"
         self.assertEqual(main(["-o", str(out), *argv]), 0)
-        return out.read_text(encoding="utf-8", newline="")
+        with open(out, encoding="utf-8", newline="") as handle:
+            return handle.read()
 
     def test_mark_convert_strip_round_trip(self):
         source = "Written by a human."
