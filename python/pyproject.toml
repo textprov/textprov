@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "textprov"
+version = "0.1.0"
+description = "Read in-band text provenance marks and render them as markup"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["provenance", "attribution", "ai", "variation-selector", "textprov"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Text Processing :: Markup :: HTML",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/textprov/textprov"
+Specification = "https://github.com/textprov/textprov/blob/main/SPEC.md"
+
+[tool.setuptools]
+packages = ["textprov"]
+
+[tool.setuptools.package-data]
+textprov = ["mapping.json"]

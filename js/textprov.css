@@ -1,0 +1,90 @@
+/*
+ *# textprov.css: provenance decorator styles
+ *# TextProv protocol: https://github.com/textprov/textprov
+ *# Contract version: 1 (see ../SPEC.md)
+ *# Mapping version: 1 (see ../mapping.json)
+ *#
+ *# Pairs with textprov.js. Not part of the decorator contract (SPEC.md
+ *# "Not specified: Visual style") but reproduces the P+ font's own marks so a
+ *# page looks the same with or without the font installed:
+ *#
+ *#   ai      sawtooth/wavy underline  -- matches the P+ glyph's AI mark.
+ *#   unknown flat solid underline     -- matches the P+ glyph's unknown mark.
+ *#   human   no underline, faint tint -- the "nothing to flag" state; a tint
+ *#                                       keeps it discoverable via data-prov
+ *#                                       without implying a warning.
+ *#   edited  dotted underline         -- sits between human and ai/unknown:
+ *#                                       a person touched machine (or vice
+ *#                                       versa) content, so a broken but
+ *#                                       plain line rather than a solid or
+ *#                                       wavy one.
+ *#   mixed   double underline         -- more than one state contributed;
+ *#                                       "double" reads as "more than one"
+ *#                                       without borrowing ai's wave or
+ *#                                       unknown's solid bar.
+ *#
+ *# Colors are custom properties on :root so integrators can retheme without
+ *# forking this file; a prefers-color-scheme: dark override is included.
+ *# Marks never change layout: no border, padding, margin, or line-height is
+ *# set, only background/text-decoration, and text-decoration-skip-ink is
+ *# disabled so the underlines stay continuous under descenders.
+ */
+
+:root {
+  --prov-human-bg: rgba(46, 160, 67, 0.12);
+  --prov-human-line: #2ea043;
+  --prov-ai-bg: rgba(199, 125, 0, 0.12);
+  --prov-ai-line: #c77d00;
+  --prov-unknown-bg: rgba(110, 118, 129, 0.12);
+  --prov-unknown-line: #6e7681;
+  --prov-edited-bg: rgba(31, 111, 235, 0.1);
+  --prov-edited-line: #1f6feb;
+  --prov-mixed-bg: rgba(163, 71, 186, 0.12);
+  --prov-mixed-line: #a347ba;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --prov-human-bg: rgba(63, 185, 80, 0.16);
+    --prov-human-line: #3fb950;
+    --prov-ai-bg: rgba(227, 152, 33, 0.16);
+    --prov-ai-line: #e39821;
+    --prov-unknown-bg: rgba(139, 148, 158, 0.16);
+    --prov-unknown-line: #8b949e;
+    --prov-edited-bg: rgba(88, 166, 255, 0.16);
+    --prov-edited-line: #58a6ff;
+    --prov-mixed-bg: rgba(219, 97, 246, 0.16);
+    --prov-mixed-line: #db61f6;
+  }
+}
+
+.prov {
+  /* No border/padding/margin/line-height: marks must not affect layout. */
+  text-decoration-skip-ink: none;
+  text-underline-offset: 0.15em;
+}
+
+.prov-human {
+  background: var(--prov-human-bg);
+}
+
+.prov-ai {
+  background: var(--prov-ai-bg);
+  text-decoration: underline wavy var(--prov-ai-line);
+}
+
+.prov-unknown {
+  background: var(--prov-unknown-bg);
+  text-decoration: underline solid var(--prov-unknown-line);
+  text-decoration-thickness: 0.15em;
+}
+
+.prov-edited {
+  background: var(--prov-edited-bg);
+  text-decoration: underline dotted var(--prov-edited-line);
+}
+
+.prov-mixed {
+  background: var(--prov-mixed-bg);
+  text-decoration: underline double var(--prov-mixed-line);
+}
