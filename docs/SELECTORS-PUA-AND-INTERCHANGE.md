@@ -109,6 +109,25 @@ visually but preserved the letter. The PUA form may improve rendering in that
 controlled editor setup, but it does so by replacing the letter with a code
 point that requires private knowledge to decode.
 
+## Try both encodings in an editor
+
+Open these UTF-8 files side by side in Zed, VS Code, or another editor:
+
+- [`examples/provenance-vs.txt`](examples/provenance-vs.txt) contains one
+  selector-encoded sample.
+- [`examples/provenance-pua.txt`](examples/provenance-pua.txt) contains the same
+  sample encoded with registry version 1's PUA mappings.
+
+Each file keeps its instructions as ordinary unmarked text. This provides a
+readable control and lets the PUA sample demonstrate its missing-font behavior
+without making the whole explanation unreadable. Compare the files first with
+a normal font, then select the matching P+ font. The files state the expected
+outcomes and distinguish verified behavior from editor paths that have not yet
+been tested.
+
+Use the included commands to inspect the stored provenance independently of
+what the editor draws.
+
 ## Publishing and local display are different boundaries
 
 Keep selector-encoded text as the canonical copy. A local tool may derive a PUA

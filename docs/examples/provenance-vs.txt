@@ -1,0 +1,17 @@
+TextProv selector encoding demo
+=================================
+
+Only the SAMPLE line below is provenance-marked. This explanatory text is ordinary Unicode.
+
+Stored form: each non-whitespace grapheme in SAMPLE is followed by U+E0101.
+
+Expected display:
+- Without a P+ font: SAMPLE remains readable as plain text; no sawtooth is shown.
+- With a P+ font and a shaper that honors the format-14 mapping: SAMPLE is readable with a sawtooth underline.
+- In Zed on macOS: CoreText renders plain base glyphs. Zed may also show spacing and green invisible-character marks if it separates selectors from their bases.
+- In other editors: installing the font is necessary but not sufficient; the text shaper must honor the mapping.
+
+SAMPLE: A󠄁I󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 s󠄁t󠄁a󠄁y󠄁s󠄁 r󠄁e󠄁a󠄁d󠄁a󠄁b󠄁l󠄁e󠄁 w󠄁h󠄁e󠄁n󠄁 i󠄁t󠄁s󠄁 d󠄁e󠄁c󠄁o󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁i󠄁s󠄁a󠄁p󠄁p󠄁e󠄁a󠄁r󠄁s󠄁.󠄁
+
+Inspect from the repository root:
+  PYTHONPATH=python python3 -m textprov inspect docs/examples/provenance-vs.txt
