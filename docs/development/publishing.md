@@ -4,6 +4,23 @@
 
 # Publishing
 
+## LICENSE — one file per package directory
+
+Both PyPI sdists and npm tarballs are meant to be self-contained: their build
+tools only read files inside the package directory, not parent paths. So each
+package directory keeps its own copy of the license:
+
+```
+LICENSE                # canonical
+python/LICENSE         # copy, consumed by setuptools via license-files
+js/LICENSE             # copy, auto-detected by npm
+```
+
+The `license-drift` job in `.github/workflows/conformance.yml` fails CI if the
+copies diverge from the root. If you ever relicense, update all three files in
+the same commit. This is what protobuf, grpc, and Apache Arrow do; symlinks
+work locally but break on Windows checkouts and confuse some archive tools.
+
 ## PyPI — publishing `textprov`
 
 All commands in this section run from the `python/` subdirectory of the repo,
