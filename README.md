@@ -36,10 +36,13 @@ requiring them to use the same tools or visual styles.
 
 ## Using TextProv
 
-The reference implementations cover two common uses:
+The reference implementations cover the common uses:
 
 - **[Python](python/README.md)** — add marks, read them back, or render marked
   text as HTML. Includes a command-line interface for working with text files.
+- **[Ruby](ruby/README.md)** — the same producer, decoder, and renderer surface
+  as Python, plus a `textprov` command-line interface. No runtime dependencies
+  and not Rails-specific.
 - **[JavaScript](js/README.md)** — read existing marks and display them in a
   browser, with an optional stylesheet.
 
@@ -76,9 +79,11 @@ above. Website development instructions are in [`site/`](site/README.md).
 
 ## Status
 
-The project is early-stage. Neither package is published yet; the reference
-implementations are available in this repository. The version 1 protocol is
-treated as stable.
+The project is early-stage. The JavaScript package is published on
+[npm](https://www.npmjs.com/package/textprov), and the Python package is
+published on [PyPI](https://pypi.org/project/textprov/). The Ruby gem lives in
+[`ruby/`](ruby/) and is not yet published to rubygems.org. The version 1
+protocol is treated as stable.
 
 ## Acknowledgements
 

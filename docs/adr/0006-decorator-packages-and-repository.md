@@ -38,7 +38,7 @@ easy to confuse with the W3C standard.
 | GitHub organisation and repository | `textprov/textprov` |
 | JavaScript package (npm) | `textprov` (browser decoder + CSS) |
 | Python package and import (PyPI) | `textprov` (producer, decoder, CLI) |
-| Ruby gem (not yet published) | `textprov` |
+| Ruby gem (`ruby/`, unpublished) | `textprov` |
 | CSS class prefix and data attribute | `prov`, `data-prov` |
 
 The class prefix stays `prov`. Changing it would break every stylesheet already
@@ -63,7 +63,11 @@ workflow, where it is correctly scoped.
 - `python/textprov`, the shared core and renderer from `bin/scripts/nfprov.py`:
   `load_mapping`, `is_combining`, `cluster_end`, the run splitter, the HTML
   renderer, and the decorator form of `strip`.
-- Fixture runners for both implementations.
+- `ruby/`, an official Ruby 3.2+ reference implementation with the same
+  producer/decoder/renderer surface as the Python package and no runtime
+  dependencies. It vendors `mapping.json` and runs the shared fixture like the
+  others.
+- Fixture runners for each implementation.
 - `docs/GOAL.md`, `docs/HTML-RENDERING.md`, and ADRs 0001–0004, 0006, and
   0008–0010.
 
@@ -105,18 +109,18 @@ reassigned or removed.
 
 ## Remaining work
 
-1. Publish `textprov` on npm. The DOM decorator and stylesheet are here; a
-   rehype plugin and a markdown-it plugin are not written. The npm name is
-   deliberately identical to the PyPI package name, even though the two ship
-   different surface areas: taking the unscoped name on both registries closes
-   off squatting and keeps the discovery story simple ("install textprov").
-   The npm README states the ship-list difference in its opening line.
-2. Wait for one breakage report and add its case to `fixtures.json` before
+The unscoped `textprov` packages have been published on npm and PyPI. The npm
+name is deliberately identical to the PyPI package name, even though the two
+ship different surface areas: taking the unscoped name on both registries
+closes off squatting and keeps the discovery story simple ("install
+textprov"). The npm README states the ship-list difference in its opening line.
+
+1. Wait for one breakage report and add its case to `fixtures.json` before
    starting another port.
-3. Publish `textprov` on PyPI.
-4. Publish a Ruby gem with a kramdown hook for Jekyll and GitHub Pages, then
-   test it in a real site.
-5. Have the fork consume the published Python package instead of its vendored
+2. Publish the Ruby gem to rubygems.org. A separate kramdown hook for Jekyll
+   and GitHub Pages, tested in a real site, remains a follow-up and is
+   deliberately not part of the core gem.
+3. Have the fork consume the published Python package instead of its vendored
    copy of the shared core, and read the registry from the package rather than
    `src/glyphs/provenance/mapping.json`. Until then the fork's copies are
    downstream duplicates of the files here, and this repository is canonical.
@@ -128,5 +132,5 @@ either `to_html` or `render`. Their shared options are `strip`,
 A browser extension based on the client-side decorator is the proposed route
 for pages whose author cannot add a decorator pass. It does not exist.
 
-No domain has been registered and no trademark clearance has been done for the
-name.
+The project subsequently registered [`textprov.org`](https://textprov.org).
+No trademark clearance has been done for the name.
