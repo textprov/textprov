@@ -1,5 +1,50 @@
 @import "../js/textprov.css";
 
+@font-face {
+  font-family: "TextProv Local P+";
+  src:
+    local("Maryheather TextProv Demo P+"), local("MaryheatherTextProvDemoPPlus"),
+    local("Zilla Slab TextProv Demo P+"), local("ZillaSlabTextProvDemoPPlus"),
+    local("Maryheather Nerd Font Propo P+"), local("MaryheatherNFPP+"),
+    local("ZillaSlab Nerd Font Propo P+"), local("ZillaSlabNFPP+");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TextProv Web Maryheather";
+  src: url("/fonts/maryheather-textprov-demo.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TextProv Web Zilla";
+  src: url("/fonts/zilla-textprov-demo.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-sample {
+  padding: 0.75rem 1rem;
+  border-left: 2px solid var(--line);
+  font-size: 1.25rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.font-local {
+  font-family: "TextProv Local P+", Georgia, serif;
+}
+.font-maryheather {
+  font-family: "TextProv Web Maryheather", Georgia, serif;
+}
+.font-zilla {
+  font-family: "TextProv Web Zilla", Georgia, serif;
+}
+
 :root {
   color-scheme: light dark;
   --background: #ffffff;

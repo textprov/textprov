@@ -17,6 +17,7 @@
       <a class="wordmark" href="./">TextProv</a>
       <nav aria-label="Primary navigation">
         <a href="#try-it">Try it</a>
+        <a href="#font-examples">See it</a>
         <a href="#use">Use it</a>
         <a href="./spec.html">Specification</a>
         <a href="https://github.com/textprov/textprov">GitHub&nbsp;↗</a>
@@ -30,6 +31,29 @@
                 <p class="tagline">Use it in an editor or content pipeline to label what you know about the text. The labels can travel through copy, paste, and plain-text storage, as long as the receiving software preserves the marks.</p>
                 <p class="note">A label is a claim, not proof. TextProv does not detect AI writing or verify authorship. Anyone can add, change, or remove marks; unmarked text does not mean human-written.</p>
         <p class="version-line">Contract v1 · Registry v1 · MIT licensed</p>
+      </section>
+
+      <section id="font-examples" aria-labelledby="examples-title">
+        <h2 id="examples-title">Same text, different displays</h2>
+        <p>Each line below</p> contains the same text and the same embedded labels: “Human words.” is labelled human, and “AI words.” is labelled AI. Only the way it is displayed changes.</p>
+
+        <h3>With an</h3> ordinary font</h3>
+        <p class="font-sample">H&#xE0100;u&#xE0100;m&#xE0100;a&#xE0100;n&#xE0100; w&#xE0100;o&#xE0100;r&#xE0100;d&#xE0100;s&#xE0100;.&#xE0100; A&#xE0101;I&#xE0101; w&#xE0101;o&#xE0101;r&#xE0101;d&#xE0101;s&#xE0101;.&#xE0101;</p>
+        <p class="note">This should look like ordinary text. The labels are still there, even though this font does not display them.</p>
+
+        <h3>With</h3> a P+ font installed on your device</h3>
+        <p class="font-sample font-local">H&#xE0100;u&#xE0100;m&#xE0100;a&#xE0100;n&#xE0100; w&#xE0100;o&#xE0100;r&#xE0100;d&#xE0100;s&#xE0100;.&#xE0100; A&#xE0101;I&#xE0101; w&#xE0101;o&#xE0101;r&#xE0101;d&#xE0101;s&#xE0101;.&#xE0101;</p>
+        <p class="note">If you have one of our <a href="#fonts">demo fonts</a> or the Maryheather / Zilla Slab Nerd Font Propo P+ family installed, and your browser supports its selector mappings, the AI words should have a sawtooth underline. Otherwise, expect ordinary text. This line never downloads a font.</p>
+
+        <h3>With web</h3>fonts supplied by this page</h3>
+        <p>No installation needed. If the font loads and your browser supports its selector mappings, the AI words should have a sawtooth underline; the human words stay plain.</p>
+        <p class="note">Maryheather P+</p>
+        <p class="font-sample font-maryheather">H&#xE0100;u&#xE0100;m&#xE0100;a&#xE0100;n&#xE0100; w&#xE0100;o&#xE0100;r&#xE0100;d&#xE0100;s&#xE0100;.&#xE0100; A&#xE0101;I&#xE0101; w&#xE0101;o&#xE0101;r&#xE0101;d&#xE0101;s&#xE0101;.&#xE0101;</p>
+        <p class="note">Zilla Slab P+</p>
+        <p class="font-sample font-zilla">H&#xE0100;u&#xE0100;m&#xE0100;a&#xE0100;n&#xE0100; w&#xE0100;o&#xE0100;r&#xE0100;d&#xE0100;s&#xE0100;.&#xE0100; A&#xE0101;I&#xE0101; w&#xE0101;o&#xE0101;r&#xE0101;d&#xE0101;s&#xE0101;.&#xE0101;</p>
+        <p class="note">These examples use the font alone, not JavaScript decoration. A loaded font does not guarantee visible marks: some rendering engines ignore these selector mappings. <a href="#check-input">The reader below</a> can reveal the labels independently of font support.</p>
+        <p><a href="./samples/marked-text.txt" target="_blank" rel="noopener">Open the marked text file in a new tab ↗</a> · <a href="./samples/marked-text.txt" download></a>Download the sample</a></p>
+        <p class="note">The file contains plain UTF-8 text, no HTML or JavaScript. Copy it normally, return here, and paste it into the reader. No copy handler adds labels to your clipboard: they are already in the file.</p>
       </section>
 
       <section id="try-it" aria-labelledby="try-title">
@@ -65,7 +89,7 @@
           </div>
         </div>
         <p><strong>2. Take it elsewhere.</strong> Copy the marked text into your editor, or download it as a UTF-8 text file. With an ordinary font, it will usually look like plain text. The preview's styling is not what carries the label.</p>
-                <p><strong>3. Check what survived.</strong> Copy the text from your editor and paste it below. This reader only reads existing marks; it does not add new ones.</p>
+                <p><strong>3. Reveal the labels.</strong> Paste text from your editor or the <a href="./samples/marked-text.txt" target="_blank" rel="noopener">static sample file ↗</a> below. This reader only reads existing marks; it does not add new ones. JavaScript and CSS display the labels even without a P+ font.</p>
                 <div class="demo-panel">
                   <label for="check-input">Paste text to check</label>
                   <textarea id="check-input" rows="3" aria-describedby="check-help" placeholder="Paste your marked text here"></textarea>
@@ -127,9 +151,14 @@ ruby -I ruby/lib -r textprov -e 'puts Textprov.to_html(Textprov.mark("Hello", st
       </section>
 
       <section id="fonts" aria-labelledby="fonts-title">
-        <h2 id="fonts-title">What about fonts?</h2>
-        <p>A provenance-aware font can draw the labels directly in compatible applications. It is an alternative to the browser styling above, not a requirement for adding or storing marks. Installing a font alone does not label any text.</p>
-        <p>There is no example font bundled with this site yet. For now, use the browser demo and its text download for a no-install trial. If you already have a matching P+ provenance font, the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md#try-both-encodings-in-an-editor">font guide includes sample files and an editor comparison</a>.</p>
+        <h2 id="fonts-title">Download example fonts</h2>
+        <p></p>Try the fonts in your own editor. Each ZIP contains an installable TTF, a WOFF2 webfont, and licence notices. Install the TTF, select its “TextProv Demo P+” family in your editor, and open the <a href="./samples/marked-text.txt" download></a>marked text sample</a>. For the local-font example above, reload this page after installation.</p>
+        <ul></ul>
+          <li><a href="./fonts/maryheather-textprov-demo.zip" download>Maryhe</a>ather P+ demo font (ZIP, about 52 KB)</a> — derived from Merriweather; <a href="./fonts/maryheather-OFL.txt">SIL Open Font License</a>.</li>
+          <li><a href="./fonts/zilla-textprov-demo.zip" download>Zilla Slab P+ demo font (ZIP, about 63 KB)</a> — derived from Zilla Slab; <a href="./fonts/zilla-OFL.txt">SIL Open Font License</a>.</li>
+        </ul>
+        <p>These</p> are regular-weight Latin-text subsets from our <a href="https://github.com/delano/nerd-fonts">Nerd Fonts fork</a>, not full replacement fonts. They include Human and AI variants only. Mixed, edited, and unknown labels are displayed by the browser reader, not these fonts. Installing a font alone does not label any text.</p>
+        <p class="note">The source fonts' older third selector has a different meaning from TextProv v1, so it is deliberately excluded from these subsets. See the <a href="./fonts/README.txt">font build notes and attribution</a> or the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md">font and interchange guide</a>.</p>
         <p class="note">Font display depends on the application's text-rendering engine. The project's tests found that HarfBuzz displayed the selector variants while macOS CoreText did not. Keep selector-encoded text for sharing; the guide's private-use (PUA) samples require a matching font and are for controlled local experiments.</p>
       </section>
 
@@ -141,7 +170,7 @@ ruby -I ruby/lib -r textprov -e 'puts Textprov.to_html(Textprov.mark("Hello", st
     </main>
 
     <footer>
-      <p><a href="https://github.com/textprov/textprov/blob/main/LICENSE">MIT License</a> · <a href="https://github.com/textprov/textprov">Source</a> · Text that carries its own provenance.</p>
+      <p><a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a> · <a href="https://github.com/textprov/textprov">Source</a> · Text that carries its own provenance.</p>
     </footer>
   </body>
 </html>

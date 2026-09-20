@@ -89,6 +89,33 @@ test("reader reports existing labels without changing the input", () => {
   assert.equal(element("check-status").textContent, "Waiting for text.");
 });
 
+test("static sample matches all font examples and reveals labels when pasted", () => {
+  const file = readFileSync(new URL("./public/samples/marked-text.txt", import.meta.url), "utf8");
+  assert.equal(file.codePointAt(0), 0xfeff, "UTF-8 BOM lets browsers identify the text encoding");
+  const sample = file.slice(1);
+  const html = readFileSync(new URL("./index.html", import.meta.url), "utf8");
+  const examples = [...html.matchAll(/<p class="font-sample[^"]*">([^<]+)<\/p>/g)];
+  assert.equal(examples.length, 4);
+  for (const [, encoded] of examples) {
+    const text = encoded.replace(/&#x([0-9a-f]+);/gi, (_, cp) =>
+      String.fromCodePoint(parseInt(cp, 16)),
+    );
+    assert.equal(text + "\n", sample);
+  }
+  const { element } = demo();
+  element("check-input").value = sample;
+  element("check-input").listeners.input();
+  assert.equal(element("check-output").textContent, sample);
+  assert.match(element("check-status").textContent, /Labels found: human, ai\./);
+});
+
+test("local-font example cannot download a webfont", () => {
+  const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+  const rule = css.match(/@font-face\s*\{[^}]*font-family: "TextProv Local P\+"[^}]*\}/)[0];
+  assert.match(rule, /local\("Maryheather TextProv Demo P\+"\)/);
+  assert.doesNotMatch(rule, /url\(/);
+});
+
 test("marking pasted text replaces existing labels rather than stacking them", () => {
   const { element, state } = demo();
   element("demo-input").value = "A\u{E0101} B";
