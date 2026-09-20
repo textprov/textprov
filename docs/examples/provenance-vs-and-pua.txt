@@ -1,0 +1,18 @@
+TextProv selector and PUA comparison
+====================================
+
+The two SAMPLE lines encode the same sentence and the same AI provenance state. Labels and explanatory text are ordinary Unicode.
+
+VS SAMPLE:  A󠄁I󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 s󠄁t󠄁a󠄁y󠄁s󠄁 r󠄁e󠄁a󠄁d󠄁a󠄁b󠄁l󠄁e󠄁 w󠄁h󠄁e󠄁n󠄁 i󠄁t󠄁s󠄁 d󠄁e󠄁c󠄁o󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁i󠄁s󠄁a󠄁p󠄁p󠄁e󠄁a󠄁r󠄁s󠄁.󠄁
+PUA SAMPLE: 􀁁􀁉 􀁰􀁲􀁯􀁶􀁥􀁮􀁡􀁮􀁣􀁥 􀁳􀁴􀁡􀁹􀁳 􀁲􀁥􀁡􀁤􀁡􀁢􀁬􀁥 􀁷􀁨􀁥􀁮 􀁩􀁴􀁳 􀁤􀁥􀁣􀁯􀁲􀁡􀁴􀁩􀁯􀁮 􀁤􀁩􀁳􀁡􀁰􀁰􀁥􀁡􀁲􀁳􀀮
+
+Expected display:
+- Without a P+ font: VS SAMPLE remains readable without a sawtooth; PUA SAMPLE normally shows missing-glyph boxes.
+- With a P+ font and a shaper that honors format-14 mappings: both samples can appear as readable text with a sawtooth underline.
+- With CoreText on macOS: VS SAMPLE renders as plain base glyphs. Direct tests selected the PUA glyphs, but each editor path must be checked separately.
+- In Zed on macOS: VS SAMPLE may also show spacing and green invisible-character marks if highlighting separates selectors from their bases.
+
+Inspect from the repository root:
+  PYTHONPATH=python python3 -m textprov inspect docs/examples/provenance-vs-and-pua.txt
+
+Expected provenance counts: ai_vs: 53 and ai_pua: 53.

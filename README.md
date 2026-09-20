@@ -52,7 +52,7 @@ shaping engine, no build step — so the reference producer ships in the Python
 package and its CLI:
 
 ```sh
-python3 -m textprov mark --ai draft.txt -o marked.txt   # or: textprov mark ...
+python3 -m textprov -o marked.txt mark --ai draft.txt   # or: textprov -o marked.txt mark ...
 python3 -m textprov mark-added old.txt new.txt          # mark only what changed
 python3 -m textprov convert --from vs --to pua marked.txt
 python3 -m textprov inspect marked.txt
@@ -76,7 +76,21 @@ that knows a model wrote a paragraph, or a person running the CLI.
 Showing marks in a *font* is a different job with a different toolchain, and it
 is a renderer, not a producer: that is the `--provenance` option of a
 [Nerd Fonts fork](https://github.com/delano/nerd-fonts), which patches a font
-with provenance variants of its own glyphs.
+with provenance variants of its own glyphs. See [Why TextProv publishes
+selectors instead of PUA text](docs/SELECTORS-PUA-AND-INTERCHANGE.md) for the
+interchange trade-off, including Nerd Fonts and Zed on macOS.
+
+## Website
+
+Preview the site locally with Vite:
+
+```sh
+cd site
+npm ci
+npm run dev
+```
+
+`npm run build` produces the GitHub Pages artifact in `site/dist`.
 
 ## Conformance
 
