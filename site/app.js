@@ -18,17 +18,6 @@ import "../js/textprov.js";
     }).join("");
   }
 
-  function renderHero() {
-    var node = document.getElementById("hero-demo");
-    var parts = [
-      ["A sentence ", "human"],
-      ["can carry its history ", "ai"],
-      ["without changing what it says.", "mixed"]
-    ];
-    node.textContent = parts.map(function (part) { return mark(part[0], part[1]); }).join("");
-    textprov.render(node);
-  }
-
   function renderDemo() {
     var input = document.getElementById("demo-input");
     var state = document.querySelector('input[name="state"]:checked').value;
@@ -53,7 +42,6 @@ import "../js/textprov.js";
     });
   }
 
-  renderHero();
   renderDemo();
   document.getElementById("demo-input").addEventListener("input", renderDemo);
   document.querySelectorAll('input[name="state"]').forEach(function (input) {
