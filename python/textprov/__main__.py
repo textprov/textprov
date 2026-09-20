@@ -27,7 +27,9 @@ PROG = "textprov"
 def read_input(path):
     """Read UTF-8 text verbatim; the locale encoding is never used."""
     if path == "-":
-        return io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8", newline="").read()
+        return io.TextIOWrapper(
+            sys.stdin.buffer, encoding="utf-8", newline=""
+        ).read()
     with open(path, encoding="utf-8", newline="") as handle:
         return handle.read()
 
@@ -63,7 +65,8 @@ def add_state(parser):
 
 def build_parser():
     parser = argparse.ArgumentParser(
-        prog=PROG, description="Put provenance marks in text, and read them back out."
+        prog=PROG,
+        description="Put provenance marks in text, and read them back out.",
     )
     mapping = default_mapping()
     parser.add_argument(
@@ -74,7 +77,9 @@ def build_parser():
             f"(contract {CONTRACT_VERSION}, mapping {mapping.version})"
         ),
     )
-    parser.add_argument("-o", "--output", help="write to this file instead of stdout")
+    parser.add_argument(
+        "-o", "--output", help="write to this file instead of stdout"
+    )
     subs = parser.add_subparsers(dest="command", required=True)
 
     p = subs.add_parser("mark", help="mark every unmarked cluster")
@@ -88,7 +93,9 @@ def build_parser():
 
     p = subs.add_parser("convert", help="change the encoding of the ai state")
     p.add_argument("file")
-    p.add_argument("--from", dest="from_mode", choices=("vs", "pua"), required=True)
+    p.add_argument(
+        "--from", dest="from_mode", choices=("vs", "pua"), required=True
+    )
     p.add_argument("--to", dest="to_mode", choices=("vs", "pua"), required=True)
 
     p = subs.add_parser("strip", help="remove every mark")
@@ -96,7 +103,9 @@ def build_parser():
 
     p = subs.add_parser("render", help="render marked text as HTML spans")
     p.add_argument("file")
-    p.add_argument("--strip", action="store_true", help="drop selectors from span text")
+    p.add_argument(
+        "--strip", action="store_true", help="drop selectors from span text"
+    )
     p.add_argument(
         "--no-merge-whitespace",
         dest="merge_whitespace",

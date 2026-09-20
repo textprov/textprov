@@ -21,7 +21,7 @@ PROPOSED_STATES = ("edited", "unknown")
 class Mapping:
     """The code-point registry, loaded once and passed to every operation."""
 
-    __slots__ = ("raw", "version", "selectors", "pua2base", "base2pua")
+    __slots__ = ("base2pua", "pua2base", "raw", "selectors", "version")
 
     def __init__(self, raw, version, selectors, pua2base, base2pua):
         self.raw = raw
@@ -113,8 +113,6 @@ def cluster_end(chars, start, sel_cps):
     return index
 
 
-
-
 # --- runs and markup -------------------------------------------------------
 
 
@@ -146,7 +144,9 @@ def _runs(text, selectors, pua2base, strip=False, merge_whitespace=True):
         cp = ord(chars[index])
         if cp in pua2base:
             base_cp, state = pua2base[cp]
-            out = chr(base_cp) if strip else chr(base_cp) + chr(selectors[state])
+            out = (
+                chr(base_cp) if strip else chr(base_cp) + chr(selectors[state])
+            )
             index += 1
         elif chars[index].isspace():
             state = "ws"
@@ -168,8 +168,16 @@ def _runs(text, selectors, pua2base, strip=False, merge_whitespace=True):
 
     merged = []
     for position, (state, out) in enumerate(items):
-        following = items[position + 1][0] if position + 1 < len(items) else None
-        if merge_whitespace and state == "ws" and merged and merged[-1][0] and merged[-1][0] == following:
+        following = (
+            items[position + 1][0] if position + 1 < len(items) else None
+        )
+        if (
+            merge_whitespace
+            and state == "ws"
+            and merged
+            and merged[-1][0]
+            and merged[-1][0] == following
+        ):
             merged[-1][1] += out
             continue
         if state == "ws":
@@ -181,7 +189,14 @@ def _runs(text, selectors, pua2base, strip=False, merge_whitespace=True):
     return [(state, out) for state, out in merged]
 
 
-def _to_html(text, selectors, pua2base, strip=False, merge_whitespace=True, class_prefix="prov"):
+def _to_html(
+    text,
+    selectors,
+    pua2base,
+    strip=False,
+    merge_whitespace=True,
+    class_prefix="prov",
+):
     """Render `text` as HTML spans per the decorator contract's Markup section."""
     parts = []
     for state, out in _runs(text, selectors, pua2base, strip, merge_whitespace):
@@ -202,14 +217,23 @@ def _to_html(text, selectors, pua2base, strip=False, merge_whitespace=True, clas
 def runs(text, mapping=None, strip=False, merge_whitespace=True):
     """Split `text` into an ordered list of (state, text) runs per SPEC.md."""
     mapping = mapping or default_mapping()
-    return _runs(text, mapping.selectors, mapping.pua2base, strip, merge_whitespace)
+    return _runs(
+        text, mapping.selectors, mapping.pua2base, strip, merge_whitespace
+    )
 
 
-def to_html(text, mapping=None, strip=False, merge_whitespace=True, class_prefix="prov"):
+def to_html(
+    text, mapping=None, strip=False, merge_whitespace=True, class_prefix="prov"
+):
     """Render `text` as HTML spans per the contract's Markup section."""
     mapping = mapping or default_mapping()
     return _to_html(
-        text, mapping.selectors, mapping.pua2base, strip, merge_whitespace, class_prefix
+        text,
+        mapping.selectors,
+        mapping.pua2base,
+        strip,
+        merge_whitespace,
+        class_prefix,
     )
 
 

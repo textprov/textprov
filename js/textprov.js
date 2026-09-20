@@ -26,16 +26,26 @@
  *   prefix          default "prov" Class prefix, e.g. "prov" -> "prov prov-STATE".
  */
 (function (global) {
-  'use strict';
+  "use strict";
 
   // Tables from mapping.json. The registry is not loaded at runtime; these
   // constants are checked against it by check_fixtures.mjs.
   var MAPPING_VERSION = 1;
-  var SELECTORS = { human: 0xE0100, ai: 0xE0101, mixed: 0xE0102, edited: 0xE0103, unknown: 0xE0104 };
+  var SELECTORS = {
+    human: 0xe0100,
+    ai: 0xe0101,
+    mixed: 0xe0102,
+    edited: 0xe0103,
+    unknown: 0xe0104,
+  };
   var PUA_AI = 0x100000; // ai plane: PUA_AI(cp) = 0x100000 + cp
   // Allocated PUA code points, inclusive ranges. Anything else in the plane is
   // not a mark. v1: U+0021-U+00FF minus Zs, Cc, Cf; every entry is state ai.
-  var PUA_RANGES = [[0x100021, 0x10007E], [0x1000A1, 0x1000AC], [0x1000AE, 0x1000FF]];
+  var PUA_RANGES = [
+    [0x100021, 0x10007e],
+    [0x1000a1, 0x1000ac],
+    [0x1000ae, 0x1000ff],
+  ];
   var VS = {};
   for (var selName in SELECTORS) VS[SELECTORS[selName]] = selName;
   function inPua(cp) {
@@ -44,7 +54,7 @@
     }
     return false;
   }
-  var seg = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
+  var seg = new Intl.Segmenter(undefined, { granularity: "grapheme" });
 
   function resolveOptions(opts) {
     opts = opts || {};
@@ -52,7 +62,7 @@
     return {
       strip: !!opts.strip,
       mergeWhitespace: merge !== false,
-      prefix: typeof opts.prefix === 'string' && opts.prefix.length ? opts.prefix : 'prov'
+      prefix: typeof opts.prefix === "string" && opts.prefix.length ? opts.prefix : "prov",
     };
   }
 
@@ -68,32 +78,38 @@
       var cps = Array.from(segment);
       var last = cps[cps.length - 1].codePointAt(0);
       var cp0 = cps[0].codePointAt(0);
-      var state = null, out = segment;
+      var state = null,
+        out = segment;
       if (VS[last] !== undefined && cps.length > 1) {
         state = VS[last];
-        if (o.strip) out = cps.slice(0, -1).join('');
+        if (o.strip) out = cps.slice(0, -1).join("");
       } else if (cps.length === 1 && inPua(cp0)) {
-        state = 'ai';
+        state = "ai";
         // PUA is unreadable without the font; re-emit as base + selector encoding.
-        out = String.fromCodePoint(cp0 - PUA_AI) + (o.strip ? '' : String.fromCodePoint(SELECTORS.ai));
+        out =
+          String.fromCodePoint(cp0 - PUA_AI) + (o.strip ? "" : String.fromCodePoint(SELECTORS.ai));
       } else if (/^\s+$/.test(segment)) {
-        state = 'ws';
+        state = "ws";
       }
       var prev = items[items.length - 1];
-      if (prev && prev.state === state) prev.text += out; else items.push({ state: state, text: out });
+      if (prev && prev.state === state) prev.text += out;
+      else items.push({ state: state, text: out });
     }
     // absorb whitespace between two runs of the same non-null state
     var merged = [];
     for (var i = 0; i < items.length; i++) {
-      var cur = items[i], mp = merged[merged.length - 1], next = items[i + 1];
-      if (cur.state === 'ws') {
+      var cur = items[i],
+        mp = merged[merged.length - 1],
+        next = items[i + 1];
+      if (cur.state === "ws") {
         if (o.mergeWhitespace && mp && next && mp.state === next.state && mp.state) {
           mp.text += cur.text;
           continue;
         }
         cur.state = null;
       }
-      if (mp && mp.state === cur.state) mp.text += cur.text; else merged.push(cur);
+      if (mp && mp.state === cur.state) mp.text += cur.text;
+      else merged.push(cur);
     }
     return merged;
   }
@@ -105,9 +121,10 @@
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
         return /[\u{E0100}-\u{E0104}\u{100000}-\u{10FFFF}]/u.test(n.nodeValue) &&
-          !n.parentNode.closest('script,style,textarea,.' + provClass)
-          ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
-      }
+          !n.parentNode.closest("script,style,textarea,." + provClass)
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_REJECT;
+      },
     });
     var nodes = [];
     var n;
@@ -119,9 +136,12 @@
       var rs = runs(node.nodeValue, o);
       for (var j = 0; j < rs.length; j++) {
         var r = rs[j];
-        if (!r.state) { frag.appendChild(document.createTextNode(r.text)); continue; }
-        var span = document.createElement('span');
-        span.className = provClass + ' ' + provClass + '-' + r.state;
+        if (!r.state) {
+          frag.appendChild(document.createTextNode(r.text));
+          continue;
+        }
+        var span = document.createElement("span");
+        span.className = provClass + " " + provClass + "-" + r.state;
         span.dataset.prov = r.state;
         span.textContent = r.text;
         frag.appendChild(span);
@@ -137,12 +157,12 @@
     render: render,
     contractVersion: 1,
     mappingVersion: MAPPING_VERSION,
-    mapping: { version: MAPPING_VERSION, selectors: SELECTORS, puaRanges: PUA_RANGES }
+    mapping: { version: MAPPING_VERSION, selectors: SELECTORS, puaRanges: PUA_RANGES },
   };
 
-  if (typeof module === 'object' && module.exports) {
+  if (typeof module === "object" && module.exports) {
     module.exports = textprov;
   } else {
     global.textprov = textprov;
   }
-})(typeof window !== 'undefined' ? window : this);
+})(typeof window !== "undefined" ? window : this);

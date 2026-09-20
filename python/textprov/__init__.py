@@ -3,10 +3,10 @@
 """TextProv: put provenance marks in text, and read them back out.
 
     >>> import textprov
-    >>> textprov.to_html("f\U000E0101")
-    '<span class="prov prov-ai" data-prov="ai">f\U000E0101</span>'
+    >>> textprov.to_html("f\U000e0101")
+    '<span class="prov prov-ai" data-prov="ai">f\U000e0101</span>'
 
-    >>> textprov.mark("hi", state="ai") == "h\U000E0101i\U000E0101"
+    >>> textprov.mark("hi", state="ai") == "h\U000e0101i\U000e0101"
     True
 
 The protocol is defined in SPEC.md; `mapping.json` is the code-point registry.

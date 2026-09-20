@@ -150,14 +150,18 @@ class TestToHtml(unittest.TestCase):
         )
 
     def test_strip(self):
-        self.assertEqual(self.render("a" + AI + " b" + AI, strip=True), span("ai", "a b"))
+        self.assertEqual(
+            self.render("a" + AI + " b" + AI, strip=True), span("ai", "a b")
+        )
 
     def test_pua_input(self):
         pua_cp, (pua_base, pua_state) = next(
             (cp, entry) for cp, entry in PUA2BASE.items() if entry[1] == "ai"
         )
         self.assertEqual(pua_state, "ai")
-        self.assertEqual(self.render(chr(pua_cp)), span("ai", chr(pua_base) + AI))
+        self.assertEqual(
+            self.render(chr(pua_cp)), span("ai", chr(pua_base) + AI)
+        )
         self.assertEqual(
             self.render(chr(pua_cp), strip=True), span("ai", chr(pua_base))
         )
@@ -191,7 +195,14 @@ class TestExplicitMapping(unittest.TestCase):
             textprov.runs("a" + AI),
         )
         self.assertEqual(
-            _to_html("a" + AI, mapping.selectors, mapping.pua2base, False, True, "prov"),
+            _to_html(
+                "a" + AI,
+                mapping.selectors,
+                mapping.pua2base,
+                False,
+                True,
+                "prov",
+            ),
             textprov.to_html("a" + AI),
         )
 

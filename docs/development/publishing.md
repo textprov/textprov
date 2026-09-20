@@ -6,7 +6,14 @@
 
 ## PyPI — publishing `textprov`
 
-From `/Users/d/Projects/dev/textprov/textprov/python/`:
+All commands in this section run from the `python/` subdirectory of the repo,
+where `pyproject.toml` lives. `cd` there first:
+
+```bash
+cd /Users/d/Projects/dev/textprov/textprov/python
+pwd            # confirm .../textprov/textprov/python
+ls pyproject.toml   # should print pyproject.toml
+```
 
 **One-time setup:**
 ```bash
@@ -27,8 +34,10 @@ chmod 600 ~/.pypirc
 pip install --upgrade build twine
 ```
 
-**Per-release:**
+**Per-release** (still in `python/`):
 ```bash
+cd /Users/d/Projects/dev/textprov/textprov/python
+
 # 1. Bump version in pyproject.toml (e.g. 0.1.0 -> 0.1.1)
 
 # 2. Clean any prior build
@@ -59,7 +68,14 @@ git push origin python-v0.1.0
 
 ## npm — publishing `@textprov/decorator`
 
-From `/Users/d/Projects/dev/textprov/textprov/js/`:
+All commands in this section run from the `js/` subdirectory of the repo,
+where `package.json` lives. `cd` there first:
+
+```bash
+cd /Users/d/Projects/dev/textprov/textprov/js
+pwd              # confirm .../textprov/textprov/js
+ls package.json  # should print package.json
+```
 
 **One-time setup:**
 ```bash
@@ -73,8 +89,10 @@ npm login
 npm whoami
 ```
 
-**Per-release:**
+**Per-release** (still in `js/`):
 ```bash
+cd /Users/d/Projects/dev/textprov/textprov/js
+
 # 1. Version bump (uses semver: patch|minor|major). This edits package.json
 #    AND creates a git commit + tag.
 npm version patch    # 0.1.0 -> 0.1.1
