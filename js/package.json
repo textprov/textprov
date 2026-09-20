@@ -2,22 +2,6 @@
   "name": "@textprov/decorator",
   "version": "0.1.0",
   "description": "Render in-band text provenance marks as HTML spans. No font required.",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/textprov/textprov.git",
-    "directory": "js"
-  },
-  "homepage": "https://github.com/textprov/textprov",
-  "main": "textprov.js",
-  "exports": {
-    ".": "./textprov.js",
-    "./textprov.css": "./textprov.css"
-  },
-  "files": [
-    "textprov.js",
-    "textprov.css"
-  ],
   "keywords": [
     "provenance",
     "attribution",
@@ -25,10 +9,38 @@
     "variation-selector",
     "textprov"
   ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/textprov/textprov.git",
+    "directory": "js"
+  },
+  "homepage": "https://github.com/textprov/textprov",
+  "bugs": {
+    "url": "https://github.com/textprov/textprov/issues"
+  },
+  "main": "textprov.js",
+  "exports": {
+    ".": "./textprov.js",
+    "./textprov.css": "./textprov.css"
+  },
+  "files": [
+    "README.md",
+    "textprov.js",
+    "textprov.css"
+  ],
+  "sideEffects": [
+    "./textprov.js",
+    "./textprov.css"
+  ],
   "scripts": {
-    "test": "node check_fixtures.mjs"
+    "test": "node check_fixtures.mjs",
+    "prepublishOnly": "npm test"
   },
   "engines": {
     "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
