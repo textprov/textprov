@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="TextProv is an open protocol for text that carries its own provenance through copy, paste, and plain-text storage.">
+    <meta name="description" content="Label text as human-written, AI-generated, or mixed. Try TextProv in your browser and see how origin labels can travel with plain text.">
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#111311" media="(prefers-color-scheme: dark)">
     <title>TextProv — provenance that travels with the text</title>
@@ -26,7 +26,9 @@
     <main id="main">
       <section class="intro">
         <h1>TextProv</h1>
-        <p class="tagline">An open protocol for in-band provenance. A run of characters can say whether a person wrote it, a machine generated it, or its origin is unknown. The state travels in the text as Unicode code points, so it survives copy, paste, and plain-text storage.</p>
+        <p class="tagline">Text that carries labels about its origin: human-written, AI-generated, mixed, edited, or unknown. TextProv is an open protocol for keeping those labels in the text itself, rather than in a separate file or one application's metadata.</p>
+                <p class="tagline">Use it in an editor or content pipeline to label what you know about the text. The labels can travel through copy, paste, and plain-text storage, as long as the receiving software preserves the marks.</p>
+                <p class="note">A label is a claim, not proof. TextProv does not detect AI writing or verify authorship. Anyone can add, change, or remove marks; unmarked text does not mean human-written.</p>
         <p class="version-line">Contract v1 · Registry v1 · MIT licensed</p>
       </section>
 
@@ -73,40 +75,68 @@
                 </div>
       </section>
 
+      <section id="how" aria-labelledby="how-title">
+        <h2 id="how-title">What travels with the text?</h2>
+        <p>TextProv adds normally invisible Unicode characters called <em>variation selectors</em> after the letters or symbols being labelled. A TextProv reader recognizes these marks and can show their meaning using underlines, colours, or other decorations.</p>
+        <p>A <em>code point</em> is a number identifying a character in Unicode. For example, <code>U+0041</code> identifies <code>A</code>. TextProv uses <code>U+E0101</code> as the AI label:</p>
+<pre><code>U+0041  U+E0101
+   A    AI mark</code></pre>
+        <p>Unicode defines the characters; <strong>UTF-8</strong> encodes them as bytes in a file or message. TextProv is not a replacement for UTF-8. A UTF-8 file can store both the letters and their marks; older encodings such as <strong>Latin-1</strong> cannot store these marks.</p>
+        <p class="note">These label meanings are a TextProv convention, not Unicode-registered variation sequences. Software that does not understand TextProv usually shows the ordinary letters. Software that strips invisible characters can remove the labels, so test the path your text takes.</p>
+      </section>
+
       <section id="use" aria-labelledby="use-title">
         <h2 id="use-title">Use it</h2>
 
-        <h3>Reading marked text</h3>
-        <p>In a browser, no font required:</p>
-<pre><code>&lt;link rel="stylesheet" href="textprov.css"&gt;
-&lt;script src="textprov.js"&gt;&lt;/script&gt;
-&lt;script&gt;textprov.render(document.body);&lt;/script&gt;</code></pre>
-
-        <p>On a server:</p>
+        <h3>Python: mark a file and read it back</h3>
+        <p>Requires Python 3.9+. Run these commands in a terminal on macOS or Linux. They create an isolated environment, install TextProv from PyPI, and write a marked UTF-8 file.</p>
+<pre><code>python3 -m venv .venv
+.venv/bin/python -m pip install textprov
+printf 'Hello from TextProv.\n' &gt; draft.txt
+.venv/bin/python -m textprov -o marked.txt mark --ai draft.txt
+.venv/bin/python -m textprov inspect marked.txt</code></pre>
+        <p>The report identifies AI-marked text even if your editor shows no decoration. Open <code>marked.txt</code> and paste its contents into the reader above to see the label.</p>
+        <p>In Python code, marking and rendering are separate operations:</p>
 <pre><code>import textprov
-textprov.to_html("f\U000E0101oo")
-<span class="comment"># '&lt;span class="prov prov-ai" data-prov="ai"&gt;f\U000E0101&lt;/span&gt;oo'</span></code></pre>
 
-        <p>Both emit the same markup:</p>
-<pre><code>&lt;span class="prov prov-ai" data-prov="ai"&gt;TEXT&lt;/span&gt;</code></pre>
+marked = textprov.mark("Hello", state="ai")
+print(textprov.to_html(marked))
+print(textprov.strip_marks(marked))  <span class="comment"># Hello</span></code></pre>
+        <p><a href="https://github.com/textprov/textprov/blob/main/python/README.md">Python API and CLI reference →</a></p>
 
-        <p><code>data-prov</code> is the contract. The classes exist so CSS can show the state; the bundled stylesheet is one choice of style, not part of the protocol.</p>
+        <h3>JavaScript: display existing marks</h3>
+        <p>The npm package reads marks; it does not add them. Install it in your web project:</p>
+<pre><code>npm install textprov</code></pre>
+        <p>With a bundler that supports CSS imports, render a container after adding its text:</p>
+<pre><code>import textprov from "textprov";
+import "textprov/textprov.css";
 
-        <h3>Producing marked text</h3>
-        <p>Marking text needs the registry and nothing else — no font, no shaping engine, no build step. The reference producer ships in the Python package and its CLI:</p>
-<pre><code>python3 -m textprov -o marked.txt mark --ai draft.txt</code></pre>
+const preview = document.createElement("p");
+preview.textContent = "A\u{E0101}"; <span class="comment">// A followed by the AI mark</span>
+document.body.append(preview);
+textprov.render(preview);</code></pre>
+        <p>The result is an AI-labelled <code>A</code>, styled without a special font. The reader wraps marked text in HTML spans with a <code>data-prov</code> attribute. The bundled CSS is optional; applications can choose their own presentation.</p>
+        <p><a href="https://github.com/textprov/textprov/blob/main/js/README.md">JavaScript API and script-tag setup →</a></p>
+
+        <h3>Ruby: mark, read, and render</h3>
+        <p>The Ruby implementation provides the same core operations and a CLI. Requires Ruby 3.2+. To try the source without relying on a published gem:</p>
+<pre><code>git clone https://github.com/textprov/textprov.git
+cd textprov
+ruby -I ruby/lib -r textprov -e 'puts Textprov.to_html(Textprov.mark("Hello", state: "ai"))'</code></pre>
+        <p>This prints HTML containing an AI-labelled span. <a href="https://github.com/textprov/textprov/blob/main/ruby/README.md">Ruby API and CLI reference →</a></p>
+      </section>
+
+      <section id="fonts" aria-labelledby="fonts-title">
+        <h2 id="fonts-title">What about fonts?</h2>
+        <p>A provenance-aware font can draw the labels directly in compatible applications. It is an alternative to the browser styling above, not a requirement for adding or storing marks. Installing a font alone does not label any text.</p>
+        <p>There is no example font bundled with this site yet. For now, use the browser demo and its text download for a no-install trial. If you already have a matching P+ provenance font, the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md#try-both-encodings-in-an-editor">font guide includes sample files and an editor comparison</a>.</p>
+        <p class="note">Font display depends on the application's text-rendering engine. The project's tests found that HarfBuzz displayed the selector variants while macOS CoreText did not. Keep selector-encoded text for sharing; the guide's private-use (PUA) samples require a matching font and are for controlled local experiments.</p>
       </section>
 
       <section id="repo" aria-labelledby="repo-title">
-        <h2 id="repo-title">Repository layout</h2>
-<pre class="tree"><code>SPEC.md         the protocol
-mapping.json    the canonical code-point registry
-fixtures.json   the conformance suite; an implementation passes it or it is not TextProv
-js/             @textprov/decorator — browser DOM decorator and optional stylesheet
-python/         textprov — producer, decoder, HTML renderer, and CLI
-ruby/           textprov — producer, decoder, HTML renderer, and CLI
-docs/           goals, HTML rendering measurements, architecture decision records</code></pre>
-        <p><a href="./spec.html">Read the specification →</a> · <a href="https://github.com/textprov/textprov">Browse the repository ↗</a></p>
+        <h2 id="repo-title">Implement the protocol</h2>
+        <p>The project is early-stage; version 1 of the protocol is treated as stable. Start with the <a href="./spec.html">specification</a> for label meanings and encoding rules, the <a href="https://github.com/textprov/textprov/blob/main/mapping.json">code-point registry</a> for the assigned marks, and the <a href="https://github.com/textprov/textprov/blob/main/fixtures.json">conformance fixtures</a> to check your implementation.</p>
+        <p><a href="https://github.com/textprov/textprov">Browse the repository ↗</a> · <a href="https://github.com/textprov/textprov/issues">Report an issue</a></p>
       </section>
     </main>
 
