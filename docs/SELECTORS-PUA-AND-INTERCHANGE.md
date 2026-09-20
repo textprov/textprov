@@ -117,6 +117,8 @@ Open these UTF-8 files side by side in Zed, VS Code, or another editor:
   selector-encoded sample.
 - [`examples/provenance-pua.txt`](examples/provenance-pua.txt) contains the same
   sample encoded with registry version 1's PUA mappings.
+- [`examples/provenance-vs-and-pua.txt`](examples/provenance-vs-and-pua.txt)
+  places both encodings in one file for a direct comparison.
 
 Each file keeps its instructions as ordinary unmarked text. This provides a
 readable control and lets the PUA sample demonstrate its missing-font behavior
