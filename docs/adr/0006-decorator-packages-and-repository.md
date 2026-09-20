@@ -36,8 +36,8 @@ easy to confuse with the W3C standard.
 | --- | --- |
 | Protocol and specification | TextProv, `SPEC.md` |
 | GitHub organisation and repository | `textprov/textprov` |
-| JavaScript package | `@textprov/decorator` |
-| Python package and import | `textprov` |
+| JavaScript package (npm) | `textprov` (browser decoder + CSS) |
+| Python package and import (PyPI) | `textprov` (producer, decoder, CLI) |
 | Ruby gem (not yet published) | `textprov` |
 | CSS class prefix and data attribute | `prov`, `data-prov` |
 
@@ -105,8 +105,12 @@ reassigned or removed.
 
 ## Remaining work
 
-1. Publish `@textprov/decorator`. The DOM decorator and stylesheet are here; a
-   rehype plugin and a markdown-it plugin are not written.
+1. Publish `textprov` on npm. The DOM decorator and stylesheet are here; a
+   rehype plugin and a markdown-it plugin are not written. The npm name is
+   deliberately identical to the PyPI package name, even though the two ship
+   different surface areas: taking the unscoped name on both registries closes
+   off squatting and keeps the discovery story simple ("install textprov").
+   The npm README states the ship-list difference in its opening line.
 2. Wait for one breakage report and add its case to `fixtures.json` before
    starting another port.
 3. Publish `textprov` on PyPI.

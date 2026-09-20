@@ -1,6 +1,8 @@
-# @textprov/decorator
+# textprov
 
 Client-side decorator for the [TextProv](https://github.com/textprov/textprov) protocol. Turns in-band provenance marks (Unicode variation selectors and a PUA block) into HTML `<span>` elements with a class and a `data-prov` attribute — so provenance is visible without installing any font.
+
+The Python package of the same name (`pip install textprov`) is the full SDK — producer, decoder, and CLI. This npm package ships the browser decoder only.
 
 - ~6 KB, no dependencies, browser-first (IIFE + `window.textprov`), also usable from Node (CJS) and via ESM default import.
 - Implements contract version 1 and mapping version 1 (see [SPEC.md](https://github.com/textprov/textprov/blob/main/SPEC.md) and [mapping.json](https://github.com/textprov/textprov/blob/main/mapping.json)).
@@ -11,7 +13,7 @@ States: `human`, `ai`, `mixed`, `edited`, `unknown`.
 ## Install
 
 ```sh
-npm install @textprov/decorator
+npm install textprov
 ```
 
 ## Usage
@@ -19,8 +21,8 @@ npm install @textprov/decorator
 ### Browser (script tag)
 
 ```html
-<link rel="stylesheet" href="node_modules/@textprov/decorator/textprov.css" />
-<script src="node_modules/@textprov/decorator/textprov.js"></script>
+<link rel="stylesheet" href="node_modules/textprov/textprov.css" />
+<script src="node_modules/textprov/textprov.js"></script>
 <script>
   textprov.render(document.body);
 </script>
@@ -29,7 +31,7 @@ npm install @textprov/decorator
 ### Node (CommonJS)
 
 ```js
-const textprov = require("@textprov/decorator");
+const textprov = require("textprov");
 
 textprov.runs("Hello\u{E0101} world\u{E0100}");
 // [
@@ -42,7 +44,7 @@ textprov.runs("Hello\u{E0101} world\u{E0100}");
 ### ESM
 
 ```js
-import textprov from "@textprov/decorator";
+import textprov from "textprov";
 
 textprov.render(document.body, { strip: true, prefix: "prov" });
 ```
@@ -76,7 +78,7 @@ With `strip: true` the selector is removed from the span text; the class and `da
 `textprov.css` is optional and not part of the decorator contract. It ships CSS custom properties on `:root` (with a `prefers-color-scheme: dark` override) and never affects layout — only `background` and `text-decoration` are set.
 
 ```html
-<link rel="stylesheet" href="node_modules/@textprov/decorator/textprov.css" />
+<link rel="stylesheet" href="node_modules/textprov/textprov.css" />
 ```
 
 ## Links
