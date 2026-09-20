@@ -12,9 +12,10 @@ Gem::Specification.new do |spec|
   spec.homepage    = "https://github.com/textprov/textprov"
 
   spec.metadata = {
-    "source_code_uri"    => "https://github.com/textprov/textprov",
-    "specification_uri"  => "https://github.com/textprov/textprov/blob/main/SPEC.md",
-    "bug_tracker_uri"    => "https://github.com/textprov/textprov/issues"
+    "source_code_uri" => "https://github.com/textprov/textprov",
+    "specification_uri" => "https://github.com/textprov/textprov/blob/main/SPEC.md",
+    "bug_tracker_uri" => "https://github.com/textprov/textprov/issues",
+    "rubygems_mfa_required" => "true"
   }
 
   spec.required_ruby_version = ">= 3.2"

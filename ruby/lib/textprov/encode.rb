@@ -48,7 +48,8 @@ module Textprov
       pre += 1
     end
     suf = 0
-    while suf < [old_chars.length, new_chars.length].min - pre && old_chars[-1 - suf] == new_chars[-1 - suf]
+    while suf < [old_chars.length,
+                 new_chars.length].min - pre && old_chars[-1 - suf] == new_chars[-1 - suf]
       suf += 1
     end
     endi = new_chars.length - suf
@@ -142,7 +143,7 @@ module Textprov
     puas = unrecognised_pua.uniq.sort.map { |cp| format("U+%04X", cp) }.join(" ")
     lines << "unrecognised_selectors: #{sels.empty? ? "-" : sels}"
     lines << "unrecognised_pua: #{puas.empty? ? "-" : puas}"
-    lines.join("\n") + "\n"
+    "#{lines.join("\n")}\n"
   end
 
   def mark(text, state: "ai", mode: "vs", mapping: nil)

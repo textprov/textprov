@@ -2,7 +2,6 @@
 
 require "cgi"
 require "json"
-require "set"
 
 module Textprov
   CONTRACT_VERSION = 1
@@ -14,12 +13,12 @@ module Textprov
   ZWJ  = 0x200D
   VS15 = 0xFE0E
   VS16 = 0xFE0F
-  SKIN_TONES = (0x1F3FB..0x1F3FF).freeze
-  REGIONAL   = (0x1F1E6..0x1F1FF).freeze
+  SKIN_TONES = (0x1F3FB..0x1F3FF)
+  REGIONAL   = (0x1F1E6..0x1F1FF)
 
   # Categories Mn/Mc/Me: extracted from Unicode data. Ruby's regexp \p{Mn} etc.
   # covers this; using a regex avoids shipping our own category table.
-  COMBINING_RE = /[\p{Mn}\p{Mc}\p{Me}]/.freeze
+  COMBINING_RE = /[\p{Mn}\p{Mc}\p{Me}]/
 
   module_function
 
@@ -69,7 +68,9 @@ module Textprov
     def self.load(path = MAPPING_PATH)
       raw = JSON.parse(File.read(path, encoding: "UTF-8"))
       selectors = {}
-      raw["variation_selectors"].each { |name, value| selectors[name] = Integer(value.sub(/^U\+/, ""), 16) }
+      raw["variation_selectors"].each do |name, value|
+        selectors[name] = Integer(value.sub(/^U\+/, ""), 16)
+      end
       pua2base = {}
       base2pua = {}
       raw["pua"].each do |pua_string, entry|
@@ -163,9 +164,11 @@ module Textprov
     merged.map { |state, out| [state, out] }
   end
 
-  def _to_html(text, selectors, pua2base, strip: false, merge_whitespace: true, class_prefix: "prov")
+  def _to_html(text, selectors, pua2base, strip: false, merge_whitespace: true,
+               class_prefix: "prov")
     parts = []
-    _runs(text, selectors, pua2base, strip: strip, merge_whitespace: merge_whitespace).each do |state, out|
+    _runs(text, selectors, pua2base, strip: strip,
+                                     merge_whitespace: merge_whitespace).each do |state, out|
       escaped = CGI.escapeHTML(out)
       if state
         parts << %(<span class="#{class_prefix} #{class_prefix}-#{state}" data-prov="#{state}">#{escaped}</span>)
@@ -179,15 +182,25 @@ module Textprov
   # Public API accepts either merge_whitespace (contract spelling) or
   # mergeWhitespace (camelCase alias per SPEC's cross-language rule).
   def runs(text, mapping: nil, strip: false, merge_whitespace: nil, mergeWhitespace: nil)
-    mw = merge_whitespace.nil? ? (mergeWhitespace.nil? ? true : mergeWhitespace) : merge_whitespace
+    mw = if merge_whitespace.nil?
+           mergeWhitespace.nil? || mergeWhitespace
+         else
+           merge_whitespace
+         end
     m = mapping || default_mapping
     _runs(text, m.selectors, m.pua2base, strip: strip, merge_whitespace: mw)
   end
 
-  def to_html(text, mapping: nil, strip: false, merge_whitespace: nil, mergeWhitespace: nil, class_prefix: "prov")
-    mw = merge_whitespace.nil? ? (mergeWhitespace.nil? ? true : mergeWhitespace) : merge_whitespace
+  def to_html(text, mapping: nil, strip: false, merge_whitespace: nil, mergeWhitespace: nil,
+              class_prefix: "prov")
+    mw = if merge_whitespace.nil?
+           mergeWhitespace.nil? || mergeWhitespace
+         else
+           merge_whitespace
+         end
     m = mapping || default_mapping
-    _to_html(text, m.selectors, m.pua2base, strip: strip, merge_whitespace: mw, class_prefix: class_prefix)
+    _to_html(text, m.selectors, m.pua2base, strip: strip, merge_whitespace: mw,
+                                            class_prefix: class_prefix)
   end
 
   def strip_marks(text, mapping: nil)
@@ -195,4 +208,3 @@ module Textprov
     _strip(text, m.selectors, m.pua2base)
   end
 end
-

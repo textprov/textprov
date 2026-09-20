@@ -12,6 +12,7 @@ class TestProducerFixtures < Minitest::Test
     FIXTURES["producer_cases"].each do |c|
       opts = c["options"]
       got = Textprov.mark(c["input"], state: opts["state"], mode: opts["mode"])
+
       assert_equal c["output"], got, "producer_case #{c["name"].inspect}"
     end
   end
@@ -20,6 +21,7 @@ class TestProducerFixtures < Minitest::Test
     FIXTURES["convert_cases"].each do |c|
       opts = c["options"]
       got = Textprov.convert(c["input"], opts["from"], opts["to"])
+
       assert_equal c["output"], got, "convert_case #{c["name"].inspect}"
     end
   end
@@ -30,6 +32,7 @@ class TestProducerProperties < Minitest::Test
     %w[vs pua].each do |mode|
       Textprov::GENERATED_STATES.each do |state|
         marked = Textprov.mark(SOURCE, state: state, mode: mode)
+
         assert_equal SOURCE, Textprov.strip_marks(marked), "state=#{state} mode=#{mode}"
       end
     end
@@ -38,34 +41,40 @@ class TestProducerProperties < Minitest::Test
   def test_mark_is_idempotent
     %w[vs pua].each do |mode|
       once = Textprov.mark(SOURCE, state: "ai", mode: mode)
+
       assert_equal once, Textprov.mark(once, state: "ai", mode: mode), "mode=#{mode}"
     end
   end
 
   def test_mark_does_not_touch_the_other_encoding
     pua = Textprov.mark(SOURCE, state: "ai", mode: "pua")
+
     assert_equal pua, Textprov.mark(pua, state: "ai", mode: "vs")
   end
 
   def test_pua_mode_equals_mark_then_convert
     vs = Textprov.mark(SOURCE, state: "ai", mode: "vs")
+
     assert_equal Textprov.convert(vs, "vs", "pua"), Textprov.mark(SOURCE, state: "ai", mode: "pua")
   end
 
   def test_convert_round_trips
     vs  = Textprov.mark(SOURCE, state: "ai", mode: "vs")
     pua = Textprov.convert(vs, "vs", "pua")
+
     refute_equal vs, pua
     assert_equal vs, Textprov.convert(pua, "pua", "vs")
   end
 
   def test_convert_passes_other_states_through
     marked = Textprov.mark(SOURCE, state: "human", mode: "vs")
+
     assert_equal marked, Textprov.convert(marked, "vs", "pua")
   end
 
   def test_convert_is_a_no_op_between_equal_modes
     marked = Textprov.mark(SOURCE, state: "ai", mode: "vs")
+
     assert_equal marked, Textprov.convert(marked, "vs", "vs")
   end
 
@@ -77,13 +86,15 @@ class TestProducerProperties < Minitest::Test
       next unless char.match?(/\s/)
 
       after = chars[i + 1]
+
       refute (after && sel_cps.include?(after.ord)), "whitespace at #{i} was marked"
     end
   end
 
   def test_one_mark_per_cluster
     [FLAG, FAMILY, TONE, HEART, "é"].each do |cluster|
-      assert_equal cluster + AI, Textprov.mark(cluster, state: "ai", mode: "vs"), "cluster=#{cluster.inspect}"
+      assert_equal cluster + AI, Textprov.mark(cluster, state: "ai", mode: "vs"),
+                   "cluster=#{cluster.inspect}"
       assert_equal cluster + AI, Textprov.mark(cluster, state: "ai", mode: "pua"),
                    "multi-code-point cluster has no PUA counterpart: #{cluster.inspect}"
       assert_equal cluster, Textprov.strip_marks(Textprov.mark(cluster, state: "ai", mode: "vs"))
@@ -95,6 +106,7 @@ class TestProducerProperties < Minitest::Test
       %w[vs pua].each do |mode|
         marked = Textprov.mark("Hi there", state: state, mode: mode)
         got = Textprov.runs(marked)
+
         assert_equal [state], got.map { |r| r[0] }, "state=#{state} mode=#{mode}"
       end
     end
@@ -123,12 +135,14 @@ end
 class TestInspect < Minitest::Test
   def test_report_counts_states
     report = Textprov.inspect_text(Textprov.mark(SOURCE, state: "ai", mode: "vs"))
+
     assert_includes report, "ai_vs: 30"
     assert_includes report, "unmarked: 0"
   end
 
   def test_report_counts_unmarked_text
     report = Textprov.inspect_text("abc")
+
     assert_includes report, "unmarked: 3"
     assert_includes report, "ai_vs: 0"
     assert_includes report, "human: 0"

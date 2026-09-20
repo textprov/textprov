@@ -7,6 +7,7 @@ class TestVendoredRegistry < Minitest::Test
   def test_vendored_copy_matches_canonical
     vendored  = File.binread(Textprov::MAPPING_PATH)
     canonical = File.binread(REGISTRY_PATH)
+
     assert_equal canonical, vendored
   end
 
@@ -34,6 +35,7 @@ class TestFixtures < Minitest::Test
       kwargs[:merge_whitespace] = options["merge_whitespace"] if options.key?("merge_whitespace")
       got = Textprov.runs(c["input"], **kwargs)
       want = c["runs"].map { |r| [r["state"], r["text"]] }
+
       assert_equal want, got, "case #{c["name"].inspect}"
     end
   end
@@ -87,8 +89,8 @@ class TestClusterEnd < Minitest::Test
 end
 
 class TestToHtml < Minitest::Test
-  def render(text, **options)
-    Textprov.to_html(text, **options)
+  def render(text, **)
+    Textprov.to_html(text, **)
   end
 
   def test_empty_and_plain
@@ -114,6 +116,7 @@ class TestToHtml < Minitest::Test
 
   def test_class_prefix
     out = render("a" + AI, class_prefix: "x")
+
     assert_equal span("ai", "a" + AI, prefix: "x"), out
     assert_includes out, 'data-prov="ai"'
   end
@@ -139,9 +142,11 @@ class TestToHtml < Minitest::Test
 
   def test_pua_input
     pua_cp, (pua_base, pua_state) = PUA2BASE.find { |_, entry| entry[1] == "ai" }
+
     assert_equal "ai", pua_state
     assert_equal span("ai", pua_base.chr(Encoding::UTF_8) + AI), render(pua_cp.chr(Encoding::UTF_8))
-    assert_equal span("ai", pua_base.chr(Encoding::UTF_8)), render(pua_cp.chr(Encoding::UTF_8), strip: true)
+    assert_equal span("ai", pua_base.chr(Encoding::UTF_8)),
+                 render(pua_cp.chr(Encoding::UTF_8), strip: true)
   end
 
   def test_span_text_reproduces_the_input
@@ -151,13 +156,15 @@ class TestToHtml < Minitest::Test
       open_tag = tag.sub("</span>", "")
       rendered = rendered.sub(open_tag, "") while rendered.include?(open_tag)
     end
+
     assert_equal source, CGI.unescapeHTML(rendered.gsub("</span>", ""))
   end
 end
 
 class TestStripMarks < Minitest::Test
   def test_selectors_and_pua_are_removed
-    pua_cp, (pua_base, _) = PUA2BASE.first
+    pua_cp, (pua_base,) = PUA2BASE.first
+
     assert_equal "ab", Textprov.strip_marks("a" + AI + "b" + HUMAN)
     assert_equal pua_base.chr(Encoding::UTF_8), Textprov.strip_marks(pua_cp.chr(Encoding::UTF_8))
   end
@@ -166,11 +173,13 @@ end
 class TestExplicitMapping < Minitest::Test
   def test_mapping_argument
     mapping = Textprov::Mapping.load(REGISTRY_PATH)
+
     assert_equal MAPPING.version, mapping.version
     assert_equal Textprov.runs("a" + AI), Textprov.runs("a" + AI, mapping: mapping)
     assert_equal(
       Textprov.runs("a" + AI),
-      Textprov._runs("a" + AI, mapping.selectors, mapping.pua2base, strip: false, merge_whitespace: true)
+      Textprov._runs("a" + AI, mapping.selectors, mapping.pua2base, strip: false,
+                                                                    merge_whitespace: true)
     )
     assert_equal(
       Textprov.to_html("a" + AI),

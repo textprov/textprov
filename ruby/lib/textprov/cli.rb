@@ -60,7 +60,9 @@ module Textprov
           opts[:state] = argv[i].sub(/^--/, "")
         when "--mode"
           opts[:mode] = argv[i + 1]
-          raise ArgumentError, "invalid --mode #{opts[:mode].inspect}" unless %w[vs pua].include?(opts[:mode])
+          raise ArgumentError, "invalid --mode #{opts[:mode].inspect}" unless %w[vs
+                                                                                 pua].include?(opts[:mode])
+
           i += 1
         else
           rest << argv[i]
@@ -119,8 +121,10 @@ module Textprov
           i = 0
           while i < argv.length
             case argv[i]
-            when "--from" then from_mode = argv[i + 1]; i += 1
-            when "--to"   then to_mode   = argv[i + 1]; i += 1
+            when "--from" then from_mode = argv[i + 1]
+                               i += 1
+            when "--to" then to_mode = argv[i + 1]
+                             i += 1
             else rest << argv[i]
             end
             i += 1
@@ -143,7 +147,8 @@ module Textprov
             case argv[i]
             when "--strip" then strip = true
             when "--no-merge-whitespace" then merge_ws = false
-            when "--class-prefix" then class_prefix = argv[i + 1]; i += 1
+            when "--class-prefix" then class_prefix = argv[i + 1]
+                                       i += 1
             else rest << argv[i]
             end
             i += 1
@@ -157,15 +162,15 @@ module Textprov
 
           Textprov.inspect_text(read_input(argv[0]))
         else
-          $stderr.puts "unknown command: #{command}"
-          $stderr.puts usage
+          warn "unknown command: #{command}"
+          warn usage
           return 2
         end
 
       write_output(out, output)
       0
     rescue ArgumentError => e
-      $stderr.puts "#{PROG}: #{e.message}"
+      warn "#{PROG}: #{e.message}"
       2
     end
   end

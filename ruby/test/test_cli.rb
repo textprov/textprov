@@ -23,6 +23,7 @@ class TestCli < Minitest::Test
 
   def run_cli(*argv)
     out = File.join(@dir, "out.txt")
+
     assert_equal 0, Textprov::CLI.main(["-o", out, *argv])
     File.binread(out).force_encoding("UTF-8")
   end
@@ -31,26 +32,32 @@ class TestCli < Minitest::Test
     source = "Written by a human."
     path = write("s.txt", source)
     marked = run_cli("mark", path)
+
     assert_equal Textprov.mark(source), marked
     pua = run_cli("convert", write("m.txt", marked), "--from", "vs", "--to", "pua")
+
     assert_equal Textprov.convert(marked, "vs", "pua"), pua
     assert_equal source, run_cli("strip", write("p.txt", pua))
   end
 
   def test_mark_state_and_mode_flags
     path = write("s.txt", "Hi")
+
     assert_equal Textprov.mark("Hi", state: "human"), run_cli("mark", "--human", path)
-    assert_equal Textprov.mark("Hi", state: "ai", mode: "pua"), run_cli("mark", "--mode", "pua", path)
+    assert_equal Textprov.mark("Hi", state: "ai", mode: "pua"),
+                 run_cli("mark", "--mode", "pua", path)
   end
 
   def test_mark_added
     old = write("old.txt", "abc")
     new = write("new.txt", "abXc")
+
     assert_equal "abX" + AI + "c", run_cli("mark-added", old, new)
   end
 
   def test_render_and_inspect
     path = write("m.txt", "a" + AI)
+
     assert_equal Textprov.to_html("a" + AI), run_cli("render", path)
     assert_includes run_cli("render", "--class-prefix", "x", path), 'class="x x-ai"'
     assert_includes run_cli("inspect", path), "ai_vs: 1"
@@ -68,11 +75,13 @@ class TestCli < Minitest::Test
     ensure
       $stdout = original
     end
+
     assert_equal Textprov.mark("Hi") * 2, buffer.string.force_encoding("UTF-8")
   end
 
   def test_crlf_survives
     path = write("s.txt", "a\r\nb")
+
     assert_equal "a" + AI + "\r\nb" + AI, run_cli("mark", path)
   end
 
@@ -85,7 +94,7 @@ class TestCli < Minitest::Test
     ensure
       $stdout = original
     end
+
     assert_match(/\Atextprov \d+\.\d+\.\d+ \(contract 1, mapping 1\)/, buffer.string)
   end
 end
-
