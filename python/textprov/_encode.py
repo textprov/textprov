@@ -1,3 +1,5 @@
+# python/textprov/_encode.py
+
 """Producer and diagnostics: add marks to text, change encoding, report states.
 
 A producer is pure text processing. It needs the registry and nothing else: no
@@ -60,14 +62,21 @@ def _mark_added(old_text, new_text, state, mode, selectors, pua2base, base2pua):
     if not old_text:
         return _mark(new_text, state, mode, selectors, pua2base, base2pua)
     pre = 0
-    while pre < min(len(old_text), len(new_text)) and old_text[pre] == new_text[pre]:
+    while (
+        pre < min(len(old_text), len(new_text))
+        and old_text[pre] == new_text[pre]
+    ):
         pre += 1
     suf = 0
-    while (suf < min(len(old_text), len(new_text)) - pre
-           and old_text[-1 - suf] == new_text[-1 - suf]):
+    while (
+        suf < min(len(old_text), len(new_text)) - pre
+        and old_text[-1 - suf] == new_text[-1 - suf]
+    ):
         suf += 1
     end = len(new_text) - suf
-    middle_marked = _mark(new_text[pre:end], state, mode, selectors, pua2base, base2pua)
+    middle_marked = _mark(
+        new_text[pre:end], state, mode, selectors, pua2base, base2pua
+    )
     return new_text[:pre] + middle_marked + new_text[end:]
 
 
@@ -109,8 +118,8 @@ def _inspect(text, selectors, pua2base):
     sel2name = {cp: name for name, cp in selectors.items()}
     counts = dict.fromkeys(
         (
-            "assumed_human",
-            "explicit_human",
+            "unmarked",
+            "human",
             "ai_vs",
             "ai_pua",
             "unknown",
@@ -150,19 +159,15 @@ def _inspect(text, selectors, pua2base):
             name = sel2name[ord(chars[index])]
             index += 1
             counts[
-                "explicit_human"
-                if name == "human"
-                else "ai_vs"
-                if name == "ai"
-                else name
+                "ai_vs" if name == "ai" else name
             ] += 1
         else:
-            counts["assumed_human"] += 1
+            counts["unmarked"] += 1
 
     lines = [f"characters: {len(chars)}"]
     for key in (
-        "assumed_human",
-        "explicit_human",
+        "unmarked",
+        "human",
         "ai_vs",
         "ai_pua",
         "unknown",
@@ -223,7 +228,12 @@ def convert(text, from_mode, to_mode, mapping=None):
     """
     mapping = mapping or default_mapping()
     return _convert(
-        text, from_mode, to_mode, mapping.selectors, mapping.pua2base, mapping.base2pua
+        text,
+        from_mode,
+        to_mode,
+        mapping.selectors,
+        mapping.pua2base,
+        mapping.base2pua,
     )
 
 

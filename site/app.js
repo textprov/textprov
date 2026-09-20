@@ -6,7 +6,7 @@ import "../js/textprov.js";
   var selectors = {
     human: String.fromCodePoint(0xE0100),
     ai: String.fromCodePoint(0xE0101),
-    unknown: String.fromCodePoint(0xE0102)
+    mixed: String.fromCodePoint(0xE0102)
   };
   var segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
   var markedText = "";
@@ -23,7 +23,7 @@ import "../js/textprov.js";
     var parts = [
       ["A sentence ", "human"],
       ["can carry its history ", "ai"],
-      ["without changing what it says.", "unknown"]
+      ["without changing what it says.", "mixed"]
     ];
     node.textContent = parts.map(function (part) { return mark(part[0], part[1]); }).join("");
     textprov.render(node);

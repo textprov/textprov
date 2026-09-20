@@ -5,6 +5,15 @@ on:
   pull_request:
 
 jobs:
+  license-drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: LICENSE copies match the root
+        run: |
+          diff -q LICENSE python/LICENSE
+          diff -q LICENSE js/LICENSE
+
   javascript:
     runs-on: ubuntu-latest
     steps:

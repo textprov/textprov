@@ -1,3 +1,5 @@
+# python/tests/test_producer.py
+
 """Producer tests: the fixture's producer cases, plus the properties behind them.
 
 A producer is pure text processing, so it is testable the same way a decoder
@@ -28,7 +30,8 @@ class TestProducerFixtures(unittest.TestCase):
         for case in FIXTURES["producer_cases"]:
             with self.subTest(case["name"]):
                 self.assertEqual(
-                    textprov.mark(case["input"], **case["options"]), case["output"]
+                    textprov.mark(case["input"], **case["options"]),
+                    case["output"],
                 )
 
     def test_convert_cases(self):
@@ -36,7 +39,9 @@ class TestProducerFixtures(unittest.TestCase):
             with self.subTest(case["name"]):
                 options = case["options"]
                 self.assertEqual(
-                    textprov.convert(case["input"], options["from"], options["to"]),
+                    textprov.convert(
+                        case["input"], options["from"], options["to"]
+                    ),
                     case["output"],
                 )
 
@@ -63,7 +68,10 @@ class TestProducerProperties(unittest.TestCase):
 
     def test_pua_mode_equals_mark_then_convert(self):
         vs = textprov.mark(SOURCE, "ai", "vs")
-        self.assertEqual(textprov.mark(SOURCE, "ai", "pua"), textprov.convert(vs, "vs", "pua"))
+        self.assertEqual(
+            textprov.mark(SOURCE, "ai", "pua"),
+            textprov.convert(vs, "vs", "pua"),
+        )
 
     def test_convert_round_trips(self):
         vs = textprov.mark(SOURCE, "ai", "vs")
@@ -94,14 +102,17 @@ class TestProducerProperties(unittest.TestCase):
     def test_one_mark_per_cluster(self):
         for cluster in (FLAG, FAMILY, TONE, HEART, "é"):
             with self.subTest(cluster=cluster):
-                self.assertEqual(textprov.mark(cluster, "ai", "vs"), cluster + AI)
+                self.assertEqual(
+                    textprov.mark(cluster, "ai", "vs"), cluster + AI
+                )
                 self.assertEqual(
                     textprov.mark(cluster, "ai", "pua"),
                     cluster + AI,
                     "a multi-code-point cluster has no PUA counterpart",
                 )
                 self.assertEqual(
-                    textprov.strip_marks(textprov.mark(cluster, "ai", "vs")), cluster
+                    textprov.strip_marks(textprov.mark(cluster, "ai", "vs")),
+                    cluster,
                 )
 
     def test_marked_text_decodes_to_the_state_it_was_marked_with(self):
@@ -111,7 +122,8 @@ class TestProducerProperties(unittest.TestCase):
                 with self.subTest(state=state, mode=mode):
                     marked = textprov.mark("Hi there", state, mode)
                     self.assertEqual(
-                        textprov.runs(marked), [(state, textprov.runs(marked)[0][1])]
+                        textprov.runs(marked),
+                        [(state, textprov.runs(marked)[0][1])],
                     )
                     self.assertEqual(
                         [run[0] for run in textprov.runs(marked)], [state]
@@ -120,7 +132,9 @@ class TestProducerProperties(unittest.TestCase):
 
 class TestMarkAdded(unittest.TestCase):
     def test_marks_only_the_middle(self):
-        self.assertEqual(textprov.mark_added("abc", "abXYc"), "abX" + AI + "Y" + AI + "c")
+        self.assertEqual(
+            textprov.mark_added("abc", "abXYc"), "abX" + AI + "Y" + AI + "c"
+        )
 
     def test_empty_old_text_marks_everything(self):
         self.assertEqual(
@@ -134,16 +148,19 @@ class TestMarkAdded(unittest.TestCase):
         self.assertEqual(
             textprov.mark_added("ab", "abX", "human"), "abX" + HUMAN
         )
-        self.assertEqual(textprov.mark_added("ab", "abX", "ai", "pua"), "ab\U00100058")
+        self.assertEqual(
+            textprov.mark_added("ab", "abX", "ai", "pua"), "ab\U00100058"
+        )
 
 
 class TestInspect(unittest.TestCase):
     def test_report_counts_states(self):
         report = textprov.inspect(textprov.mark(SOURCE, "ai", "vs"))
         self.assertIn("ai_vs: 30", report)
-        self.assertIn("assumed_human: 0", report)
+        self.assertIn("unmarked: 0", report)
 
     def test_report_counts_unmarked_text(self):
         report = textprov.inspect("abc")
-        self.assertIn("assumed_human: 3", report)
+        self.assertIn("unmarked: 3", report)
         self.assertIn("ai_vs: 0", report)
+        self.assertIn("human: 0", report)
