@@ -52,7 +52,7 @@ shaping engine, no build step — so the reference producer ships in the Python
 package and its CLI:
 
 ```sh
-python3 -m textprov mark --ai draft.txt -o marked.txt   # or: textprov mark ...
+python3 -m textprov -o marked.txt mark --ai draft.txt   # or: textprov -o marked.txt mark ...
 python3 -m textprov mark-added old.txt new.txt          # mark only what changed
 python3 -m textprov convert --from vs --to pua marked.txt
 python3 -m textprov inspect marked.txt

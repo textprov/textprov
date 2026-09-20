@@ -28,7 +28,7 @@ registry other than the copy vendored in this package.
 ## CLI
 
 ```sh
-python3 -m textprov mark --ai draft.txt -o marked.txt
+python3 -m textprov -o marked.txt mark --ai draft.txt
 python3 -m textprov mark-added old.txt new.txt
 python3 -m textprov convert --from vs --to pua marked.txt
 python3 -m textprov strip marked.txt
