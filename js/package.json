@@ -1,7 +1,7 @@
 {
   "name": "textprov",
   "version": "0.1.0",
-  "description": "Render in-band text provenance marks as HTML spans. No font required.",
+  "description": "Label AI output down to the character, directly in ordinary Unicode text.",
   "keywords": [
     "provenance",
     "attribution",

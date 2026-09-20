@@ -5,9 +5,10 @@ require_relative "lib/textprov/version"
 Gem::Specification.new do |spec|
   spec.name        = "textprov"
   spec.version     = Textprov::VERSION
-  spec.summary     = "Put provenance marks in text, and read them back out"
-  spec.description = "Ruby reference implementation of the TextProv protocol: " \
-                     "encode, decode, convert, and render provenance-marked text."
+  spec.summary     = "Label AI output down to the character, directly in ordinary Unicode text."
+  spec.description = "Ruby reference implementation of the TextProv protocol. " \
+                     "Encodes and decodes producer-declared origin labels in Unicode text; " \
+                     "does not detect or verify origin."
   spec.authors     = ["TextProv contributors"]
   spec.license     = "MIT"
   spec.homepage    = "https://github.com/textprov/textprov"

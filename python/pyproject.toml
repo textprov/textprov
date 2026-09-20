@@ -3,7 +3,7 @@
 [project]
 name = "textprov"
 version = "0.1.2"
-description = "Put provenance marks in text, and read them back out"
+description = "Label AI output down to the character, directly in ordinary Unicode text."
 readme = "README.md"
 requires-python = ">=3.9"
 license = "MIT"
