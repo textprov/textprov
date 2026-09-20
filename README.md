@@ -1,122 +1,84 @@
-# README.md
-
----
-
 # TextProv
 
-Text that carries its own provenance. A run of characters can say whether a
-person wrote it, a machine generated it, or its origin is unknown. The state
-travels in the text as Unicode code points, so it survives copy, paste, and
-plain-text storage.
+TextProv is a protocol that lets text carry labels about its origin:
+human-written, AI-generated, mixed, edited, or unknown. The labels are part of
+the text, rather than metadata kept in a separate file or tied to one application.
 
-This repository is the protocol: the specification, the canonical code-point
-registry, the conformance fixture, and reference implementations that put marks
-in text and read them back out.
+Visit [textprov.org](https://textprov.org) for an introduction. This repository
+holds the protocol specification, implementations, and website source together.
 
-```
-SPEC.md         the protocol
-mapping.json    the canonical code-point registry
-fixtures.json   the conformance suite; an implementation passes it or it is not TextProv
-js/             @textprov/decorator — browser DOM decorator and optional stylesheet
-python/         textprov — producer, decoder, HTML renderer, and CLI
-docs/           goals, HTML rendering measurements, architecture decision records
-```
+## How it works
 
-## Reading marked text
+An editor or content pipeline adds marks based on what it knows about the text.
+For example, an application could mark a paragraph returned by a model as
+AI-generated, while leaving the surrounding text unchanged.
 
-In a browser, no font required:
+The marks use Unicode characters and travel with the text through copy, paste,
+and plain-text storage, provided the receiving software preserves them. A
+TextProv-aware application can read those marks and make the labels visible.
+With the default encoding, other applications display the ordinary text without
+showing its provenance.
 
-```html
-<link rel="stylesheet" href="textprov.css">
-<script src="textprov.js"></script>
-<script>textprov.render(document.body);</script>
-```
+Adding marks and displaying them are separate tasks. You do not need a special
+font to mark text or show its provenance in a browser.
 
-On a server:
+## What the labels mean
+
+TextProv records a claim about origin; it does not establish that claim. The
+application or person adding a mark decides which label applies.
+
+- **It is not an AI detector.** It carries information supplied by an integration.
+- **It is not proof of authorship.** Anyone can add, remove, or change a mark.
+- **Unmarked does not mean human-written.** It means no label is present.
+
+The protocol gives applications a shared way to represent these labels, without
+requiring them to use the same tools or visual styles.
+
+## Using TextProv
+
+The reference implementations cover two common uses:
+
+- **[Python](python/README.md)** — add marks, read them back, or render marked
+  text as HTML. Includes a command-line interface for working with text files.
+- **[JavaScript](js/README.md)** — read existing marks and display them in a
+  browser, with an optional stylesheet.
+
+For example, the Python API can mark text and turn it into HTML:
 
 ```python
 import textprov
-textprov.to_html("f\U000E0101oo")
-# '<span class="prov prov-ai" data-prov="ai">f\U000E0101</span>oo'
+
+marked = textprov.mark("Hello", state="ai")
+html = textprov.to_html(marked)
 ```
 
-Both emit the same markup:
+This labels the text supplied to `mark()`; it does not analyze who wrote it.
 
-```html
-<span class="prov prov-ai" data-prov="ai">TEXT</span>
-```
+Marks can also be displayed with a patched font. The
+[font and interchange guide](docs/SELECTORS-PUA-AND-INTERCHANGE.md) explains that
+workflow and when to use it.
 
-`data-prov` is the contract. The classes exist so CSS can show the state; the
-bundled stylesheet is one choice of style, not part of the protocol.
+## Exploring the protocol
 
-## Producing marked text
+You do not need to work on the packages or website to use the protocol. If you
+are considering an integration or writing an implementation, start here:
 
-Also here. Marking text needs the registry and nothing else — no font, no
-shaping engine, no build step — so the reference producer ships in the Python
-package and its CLI:
+- [Specification](SPEC.md) — the labels, encodings, and rules for reading and
+  writing marked text.
+- [Code-point registry](mapping.json) — the characters assigned to those labels.
+- [Conformance fixtures](fixtures.json) — shared examples with expected results
+  for checking implementations.
+- [Architecture decisions](docs/adr) — the reasoning behind the design and
+  questions still under discussion.
 
-```sh
-python3 -m textprov -o marked.txt mark --ai draft.txt   # or: textprov -o marked.txt mark ...
-python3 -m textprov mark-added old.txt new.txt          # mark only what changed
-python3 -m textprov convert --from vs --to pua marked.txt
-python3 -m textprov inspect marked.txt
-```
-
-```python
-textprov.mark("Hi", state="ai")        # 'H\U000E0101i\U000E0101'
-textprov.mark_added("abc", "abXc")     # mark what an edit added
-textprov.convert(marked, "vs", "pua")  # change encoding, same states
-```
-
-`fixtures.json` carries `producer_cases` and `convert_cases` beside the decoder
-cases, so a producer either conforms or it does not; `SPEC.md` states the four
-properties those cases exist to pin down. The JavaScript package reads marks
-only.
-
-What a producer does *not* decide here is which state applies to which text.
-That belongs to the integration: an editor that knows who typed, a pipeline
-that knows a model wrote a paragraph, or a person running the CLI.
-
-Showing marks in a *font* is a different job with a different toolchain, and it
-is a renderer, not a producer: that is the `--provenance` option of a
-[Nerd Fonts fork](https://github.com/delano/nerd-fonts), which patches a font
-with provenance variants of its own glyphs. See [Why TextProv publishes
-selectors instead of PUA text](docs/SELECTORS-PUA-AND-INTERCHANGE.md) for the
-interchange trade-off, including Nerd Fonts and Zed on macOS.
-
-## Website
-
-Preview the site locally with Vite:
-
-```sh
-cd site
-npm ci
-npm run dev
-```
-
-`npm run build` produces the GitHub Pages artifact in `site/dist`.
-
-## Conformance
-
-```sh
-cd js && node check_fixtures.mjs
-cd python && python3 -m unittest discover -s tests -t .
-```
-
-Each runner checks every case in `fixtures.json`, checks the contract and
-registry versions it implements, and checks the registry tables it embeds
-against `mapping.json`. The Python suite also runs the producer cases and the
-properties behind them. An implementation in a new language is conforming when
-it reproduces every recorded result for the roles it implements; add fixtures
-rather than reading either reference implementation as the definition.
+Package usage and test instructions live in the implementation guides linked
+above. Website development instructions are in [`site/`](site/README.md).
 
 ## Status
 
-Early. The protocol is at contract version 1 and the registry at version 1.
-Neither package is published yet; both reference implementations pass the
-fixture. Open questions and the shape of what comes next are in
-[docs/adr](docs/adr). The two encodings, the run algorithm, and the span markup
-are settled and should be treated as stable.
+The project is early-stage. Neither package is published yet; the reference
+implementations are available in this repository. The version 1 protocol is
+treated as stable.
 
 ## Acknowledgements
 
