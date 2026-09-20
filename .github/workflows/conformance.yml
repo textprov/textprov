@@ -14,11 +14,6 @@ jobs:
           node-version: 20
       - run: node check_fixtures.mjs
         working-directory: js
-      - name: Verify site assets match the browser package
-        run: |
-          cmp textprov.js ../site/assets/textprov.js
-          cmp textprov.css ../site/assets/textprov.css
-        working-directory: js
 
   python:
     runs-on: ubuntu-latest

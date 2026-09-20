@@ -1,3 +1,5 @@
+import "../js/textprov.js";
+
 (function () {
   "use strict";
 

@@ -29,20 +29,28 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install site dependencies
+        run: npm ci
+        working-directory: site
+
+      - name: Build site
+        run: npm run build
+        working-directory: site
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
-
-      - name: Assemble site
-        run: |
-          mkdir -p _site/assets
-          cp -R site/. _site/
-          cp js/textprov.js js/textprov.css _site/assets/
-          touch _site/.nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: site/dist
 
       - name: Deploy to GitHub Pages
         id: deployment
