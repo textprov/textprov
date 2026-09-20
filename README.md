@@ -76,7 +76,9 @@ that knows a model wrote a paragraph, or a person running the CLI.
 Showing marks in a *font* is a different job with a different toolchain, and it
 is a renderer, not a producer: that is the `--provenance` option of a
 [Nerd Fonts fork](https://github.com/delano/nerd-fonts), which patches a font
-with provenance variants of its own glyphs.
+with provenance variants of its own glyphs. See [Why TextProv publishes
+selectors instead of PUA text](docs/SELECTORS-PUA-AND-INTERCHANGE.md) for the
+interchange trade-off, including Nerd Fonts and Zed on macOS.
 
 ## Conformance
 
