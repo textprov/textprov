@@ -17,7 +17,7 @@ separate job and needs a font toolchain; that producer-side renderer is the
 from ._core import (
     CONTRACT_VERSION,
     GENERATED_STATES,
-    RESERVED_STATES,
+    PROPOSED_STATES,
     Mapping,
     cluster_end,
     default_mapping,
@@ -32,7 +32,7 @@ from ._encode import convert, inspect, mark, mark_added
 __all__ = [
     "CONTRACT_VERSION",
     "GENERATED_STATES",
-    "RESERVED_STATES",
+    "PROPOSED_STATES",
     "Mapping",
     "cluster_end",
     "convert",

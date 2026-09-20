@@ -12,8 +12,8 @@ from pathlib import Path
 MAPPING_PATH = Path(__file__).with_name("mapping.json")
 
 CONTRACT_VERSION = 1  # see SPEC.md
-GENERATED_STATES = ("human", "ai", "unknown")
-RESERVED_STATES = ("edited", "mixed")
+GENERATED_STATES = ("human", "ai", "mixed")
+PROPOSED_STATES = ("edited", "unknown")
 
 
 class Mapping:

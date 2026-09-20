@@ -12,10 +12,10 @@
   --focus: #82bd9c;
   --human: #397653;
   --ai: #b66725;
-  --unknown: #717771;
+  --mixed: #717771;
   --human-bg: rgba(57, 118, 83, 0.12);
   --ai-bg: rgba(182, 103, 37, 0.12);
-  --unknown-bg: rgba(113, 119, 113, 0.13);
+  --mixed-bg: rgba(113, 119, 113, 0.13);
   font-family:
     Inter,
     ui-sans-serif,
@@ -40,10 +40,10 @@
     --focus: #91cbaa;
     --human: #81c69f;
     --ai: #e1a36f;
-    --unknown: #aeb5ae;
+    --mixed: #aeb5ae;
     --human-bg: rgba(129, 198, 159, 0.13);
     --ai-bg: rgba(225, 163, 111, 0.13);
-    --unknown-bg: rgba(174, 181, 174, 0.13);
+    --mixed-bg: rgba(174, 181, 174, 0.13);
   }
 }
 
@@ -235,8 +235,8 @@ blockquote {
 .key-ai {
   background: var(--ai);
 }
-.key-unknown {
-  background: var(--unknown);
+.key-mixed {
+  background: var(--mixed);
 }
 
 .section {
@@ -437,9 +437,9 @@ footer p {
   background: var(--ai-bg);
   text-decoration-color: var(--ai);
 }
-.prov-unknown {
-  background: var(--unknown-bg);
-  text-decoration-color: var(--unknown);
+.prov-mixed {
+  background: var(--mixed-bg);
+  text-decoration-color: var(--mixed);
 }
 
 @media (max-width: 640px) {
