@@ -215,10 +215,11 @@ textprov --version                                  # prints "textprov 0.1.1 (co
 echo -n "hello" | textprov mark --human - | textprov inspect -
 ```
 
-## Gotchas worth knowing
+## Publishing best practices
 
-- **Registry names are hard to change.** Once you take `textprov` on PyPI, npm, or RubyGems, you can yank a version but cannot casually rename or transfer the package.
-- **npm 2FA on publish** — if you enabled "auth-and-writes" 2FA, every `npm publish` prompts for an OTP. Have your authenticator ready.
-- **PyPI `long_description`** — your `pyproject.toml` reads `README.md`; make sure the README renders on PyPI by running `twine check dist/*` before upload. It catches RST/MD errors that would otherwise leave the project page blank.
-- **Version once, publish once.** You cannot re-upload the same version to these registries, even after deletion. If a publish fails halfway, determine whether the release reached the registry before retrying; if it did, bump the patch version.
-- **`prepublishOnly` runs `npm test`.** Any test failure aborts the publish before the tarball leaves your machine. Don't disable it.
+- **Enable two-factor authentication (2FA).** Keep 2FA enabled on PyPI, npm, and RubyGems maintainer accounts. Store recovery codes securely and keep your authenticator available when publishing.
+- **Protect publishing credentials.** Use the narrowest token permissions available, restrict access to local credential files, and never commit tokens. Revoke and replace any exposed credentials.
+- **Validate release artifacts.** Inspect package contents and test the built package before uploading. Run `twine check dist/*` for PyPI metadata and description checks.
+- **Keep release checks enabled.** Run the package's test suite before publishing; do not bypass publish-time checks to force a release through.
+- **Treat published artifacts as immutable.** Publish corrections under a new version. After an interrupted upload, check the registry to determine what succeeded before retrying.
+- **Verify each release.** Install the published version in a clean environment, run a smoke test, and confirm the release tag matches the source used to build it.
