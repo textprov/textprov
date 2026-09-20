@@ -53,14 +53,14 @@ def load_mapping(path=MAPPING_PATH):
     with open(path, encoding="utf-8") as handle:
         mapping = json.load(handle)
     selectors = {
-        name: int(value[2:], 16)
+        name: int(value, 0)
         for name, value in mapping["variation_selectors"].items()
     }
     pua2base = {}
     base2pua = {}
     for pua_string, entry in mapping["pua"].items():
-        pua = int(pua_string[2:], 16)
-        base = int(entry["base"][2:], 16)
+        pua = int(pua_string, 0)
+        base = int(entry["base"], 0)
         pua2base[pua] = (base, entry.get("provenance", "ai"))
         if entry.get("provenance", "ai") == "ai":
             base2pua[base] = pua
