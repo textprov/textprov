@@ -31,15 +31,17 @@
       </section>
 
       <section id="try-it" aria-labelledby="try-title">
-        <h2 id="try-title">Try it</h2>
-        <p>Type below. Choose a state. The reference decoder renders each grapheme with its declared provenance.</p>
+        <h2 id="try-title">Try it in five minutes</h2>
+        <p>No install or special font needed. This demo runs in your browser; it does not send your text to a server.</p>
+        <p><strong>1. Add a label.</strong> Type a sentence and choose its declared origin. The preview uses styling to make the marks visible.</p>
+        <noscript><p>This demo needs JavaScript. You can also try the Python example below.</p></noscript>
 
         <div class="demo-panel">
           <label for="demo-input">Text to mark</label>
           <textarea id="demo-input" rows="3" maxlength="280">Some words have a story worth carrying.</textarea>
 
           <fieldset>
-            <legend>Provenance state</legend>
+            <legend>Declared origin</legend>
             <div class="state-options">
               <label><input type="radio" name="state" value="human"><span>Human</span></label>
               <label><input type="radio" name="state" value="ai" checked><span>AI</span></label>
@@ -48,8 +50,11 @@
           </fieldset>
 
           <div class="output-heading">
-            <span>Rendered result</span>
-            <button id="copy-button" type="button">Copy marked text</button>
+            <span>Preview</span>
+            <div class="demo-actions">
+              <button id="copy-button" type="button">Copy marked text</button>
+              <button id="download-button" type="button">Download .txt</button>
+            </div>
           </div>
           <div id="demo-output" class="demo-output" aria-live="polite"></div>
           <div class="output-meta">
@@ -57,7 +62,15 @@
             <span id="copy-status" role="status"></span>
           </div>
         </div>
-        <p class="note">TextProv records a <em>declared</em> state. It does not infer authorship or detect AI-generated writing.</p>
+        <p><strong>2. Take it elsewhere.</strong> Copy the marked text into your editor, or download it as a UTF-8 text file. With an ordinary font, it will usually look like plain text. The preview's styling is not what carries the label.</p>
+                <p><strong>3. Check what survived.</strong> Copy the text from your editor and paste it below. This reader only reads existing marks; it does not add new ones.</p>
+                <div class="demo-panel">
+                  <label for="check-input">Paste text to check</label>
+                  <textarea id="check-input" rows="3" aria-describedby="check-help" placeholder="Paste your marked text here"></textarea>
+                  <p id="check-help" class="note">If no labels appear, the text may be unmarked or an application may have removed the marks. Save files as UTF-8, not Latin-1.</p>
+                  <div id="check-output" class="demo-output"></div>
+                  <p id="check-status" class="note" role="status">Waiting for text.</p>
+                </div>
       </section>
 
       <section id="use" aria-labelledby="use-title">
