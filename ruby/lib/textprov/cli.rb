@@ -1,3 +1,5 @@
+# ruby/lib/textprov/cli.rb
+#
 # frozen_string_literal: true
 
 require "optparse"

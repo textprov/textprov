@@ -1,3 +1,5 @@
+# ruby/lib/textprov/core.rb
+#
 # frozen_string_literal: true
 
 require "cgi"
