@@ -157,9 +157,10 @@ class TestInspect(unittest.TestCase):
     def test_report_counts_states(self):
         report = textprov.inspect(textprov.mark(SOURCE, "ai", "vs"))
         self.assertIn("ai_vs: 30", report)
-        self.assertIn("assumed_human: 0", report)
+        self.assertIn("unmarked: 0", report)
 
     def test_report_counts_unmarked_text(self):
         report = textprov.inspect("abc")
-        self.assertIn("assumed_human: 3", report)
+        self.assertIn("unmarked: 3", report)
         self.assertIn("ai_vs: 0", report)
+        self.assertIn("human: 0", report)

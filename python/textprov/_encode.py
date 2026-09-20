@@ -118,8 +118,8 @@ def _inspect(text, selectors, pua2base):
     sel2name = {cp: name for name, cp in selectors.items()}
     counts = dict.fromkeys(
         (
-            "assumed_human",
-            "explicit_human",
+            "unmarked",
+            "human",
             "ai_vs",
             "ai_pua",
             "unknown",
@@ -159,19 +159,15 @@ def _inspect(text, selectors, pua2base):
             name = sel2name[ord(chars[index])]
             index += 1
             counts[
-                "explicit_human"
-                if name == "human"
-                else "ai_vs"
-                if name == "ai"
-                else name
+                "ai_vs" if name == "ai" else name
             ] += 1
         else:
-            counts["assumed_human"] += 1
+            counts["unmarked"] += 1
 
     lines = [f"characters: {len(chars)}"]
     for key in (
-        "assumed_human",
-        "explicit_human",
+        "unmarked",
+        "human",
         "ai_vs",
         "ai_pua",
         "unknown",

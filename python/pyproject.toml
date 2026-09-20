@@ -2,7 +2,7 @@
 
 [project]
 name = "textprov"
-version = "0.1.0"
+version = "0.1.1"
 description = "Put provenance marks in text, and read them back out"
 readme = "README.md"
 requires-python = ">=3.9"
