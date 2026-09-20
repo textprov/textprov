@@ -12,12 +12,11 @@
   --human: #1a7f37;
   --ai: #bc4c00;
   --mixed: #6e7781;
-  --human-bg: rgba(26, 127, 55, 0.10);
-  --ai-bg: rgba(188, 76, 0, 0.10);
+  --human-bg: rgba(26, 127, 55, 0.1);
+  --ai-bg: rgba(188, 76, 0, 0.1);
   --mixed-bg: rgba(110, 119, 129, 0.12);
   font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
-    Helvetica, Arial, sans-serif;
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-synthesis: none;
   line-height: 1.55;
 }
@@ -40,15 +39,26 @@
   }
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   background: var(--background);
   color: var(--text);
 }
-a { color: var(--accent); }
-a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
-button, textarea, input { font: inherit; }
+a {
+  color: var(--accent);
+}
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+button,
+textarea,
+input {
+  font: inherit;
+}
 
 .skip-link {
   position: fixed;
@@ -60,7 +70,9 @@ button, textarea, input { font: inherit; }
   color: var(--background);
   transform: translateY(-180%);
 }
-.skip-link:focus { transform: translateY(0); }
+.skip-link:focus {
+  transform: translateY(0);
+}
 
 .site-header {
   width: min(860px, calc(100% - 2rem));
@@ -88,7 +100,10 @@ nav a {
   color: var(--muted);
   text-decoration: none;
 }
-nav a:hover { color: var(--text); text-decoration: none; }
+nav a:hover {
+  color: var(--text);
+  text-decoration: none;
+}
 
 main {
   width: min(860px, calc(100% - 2rem));
@@ -96,8 +111,12 @@ main {
   padding: 2rem 0 3rem;
 }
 
-section { padding: 1.5rem 0; }
-section + section { border-top: 1px solid var(--line); }
+section {
+  padding: 1.5rem 0;
+}
+section + section {
+  border-top: 1px solid var(--line);
+}
 
 .intro {
   padding-top: 0.5rem;
@@ -137,10 +156,15 @@ p {
 .version-line {
   margin: 0.25rem 0 0;
   color: var(--muted);
-  font: 0.8rem/1.5 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font:
+    0.8rem/1.5 ui-monospace,
+    "SFMono-Regular",
+    Consolas,
+    monospace;
 }
 
-code, pre {
+code,
+pre {
   font-family: ui-monospace, "SFMono-Regular", "Menlo", Consolas, monospace;
 }
 p code {
@@ -159,9 +183,16 @@ pre {
   font-size: 0.82rem;
   line-height: 1.55;
 }
-pre code { background: none; padding: 0; }
-pre .comment { color: var(--muted); }
-pre.tree { font-size: 0.8rem; }
+pre code {
+  background: none;
+  padding: 0;
+}
+pre .comment {
+  color: var(--muted);
+}
+pre.tree {
+  font-size: 0.8rem;
+}
 
 .demo-panel {
   margin: 1.25rem 0 1rem;
@@ -203,7 +234,9 @@ fieldset {
   padding: 0;
   border: 0;
 }
-fieldset legend { margin-bottom: 0.4rem; }
+fieldset legend {
+  margin-bottom: 0.4rem;
+}
 .state-options {
   display: flex;
   gap: 0.4rem;
@@ -251,7 +284,9 @@ fieldset legend { margin-bottom: 0.4rem; }
   text-transform: none;
   letter-spacing: 0;
 }
-.output-heading button:hover { text-decoration: underline; }
+.output-heading button:hover {
+  text-decoration: underline;
+}
 .demo-output {
   min-height: 3rem;
   padding: 0.75rem;
@@ -268,7 +303,11 @@ fieldset legend { margin-bottom: 0.4rem; }
   display: flex;
   justify-content: space-between;
   color: var(--muted);
-  font: 0.75rem/1 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font:
+    0.75rem/1 ui-monospace,
+    "SFMono-Regular",
+    Consolas,
+    monospace;
 }
 
 footer {
@@ -280,13 +319,27 @@ footer {
   font-size: 0.82rem;
   text-align: center;
 }
-footer p { margin: 0; }
-footer a { color: var(--muted); }
-footer a:hover { color: var(--text); }
+footer p {
+  margin: 0;
+}
+footer a {
+  color: var(--muted);
+}
+footer a:hover {
+  color: var(--text);
+}
 
-.prov-human { background: var(--human-bg); }
-.prov-ai { background: var(--ai-bg); text-decoration-color: var(--ai); }
-.prov-mixed { background: var(--mixed-bg); text-decoration-color: var(--mixed); }
+.prov-human {
+  background: var(--human-bg);
+}
+.prov-ai {
+  background: var(--ai-bg);
+  text-decoration-color: var(--ai);
+}
+.prov-mixed {
+  background: var(--mixed-bg);
+  text-decoration-color: var(--mixed);
+}
 
 @media (max-width: 640px) {
   .site-header {
@@ -298,11 +351,19 @@ footer a:hover { color: var(--text); }
     flex-wrap: wrap;
     gap: 0.9rem;
   }
-  h1 { font-size: 1.5rem; }
-  h2 { font-size: 1.2rem; }
-  .state-options { flex-direction: column; }
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+  .state-options {
+    flex-direction: column;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
 }

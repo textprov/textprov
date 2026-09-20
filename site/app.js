@@ -4,9 +4,9 @@ import "../js/textprov.js";
   "use strict";
 
   var selectors = {
-    human: String.fromCodePoint(0xE0100),
-    ai: String.fromCodePoint(0xE0101),
-    mixed: String.fromCodePoint(0xE0102)
+    human: String.fromCodePoint(0xe0100),
+    ai: String.fromCodePoint(0xe0101),
+    mixed: String.fromCodePoint(0xe0102),
   };
   var segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
   var markedText = "";
@@ -25,7 +25,8 @@ import "../js/textprov.js";
     markedText = mark(input.value, state);
     output.textContent = markedText;
     var count = textprov.render(output);
-    document.getElementById("run-count").textContent = count + (count === 1 ? " marked run" : " marked runs");
+    document.getElementById("run-count").textContent =
+      count + (count === 1 ? " marked run" : " marked runs");
     document.getElementById("copy-status").textContent = "";
   }
 
@@ -35,11 +36,14 @@ import "../js/textprov.js";
       status.textContent = "Clipboard unavailable";
       return;
     }
-    navigator.clipboard.writeText(markedText).then(function () {
-      status.textContent = "Copied with marks";
-    }, function () {
-      status.textContent = "Could not copy";
-    });
+    navigator.clipboard.writeText(markedText).then(
+      function () {
+        status.textContent = "Copied with marks";
+      },
+      function () {
+        status.textContent = "Could not copy";
+      },
+    );
   }
 
   renderDemo();
@@ -48,4 +52,4 @@ import "../js/textprov.js";
     input.addEventListener("change", renderDemo);
   });
   document.getElementById("copy-button").addEventListener("click", copyMarkedText);
-}());
+})();
