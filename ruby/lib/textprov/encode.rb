@@ -108,7 +108,7 @@ module Textprov
         unrecognised_selectors << cp
         next
       end
-      if cp >= 0xE0100 && cp <= 0xE01EF
+      if cp.between?(0xE0100, 0xE01EF)
         unrecognised_selectors << cp
         next
       end
@@ -116,7 +116,7 @@ module Textprov
         counts["ai_pua"] += 1
         next
       end
-      if cp >= 0x100000 && cp <= 0x10FFFD
+      if cp.between?(0x100000, 0x10FFFD)
         unrecognised_pua << cp
         next
       end

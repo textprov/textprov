@@ -52,13 +52,13 @@ class TestCli < Minitest::Test
     old = write("old.txt", "abc")
     new = write("new.txt", "abXc")
 
-    assert_equal "abX" + AI + "c", run_cli("mark-added", old, new)
+    assert_equal "abX#{AI}c", run_cli("mark-added", old, new)
   end
 
   def test_render_and_inspect
-    path = write("m.txt", "a" + AI)
+    path = write("m.txt", "a#{AI}")
 
-    assert_equal Textprov.to_html("a" + AI), run_cli("render", path)
+    assert_equal Textprov.to_html("a#{AI}"), run_cli("render", path)
     assert_includes run_cli("render", "--class-prefix", "x", path), 'class="x x-ai"'
     assert_includes run_cli("inspect", path), "ai_vs: 1"
   end
@@ -82,7 +82,7 @@ class TestCli < Minitest::Test
   def test_crlf_survives
     path = write("s.txt", "a\r\nb")
 
-    assert_equal "a" + AI + "\r\nb" + AI, run_cli("mark", path)
+    assert_equal "a#{AI}\r\nb#{AI}", run_cli("mark", path)
   end
 
   def test_version_flag

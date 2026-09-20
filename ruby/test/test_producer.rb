@@ -115,7 +115,7 @@ end
 
 class TestMarkAdded < Minitest::Test
   def test_marks_only_the_middle
-    assert_equal "abX" + AI + "Y" + AI + "c", Textprov.mark_added("abc", "abXYc")
+    assert_equal "abX#{AI}Y#{AI}c", Textprov.mark_added("abc", "abXYc")
   end
 
   def test_empty_old_text_marks_everything
@@ -127,7 +127,7 @@ class TestMarkAdded < Minitest::Test
   end
 
   def test_state_and_mode_are_honoured
-    assert_equal "abX" + HUMAN, Textprov.mark_added("ab", "abX", state: "human")
+    assert_equal "abX#{HUMAN}", Textprov.mark_added("ab", "abX", state: "human")
     assert_equal "ab\u{100058}", Textprov.mark_added("ab", "abX", state: "ai", mode: "pua")
   end
 end

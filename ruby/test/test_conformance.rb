@@ -57,16 +57,16 @@ class TestClusterEnd < Minitest::Test
   end
 
   def test_zwj_sequence
-    assert_equal 5, cluster(FAMILY + "x")
+    assert_equal 5, cluster("#{FAMILY}x")
     assert_equal 5, cluster(FAMILY)
   end
 
   def test_skin_tone
-    assert_equal 2, cluster(TONE + "x")
+    assert_equal 2, cluster("#{TONE}x")
   end
 
   def test_regional_indicators
-    assert_equal 2, cluster(FLAG + "\u{1F1E8}")
+    assert_equal 2, cluster("#{FLAG}\u{1F1E8}")
     assert_equal 1, cluster("\u{1F1E8}x")
   end
 
@@ -76,10 +76,10 @@ class TestClusterEnd < Minitest::Test
   end
 
   def test_provenance_selector_ends_the_cluster
-    assert_equal 1, cluster(AI + "x")
-    assert_equal 1, cluster("a" + AI + "b")
-    assert_equal 2, cluster("é" + AI + "b")
-    assert_equal 5, cluster(FAMILY + AI + "b")
+    assert_equal 1, cluster("#{AI}x")
+    assert_equal 1, cluster("a#{AI}b")
+    assert_equal 2, cluster("é#{AI}b")
+    assert_equal 5, cluster("#{FAMILY}#{AI}b")
   end
 
   def test_is_combining
@@ -99,45 +99,45 @@ class TestToHtml < Minitest::Test
   end
 
   def test_span_shape
-    assert_equal span("ai", "a" + AI), render("a" + AI)
+    assert_equal span("ai", "a#{AI}"), render("a#{AI}")
   end
 
   def test_escaping
     assert_equal "&lt;&amp;&quot;", render(%(<&"))
     assert_equal(
-      span("ai", "&lt;" + AI + "&amp;" + AI + "&quot;" + AI),
-      render("<" + AI + "&" + AI + %(") + AI)
+      span("ai", "&lt;#{AI}&amp;#{AI}&quot;#{AI}"),
+      render("<#{AI}&#{AI}\"#{AI}")
     )
     assert_equal(
-      span("ai", "a" + AI) + "&lt;b" + span("human", "&gt;" + HUMAN) + " &amp; x",
-      render("a" + AI + "<b>" + HUMAN + " & x")
+      "#{span("ai", "a#{AI}")}&lt;b#{span("human", "&gt;#{HUMAN}")} &amp; x",
+      render("a#{AI}<b>#{HUMAN} & x")
     )
   end
 
   def test_class_prefix
-    out = render("a" + AI, class_prefix: "x")
+    out = render("a#{AI}", class_prefix: "x")
 
-    assert_equal span("ai", "a" + AI, prefix: "x"), out
+    assert_equal span("ai", "a#{AI}", prefix: "x"), out
     assert_includes out, 'data-prov="ai"'
   end
 
   def test_merge_whitespace
-    assert_equal span("ai", "a" + AI + " b" + AI), render("a" + AI + " b" + AI)
+    assert_equal span("ai", "a#{AI} b#{AI}"), render("a#{AI} b#{AI}")
     assert_equal(
-      span("ai", "a" + AI) + " " + span("ai", "b" + AI),
-      render("a" + AI + " b" + AI, merge_whitespace: false)
+      "#{span("ai", "a#{AI}")} #{span("ai", "b#{AI}")}",
+      render("a#{AI} b#{AI}", merge_whitespace: false)
     )
   end
 
   def test_merge_whitespace_camelcase_alias
     assert_equal(
-      span("ai", "a" + AI) + " " + span("ai", "b" + AI),
-      render("a" + AI + " b" + AI, mergeWhitespace: false)
+      "#{span("ai", "a#{AI}")} #{span("ai", "b#{AI}")}",
+      render("a#{AI} b#{AI}", mergeWhitespace: false)
     )
   end
 
   def test_strip
-    assert_equal span("ai", "a b"), render("a" + AI + " b" + AI, strip: true)
+    assert_equal span("ai", "a b"), render("a#{AI} b#{AI}", strip: true)
   end
 
   def test_pua_input
@@ -150,7 +150,7 @@ class TestToHtml < Minitest::Test
   end
 
   def test_span_text_reproduces_the_input
-    source = "x<y" + AI + " & " + FAMILY + HUMAN + %(\n"z")
+    source = "x<y#{AI} & #{FAMILY}#{HUMAN}\n\"z\""
     rendered = render(source)
     [span("ai", ""), span("human", "")].each do |tag|
       open_tag = tag.sub("</span>", "")
@@ -165,7 +165,7 @@ class TestStripMarks < Minitest::Test
   def test_selectors_and_pua_are_removed
     pua_cp, (pua_base,) = PUA2BASE.first
 
-    assert_equal "ab", Textprov.strip_marks("a" + AI + "b" + HUMAN)
+    assert_equal "ab", Textprov.strip_marks("a#{AI}b#{HUMAN}")
     assert_equal pua_base.chr(Encoding::UTF_8), Textprov.strip_marks(pua_cp.chr(Encoding::UTF_8))
   end
 end
@@ -175,15 +175,15 @@ class TestExplicitMapping < Minitest::Test
     mapping = Textprov::Mapping.load(REGISTRY_PATH)
 
     assert_equal MAPPING.version, mapping.version
-    assert_equal Textprov.runs("a" + AI), Textprov.runs("a" + AI, mapping: mapping)
+    assert_equal Textprov.runs("a#{AI}"), Textprov.runs("a#{AI}", mapping: mapping)
     assert_equal(
-      Textprov.runs("a" + AI),
-      Textprov._runs("a" + AI, mapping.selectors, mapping.pua2base, strip: false,
+      Textprov.runs("a#{AI}"),
+      Textprov._runs("a#{AI}", mapping.selectors, mapping.pua2base, strip: false,
                                                                     merge_whitespace: true)
     )
     assert_equal(
-      Textprov.to_html("a" + AI),
-      Textprov._to_html("a" + AI, mapping.selectors, mapping.pua2base,
+      Textprov.to_html("a#{AI}"),
+      Textprov._to_html("a#{AI}", mapping.selectors, mapping.pua2base,
                         strip: false, merge_whitespace: true, class_prefix: "prov")
     )
   end
