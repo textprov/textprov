@@ -1,0 +1,20 @@
+[
+  {
+    "source": "patched-fonts/maryheather/webfonts/MaryheatherNerdFontPropoP+-Regular.woff2",
+    "sha256": "5ccefe02f649091b355ae173dc8da5f3fdf28d559f63d4d942df28504c07fd45",
+    "family": "Maryheather TextProv Demo P+",
+    "selectors": [
+      "U+E0100",
+      "U+E0101"
+    ]
+  },
+  {
+    "source": "patched-fonts/zilla/webfonts/ZillaSlabNerdFontPropoP+-Regular.woff2",
+    "sha256": "03548525954d5fb2113a14e7b2a5178d79deb5bd0289d49ad7b5517791e5a3e0",
+    "family": "Zilla Slab TextProv Demo P+",
+    "selectors": [
+      "U+E0100",
+      "U+E0101"
+    ]
+  }
+]
