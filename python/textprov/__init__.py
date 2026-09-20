@@ -1,3 +1,5 @@
+# python/textprov/__init__.py
+
 """TextProv: put provenance marks in text, and read them back out.
 
     >>> import textprov

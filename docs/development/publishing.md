@@ -1,3 +1,7 @@
+# docs/development/publishing.md
+
+---
+
 # Publishing
 
 ## PyPI — publishing `textprov`

@@ -1,3 +1,5 @@
+// js/check_fixtures.mjs
+
 // Runs textprov.js against ../fixtures.json and checks the tables it embeds
 // (textprov.mapping) against ../mapping.json, which it never loads at runtime.
 // Usage: node check_fixtures.mjs [path/to/textprov.js]

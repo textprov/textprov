@@ -1,3 +1,7 @@
+# SPEC.md
+
+---
+
 # TextProv protocol specification
 
 TextProv carries provenance in the text itself. A run of characters can say

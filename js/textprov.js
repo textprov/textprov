@@ -1,3 +1,5 @@
+// js/textprov.js
+
 /*
  * textprov.js: client-side provenance decorator
  * TextProv protocol: https://github.com/textprov/textprov

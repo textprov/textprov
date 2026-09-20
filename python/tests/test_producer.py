@@ -1,3 +1,5 @@
+# python/tests/test_producer.py
+
 """Producer tests: the fixture's producer cases, plus the properties behind them.
 
 A producer is pure text processing, so it is testable the same way a decoder

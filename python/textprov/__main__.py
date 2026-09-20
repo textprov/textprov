@@ -1,3 +1,5 @@
+# python/textprov/__main__.py
+
 """Command line interface: python3 -m textprov
 
     textprov mark [--human|--ai|--mixed] [--mode vs|pua] FILE

@@ -1,3 +1,5 @@
+# python/textprov/_core.py
+
 """Shared core of the TextProv decorator: registry, clusters, runs, markup.
 
 Extracted from bin/scripts/nfprov.py in the nerd-fonts provenance fork, which

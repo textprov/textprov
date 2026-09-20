@@ -1,3 +1,5 @@
+# python/textprov/_encode.py
+
 """Producer and diagnostics: add marks to text, change encoding, report states.
 
 A producer is pure text processing. It needs the registry and nothing else: no

@@ -1,3 +1,5 @@
+# python/tests/test_cli.py
+
 """The CLI is the reference producer's user interface; smoke-test each verb."""
 
 import io

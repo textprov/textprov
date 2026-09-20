@@ -1,3 +1,7 @@
+# README.md
+
+---
+
 # TextProv
 
 Text that carries its own provenance. A run of characters can say whether a
