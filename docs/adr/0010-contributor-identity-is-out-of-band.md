@@ -5,9 +5,10 @@ Status: accepted. Date: 2026-09-11.
 ## Context
 
 A mark is one code point after a grapheme cluster. It identifies the state of
-that cluster: explicit human, AI, unknown, edited, or mixed
+that cluster: human, AI, unknown, edited, or mixed
 (`mapping.json` `variation_selectors`). Unmarked text has no in-band state;
-consumers may treat it as human by default.
+the consumer decides what unmarked text means and the protocol takes no
+position on it.
 
 The question was whether the protocol could name contributors instead:
 H1, H2, AI1, AI2, and so on. The capacity to do so exists in one place and
@@ -60,8 +61,8 @@ several selectors to the same variant glyph.
 ## Consequences
 
 - `human`, `ai`, `unknown`, `edited`, and `mixed` remain the complete in-band
-  set. Font renderers still need glyphs for `edited` and `mixed`; their
-  selectors are reserved.
+  set. `edited` and `mixed` are proposed: their selectors are allocated in the
+  registry but no producer emits them yet and no font renders them.
 - A page that wants per-contributor colour styles by container, not by
   mark. The decorator's `data-prov` stays a state name.
 - Selector allocation for slots would raise collisions with registered
