@@ -114,6 +114,11 @@ fixture. Open questions and the shape of what comes next are in
 [docs/adr](docs/adr). The two encodings, the run algorithm, and the span markup
 are settled and should be treated as stable.
 
+## Acknowledgements
+
+TextProv was inspired by Pipedrive's concept of encoding information in Unicode
+text and by the Nerd Fonts tooling workflow that made the approach practical.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
