@@ -6,14 +6,15 @@
 
 ## LICENSE — one file per package directory
 
-Both PyPI sdists and npm tarballs are meant to be self-contained: their build
-tools only read files inside the package directory, not parent paths. So each
-package directory keeps its own copy of the license:
+PyPI sdists, npm tarballs, and RubyGems packages are meant to be self-contained:
+their build tools only read files inside the package directory, not parent
+paths. So each package directory keeps its own copy of the license:
 
 ```
 LICENSE                # canonical
 python/LICENSE         # copy, consumed by setuptools via license-files
 js/LICENSE             # copy, auto-detected by npm
+ruby/LICENSE           # copy, included by textprov.gemspec
 ```
 
 The `license-drift` job in `.github/workflows/conformance.yml` fails CI if the
@@ -146,10 +147,78 @@ mkdir /tmp/test && cd /tmp/test && npm init -y && npm install textprov
 node -e "console.log(require('textprov'))"
 ```
 
+## RubyGems — publishing `textprov`
+
+All commands in this section run from the `ruby/` subdirectory of the repo,
+where `textprov.gemspec` lives. Ruby 3.2 or newer is required.
+
+```bash
+cd /Users/d/Projects/dev/textprov/textprov/ruby
+pwd                    # confirm .../textprov/textprov/ruby
+ls textprov.gemspec     # should print textprov.gemspec
+```
+
+**One-time setup:**
+```bash
+# Create an account at https://rubygems.org/sign_up
+# Enable MFA, then sign in from RubyGems:
+gem signin
+
+# Install development dependencies:
+bundle install
+```
+
+`gem signin` stores a RubyGems API key in the local credentials file. Protect
+that file with the permissions RubyGems requests, and do not commit it.
+
+**Per-release** (still in `ruby/`):
+```bash
+cd /Users/d/Projects/dev/textprov/textprov/ruby
+
+# 1. Bump Textprov::VERSION in lib/textprov/version.rb
+#    (e.g. 0.1.0 -> 0.1.1), then confirm it:
+bundle exec ruby -Ilib -rtextprov -e 'puts Textprov::VERSION'
+
+# 2. Run the test suite
+bundle exec rake test
+
+# 3. Remove prior packages and build the gem
+rm -f textprov-*.gem
+gem build textprov.gemspec
+# produces: textprov-0.1.1.gem
+
+# 4. Inspect the package metadata and file list
+#    (replace the version below with the version you just built)
+gem specification textprov-0.1.1.gem
+rm -rf /tmp/textprov-gem
+gem unpack textprov-0.1.1.gem --target /tmp/textprov-gem
+find /tmp/textprov-gem/textprov-0.1.1 -type f | sort
+# Confirm the gem includes README.md, LICENSE, exe/textprov, and lib/**.
+
+# 5. Install and test the exact package locally
+gem install --local textprov-0.1.1.gem
+textprov --version
+
+# 6. Publish. RubyGems prompts for an MFA code when required.
+gem push textprov-0.1.1.gem
+
+# 7. Tag the release
+git tag -a ruby-v0.1.1 -m "textprov ruby 0.1.1"
+git push origin ruby-v0.1.1
+```
+
+**Verify:**
+```bash
+gem info textprov --remote
+gem install textprov
+textprov --version                                  # prints "textprov 0.1.1 (contract 1, mapping 1)"
+echo -n "hello" | textprov mark --human - | textprov inspect -
+```
+
 ## Gotchas worth knowing
 
-- **Registry names are irrevocable.** Once you take `textprov` on PyPI or npm, you own it — you can yank a version but you cannot rename or transfer casually.
+- **Registry names are hard to change.** Once you take `textprov` on PyPI, npm, or RubyGems, you can yank a version but cannot casually rename or transfer the package.
 - **npm 2FA on publish** — if you enabled "auth-and-writes" 2FA, every `npm publish` prompts for an OTP. Have your authenticator ready.
 - **PyPI `long_description`** — your `pyproject.toml` reads `README.md`; make sure the README renders on PyPI by running `twine check dist/*` before upload. It catches RST/MD errors that would otherwise leave the project page blank.
-- **Version once, publish once.** You cannot re-upload the same version to either registry, even after deletion. If a publish fails halfway, bump the patch version before retrying.
+- **Version once, publish once.** You cannot re-upload the same version to these registries, even after deletion. If a publish fails halfway, determine whether the release reached the registry before retrying; if it did, bump the patch version.
 - **`prepublishOnly` runs `npm test`.** Any test failure aborts the publish before the tarball leaves your machine. Don't disable it.
