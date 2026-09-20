@@ -55,7 +55,11 @@ pip install --upgrade build twine
 ```bash
 cd /Users/d/Projects/dev/textprov/textprov/python
 
-# 1. Bump version in pyproject.toml (e.g. 0.1.0 -> 0.1.1)
+# 1. Bump version in pyproject.toml (e.g. 0.1.0 -> 0.1.1).
+#    `textprov/__init__.py` reads it from installed metadata, so nothing else
+#    to edit. Confirm with:
+#      python -c "import textprov; print(textprov.__version__)"
+#    (run after `pip install -e .` so metadata reflects the new number)
 
 # 2. Clean any prior build
 rm -rf dist/ build/ *.egg-info
@@ -77,11 +81,16 @@ python -c "import textprov; print(textprov.__file__)"
 twine upload dist/*
 
 # 7. Tag the release
-git tag -a python-v0.1.0 -m "textprov python 0.1.0"
-git push origin python-v0.1.0
+git tag -a python-v0.1.2 -m "textprov python 0.1.2"
+git push origin python-v0.1.2
 ```
 
-**Verify:** `pip install textprov && textprov --selftest`
+**Verify:**
+```bash
+pip install textprov
+textprov --version                                    # prints "textprov 0.1.0 (contract 1, mapping 1)"
+echo -n "hello" | textprov mark --human - | textprov inspect -
+```
 
 ## npm — publishing `@textprov/decorator`
 
