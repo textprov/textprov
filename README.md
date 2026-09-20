@@ -80,6 +80,18 @@ with provenance variants of its own glyphs. See [Why TextProv publishes
 selectors instead of PUA text](docs/SELECTORS-PUA-AND-INTERCHANGE.md) for the
 interchange trade-off, including Nerd Fonts and Zed on macOS.
 
+## Website
+
+Preview the site locally with Vite:
+
+```sh
+cd site
+npm ci
+npm run dev
+```
+
+`npm run build` produces the GitHub Pages artifact in `site/dist`.
+
 ## Conformance
 
 ```sh
