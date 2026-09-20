@@ -6,7 +6,7 @@ import "../js/textprov.js";
   var selectors = {
     human: String.fromCodePoint(0xE0100),
     ai: String.fromCodePoint(0xE0101),
-    unknown: String.fromCodePoint(0xE0102)
+    unknown: String.fromCodePoint(0xE0104)
   };
   var segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
   var markedText = "";
