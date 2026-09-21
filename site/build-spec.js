@@ -11,9 +11,10 @@ const outPath = resolve(here, "spec.html");
 
 const source = readFileSync(specPath, "utf8");
 
-// Strip the leading "# TextProv protocol specification" heading — the page
-// chrome supplies its own title.
-const body = source.replace(/^# [^\n]*\n+/, "");
+// Strip the leading "# SPEC.md" marker, the following horizontal rule, and the
+// "# TextProv protocol specification" heading — the page chrome supplies the
+// title, and the rule would double up with the H2 top border below.
+const body = source.replace(/^# SPEC\.md\s*\n+(?:---\s*\n+)?# [^\n]*\n+/, "");
 
 const renderer = new marked.Renderer();
 
