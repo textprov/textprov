@@ -40,7 +40,7 @@ These subsets retain U+0020 through U+00FF where present in the source and
 variation selectors U+E0100 (Human) and U+E0101 (AI). Nerd Fonts icons and
 private-use encodings are excluded. They are not full replacement fonts.
 
-The source fonts map U+E0102 to a legacy unknown glyph. TextProv v1 assigns
+The source fonts map U+E0102 to a legacy unknown glyph. TextProv 0.1 assigns
 that selector to mixed, so this mapping is deliberately removed. These
 subsets do not display mixed, edited, or unknown variants. Use the JavaScript
 reader to display all five states.

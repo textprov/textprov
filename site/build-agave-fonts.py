@@ -3,7 +3,7 @@
 The Agave P+ variants are shipped as raw TTFs (no upstream WOFF2, no ZIP), so
 this script operates on the on-disk TTFs directly. It renames the family,
 strips the legacy U+E0102 mapping (source's "unknown" glyph, which collides
-with TextProv v1's `mixed`), keeps U+E0100/U+E0101, and emits TTF + WOFF2 +
+with TextProv 0.1's `mixed`), keeps U+E0100/U+E0101, and emits TTF + WOFF2 +
 ZIP bundles alongside the Maryheather and Zilla assets.
 
 Requires fonttools and brotli. Run:
