@@ -10,41 +10,40 @@
 > will not be reassigned or removed. Stable specification compatibility guarantees
 > have not yet taken effect. See the [maturity lifecycle](docs/MATURITY.md).
 
-TextProv carries origin labels in the text itself: human-written,
-AI-generated, mixed, edited, or unknown. It gives cooperating producers and
-consumers a shared way to preserve and display disclosures about text's origin.
-For example, a writing integration can label generated passages so an editor
-can see those disclosures during review.
+TextProv is a protocol for attaching origin labels to passages of text. A label
+states that a passage is human-written, AI-generated, mixed, edited, or of
+unknown origin. Cooperating tools can preserve and display these labels as text
+moves between them. For example, a writing integration can label a generated
+passage so an editor can identify it during review.
 
-Labels are stored as Unicode code points within the text, rather than in a
-separate metadata field or wrapper. They can survive copying, pasting, and
-plain-text storage when the software involved preserves those code points.
-Software that removes the marks also removes the labels.
+TextProv stores labels as Unicode code points within the character sequence,
+not in a separate metadata field or document wrapper. The labels can therefore
+survive copying, pasting, and plain-text storage, provided every tool in the
+path preserves those code points. A tool that removes the marks also removes
+the labels.
 
-This document defines the in-band encodings, registry rules, producer behavior,
-decoder behavior, and renderer markup. It does not define how an integration
-determines which provenance state applies or how a renderer presents that state
-visually.
+This document defines the text encodings, label registry, producer and decoder
+behavior, and renderer markup. It does not define how a producer decides which
+label applies or how a renderer presents labels visually.
 
-TextProv carries provenance labels, not proof of provenance. A label expresses
-a claim about origin, not a judgment about the text's quality, accuracy, or
-trustworthiness. Any text processor can add, remove, or change a mark; unmarked
-text makes no claim about its origin.
+A TextProv label is a claim, not proof. Decoding identifies the claim attached
+to a passage; it does not establish who made the claim or whether the claim is
+true. Any text processor can add, change, or remove a mark, and unmarked text
+makes no claim about its origin. A label also says nothing about the text's
+quality, accuracy, or trustworthiness. Authentication, signatures, tamper
+evidence, and verification of producer claims are outside this protocol.
 
-Decoding a label establishes which claim is present, not whether it is true.
-Confidence in a claim depends on evidence about its source and workflow, not
-on the mark alone. Decisions that depend on accurate authorship require
-evidence beyond TextProv labels. Authentication, signatures, tamper evidence,
-and verification of a producer's claim are outside this protocol.
+This draft has two independent compatibility versions:
 
-Two compatibility versions appear in this draft. **Specification version 0.1**
-covers the algorithms and rules below — the encodings, the decoder, and
-producer conformance. **Registry version 0.1** covers `mapping.json`: which
-base characters have PUA slots and which states exist. These versions are
-Draft: specification behavior is experimental, but published registry allocations
-remain protected. The registry and specification advance independently. Fixtures and reference
-APIs expose these values as `spec_version` and `registry_version` (or the
-language-appropriate camel-case equivalents).
+- **Specification version 0.1** covers the encodings, decoding algorithm, and
+  conformance rules defined in this document.
+- **Registry version 0.1** covers `mapping.json`, including the available states
+  and the base characters assigned Private Use Area (PUA) slots.
+
+Both versions are Draft. Specification behavior remains experimental, while
+published registry allocations remain reserved. Fixtures and reference APIs
+expose the versions as `spec_version` and `registry_version`, or with the
+language-appropriate camel-case equivalents.
 
 ## Roles
 
@@ -146,8 +145,9 @@ whitespace, or with no preceding cluster, is not a mark.
 }
 ```
 
-Registry version 0.1 covers `U+0021`–`U+00FF` minus the general categories
-`Zs`, `Cc`, and `Cf`: 188 entries, every one state `ai`. The formula reserves
+Registry version 0.1 covers `U+0021`–`U+00FF`, excluding characters in the
+Unicode general categories `Zs` (space separators), `Cc` (control characters),
+and `Cf` (format characters): 188 entries, every one state `ai`. The formula reserves
 the rest of the range; a later version must not give those code points a
 different meaning. This reservation applies during Draft and Candidate as well
 as Stable.
