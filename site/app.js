@@ -28,9 +28,17 @@ import "../js/textprov.js";
     var input = document.getElementById("demo-input");
     var state = document.querySelector('input[name="state"]:checked').value;
     var output = document.getElementById("demo-output");
+    var preview = document.getElementById("demo-preview") || output;
     markedText = mark(input.value, state);
-    output.textContent = markedText;
-    var count = textprov.render(output);
+    if ("value" in output) {
+      output.value = markedText;
+    } else {
+      output.textContent = markedText;
+    }
+    if (preview !== output) {
+      preview.textContent = markedText;
+    }
+    var count = textprov.render(preview);
     document.getElementById("run-count").textContent =
       count + (count === 1 ? " marked run" : " marked runs");
     document.getElementById("copy-status").textContent = "";
@@ -88,12 +96,19 @@ import "../js/textprov.js";
         : "No TextProv labels found. This does not mean the text is human-written.";
   }
 
-  renderDemo();
-  document.getElementById("demo-input").addEventListener("input", renderDemo);
-  document.querySelectorAll('input[name="state"]').forEach(function (input) {
-    input.addEventListener("change", renderDemo);
-  });
-  document.getElementById("copy-button").addEventListener("click", copyMarkedText);
-  document.getElementById("download-button").addEventListener("click", downloadMarkedText);
-  document.getElementById("check-input").addEventListener("input", checkText);
+  var demoInput = document.getElementById("demo-input");
+  if (demoInput) {
+    renderDemo();
+    demoInput.addEventListener("input", renderDemo);
+    document.querySelectorAll('input[name="state"]').forEach(function (input) {
+      input.addEventListener("change", renderDemo);
+    });
+    document.getElementById("copy-button").addEventListener("click", copyMarkedText);
+    document.getElementById("download-button").addEventListener("click", downloadMarkedText);
+  }
+
+  var checkInput = document.getElementById("check-input");
+  if (checkInput) {
+    checkInput.addEventListener("input", checkText);
+  }
 })();

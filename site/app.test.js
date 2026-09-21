@@ -138,5 +138,6 @@ test("marking pasted text replaces existing labels rather than stacking them", (
   element("demo-input").value = "A\u{E0101} B";
   state.value = "human";
   element("demo-input").listeners.input();
-  assert.equal(element("demo-output").textContent, "A\u{E0100} B\u{E0100}");
+  assert.equal(element("demo-output").value, "A\u{E0100} B\u{E0100}");
+  assert.equal(element("demo-preview").textContent, "A\u{E0100} B\u{E0100}");
 });
