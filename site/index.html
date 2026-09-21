@@ -34,25 +34,27 @@
       </section>
 
       <section id="font-examples" aria-labelledby="examples-title">
-        <h2 id="examples-title">Same text, different displays</h2>
-        <p>Each line below</p> contains the same text and the same embedded labels: “Human words.” is labelled human, and “AI words.” is labelled AI. Only the way it is displayed changes.</p>
+        <h2 id="examples-title">Marked text in four displays</h2>
+        <p>These examples contain different text, but all use the same embedded Human and AI labels. Each passage describes its expected appearance. The labels are part of the text before the browser displays it; JavaScript does not add them.</p>
 
-        <h3>With an</h3> ordinary font</h3>
-        <p class="font-sample">H&#xE0100;u&#xE0100;m&#xE0100;a&#xE0100;n&#xE0100; w&#xE0100;o&#xE0100;r&#xE0100;d&#xE0100;s&#xE0100;.&#xE0100; A&#xE0101;I&#xE0101; w&#xE0101;o&#xE0101;r&#xE0101;d&#xE0101;s&#xE0101;.&#xE0101;</p>
-        <p class="note">This should look like ordinary text. The labels are still there, even though this font does not display them.</p>
+        <h3>Ordinary font</h3>
+        <p class="font-sample" data-example="ordinary">T󠄁h󠄁i󠄁s󠄁 e󠄁n󠄁t󠄁i󠄁r󠄁e󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁I󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 f󠄁o󠄁n󠄁t󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 m󠄁a󠄁k󠄁e󠄁 i󠄁t󠄁 l󠄁o󠄁o󠄁k󠄁 l󠄁i󠄁k󠄁e󠄁 n󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁.󠄁</p>
+        <p class="note">Expected: ordinary text with no visible provenance decoration. The sentence is still labelled AI.</p>
 
-        <h3>With</h3> a P+ font installed on your device</h3>
-        <p class="font-sample font-local">H&#xE0100;u&#xE0100;m&#xE0100;a&#xE0100;n&#xE0100; w&#xE0100;o&#xE0100;r&#xE0100;d&#xE0100;s&#xE0100;.&#xE0100; A&#xE0101;I&#xE0101; w&#xE0101;o&#xE0101;r&#xE0101;d&#xE0101;s&#xE0101;.&#xE0101;</p>
-        <p class="note">If you have one of our <a href="#fonts">demo fonts</a> or the Maryheather / Zilla Slab Nerd Font Propo P+ family installed, and your browser supports its selector mappings, the AI words should have a sawtooth underline. Otherwise, expect ordinary text. This line never downloads a font.</p>
+        <h3>P+ font installed on your device</h3>
+        <p class="font-sample font-local" data-example="local">T󠄀h󠄀i󠄀s󠄀 o󠄀p󠄀e󠄀n󠄀i󠄀n󠄀g󠄀 s󠄀e󠄀n󠄀t󠄀e󠄀n󠄀c󠄀e󠄀 i󠄀s󠄀 l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀 a󠄀n󠄀d󠄀 s󠄀h󠄀o󠄀u󠄀l󠄀d󠄀 s󠄀t󠄀a󠄀y󠄀 p󠄀l󠄀a󠄀i󠄀n󠄀.󠄀 T󠄁h󠄁i󠄁s󠄁 s󠄁e󠄁c󠄁o󠄁n󠄁d󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁I󠄁 a󠄁n󠄁d󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 g󠄁a󠄁i󠄁n󠄁 a󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁 w󠄁h󠄁e󠄁n󠄁 a󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁t󠄁i󠄁b󠄁l󠄁e󠄁 P󠄁+󠄁 f󠄁o󠄁n󠄁t󠄁 i󠄁s󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁.󠄁</p>
+        <p class="note">Expected with a compatible installed font and rendering engine: the first sentence stays plain and the second gains a sawtooth underline. Otherwise, both look ordinary. This example never downloads a font.</p>
 
-        <h3>With web</h3>fonts supplied by this page</h3>
-        <p>No installation needed. If the font loads and your browser supports its selector mappings, the AI words should have a sawtooth underline; the human words stay plain.</p>
-        <p class="note">Maryheather P+</p>
-        <p class="font-sample font-maryheather">H&#xE0100;u&#xE0100;m&#xE0100;a&#xE0100;n&#xE0100; w&#xE0100;o&#xE0100;r&#xE0100;d&#xE0100;s&#xE0100;.&#xE0100; A&#xE0101;I&#xE0101; w&#xE0101;o&#xE0101;r&#xE0101;d&#xE0101;s&#xE0101;.&#xE0101;</p>
-        <p class="note">Zilla Slab P+</p>
-        <p class="font-sample font-zilla">H&#xE0100;u&#xE0100;m&#xE0100;a&#xE0100;n&#xE0100; w&#xE0100;o&#xE0100;r&#xE0100;d&#xE0100;s&#xE0100;.&#xE0100; A&#xE0101;I&#xE0101; w&#xE0101;o&#xE0101;r&#xE0101;d&#xE0101;s&#xE0101;.&#xE0101;</p>
-        <p class="note">These examples use the font alone, not JavaScript decoration. A loaded font does not guarantee visible marks: some rendering engines ignore these selector mappings. <a href="#check-input">The reader below</a> can reveal the labels independently of font support.</p>
-        <p><a href="./samples/marked-text.txt" target="_blank" rel="noopener">Open the marked text file in a new tab ↗</a> · <a href="./samples/marked-text.txt" download></a>Download the sample</a></p>
+        <h3>Maryheather webfont supplied by this page</h3>
+        <p class="font-sample font-maryheather" data-example="maryheather">M󠄀a󠄀r󠄀y󠄀h󠄀e󠄀a󠄀t󠄀h󠄀e󠄀r󠄀 i󠄀s󠄀 l󠄀o󠄀a󠄀d󠄀e󠄀d󠄀 f󠄀r󠄀o󠄀m󠄀 t󠄀h󠄀i󠄀s󠄀 p󠄀a󠄀g󠄀e󠄀,󠄀 a󠄀n󠄀d󠄀 t󠄀h󠄀i󠄀s󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀-󠄀l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 s󠄀e󠄀n󠄀t󠄀e󠄀n󠄀c󠄀e󠄀 s󠄀h󠄀o󠄀u󠄀l󠄀d󠄀 r󠄀e󠄀m󠄀a󠄀i󠄀n󠄀 p󠄀l󠄀a󠄀i󠄀n󠄀.󠄀 T󠄁h󠄁i󠄁s󠄁 A󠄁I󠄁-󠄁l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 a󠄁p󠄁p󠄁e󠄁a󠄁r󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 t󠄁y󠄁p󠄁e󠄁f󠄁a󠄁c󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁.󠄁</p>
+        <p class="note">Expected with compatible webfont rendering: Maryheather throughout, with a sawtooth underline only beneath the AI-labelled second sentence.</p>
+
+        <h3>Zilla Slab webfont supplied by this page</h3>
+        <p class="font-sample font-zilla" data-example="zilla">Z󠄀i󠄀l󠄀l󠄀a󠄀 S󠄀l󠄀a󠄀b󠄀 i󠄀s󠄀 t󠄀h󠄀e󠄀 a󠄀c󠄀t󠄀i󠄀v󠄀e󠄀 w󠄀e󠄀b󠄀f󠄀o󠄀n󠄀t󠄀 f󠄀o󠄀r󠄀 t󠄀h󠄀i󠄀s󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀-󠄀l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 s󠄀e󠄀n󠄀t󠄀e󠄀n󠄀c󠄀e󠄀,󠄀 s󠄀o󠄀 i󠄀t󠄀 s󠄀h󠄀o󠄀u󠄀l󠄀d󠄀 r󠄀e󠄀m󠄀a󠄀i󠄀n󠄀 p󠄀l󠄀a󠄀i󠄀n󠄀.󠄀 T󠄁h󠄁e󠄁 f󠄁o󠄁l󠄁l󠄁o󠄁w󠄁i󠄁n󠄁g󠄁 A󠄁I󠄁-󠄁l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 u󠄁s󠄁e󠄁 Z󠄁i󠄁l󠄁l󠄁a󠄁 S󠄁l󠄁a󠄁b󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁.󠄁</p>
+        <p class="note">Expected with compatible webfont rendering: Zilla Slab throughout, with a sawtooth underline only beneath the AI-labelled second sentence.</p>
+
+        <p class="note">The font examples use no JavaScript decoration. A browser can load a font but ignore its selector mappings. <a href="#check-input">The reader below</a> reveals labels independently of font support.</p>
+        <p><a href="./samples/marked-text.txt" target="_blank" rel="noopener">Open a longer marked text file in a new tab ↗</a> · <a href="./samples/marked-text.txt" download>Download the sample</a></p>
         <p class="note">The file contains plain UTF-8 text, no HTML or JavaScript. Copy it normally, return here, and paste it into the reader. No copy handler adds labels to your clipboard: they are already in the file.</p>
       </section>
 
@@ -152,12 +154,12 @@ ruby -I ruby/lib -r textprov -e 'puts Textprov.to_html(Textprov.mark("Hello", st
 
       <section id="fonts" aria-labelledby="fonts-title">
         <h2 id="fonts-title">Download example fonts</h2>
-        <p></p>Try the fonts in your own editor. Each ZIP contains an installable TTF, a WOFF2 webfont, and licence notices. Install the TTF, select its “TextProv Demo P+” family in your editor, and open the <a href="./samples/marked-text.txt" download></a>marked text sample</a>. For the local-font example above, reload this page after installation.</p>
-        <ul></ul>
-          <li><a href="./fonts/maryheather-textprov-demo.zip" download>Maryhe</a>ather P+ demo font (ZIP, about 52 KB)</a> — derived from Merriweather; <a href="./fonts/maryheather-OFL.txt">SIL Open Font License</a>.</li>
+        <p>Try the fonts in your own editor. Each ZIP contains an installable TTF, a WOFF2 webfont, and licence notices. Install the TTF, select its “TextProv Demo P+” family in your editor, and open the <a href="./samples/marked-text.txt" download>marked text sample</a>. For the local-font example above, reload this page after installation.</p>
+        <ul>
+          <li><a href="./fonts/maryheather-textprov-demo.zip" download>Maryheather P+ demo font (ZIP, about 52 KB)</a> — derived from Merriweather; <a href="./fonts/maryheather-OFL.txt">SIL Open Font License</a>.</li>
           <li><a href="./fonts/zilla-textprov-demo.zip" download>Zilla Slab P+ demo font (ZIP, about 63 KB)</a> — derived from Zilla Slab; <a href="./fonts/zilla-OFL.txt">SIL Open Font License</a>.</li>
         </ul>
-        <p>These</p> are regular-weight Latin-text subsets from our <a href="https://github.com/delano/nerd-fonts">Nerd Fonts fork</a>, not full replacement fonts. They include Human and AI variants only. Mixed, edited, and unknown labels are displayed by the browser reader, not these fonts. Installing a font alone does not label any text.</p>
+        <p>These are regular-weight Latin-text subsets from our <a href="https://github.com/delano/nerd-fonts">Nerd Fonts fork</a>, not full replacement fonts. They include Human and AI variants only. Mixed, edited, and unknown labels are displayed by the browser reader, not these fonts. Installing a font alone does not label any text.</p>
         <p class="note">The source fonts' older third selector has a different meaning from TextProv v1, so it is deliberately excluded from these subsets. See the <a href="./fonts/README.txt">font build notes and attribution</a> or the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md">font and interchange guide</a>.</p>
         <p class="note">Font display depends on the application's text-rendering engine. The project's tests found that HarfBuzz displayed the selector variants while macOS CoreText did not. Keep selector-encoded text for sharing; the guide's private-use (PUA) samples require a matching font and are for controlled local experiments.</p>
       </section>
