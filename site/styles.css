@@ -28,6 +28,30 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "TextProv Web Agave Mono";
+  src: url("/fonts/agave-mono-textprov-demo.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TextProv Web Agave";
+  src: url("/fonts/agave-fixed-textprov-demo.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TextProv Web Agave Propo";
+  src: url("/fonts/agave-propo-textprov-demo.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 .font-sample {
   padding: 0.75rem 1rem;
   border-left: 2px solid var(--line);
@@ -43,6 +67,23 @@
 }
 .font-zilla {
   font-family: "TextProv Web Zilla", Georgia, serif;
+}
+.font-agave-mono {
+  font-family: "TextProv Web Agave Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+.font-agave-fixed {
+  font-family: "TextProv Web Agave", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+.font-agave-propo {
+  font-family: "TextProv Web Agave Propo", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+.code-sample {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  tab-size: 2;
 }
 
 :root {

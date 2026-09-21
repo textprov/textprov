@@ -19,6 +19,7 @@
         <a href="#try-it">Reader</a>
         <a href="./encoder.html">Encoder</a>
         <a href="#font-examples">Font examples</a>
+        <a href="#ide-fonts">In code</a>
         <a href="#use">Use it</a>
         <a href="./spec.html">Specification</a>
         <a href="https://github.com/textprov/textprov">GitHub&nbsp;↗</a>
@@ -137,12 +138,34 @@ ruby -I ruby/lib -r textprov -e 'puts Textprov.to_html(Textprov.mark("Hello", st
         <p>This prints HTML containing an AI-labelled span. <a href="https://github.com/textprov/textprov/blob/main/ruby/README.md">Ruby API and CLI reference →</a></p>
       </section>
 
+      <section id="ide-fonts" aria-labelledby="ide-fonts-title">
+        <h2 id="ide-fonts-title">Try it in code</h2>
+        <p>The same marked snippet rendered in three P+ variants of <a href="https://github.com/blobject/agave">Agave</a>, a monospaced code font. The first line is labelled Human; the two below it are labelled AI. Bytes are identical across all three samples; only the font differs.</p>
+
+        <h3>Agave Mono P+ (single-width cells)</h3>
+        <pre class="font-sample font-agave-mono code-sample" data-example="agave-mono">#󠄀 󠄀h󠄀u󠄀m󠄀a󠄀n󠄀 󠄀n󠄀o󠄀t󠄀e󠄀:󠄀 󠄀k󠄀e󠄀e󠄀p󠄀 󠄀t󠄀h󠄀e󠄀 󠄀s󠄀o󠄀r󠄀t󠄀 󠄀s󠄀t󠄀a󠄀b󠄀l󠄀e󠄀
+d󠄁e󠄁f󠄁 󠄁r󠄁a󠄁n󠄁k󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁)󠄁:󠄁
+ 󠄁 󠄁 󠄁 󠄁r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 󠄁s󠄁o󠄁r󠄁t󠄁e󠄁d󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁,󠄁 󠄁k󠄁e󠄁y󠄁=󠄁l󠄁a󠄁m󠄁b󠄁d󠄁a󠄁 󠄁x󠄁:󠄁 󠄁(󠄁-󠄁x󠄁.󠄁s󠄁c󠄁o󠄁r󠄁e󠄁,󠄁 󠄁x󠄁.󠄁n󠄁a󠄁m󠄁e󠄁)󠄁)󠄁</pre>
+        <p class="note">Best fit for editors and IDEs: fixed advance width, glyphs rendered in single-width cells.</p>
+
+        <h3>Agave P+ (fixed-width text, double-width icons)</h3>
+        <pre class="font-sample font-agave-fixed code-sample" data-example="agave-fixed">#󠄀 󠄀h󠄀u󠄀m󠄀a󠄀n󠄀 󠄀n󠄀o󠄀t󠄀e󠄀:󠄀 󠄀k󠄀e󠄀e󠄀p󠄀 󠄀t󠄀h󠄀e󠄀 󠄀s󠄀o󠄀r󠄀t󠄀 󠄀s󠄀t󠄀a󠄀b󠄀l󠄀e󠄀
+d󠄁e󠄁f󠄁 󠄁r󠄁a󠄁n󠄁k󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁)󠄁:󠄁
+ 󠄁 󠄁 󠄁 󠄁r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 󠄁s󠄁o󠄁r󠄁t󠄁e󠄁d󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁,󠄁 󠄁k󠄁e󠄁y󠄁=󠄁l󠄁a󠄁m󠄁b󠄁d󠄁a󠄁 󠄁x󠄁:󠄁 󠄁(󠄁-󠄁x󠄁.󠄁s󠄁c󠄁o󠄁r󠄁e󠄁,󠄁 󠄁x󠄁.󠄁n󠄁a󠄁m󠄁e󠄁)󠄁)󠄁</pre>
+        <p class="note">Terminal-friendly default: text is fixed-width, but Nerd Font icons occupy two cells so they align in a shell.</p>
+
+        <p>Install one of these TTFs in your editor to see marked source files render with the sawtooth underline in place. The <a href="#fonts">downloads below</a> include TTF, WOFF2, and licence notices.</p>
+      </section>
+
       <section id="fonts" aria-labelledby="fonts-title">
         <h2 id="fonts-title">Download example fonts</h2>
         <p>Try the fonts in your own editor. Each ZIP contains an installable TTF, a WOFF2 webfont, and licence notices. Install the TTF, select its “TextProv Demo P+” family in your editor, and open the <a href="./samples/marked-text.txt" download>marked text sample</a>. For the local-font example above, reload this page after installation.</p>
         <ul>
-          <li><a href="./fonts/maryheather-textprov-demo.zip" download>Maryheather P+ demo font (ZIP, about 52 KB)</a> — derived from Merriweather; <a href="./fonts/maryheather-OFL.txt">SIL Open Font License</a>.</li>
-          <li><a href="./fonts/zilla-textprov-demo.zip" download>Zilla Slab P+ demo font (ZIP, about 63 KB)</a> — derived from Zilla Slab; <a href="./fonts/zilla-OFL.txt">SIL Open Font License</a>.</li>
+          <li><a href="./fonts/maryheather-textprov-demo.zip" download>Maryheather P+ demo font (ZIP, about 52 KB)</a> — prose; derived from Merriweather; <a href="./fonts/maryheather-OFL.txt">SIL Open Font License</a>.</li>
+          <li><a href="./fonts/zilla-textprov-demo.zip" download>Zilla Slab P+ demo font (ZIP, about 63 KB)</a> — prose; derived from Zilla Slab; <a href="./fonts/zilla-OFL.txt">SIL Open Font License</a>.</li>
+          <li><a href="./fonts/agave-mono-textprov-demo.zip" download>Agave Mono P+ demo font (ZIP, about 45 KB)</a> — code, single-width cells; derived from Agave; <a href="./fonts/agave-OFL.txt">SIL Open Font License</a>.</li>
+          <li><a href="./fonts/agave-fixed-textprov-demo.zip" download>Agave P+ demo font (ZIP, about 45 KB)</a> — code, fixed-width text with double-width icons; derived from Agave; <a href="./fonts/agave-OFL.txt">SIL Open Font License</a>.</li>
+          <li><a href="./fonts/agave-propo-textprov-demo.zip" download>Agave Propo P+ demo font (ZIP, about 45 KB)</a> — proportional; derived from Agave; <a href="./fonts/agave-OFL.txt">SIL Open Font License</a>.</li>
         </ul>
         <p>These are regular-weight Latin-text subsets from our <a href="https://github.com/delano/nerd-fonts">Nerd Fonts fork</a>, not full replacement fonts. They include Human and AI variants only. Mixed, edited, and unknown labels are displayed by the browser reader, not these fonts. Installing a font alone does not label any text.</p>
         <p class="note">The source fonts' older third selector has a different meaning from TextProv v1, so it is deliberately excluded from these subsets. See the <a href="./fonts/README.txt">font build notes and attribution</a> or the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md">font and interchange guide</a>.</p>
