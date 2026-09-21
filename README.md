@@ -34,6 +34,37 @@ application or person adding a mark decides which label applies.
 The protocol gives applications a shared way to represent these labels, without
 requiring them to use the same tools or visual styles.
 
+## Alongside C2PA and sidecar metadata
+
+TextProv focuses on plain text and passages copied between applications. It
+complements C2PA (Content Credentials), rather than replacing its signed
+provenance records. TextProv is not a provenance format for images, audio, or
+video.
+
+C2PA uses cryptographic hashes and signatures to bind provenance records to
+digital assets. Its manifests can be embedded in supported formats or stored
+externally, including in a **sidecar**: a separate metadata file accompanying
+an asset. C2PA does not exclude plain text; its
+[technical specification, section 11.4](https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html),
+explicitly names `.txt` files as a reason to use an external manifest.
+
+TextProv addresses a different transfer boundary. Copying only a passage into
+another editor or message does not automatically carry the source document's
+manifest, sidecar, or verification context. TextProv labels are part of the
+character sequence and can accompany the passage without that surrounding
+metadata, provided the receiving software preserves the marks.
+
+A workflow could use TextProv for labels within the text and C2PA for a signed
+record bound to the marked file. Add marks before creating a manifest that
+binds those bytes: adding or removing marks changes the file's bytes. A copied
+passage does not inherit the original file's verified status merely because
+its labels remain.
+
+TextProv does not create or validate C2PA manifests, and its labels are not
+Content Credentials. This is coexistence at the workflow level, not a built-in
+integration. Neither an origin label nor a valid signature establishes factual
+accuracy.
+
 ## Using TextProv
 
 The reference implementations cover the common uses:

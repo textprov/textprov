@@ -85,6 +85,15 @@
         <p class="note">These label meanings are a TextProv convention, not Unicode-registered variation sequences. Software that does not understand TextProv usually shows the ordinary letters. Software that strips invisible characters can remove the labels, so test the path your text takes.</p>
       </section>
 
+      <section id="c2pa" aria-labelledby="c2pa-title">
+        <h2 id="c2pa-title">Alongside C2PA and sidecar metadata</h2>
+        <p>TextProv focuses on plain text and passages copied between applications. It complements C2PA (Content Credentials), rather than replacing its signed provenance records or extending TextProv to images, audio, or video.</p>
+        <p>C2PA binds provenance records to digital assets using cryptographic hashes and signatures. Its manifests can be embedded in supported formats or stored externally. A <em>sidecar</em> is a separate file holding metadata for an asset. C2PA does not exclude plain text: its <a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html">technical specification, section 11.4</a>, explicitly names <code>.txt</code> files as a reason to use an external manifest.</p>
+        <p>The distinction is what accompanies a copied passage. Copying only text into another editor or message does not automatically carry a sidecar file, a document's embedded manifest, or its verification context. TextProv puts origin labels in the character sequence, so a passage can retain its labels when copied without that surrounding metadata, provided the receiving software preserves the marks.</p>
+        <p>A workflow could use both: TextProv for labels within the text, and C2PA for a signed record bound to the marked file. Adding or removing marks changes the text's bytes, so that step belongs before creating a manifest that binds those bytes. A copied passage does not inherit the original file's verified status merely because its TextProv labels remain.</p>
+        <p class="note">TextProv does not create or validate C2PA manifests, and its labels are not Content Credentials. Coexistence is a workflow choice, not a built-in integration. Neither an origin label nor a valid signature establishes that the text is factually correct.</p>
+      </section>
+
       <section id="use" aria-labelledby="use-title">
         <h2 id="use-title">Use it</h2>
 
