@@ -336,10 +336,12 @@ package publication alone does not establish maturity.
 
 The [maturity lifecycle](docs/MATURITY.md) defines entry and exit criteria for
 **Draft → Candidate → Stable**, and retirement through **Deprecated**.
-Promotion requires a public maintainer decision with evidence. Candidate review
-lasts at least 30 days without changes to required behavior; Stable requires
-conformance results, an end-to-end integration, and an external interoperability
-exercise. No promotion is implied by this document's version numbers.
+Promotion requires a public maintainer decision with evidence; a short release
+note is sufficient. Candidate review lasts at least 30 days without changes to
+required behavior. Stable requires passing applicable checks from at least one
+maintained implementation and no unresolved release blockers; independent
+implementation or external participation is not required. See the lifecycle for
+the full criteria. No promotion is implied by this document's version numbers.
 
 The contract and registry versions advance independently. Each promotion record
 identifies the exact pair reviewed together. Registry allocation protections
