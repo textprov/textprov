@@ -18,7 +18,7 @@
       <nav aria-label="Primary navigation">
         <a href="#try-it">Reader</a>
         <a href="./encoder.html">Encoder</a>
-        <a href="#font-examples">See it</a>
+        <a href="#font-examples">Font examples</a>
         <a href="#use">Use it</a>
         <a href="./spec.html">Specification</a>
         <a href="https://github.com/textprov/textprov">GitHub&nbsp;↗</a>
@@ -29,15 +29,16 @@
       <section class="intro">
         <h1>TextProv</h1>
         <p class="tagline">Origin labels that travel with text: human-written, AI-generated, mixed, edited, or unknown. TextProv is an open protocol for keeping those disclosures in the text itself, rather than in a separate file or one application's metadata.</p>
-        <p class="tagline">Use it in an editor or content pipeline to label what you know about the text. For example, an AI-writing integration can label the passages it generates so an editor can see those disclosures during review. TextProv gives cooperating tools a shared way to preserve and display labels; it does not enforce honest disclosure.</p>
+        <p>Use it in an editor or content pipeline when you know how text was produced. For example, an AI-writing integration can label the passages it generates for review. TextProv lets cooperating tools preserve and display those labels; it does not enforce honest disclosure.</p>
+        <p><a href="#try-it">Read labels in your browser</a>, <a href="./encoder.html">add labels with the encoder</a>, or <a href="#use">integrate a package</a>. No special font is needed for these tasks.</p>
         <p>The labels can travel through copy, paste, and plain-text storage, as long as the receiving software preserves the marks.</p>
         <p class="note">A label is a claim about origin, not proof of authorship or a judgment about quality, accuracy, or trustworthiness. TextProv does not detect AI writing or authenticate the source of a claim. Anyone can add, change, or remove marks; unmarked text makes no claim about its origin.</p>
-        <p class="version-line">Contract v1 · Registry v1 · MIT licensed</p>
+        <p class="version-line">Protocol rules (contract) v1 · Code-point registry v1 · Code: MIT licensed</p>
       </section>
 
       <section id="font-examples" aria-labelledby="examples-title">
         <h2 id="examples-title">Marked text in four displays</h2>
-        <p>These examples contain different text, but all use the same embedded Human and AI labels. Each passage describes its expected appearance. The labels are part of the text before the browser displays it; JavaScript does not add them.</p>
+        <p>These examples show how fonts affect the display of marked text. The first passage is labelled AI; the others contain Human- and AI-labelled sentences. The labels are already in the text; JavaScript does not add them. A “P+” font is a font modified to display provenance marks.</p>
 
         <h3>Ordinary font</h3>
         <p class="font-sample" data-example="ordinary">T󠄁h󠄁i󠄁s󠄁 e󠄁n󠄁t󠄁i󠄁r󠄁e󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁I󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 f󠄁o󠄁n󠄁t󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 m󠄁a󠄁k󠄁e󠄁 i󠄁t󠄁 l󠄁o󠄁o󠄁k󠄁 l󠄁i󠄁k󠄁e󠄁 n󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁.󠄁</p>
@@ -77,8 +78,9 @@
 
       <section id="how" aria-labelledby="how-title">
         <h2 id="how-title">What travels with the text?</h2>
-        <p>TextProv adds normally invisible Unicode characters called <em>variation selectors</em> after the letters or symbols being labelled. A TextProv reader recognizes these marks and can show their meaning using underlines, colours, or other decorations.</p>
-        <p>A <em>code point</em> is a number identifying a character in Unicode. For example, <code>U+0041</code> identifies <code>A</code>. TextProv uses <code>U+E0101</code> as the AI label:</p>
+        <p>TextProv's default encoding adds normally invisible Unicode characters called <em>variation selectors</em> after the letters or symbols being labelled. A TextProv reader recognizes these marks and can show their meaning using underlines, colours, or other decorations.</p>
+        <p>Labels do not identify an author, model, or timestamp; a workflow must store those details separately. An explicit unknown label differs from unmarked text, which has no label.</p>
+                <p>A <em>code point</em> is a number identifying a character in Unicode. For example, <code>U+0041</code> identifies <code>A</code>. TextProv uses <code>U+E0101</code> as the AI label:</p>
 <pre><code>U+0041  U+E0101
    A    AI mark</code></pre>
         <p>Unicode defines the characters; <strong>UTF-8</strong> encodes them as bytes in a file or message. TextProv is not a replacement for UTF-8. A UTF-8 file can store both the letters and their marks; older encodings such as <strong>Latin-1</strong> cannot store these marks.</p>
@@ -87,25 +89,25 @@
 
       <section id="c2pa" aria-labelledby="c2pa-title">
         <h2 id="c2pa-title">Alongside C2PA and sidecar metadata</h2>
-        <p>TextProv focuses on plain text and passages copied between applications. It complements C2PA (Content Credentials), rather than replacing its signed provenance records or extending TextProv to images, audio, or video.</p>
-        <p>C2PA binds provenance records to digital assets using cryptographic hashes and signatures. Its manifests can be embedded in supported formats or stored externally. A <em>sidecar</em> is a separate file holding metadata for an asset. C2PA does not exclude plain text: its <a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html">technical specification, section 11.4</a>, explicitly names <code>.txt</code> files as a reason to use an external manifest.</p>
+        <p>TextProv focuses on plain text and passages copied between applications. It complements C2PA (Content Credentials), rather than replacing its signed provenance records. TextProv is not a provenance format for images, audio, or video.</p>
+        <p>C2PA binds provenance records to digital assets using cryptographic hashes and signatures. These records are packaged in <em>manifests</em></em>, which can be embedded in supported formats or stored externally. A <em>sidecar</em> is a separate file holding metadata for an asset. C2PA does not exclude plain text: its <a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html">technical specification, section 11.4</a>, explicitly names <code>.txt</code> files as a reason to use an external manifest.</p>
         <p>The distinction is what accompanies a copied passage. Copying only text into another editor or message does not automatically carry a sidecar file, a document's embedded manifest, or its verification context. TextProv puts origin labels in the character sequence, so a passage can retain its labels when copied without that surrounding metadata, provided the receiving software preserves the marks.</p>
         <p>A workflow could use both: TextProv for labels within the text, and C2PA for a signed record bound to the marked file. Adding or removing marks changes the text's bytes, so that step belongs before creating a manifest that binds those bytes. A copied passage does not inherit the original file's verified status merely because its TextProv labels remain.</p>
         <p class="note">TextProv does not create or validate C2PA manifests, and its labels are not Content Credentials. Coexistence is a workflow choice, not a built-in integration. Neither an origin label nor a valid signature establishes that the text is factually correct.</p>
       </section>
 
       <section id="use" aria-labelledby="use-title">
-        <h2 id="use-title">Use it</h2>
+        <h2 id="use-title">Use TextProv in your application</h2>
 
         <h3>Python: mark a file and read it back</h3>
-        <p>Requires Python 3.9+. Run these commands in a terminal on macOS or Linux. They create an isolated environment, install TextProv from PyPI, and write a marked UTF-8 file.</p>
+        <p>Requires Python 3.9+. Run these commands in a terminal on macOS or Linux, in a directory where you can create files. They overwrite <code>draft.txt</code> and <code>marked.txt</code> if those files already exist. They create an isolated environment, install TextProv from PyPI, and write a marked UTF-8 file.</p>
 <pre><code>python3 -m venv .venv
 .venv/bin/python -m pip install textprov
 printf 'Hello from TextProv.\n' &gt; draft.txt
 .venv/bin/python -m textprov -o marked.txt mark --ai draft.txt
 .venv/bin/python -m textprov inspect marked.txt</code></pre>
         <p>The report identifies AI-marked text even if your editor shows no decoration. Open <code>marked.txt</code> and paste its contents into the reader above to see the label.</p>
-        <p>In Python code, marking and rendering are separate operations:</p>
+        <p>Run <code>.venv/bin/python</code> to open a Python prompt in that environment, then try the API. Marking and rendering are separate operations; the HTML output needs CSS to make the label visible:</p>
 <pre><code>import textprov
 
 marked = textprov.mark("Hello", state="ai")
@@ -128,7 +130,7 @@ textprov.render(preview);</code></pre>
         <p><a href="https://github.com/textprov/textprov/blob/main/js/README.md">JavaScript API and script-tag setup →</a></p>
 
         <h3>Ruby: mark, read, and render</h3>
-        <p>The Ruby implementation provides the same core operations and a CLI. Requires Ruby 3.2+. To try the source without relying on a published gem:</p>
+        <p>The Ruby implementation can add marks, read them, and render HTML, and includes a command-line interface. Requires Ruby 3.2+ and Git for this source-based example. From the repository root, run only the last command; otherwise, clone the repository first:</p>
 <pre><code>git clone https://github.com/textprov/textprov.git
 cd textprov
 ruby -I ruby/lib -r textprov -e 'puts Textprov.to_html(Textprov.mark("Hello", state: "ai"))'</code></pre>
