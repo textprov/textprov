@@ -58,9 +58,8 @@ decoder. Under TextProv's registry, `U+100041` means the AI form of `A`; outside
 that agreement, it is only a private code point.
 
 A consumer without a matching provenance font (called a **P+ font**) may show
-a missing-glyph box. A
-A consumer without the private mapping cannot infer from Unicode alone that
-the code point stands for `A`.
+a missing-glyph box. A consumer without the private mapping cannot infer from
+Unicode alone that the code point stands for `A`.
 Copying it preserves the private code point, not the ordinary letter. Search,
 indexing, speech output, spell-checking, and other text operations therefore
 cannot be assumed to recover the base text.
@@ -87,15 +86,31 @@ Nerd Fonts' use of PUA demonstrates that PUA is effective inside an agreed font
 ecosystem. It does not give a PUA assignment universal Unicode meaning or make
 it portable outside that ecosystem.
 
-## What Zed on macOS reveals
+## Known limitation: selector glyphs on macOS CoreText
 
-The tested P+ font contains mappings from a base-plus-selector sequence to
-a decorated glyph. HarfBuzz honored those mappings in the recorded tests. The
-tested Zed version on macOS shapes text through CoreText, and a direct
-CoreText test did not select the decorated glyph
-for `<base, U+E0101>`. CoreText consumed the selector and emitted the plain base
-glyph. The text stayed readable and aligned, but the sawtooth provenance mark
-disappeared.
+In the project's recorded tests, HarfBuzz selected the P+ font's decorated
+glyphs for TextProv's base-plus-selector sequences. macOS CoreText rendered the
+plain base glyphs instead. The selectors remained in the stored text, so this
+was a font-display failure rather than loss of the provenance encoding.
+
+The demo fonts expose their Human and AI selector variants through a `cmap`
+format 14 Unicode Variation Sequences (UVS) subtable. The build scripts verify
+that the subtable contains `U+E0100` and `U+E0101`. TextProv's sequences are a
+private convention, not Unicode-registered variation sequences. HarfBuzz
+honored these private UVS mappings in the recorded tests; CoreText did not.
+
+A separate font design can use `ccmp` glyph-substitution rules instead of
+relying only on the format 14 mapping. That is a proposed CoreText compatibility
+route in the Nerd Fonts fork, not a feature of these demo fonts or a TextProv
+protocol requirement. Loading a P+ font is therefore not, by itself, a
+compatibility guarantee.
+
+On the tested macOS paths, Chromium used HarfBuzz and displayed the selector
+variants, while WebKit and the tested Zed version used CoreText and did not.
+Treat this as a record of tested engine paths, not a permanent guarantee about
+all Chrome, Safari, WebKit, or Zed versions.
+
+## Separate Zed invisible-character behavior
 
 The extra spacing and green underlines observed in Zed are a separate editor
 display artifact. Zed 1.18.1 classifies `U+E0100` through `U+E01EF` as invisible
@@ -104,6 +119,8 @@ grapheme in a highlighted chunk, Zed's invisible-character path can substitute
 `U+2007 FIGURE SPACE` and decorate it. This changes the display, not the buffer
 or saved file. The source path is known; the condition that caused the observed
 chunk boundaries has not been reproduced.
+
+## PUA as a controlled local workaround
 
 PUA avoids the known CoreText selector limitation in a direct test because the
 private code point maps straight to the decorated glyph. Zed also does not

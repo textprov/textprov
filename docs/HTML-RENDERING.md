@@ -18,7 +18,7 @@ Font-based rendering needs both a matching provenance font (called a **P+
 font**) and a text shaper that selects its decorated glyphs. Installing or
 serving the font alone is not enough. In the recorded CoreText tests, selectors
 remained in the text but did not select those glyphs. See the
-[font and interchange guide](SELECTORS-PUA-AND-INTERCHANGE.md#what-zed-on-macos-reveals)
+[font and interchange guide](SELECTORS-PUA-AND-INTERCHANGE.md#known-limitation-selector-glyphs-on-macos-coretext)
 for the evidence and limits.
 
 A span decorator avoids that font-substitution dependency. Readers need no
