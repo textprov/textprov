@@ -13,7 +13,7 @@ from pathlib import Path
 
 MAPPING_PATH = Path(__file__).with_name("mapping.json")
 
-CONTRACT_VERSION = "0.1"  # see SPEC.md
+SPEC_VERSION = "0.1"  # see SPEC.md
 GENERATED_STATES = ("human", "ai", "mixed")
 PROPOSED_STATES = ("edited", "unknown")
 
@@ -144,7 +144,7 @@ def _strip(text, selectors, pua2base):
 def _runs(text, selectors, pua2base, strip=False, merge_whitespace=True):
     """Split `text` into an ordered list of (state, text) runs.
 
-    Implements the decorator contract in SPEC.md version 0.1. `state` is a
+    Implements the decorator specification in SPEC.md version 0.1. `state` is a
     selector name from mapping.json's variation_selectors, or None.
     """
     sel_cps = set(selectors.values())
@@ -209,7 +209,7 @@ def _to_html(
     merge_whitespace=True,
     class_prefix="prov",
 ):
-    """Render `text` as HTML spans per the decorator contract's Markup section."""
+    """Render `text` as HTML spans per the decorator specification's Markup section."""
     parts = []
     for state, out in _runs(text, selectors, pua2base, strip, merge_whitespace):
         escaped = html.escape(out)
@@ -237,7 +237,7 @@ def runs(text, mapping=None, strip=False, merge_whitespace=True):
 def to_html(
     text, mapping=None, strip=False, merge_whitespace=True, class_prefix="prov"
 ):
-    """Render `text` as HTML spans per the contract's Markup section."""
+    """Render `text` as HTML spans per the specification's Markup section."""
     mapping = mapping or default_mapping()
     return _to_html(
         text,

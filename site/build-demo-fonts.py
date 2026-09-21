@@ -40,7 +40,7 @@ for folder, display, filename, archive, license_path in fonts:
     options.name_legacy = True
     options.name_languages = ["*"]
     worker = subset.Subsetter(options=options)
-    # The source's E0102 is a legacy unknown glyph, not TextProv v1 mixed.
+    # The source's E0102 is a legacy unknown glyph, not TextProv 0.1 mixed.
     worker.populate(unicodes=list(range(0x20, 0x100)) + [0xE0100, 0xE0101])
     worker.subset(font)
     family = display + " TextProv Demo P+"

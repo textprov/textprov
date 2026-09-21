@@ -56,7 +56,7 @@ including whitespace and lone selectors. In summary:
    [specification's limits](../SPEC.md#not-specified).
 2. Read recognized selectors (`U+E0100`–`U+E0104`) or registered PUA entries
    using the [registry](../mapping.json). A lone selector or a selector after
-   whitespace is not a mark under the contract.
+   whitespace is not a mark under the specification.
 3. Coalesce adjacent clusters with the same state. By default, absorb
    whitespace between two runs of the same non-null state, then coalesce again.
 4. Emit spans for marked runs and text for the rest.
@@ -92,7 +92,7 @@ the text nodes; do not wrap Markdown source in spans before parsing it.
   its state remain available without a P+ font. With `strip`, only the base
   character remains.
 
-The markup and decoder options are part of the contract. The visual style is
+The markup and decoder options are part of the specification. The visual style is
 not. The optional [stylesheet](../js/textprov.css) uses a wavy underline for
 `ai`, a solid underline for `unknown`, and other styles for the remaining states.
 
@@ -122,7 +122,7 @@ in the selector-encoded form.
 
 At measurement time, the prototype decoded PUA to bare base characters. That
 explains the zero in the last row. It was subsequently changed to emit base
-plus selector, as the current contract requires; the table does not measure
+plus selector, as the current specification requires; the table does not measure
 that revised behavior.
 
 A destination that preserves the selection's selectors receives the encoding

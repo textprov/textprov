@@ -41,7 +41,7 @@ state applies is the integration's problem, not the protocol's.
 `fixtures.json` gains `producer_cases` and `convert_cases` beside the decoder
 `cases`. Recorded cases alone cannot cover the input space, so the reference
 suite also tests the four properties directly. This is additive: the decoder
-contract did not change, so the contract version stays 1. An implementation
+specification did not change, so the specification version stays 0.1. An implementation
 that only reads marks ignores the new arrays.
 
 The role vocabulary in `SPEC.md` is now producer, decoder, renderer, where

@@ -6,7 +6,7 @@ require "cgi"
 require "json"
 
 module Textprov
-  CONTRACT_VERSION = "0.1"
+  SPEC_VERSION = "0.1"
   GENERATED_STATES = %w[human ai mixed].freeze
   PROPOSED_STATES  = %w[edited unknown].freeze
 
@@ -181,7 +181,7 @@ module Textprov
     parts.join
   end
 
-  # Public API accepts either merge_whitespace (contract spelling) or
+  # Public API accepts either merge_whitespace (specification spelling) or
   # mergeWhitespace (camelCase alias per SPEC's cross-language rule).
   def runs(text, mapping: nil, strip: false, merge_whitespace: nil, mergeWhitespace: nil)
     mw = if merge_whitespace.nil?

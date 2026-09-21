@@ -1,6 +1,6 @@
 {
- "contract_version": "0.1",
- "mapping_version": "0.1",
+ "spec_version": "0.1",
+ "registry_version": "0.1",
  "cases": [
   {
    "name": "plain text, no marks",

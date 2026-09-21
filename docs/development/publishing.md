@@ -181,7 +181,7 @@ in `package.json`:
   cd /tmp/textprov-npm
   npm init -y
   npm install ./textprov-X.Y.Z.tgz
-  node -e 'console.log(require("textprov").contractVersion)'
+  node -e 'console.log(require("textprov").specVersion)'
 )
 ```
 
@@ -209,7 +209,7 @@ mkdir /tmp/textprov-npm-registry
   cd /tmp/textprov-npm-registry
   npm init -y
   npm install textprov@X.Y.Z
-  node -e 'console.log(require("textprov").contractVersion)'
+  node -e 'console.log(require("textprov").specVersion)'
 )
 ```
 

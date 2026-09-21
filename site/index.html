@@ -16,13 +16,11 @@
     <header class="site-header">
       <a class="wordmark" href="./">TextProv</a>
       <nav aria-label="Primary navigation">
-        <a href="#try-it">Reader</a>
-        <a href="./encoder.html">Encoder</a>
-        <a href="#font-examples">Font examples</a>
-        <a href="#ide-fonts">In code</a>
-        <a href="#use">Use it</a>
-        <a href="./spec.html">Specification</a>
-        <a href="https://github.com/textprov/textprov">GitHub&nbsp;↗</a>
+        <a href="#how">How it works</a>
+        <a href="#font-examples">Examples</a>
+        <a href="#try-it">Try it</a>
+        <a href="#use-cases">Use cases</a>
+        <a href="/spec.html">Spec</a>
       </nav>
     </header>
 
@@ -31,14 +29,14 @@
         <h1>TextProv</h1>
         <p class="tagline">Origin labels that travel with text: human-written, AI-generated, mixed, edited, or unknown. TextProv is an open protocol for keeping those disclosures in the text itself, rather than in a separate file or one application's metadata.</p>
         <p>Use it in an editor or content pipeline when you know how text was produced. For example, an AI-writing integration can label the passages it generates for review. TextProv lets cooperating tools preserve and display those labels; it does not enforce honest disclosure.</p>
-        <p><a href="#try-it">Read labels in your browser</a>, <a href="./encoder.html">add labels with the encoder</a>, or <a href="#use">integrate a package</a>. No special font is needed for these tasks.</p>
+        <p><a href="#try-it">Read labels in your browser</a>, <a href="./encoder.html">add labels with the encoder</a>, or <a href="#use-cases">explore use cases</a>. No special font is needed for these tasks.</p>
         <p>The labels can travel through copy, paste, and plain-text storage, as long as the receiving software preserves the marks.</p>
         <p class="note">A label is a claim about origin, not proof of authorship or a judgment about quality, accuracy, or trustworthiness. TextProv does not detect AI writing or authenticate the source of a claim. Anyone can add, change, or remove marks; unmarked text makes no claim about its origin.</p>
-        <p class="version-line">Protocol rules (contract) v1 · Code-point registry v1 · Code: MIT licensed</p>
+        <p class="version-line">Draft · Specification v0.1 · Registry v0.1 · Code: MIT licensed</p>
       </section>
 
       <section id="font-examples" aria-labelledby="examples-title">
-        <h2 id="examples-title">Marked text in four displays</h2>
+        <h2 id="examples-title">What does it look like?</h2>
         <p>These examples show how fonts affect the display of marked text. The first passage is labelled AI; the others contain Human- and AI-labelled sentences. The labels are already in the text; JavaScript does not add them. A “P+” font is a font modified to display provenance marks.</p>
 
         <h3>Ordinary font</h3>
@@ -78,7 +76,7 @@
       </section>
 
       <section id="how" aria-labelledby="how-title">
-        <h2 id="how-title">What travels with the text?</h2>
+        <h2 id="how-title">How does it work?</h2>
         <p>TextProv's default encoding adds normally invisible Unicode characters called <em>variation selectors</em> after the letters or symbols being labelled. A TextProv reader recognizes these marks and can show their meaning using underlines, colours, or other decorations.</p>
         <p>Labels do not identify an author, model, or timestamp; a workflow must store those details separately. An explicit unknown label differs from unmarked text, which has no label.</p>
                 <p>A <em>code point</em> is a number identifying a character in Unicode. For example, <code>U+0041</code> identifies <code>A</code>. TextProv uses <code>U+E0101</code> as the AI label:</p>
@@ -89,53 +87,44 @@
       </section>
 
       <section id="c2pa" aria-labelledby="c2pa-title">
-        <h2 id="c2pa-title">Alongside C2PA and sidecar metadata</h2>
-        <p>TextProv focuses on plain text and passages copied between applications. It complements C2PA (Content Credentials), rather than replacing its signed provenance records. TextProv is not a provenance format for images, audio, or video.</p>
-        <p>C2PA binds provenance records to digital assets using cryptographic hashes and signatures. These records are packaged in <em>manifests</em></em>, which can be embedded in supported formats or stored externally. A <em>sidecar</em> is a separate file holding metadata for an asset. C2PA does not exclude plain text: its <a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html">technical specification, section 11.4</a>, explicitly names <code>.txt</code> files as a reason to use an external manifest.</p>
-        <p>The distinction is what accompanies a copied passage. Copying only text into another editor or message does not automatically carry a sidecar file, a document's embedded manifest, or its verification context. TextProv puts origin labels in the character sequence, so a passage can retain its labels when copied without that surrounding metadata, provided the receiving software preserves the marks.</p>
-        <p>A workflow could use both: TextProv for labels within the text, and C2PA for a signed record bound to the marked file. Adding or removing marks changes the text's bytes, so that step belongs before creating a manifest that binds those bytes. A copied passage does not inherit the original file's verified status merely because its TextProv labels remain.</p>
-        <p class="note">TextProv does not create or validate C2PA manifests, and its labels are not Content Credentials. Coexistence is a workflow choice, not a built-in integration. Neither an origin label nor a valid signature establishes that the text is factually correct.</p>
+        <h2 id="c2pa-title">Does TextProv prove a label is true?</h2>
+        <p class="thesis">No. TextProv standardizes the transport of origin declarations; it does not verify them.</p>
+        <p>A TextProv workflow has four independent steps:</p>
+        <pre class="pipeline">integration decides → producer marks → transport preserves → consumer interprets</pre>
+        <p>The protocol defines only the middle two: how a producer encodes a state and how a consumer decodes it. It says nothing about how the state was chosen, whether the declaration is honest, or whether the consumer should act on it. A false declaration can be correctly encoded, and a valid decoder can report it without endorsing it.</p>
+        <p>An advisory protocol can still be useful. <a href="https://www.rfc-editor.org/rfc/rfc9309.html"><code>robots.txt</code></a>, canonical links, <a href="https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions/">SPDX license expressions</a>, Semantic Versioning, and RSS all standardize a declaration without proving it is true. Honest participants benefit from a shared vocabulary; adversarial ones cannot be stopped by the format itself. TextProv makes the same trade for origin labels.</p>
+        <p>If you need cryptographic proof of who produced a file and whether it has been altered, that is a different problem. One answer is <a href="https://c2pa.org">C2PA</a>: a signed <em>manifest</em> bound to a file's bytes, shown to readers as Content Credentials. Plain text needs a sidecar file for this — the <a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html#_external_manifests">specification, section 11.4</a>, gives <code>.txt</code> as its example of a format that cannot embed a manifest.</p>
+        <p>The two approaches survive different things. Select a passage and paste it into a message, and the sidecar, manifest, and signature stay behind with the original file; TextProv labels live in the character sequence itself and travel with the passage. The approaches combine cleanly: mark the text with TextProv, then sign the marked file with C2PA. A copied passage keeps its labels but not the file's signature, so it does not inherit the file's verified status.</p>
+        <p class="note">TextProv does not create or validate C2PA manifests, and its labels are not Content Credentials. Neither an origin label nor a valid signature says anything about whether the text is factually correct.</p>
       </section>
 
-      <section id="use" aria-labelledby="use-title">
-        <h2 id="use-title">Use TextProv in your application</h2>
+      <section id="use-cases" aria-labelledby="use-cases-title">
+        <h2 id="use-cases-title">Use cases</h2>
+        <p class="use-cases-intro">TextProv can carry passage-level origin labels through workflows where text moves between files, tools, and people.</p>
 
-        <h3>Python: mark a file and read it back</h3>
-        <p>Requires Python 3.9+. Run these commands in a terminal on macOS or Linux, in a directory where you can create files. They overwrite <code>draft.txt</code> and <code>marked.txt</code> if those files already exist. They create an isolated environment, install TextProv from PyPI, and write a marked UTF-8 file.</p>
-<pre><code>python3 -m venv .venv
-.venv/bin/python -m pip install textprov
-printf 'Hello from TextProv.\n' &gt; draft.txt
-.venv/bin/python -m textprov -o marked.txt mark --ai draft.txt
-.venv/bin/python -m textprov inspect marked.txt</code></pre>
-        <p>The report identifies AI-marked text even if your editor shows no decoration. Open <code>marked.txt</code> and paste its contents into the reader above to see the label.</p>
-        <p>Run <code>.venv/bin/python</code> to open a Python prompt in that environment, then try the API. Marking and rendering are separate operations; the HTML output needs CSS to make the label visible:</p>
-<pre><code>import textprov
+        <div class="use-case-grid">
+          <article class="use-case-card">
+            <h3>Writers tracking drafts</h3>
+            <p>Bloggers, journalists, and other writers can distinguish their own prose from AI-generated passages while drafting. The labels remain attached when compatible tools preserve the Unicode marks.</p>
+          </article>
 
-marked = textprov.mark("Hello", state="ai")
-print(textprov.to_html(marked))
-print(textprov.strip_marks(marked))  <span class="comment"># Hello</span></code></pre>
-        <p><a href="https://github.com/textprov/textprov/blob/main/python/README.md">Python API and CLI reference →</a></p>
+          <article class="use-case-card">
+            <h3>Developers reviewing AI-assisted code</h3>
+            <p>Developers can mark generated code and comments so collaborators know which passages may need extra review, testing, or explanation.</p>
+          </article>
 
-        <h3>JavaScript: display existing marks</h3>
-        <p>The npm package reads marks; it does not add them. Install it in your web project:</p>
-<pre><code>npm install textprov</code></pre>
-        <p>With a bundler that supports CSS imports, render a container after adding its text:</p>
-<pre><code>import textprov from "textprov";
-import "textprov/textprov.css";
+          <article class="use-case-card">
+            <h3>Auditing content</h3>
+            <p>Auditors, editors, and compliance reviewers can inspect labelled passages in place, without relying on a particular document format or a separate metadata file.</p>
+          </article>
 
-const preview = document.createElement("p");
-preview.textContent = "A\u{E0101}"; <span class="comment">// A followed by the AI mark</span>
-document.body.append(preview);
-textprov.render(preview);</code></pre>
-        <p>The result is an AI-labelled <code>A</code>, styled without a special font. The reader wraps marked text in HTML spans with a <code>data-prov</code> attribute. The bundled CSS is optional; applications can choose their own presentation.</p>
-        <p><a href="https://github.com/textprov/textprov/blob/main/js/README.md">JavaScript API and script-tag setup →</a></p>
+          <article class="use-case-card">
+            <h3>Publishing and collaboration tools</h3>
+            <p>Applications can retain origin labels when accepting, storing, displaying, and exporting text. Implementations are available for <a href="https://github.com/textprov/textprov/blob/main/python/README.md">Python</a>, <a href="https://github.com/textprov/textprov/blob/main/js/README.md">JavaScript</a>, and <a href="https://github.com/textprov/textprov/blob/main/ruby/README.md">Ruby</a>.</p>
+          </article>
+        </div>
 
-        <h3>Ruby: mark, read, and render</h3>
-        <p>The Ruby implementation can add marks, read them, and render HTML, and includes a command-line interface. Requires Ruby 3.2+ and Git for this source-based example. From the repository root, run only the last command; otherwise, clone the repository first:</p>
-<pre><code>git clone https://github.com/textprov/textprov.git
-cd textprov
-ruby -I ruby/lib -r textprov -e 'puts Textprov.to_html(Textprov.mark("Hello", state: "ai"))'</code></pre>
-        <p>This prints HTML containing an AI-labelled span. <a href="https://github.com/textprov/textprov/blob/main/ruby/README.md">Ruby API and CLI reference →</a></p>
+        <p class="note use-cases-note">A TextProv label records a claim about a passage's origin. It does not prove authorship, accuracy, or whether the passage was later edited.</p>
       </section>
 
       <section id="ide-fonts" aria-labelledby="ide-fonts-title">
@@ -152,24 +141,70 @@ d󠄁e󠄁f󠄁 󠄁r󠄁a󠄁n󠄁k󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁)󠄁:󠄁
       </section>
 
       <section id="fonts" aria-labelledby="fonts-title">
-        <h2 id="fonts-title">Download example fonts</h2>
-        <p>Try the fonts in your own editor. Each ZIP contains an installable TTF, a WOFF2 webfont, and licence notices. Install the TTF, select its “TextProv Demo P+” family in your editor, and open the <a href="./samples/marked-text.txt" download>marked text sample</a>. For the local-font example above, reload this page after installation.</p>
-        <ul>
-          <li><a href="./fonts/maryheather-textprov-demo.zip" download>Maryheather P+ demo font (ZIP, about 52 KB)</a> — prose; derived from Merriweather; <a href="./fonts/maryheather-OFL.txt">SIL Open Font License</a>.</li>
-          <li><a href="./fonts/zilla-textprov-demo.zip" download>Zilla Slab P+ demo font (ZIP, about 63 KB)</a> — prose; derived from Zilla Slab; <a href="./fonts/zilla-OFL.txt">SIL Open Font License</a>.</li>
-          <li><a href="./fonts/agave-mono-textprov-demo.zip" download>Agave Mono P+ demo font (ZIP, about 45 KB)</a> — code, single-width cells; derived from Agave; <a href="./fonts/agave-OFL.txt">SIL Open Font License</a>.</li>
-          <li><a href="./fonts/agave-fixed-textprov-demo.zip" download>Agave P+ demo font (ZIP, about 45 KB)</a> — code, fixed-width text with double-width icons; derived from Agave; <a href="./fonts/agave-OFL.txt">SIL Open Font License</a>.</li>
-          <li><a href="./fonts/agave-propo-textprov-demo.zip" download>Agave Propo P+ demo font (ZIP, about 45 KB)</a> — proportional; derived from Agave; <a href="./fonts/agave-OFL.txt">SIL Open Font License</a>.</li>
-        </ul>
-        <p>These are regular-weight Latin-text subsets from our <a href="https://github.com/delano/nerd-fonts">Nerd Fonts fork</a>, not full replacement fonts. They include Human and AI variants only. Mixed, edited, and unknown labels are displayed by the browser reader, not these fonts. Installing a font alone does not label any text.</p>
-        <p class="note">The source fonts' older third selector has a different meaning from TextProv 0.1, so it is deliberately excluded from these subsets. See the <a href="./fonts/README.txt">font build notes and attribution</a> or the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md">font and interchange guide</a>.</p>
-        <p class="note"><strong>Known macOS limitation:</strong> in the project's recorded tests, HarfBuzz displayed the demo fonts' private selector variants while CoreText rendered plain base glyphs. The selectors remained in the text. The demo fonts use <code>cmap</code> format 14 mappings; loading one is not by itself a compatibility guarantee. Keep selector-encoded text for sharing, and see the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md#known-limitation-selector-glyphs-on-macos-coretext">CoreText limitation and evidence</a>.</p>
+        <h2 id="fonts-title">See labels in your editor</h2>
+        <p>These demo fonts can display Human and AI labels in TextProv-marked text. Installing a</p> font does not add labels to ordinary text.</p>
+
+        <div class="font-download-grid">
+          <article class="font-download-card">
+            <p class="font-use">For reading and writing</p>
+            <h3>Maryheather</h3>
+            <p class="font-card-sample font-maryheather">Human text stays plain. A󠄁I󠄁 t󠄁e󠄁x󠄁t󠄁 gains a mark.</p>
+            <p>A serif font for prose, derived from Merriweather.</p>
+            <a class="download-link" href="./fonts/maryheather-textprov-demo.zip" download>Download Maryheather <span>(ZIP, about 52 KB)</span></a>
+          </article>
+          <article class="font-download-card">
+            <p class="font-use">For code</p>
+            <h3>Agave Mono</h3>
+            <pre class="font-card-sample font-agave-mono"><code># human note
+r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 result</code></pre>
+            <p>A monospaced font for code with single-width cells.</p>
+            <a class="download-link" href="./fonts/agave-mono-textprov-demo.zip" download>Download Agave Mono <span>(ZIP, about 45 KB)</span></a>
+          </article>
+        </div>
+
+        <h3>Try a font</h3>
+        <ol class="setup-steps">
+          <li>Download and unzip it.</li>
+          <li>Install the <code>.ttf</code> font file.</li>
+          <li>Select its “TextProv Demo P+” family in your editor.</li>
+          <li>Open the <a href="./samples/marked-text.txt" download>marked text sample</a>. Reload this page to update the local-font example above.</li>
+        </ol>
+
+        <p class="font-warning"><strong>Mac users:</strong> In the project's recorded tests, some rendering systems showed ordinary characters instead of labels. The labels remained in the text, but installing a font does not guarantee they will appear. <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md#known-limitation-selector-glyphs-on-macos-coretext">View compatibility details</a>.</p>
+
+        <details>
+          <summary>More font choices</summary>
+          <ul>
+            <li><a href="./fonts/zilla-textprov-demo.zip" download>Zilla Slab</a> — serif prose font derived from Zilla Slab (ZIP, about 63 KB).</li>
+            <li><a href="./fonts/agave-fixed-textprov-demo.zip" download>Agave</a> — fixed-width text with double-width icons (ZIP, about 45 KB).</li>
+            <li><a href="./fonts/agave-propo-textprov-demo.zip" download>Agave Propo</a> — proportional font derived from Agave (ZIP, about 45 KB).</li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>What is included and supported?</summary>
+          <p>Each ZIP contains an installable TTF, a WOFF2 webfont, and licence notices. These are regular-weight Latin-text subsets from our <a href="https://github.com/delano/nerd-fonts">Nerd Fonts fork</a>, not full replacement fonts.</p>
+          <p>They include Human and AI variants only. Mixed, edited, and unknown labels are displayed by the browser reader, not these fonts.</p>
+        </details>
+
+        <details>
+          <summary>Where these fonts come from</summary>
+          <p>The demo fonts are built from <a href="https://github.com/delano/nerd-fonts">delano/nerd-fonts</a>, a fork of <a href="https://github.com/ryanoasis/nerd-fonts">ryanoasis/nerd-fonts</a> that adds a TextProv provenance patch. The fork's font patcher inserts <code>cmap</code> format 14 mappings for the Human and AI selectors, so the resulting <code>P+</code> variants render marks the base fonts otherwise ignore.</p>
+          <p>To reproduce a build, clone the fork, install the patcher's dependencies, and run it against an unpatched source font with the <code>--provenance</code> option. The <a href="https://github.com/delano/nerd-fonts#textprov-provenance-marks">fork README</a> documents the flags; the <a href="./fonts/README.txt">font build notes</a> record the exact sources and options used for the ZIPs above.</p>
+        </details>
+
+        <details>
+          <summary>Licensing and technical details</summary>
+          <p>Maryheather and Zilla Slab are available under the <a href="./fonts/maryheather-OFL.txt">SIL Open Font License</a>. The Agave variants use the <a href="./fonts/agave-OFL.txt">SIL Open Font License</a>.</p>
+          <p>The source fonts' older third selector has a different meaning from TextProv 0.1, so it is deliberately excluded from these subsets. See the <a href="./fonts/README.txt">font build notes and attribution</a> or the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md">font and interchange guide</a>.</p>
+          <p>The demo fonts use <code>cmap</code> format 14 mappings. Keep selector-encoded text for sharing; font rendering is only one way to display its labels.</p>
+        </details>
       </section>
 
       <section id="repo" aria-labelledby="repo-title">
         <h2 id="repo-title">Implement the protocol</h2>
         <p>The protocol is Draft 0.1 and may change incompatibly. Start with the <a href="./spec.html">specification</a> for its maturity, label meanings, and encoding rules; the <a href="https://github.com/textprov/textprov/blob/main/mapping.json">code-point registry</a> for the assigned marks; and the <a href="https://github.com/textprov/textprov/blob/main/fixtures.json">conformance fixtures</a> to check your implementation.</p>
-        <p><a href="https://github.com/textprov/textprov">Browse the repository ↗</a> · <a href="https://github.com/textprov/textprov/issues">Report an issue</a></p>
+        <p><a href="https://github.com/textprov/textprov">Browse the repository ↗</a> · <a href="https://github.com/textprov/textprov/discussions">Join the discussion</a> · <a href="https://github.com/textprov/textprov/issues">Report an issue</a></p>
       </section>
     </main>
 

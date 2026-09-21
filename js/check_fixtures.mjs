@@ -55,20 +55,20 @@ if (!same(textprov.mapping.puaRanges, ranges)) {
 if (textprov.mapping.version !== map.version) {
   fail++;
   console.log(
-    `FAIL mapping version: textprov.js ${textprov.mapping.version}, mapping.json ${map.version}`,
+    `FAIL registry version: textprov.js ${textprov.mapping.version}, mapping.json ${map.version}`,
   );
 }
 
-if (textprov.contractVersion !== fx.contract_version) {
+if (textprov.specVersion !== fx.spec_version) {
   fail++;
   console.log(
-    `FAIL contract version: implementation ${textprov.contractVersion}, fixture ${fx.contract_version}`,
+    `FAIL specification version: implementation ${textprov.specVersion}, fixture ${fx.spec_version}`,
   );
 }
-if (textprov.mappingVersion !== fx.mapping_version) {
+if (textprov.registryVersion !== fx.registry_version) {
   fail++;
   console.log(
-    `FAIL mapping version: implementation ${textprov.mappingVersion}, fixture ${fx.mapping_version}`,
+    `FAIL registry version: implementation ${textprov.registryVersion}, fixture ${fx.registry_version}`,
   );
 }
 for (const c of fx.cases) {

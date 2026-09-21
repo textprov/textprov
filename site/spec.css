@@ -99,8 +99,15 @@
     monospace;
 }
 
-.spec-toc-depth-2 > li > a .spec-toc-text {
+.spec-toc-depth-1 > li > a .spec-toc-text {
   font-weight: 600;
+  color: var(--text);
+}
+.spec-toc-depth-2 > li > a .spec-toc-text {
+  font-weight: 400;
+  color: var(--muted);
+}
+.spec-toc-depth-2 > li > a:hover .spec-toc-text {
   color: var(--text);
 }
 

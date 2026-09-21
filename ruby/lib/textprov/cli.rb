@@ -32,7 +32,7 @@ module Textprov
     end
 
     def version_string
-      "#{PROG} #{Textprov::VERSION} (contract #{Textprov::CONTRACT_VERSION}, mapping #{Textprov.default_mapping.version})"
+      "#{PROG} #{Textprov::VERSION} (specification #{Textprov::SPEC_VERSION}, registry #{Textprov.default_mapping.version})"
     end
 
     def usage

@@ -74,6 +74,75 @@ import "../js/textprov.js";
     }, 1000);
   }
 
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+
+    return new Promise(function (resolve, reject) {
+      var textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        if (!document.execCommand("copy")) throw new Error("Copy command failed");
+        resolve();
+      } catch (error) {
+        reject(error);
+      } finally {
+        textarea.remove();
+      }
+    });
+  }
+
+  function addSampleCopyButtons() {
+    var selectorPattern = /[\u{E0100}-\u{E01EF}]/u;
+    var targets = new Set(document.querySelectorAll("blockquote"));
+
+    document.querySelectorAll("main p, main pre").forEach(function (element) {
+      if (selectorPattern.test(element.textContent)) targets.add(element);
+    });
+
+    targets.forEach(function (target) {
+      if (!target || !target.dataset || typeof target.insertAdjacentElement !== "function") return;
+      if (target.dataset.copyButton === "true") return;
+      target.dataset.copyButton = "true";
+
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "sample-copy-button";
+      button.textContent = "Copy";
+      button.setAttribute(
+        "aria-label",
+        selectorPattern.test(target.textContent) ? "Copy marked text" : "Copy sample text",
+      );
+
+      button.addEventListener("click", function () {
+        copyText(target.textContent).then(
+          function () {
+            button.textContent = "Copied";
+          },
+          function () {
+            button.textContent = "Copy failed";
+          },
+        );
+        window.setTimeout(function () {
+          button.textContent = "Copy";
+        }, 2000);
+      });
+
+      var wrapper = document.createElement("div");
+      wrapper.className = "sample-copy-wrapper";
+      target.insertAdjacentElement("beforebegin", wrapper);
+      wrapper.appendChild(target);
+      wrapper.appendChild(button);
+    });
+  }
+
   function checkText() {
     var text = document.getElementById("check-input").value;
     var output = document.getElementById("check-output");
@@ -112,6 +181,8 @@ import "../js/textprov.js";
     checkInput.addEventListener("input", checkText);
   }
 
+  addSampleCopyButtons();
+
   function detectSelectorRendering() {
     try {
       if (!document.fonts || typeof document.fonts.ready === "undefined") return;
@@ -120,8 +191,7 @@ import "../js/textprov.js";
       if (!ctx) return;
 
       var ua = navigator.userAgent || "";
-      var isSafari =
-        /Safari/.test(ua) && !/Chrome|Chromium|Android/.test(ua);
+      var isSafari = /Safari/.test(ua) && !/Chrome|Chromium|Android/.test(ua);
       var message = isSafari
         ? "Your browser did not render the variation-selector marks for this sample. This is a known limitation of Safari with the current demo fonts."
         : "Your browser did not render the variation-selector marks for this sample.";
@@ -132,12 +202,11 @@ import "../js/textprov.js";
 
       samples.forEach(function (el) {
         if (el.dataset.example === "ordinary") return;
-        if (el.nextElementSibling && el.nextElementSibling.classList.contains("sample-warning")) return;
-
+        if (el.nextElementSibling && el.nextElementSibling.classList.contains("sample-warning"))
+          return;
         var cs = window.getComputedStyle(el);
         var size = Math.max(parseFloat(cs.fontSize) || 16, 64);
-        var font =
-          cs.fontStyle + " " + cs.fontWeight + " " + size + "px " + cs.fontFamily;
+        var font = cs.fontStyle + " " + cs.fontWeight + " " + size + "px " + cs.fontFamily;
 
         canvas.width = Math.ceil(size * 3);
         canvas.height = Math.ceil(size * 2);
