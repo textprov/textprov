@@ -36,7 +36,7 @@
       </section>
 
       <section id="font-examples" aria-labelledby="examples-title">
-        <h2 id="examples-title">See how labels appear in different fonts</h2>
+        <h2 id="examples-title">What does it look like?</h2>
         <p>These examples show how fonts affect the display of marked text. The first passage is labelled AI; the others contain Human- and AI-labelled sentences. The labels are already in the text; JavaScript does not add them. A “P+” font is a font modified to display provenance marks.</p>
 
         <h3>Ordinary font</h3>
@@ -185,6 +185,12 @@ r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 result</code></pre>
           <summary>What is included and supported?</summary>
           <p>Each ZIP contains an installable TTF, a WOFF2 webfont, and licence notices. These are regular-weight Latin-text subsets from our <a href="https://github.com/delano/nerd-fonts">Nerd Fonts fork</a>, not full replacement fonts.</p>
           <p>They include Human and AI variants only. Mixed, edited, and unknown labels are displayed by the browser reader, not these fonts.</p>
+        </details>
+
+        <details>
+          <summary>Where these fonts come from</summary>
+          <p>The demo fonts are built from <a href="https://github.com/delano/nerd-fonts">delano/nerd-fonts</a>, a fork of <a href="https://github.com/ryanoasis/nerd-fonts">ryanoasis/nerd-fonts</a> that adds a TextProv provenance patch. The fork's font patcher inserts <code>cmap</code> format 14 mappings for the Human and AI selectors, so the resulting <code>P+</code> variants render marks the base fonts otherwise ignore.</p>
+          <p>To reproduce a build, clone the fork, install the patcher's dependencies, and run it against an unpatched source font with the <code>--provenance</code> option. The <a href="https://github.com/delano/nerd-fonts#textprov-provenance-marks">fork README</a> documents the flags; the <a href="./fonts/README.txt">font build notes</a> record the exact sources and options used for the ZIPs above.</p>
         </details>
 
         <details>
