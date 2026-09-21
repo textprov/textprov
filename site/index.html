@@ -20,6 +20,7 @@
         <a href="#font-examples">Examples</a>
         <a href="#try-it">Try it</a>
         <a href="#use-cases">Use cases</a>
+        <a href="/spec.html">Spec</a>
       </nav>
     </header>
 
@@ -87,10 +88,13 @@
 
       <section id="c2pa" aria-labelledby="c2pa-title">
         <h2 id="c2pa-title">Does TextProv prove a label is true?</h2>
-        <p>No. TextProv markers live within the text itself so in many cases it survives copy and paste without any special tools or applications. It cannot show who applied the markers, whether they're accurate, or whether someone changed it later. Its job is to make labels portable, not authoritative.</p>
-        <p>Verifying who made a claim, and whether a file has changed since, is a different problem. One existing answer is <a href="https://c2pa.org">C2PA</a>, a standard from the Coalition for Content Provenance and Authenticity. It records a file's origin and edit history in a <em>manifest</em>, then binds the manifest to the file's bytes with cryptographic hashes and signatures. Compatible software can detect whether either has been altered and shows the result as Content Credentials. A manifest can be embedded in the file or kept alongside it as a separate <em>sidecar</em> file. Plain text needs the sidecar: the <a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html#_external_manifests">specification, section 11.4</a>, gives <code>.txt</code> as its example of a file that cannot carry an embedded manifest.</p>
-        <p>The two approaches differ in what survives a copy. Select a passage, paste it into another editor or a message, and the sidecar, manifest, and signature stay behind with the original file. TextProv labels live in the character sequence itself, so they travel with the passage, provided the receiving software preserves the marks.</p>
-        <p>The approaches can be combined: TextProv for labels inside the text, C2PA for a signed record of the whole marked file. Because adding or removing marks changes the bytes, apply marks before signing. Note the limit, though: a copied passage keeps its labels but not the original file's signature, so it does not inherit the file's verified status.</p>
+        <p class="thesis">No. TextProv standardizes the transport of origin declarations; it does not verify them.</p>
+        <p>A TextProv workflow has four independent steps:</p>
+        <pre class="pipeline">integration decides → producer marks → transport preserves → consumer interprets</pre>
+        <p>The protocol defines only the middle two: how a producer encodes a state and how a consumer decodes it. It says nothing about how the state was chosen, whether the declaration is honest, or whether the consumer should act on it. A false declaration can be correctly encoded, and a valid decoder can report it without endorsing it.</p>
+        <p>An advisory protocol can still be useful. <a href="https://www.rfc-editor.org/rfc/rfc9309.html"><code>robots.txt</code></a>, canonical links, <a href="https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions/">SPDX license expressions</a>, Semantic Versioning, and RSS all standardize a declaration without proving it is true. Honest participants benefit from a shared vocabulary; adversarial ones cannot be stopped by the format itself. TextProv makes the same trade for origin labels.</p>
+        <p>If you need cryptographic proof of who produced a file and whether it has been altered, that is a different problem. One answer is <a href="https://c2pa.org">C2PA</a>: a signed <em>manifest</em> bound to a file's bytes, shown to readers as Content Credentials. Plain text needs a sidecar file for this — the <a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html#_external_manifests">specification, section 11.4</a>, gives <code>.txt</code> as its example of a format that cannot embed a manifest.</p>
+        <p>The two approaches survive different things. Select a passage and paste it into a message, and the sidecar, manifest, and signature stay behind with the original file; TextProv labels live in the character sequence itself and travel with the passage. The approaches combine cleanly: mark the text with TextProv, then sign the marked file with C2PA. A copied passage keeps its labels but not the file's signature, so it does not inherit the file's verified status.</p>
         <p class="note">TextProv does not create or validate C2PA manifests, and its labels are not Content Credentials. Neither an origin label nor a valid signature says anything about whether the text is factually correct.</p>
       </section>
 
@@ -110,8 +114,8 @@
           </article>
 
           <article class="use-case-card">
-            <h3>Editors and reviewers</h3>
-            <p>Editors, teachers, and reviewers can inspect labelled passages without relying on a particular document format or separate metadata file.</p>
+            <h3>Auditing content</h3>
+            <p>Auditors, editors, and compliance reviewers can inspect labelled passages in place, without relying on a particular document format or a separate metadata file.</p>
           </article>
 
           <article class="use-case-card">
