@@ -1,6 +1,6 @@
 {
- "contract_version": 1,
- "mapping_version": 1,
+ "contract_version": "0.1",
+ "mapping_version": "0.1",
  "cases": [
   {
    "name": "plain text, no marks",
@@ -544,7 +544,7 @@
     "mode": "pua"
    },
    "output": "\u4e2d\udb40\udd01",
-   "note": "registry version 1 allocates U+0021-U+00FF only"
+   "note": "registry version 0.1 allocates U+0021-U+00FF only"
   },
   {
    "name": "pua mode with a non-ai state uses the selector",
@@ -554,7 +554,7 @@
     "mode": "pua"
    },
    "output": "H\udb40\udd00i\udb40\udd00",
-   "note": "registry version 1 allocates PUA for the ai state only"
+   "note": "registry version 0.1 allocates PUA for the ai state only"
   },
   {
    "name": "pua characters are not re-marked",
@@ -594,7 +594,7 @@
     "to": "pua"
    },
    "output": "H\udb40\udd00",
-   "note": "only the ai state has a PUA allocation in registry version 1"
+   "note": "only the ai state has a PUA allocation in registry version 0.1"
   },
   {
    "name": "vs to pua leaves unallocated bases alone",

@@ -22,7 +22,7 @@ The sequence means “the grapheme `A`, with AI provenance.” `U+E0101` is a
 standardized variation-selector code point, but TextProv's use of it is a
 private convention rather than a Unicode-registered variation sequence.
 
-In PUA encoding, registry version 1 can replace that sequence with one
+In PUA encoding, registry version 0.1 can replace that sequence with one
 Supplementary Private Use Area-B code point:
 
 ```text
@@ -140,7 +140,7 @@ Open these UTF-8 files side by side in Zed, VS Code, or another editor:
 - [`examples/provenance-vs.txt`](examples/provenance-vs.txt) contains one
   selector-encoded sample.
 - [`examples/provenance-pua.txt`](examples/provenance-pua.txt) contains the same
-  sample encoded with registry version 1's PUA mappings.
+  sample encoded with registry version 0.1's PUA mappings.
 - [`examples/provenance-vs-and-pua.txt`](examples/provenance-vs-and-pua.txt)
   places both encodings in one file for a direct comparison.
 
@@ -189,7 +189,7 @@ output path you can overwrite; `-o` replaces an existing file. If the Python
 package is installed in your environment, omit `PYTHONPATH=python` and run from
 the directory containing your document.
 
-Registry version 1 has PUA assignments only for the AI state and supported base
+Registry version 0.1 has PUA assignments only for the AI state and supported base
 characters in `U+0021`–`U+00FF`, excluding whitespace, control, and format
 characters. Unsupported grapheme clusters remain selector-encoded, so a
 converted file may contain both forms.

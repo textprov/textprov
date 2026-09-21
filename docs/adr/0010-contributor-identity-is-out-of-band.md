@@ -48,7 +48,7 @@ document boundary: AI2 in one file is not AI2 in another.
 ## Evidence
 
 The capacity table is read from the code as of this date: `mapping.json`
-version 1, `font-patcher` glyph generation (three variants per base plus mark
+version 0.1, `font-patcher` glyph generation (three variants per base plus mark
 glyphs), and `css/nfprov.js`. The decorator is table driven in both
 languages, so the software cost of a new state is one registry entry; the
 font cost is one glyph per base; the visual cost is a stroke pattern a reader

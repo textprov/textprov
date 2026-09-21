@@ -4,8 +4,8 @@
  * textprov.js: client-side provenance decorator
  * TextProv protocol: https://github.com/textprov/textprov
  *
- * Contract version 1 (see ../SPEC.md).
- * Mapping version 1 (see ../mapping.json; the registry is embedded below as
+ * Contract version 0.1 (see ../SPEC.md).
+ * Mapping version 0.1 (see ../mapping.json; the registry is embedded below as
  * SELECTORS and PUA_RANGES and is never loaded at runtime).
  *
  * Renders in-band provenance marks (selector or PUA encoding) as HTML spans
@@ -30,7 +30,7 @@
 
   // Tables from mapping.json. The registry is not loaded at runtime; these
   // constants are checked against it by check_fixtures.mjs.
-  var MAPPING_VERSION = 1;
+  var MAPPING_VERSION = "0.1";
   var SELECTORS = {
     human: 0xe0100,
     ai: 0xe0101,
@@ -155,7 +155,7 @@
   var textprov = {
     runs: runs,
     render: render,
-    contractVersion: 1,
+    contractVersion: "0.1",
     mappingVersion: MAPPING_VERSION,
     mapping: { version: MAPPING_VERSION, selectors: SELECTORS, puaRanges: PUA_RANGES },
   };

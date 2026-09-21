@@ -125,9 +125,12 @@ are considering an integration or writing an implementation, start here:
 
 - [Specification](SPEC.md) — the labels, encodings, and rules for reading and
   writing marked text.
+- [Maturity lifecycle](docs/MATURITY.md) — compatibility promises and the evidence
+  required to promote a release.
 - [Code-point registry](mapping.json) — the characters assigned to those labels.
 - [Conformance fixtures](fixtures.json) — shared examples with expected results
   for checking implementations.
+- [Changelog](CHANGELOG.md) — dated protocol and registry changes.
 - [Architecture decisions](docs/adr) — the reasoning behind the design and
   questions still under discussion.
 
@@ -136,11 +139,15 @@ above. Website development instructions are in [`site/`](site/README.md).
 
 ## Status
 
-The project is early-stage. The JavaScript package is published on
-[npm](https://www.npmjs.com/package/textprov), the Python package is published
-on [PyPI](https://pypi.org/project/textprov/), and the Ruby gem is published on
-[RubyGems](https://rubygems.org/gems/textprov). The version 1 protocol is
-treated as stable.
+The protocol is **Draft 0.1**, last updated 2026-09-20. Contract behavior may
+change incompatibly; implementers should pin an immutable revision. Published
+registry allocations remain reserved and are never reassigned or removed. The
+JavaScript package is published on [npm](https://www.npmjs.com/package/textprov),
+the Python package is published on [PyPI](https://pypi.org/project/textprov/),
+and the Ruby gem is published on
+[RubyGems](https://rubygems.org/gems/textprov). See the
+[maturity lifecycle](docs/MATURITY.md) for compatibility promises and promotion
+criteria before implementing it.
 
 ## Acknowledgements
 

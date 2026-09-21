@@ -5,7 +5,7 @@ Client-side decorator for the [TextProv](https://github.com/textprov/textprov) p
 The Python package of the same name (`pip install textprov`) is the full SDK — producer, decoder, and CLI. This npm package ships the browser decoder only.
 
 - ~6 KB, no dependencies, browser-first (IIFE + `window.textprov`), also usable from Node (CJS) and via ESM default import.
-- Implements contract version 1 and mapping version 1 (see [SPEC.md](https://github.com/textprov/textprov/blob/main/SPEC.md) and [mapping.json](https://github.com/textprov/textprov/blob/main/mapping.json)).
+- Implements draft contract version 0.1 and registry version 0.1 (see [SPEC.md](https://github.com/textprov/textprov/blob/main/SPEC.md) and [mapping.json](https://github.com/textprov/textprov/blob/main/mapping.json)).
 - Optional companion stylesheet (`textprov.css`) reproduces the P+ font's mark styles (wavy for `ai`, dotted for `edited`, etc.).
 
 States: `human`, `ai`, `mixed`, `edited`, `unknown`.
@@ -53,8 +53,8 @@ textprov.render(document.body, { strip: true, prefix: "prov" });
 
 - `textprov.render(root?, options?)` — walks text nodes under `root` (default `document.body`), replaces marked runs with `<span>` elements. Skips `<script>`, `<style>`, `<textarea>`, and anything already inside a `.<prefix>` element. Returns the number of spans created. Browser only.
 - `textprov.runs(text, options?)` — returns `[{ state, text }]`. Environment-agnostic; use this in Node or for custom rendering.
-- `textprov.contractVersion` — `1`
-- `textprov.mappingVersion` — `1`
+- `textprov.contractVersion` — `"0.1"`
+- `textprov.mappingVersion` — `"0.1"`
 - `textprov.mapping` — `{ version, selectors, puaRanges }`, the embedded tables (checked against the canonical `mapping.json` in CI).
 
 ### Options

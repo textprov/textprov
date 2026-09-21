@@ -162,13 +162,13 @@ d󠄁e󠄁f󠄁 󠄁r󠄁a󠄁n󠄁k󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁)󠄁:󠄁
           <li><a href="./fonts/agave-propo-textprov-demo.zip" download>Agave Propo P+ demo font (ZIP, about 45 KB)</a> — proportional; derived from Agave; <a href="./fonts/agave-OFL.txt">SIL Open Font License</a>.</li>
         </ul>
         <p>These are regular-weight Latin-text subsets from our <a href="https://github.com/delano/nerd-fonts">Nerd Fonts fork</a>, not full replacement fonts. They include Human and AI variants only. Mixed, edited, and unknown labels are displayed by the browser reader, not these fonts. Installing a font alone does not label any text.</p>
-        <p class="note">The source fonts' older third selector has a different meaning from TextProv v1, so it is deliberately excluded from these subsets. See the <a href="./fonts/README.txt">font build notes and attribution</a> or the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md">font and interchange guide</a>.</p>
+        <p class="note">The source fonts' older third selector has a different meaning from TextProv 0.1, so it is deliberately excluded from these subsets. See the <a href="./fonts/README.txt">font build notes and attribution</a> or the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md">font and interchange guide</a>.</p>
         <p class="note"><strong>Known macOS limitation:</strong> in the project's recorded tests, HarfBuzz displayed the demo fonts' private selector variants while CoreText rendered plain base glyphs. The selectors remained in the text. The demo fonts use <code>cmap</code> format 14 mappings; loading one is not by itself a compatibility guarantee. Keep selector-encoded text for sharing, and see the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md#known-limitation-selector-glyphs-on-macos-coretext">CoreText limitation and evidence</a>.</p>
       </section>
 
       <section id="repo" aria-labelledby="repo-title">
         <h2 id="repo-title">Implement the protocol</h2>
-        <p>The project is early-stage; version 1 of the protocol is treated as stable. Start with the <a href="./spec.html">specification</a> for label meanings and encoding rules, the <a href="https://github.com/textprov/textprov/blob/main/mapping.json">code-point registry</a> for the assigned marks, and the <a href="https://github.com/textprov/textprov/blob/main/fixtures.json">conformance fixtures</a> to check your implementation.</p>
+        <p>The protocol is Draft 0.1 and may change incompatibly. Start with the <a href="./spec.html">specification</a> for its maturity, label meanings, and encoding rules; the <a href="https://github.com/textprov/textprov/blob/main/mapping.json">code-point registry</a> for the assigned marks; and the <a href="https://github.com/textprov/textprov/blob/main/fixtures.json">conformance fixtures</a> to check your implementation.</p>
         <p><a href="https://github.com/textprov/textprov">Browse the repository ↗</a> · <a href="https://github.com/textprov/textprov/issues">Report an issue</a></p>
       </section>
     </main>
