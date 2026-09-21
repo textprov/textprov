@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Label text as human-written, AI-generated, or mixed. Try TextProv in your browser and see how origin labels can travel with plain text.">
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#111311" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#2a2724" media="(prefers-color-scheme: dark)">
     <title>TextProv — origin labels that travel with text</title>
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="app.js"></script>
@@ -27,12 +27,12 @@
     <main id="main">
       <section class="intro">
         <h1>TextProv</h1>
+        <p class="version-line">Draft · Specification v0.1 · Registry v0.1 · Updated 2026-09-21</p>
         <p class="tagline">Origin labels that travel with text: human-written, AI-generated, mixed, edited, or unknown. TextProv is an open protocol for keeping those disclosures in the text itself, rather than in a separate file or one application's metadata.</p>
         <p>Use it in an editor or content pipeline when you know how text was produced. For example, an AI-writing integration can label the passages it generates for review. TextProv lets cooperating tools preserve and display those labels; it does not enforce honest disclosure.</p>
         <p><a href="#try-it">Read labels in your browser</a>, <a href="./encoder.html">add labels with the encoder</a>, or <a href="#use-cases">explore use cases</a>. No special font is needed for these tasks.</p>
         <p>The labels can travel through copy, paste, and plain-text storage, as long as the receiving software preserves the marks.</p>
         <p class="note">A label is a claim about origin, not proof of authorship or a judgment about quality, accuracy, or trustworthiness. TextProv does not detect AI writing or authenticate the source of a claim. Anyone can add, change, or remove marks; unmarked text makes no claim about its origin.</p>
-        <p class="version-line">Draft · Specification v0.1 · Registry v0.1 · Code: MIT licensed</p>
       </section>
 
       <section id="font-examples" aria-labelledby="examples-title">
@@ -61,16 +61,15 @@
       </section>
 
       <section id="try-it" aria-labelledby="try-title">
-        <h2 id="try-title">Reveal labels in your text</h2>
-        <p>Paste text from the examples above or the <a href="./samples/marked-text.txt" target="_blank" rel="noopener">static sample file ↗</a> to reveal its embedded TextProv labels. This reader does not add labels, detect AI writing, or verify authorship.</p>
+        <h2 id="try-title">Check text for TextProv labels</h2>
+        <p>Copy any of the text above and paste it below. To try a labelled example, use the text above or the <a href="./samples/marked-text.txt" target="_blank" rel="noopener">static sample file ↗</a>. This reader does not add labels, detect AI writing, or verify authorship.</p>
         <p>No installation or special font is needed. Your text stays in your browser.</p>
         <noscript><p>This reader needs JavaScript. You can also inspect marked text with the Python example below.</p></noscript>
         <div class="demo-panel">
-          <label for="check-input">Paste text to reveal labels</label>
+          <label for="check-input">Paste text below</label>
           <textarea id="check-input" rows="3" aria-describedby="check-help" placeholder="Paste your marked text here"></textarea>
-          <p id="check-help" class="note">If no labels appear, the text may be unmarked or an application may have removed the marks. Save files as UTF-8, not Latin-1.</p>
           <div id="check-output" class="demo-output"></div>
-          <p id="check-status" class="note" role="status">Waiting for text.</p>
+          <p id="check-status" class="note" role="status"></p>
         </div>
         <p>Need to add labels first? Use the <a href="./encoder.html">TextProv encoder</a> to produce marked UTF-8 text.</p>
       </section>
@@ -87,11 +86,55 @@
       </section>
 
       <section id="c2pa" aria-labelledby="c2pa-title">
-        <h2 id="c2pa-title">Does TextProv prove a label is true?</h2>
-        <p class="thesis">No. TextProv standardizes the transport of origin declarations; it does not verify them.</p>
-        <p>A TextProv workflow has four independent steps:</p>
-        <pre class="pipeline">integration decides → producer marks → transport preserves → consumer interprets</pre>
-        <p>The protocol defines only the middle two: how a producer encodes a state and how a consumer decodes it. It says nothing about how the state was chosen, whether the declaration is honest, or whether the consumer should act on it. A false declaration can be correctly encoded, and a valid decoder can report it without endorsing it.</p>
+        <h2 id="c2pa-title">Does TextProv prove an AI wrote it?</h2>
+        <p class="thesis">No. TextProv is just markup data; it does not verify who or what applied it.</p>
+        <p>TextProv separates who decides what to mark, who adds the marks, what keeps them intact, and who interprets them.</p>
+        <figure class="roles">
+          <svg viewBox="0 0 640 150" role="img" aria-labelledby="roles-svg-title roles-svg-desc" xmlns="http://www.w3.org/2000/svg">
+            <title id="roles-svg-title">Four separate responsibilities around a TextProv label</title>
+            <desc id="roles-svg-desc">Four boxes in a row: decide, mark, preserve, read. Mark and read have solid outlines and are defined by TextProv. Decide and preserve have dashed outlines and are outside the protocol.</desc>
+            <g class="roles-outside">
+              <rect x="10" y="10" width="140" height="56" rx="4" fill="var(--surface)" stroke="var(--line)" stroke-dasharray="4 3" />
+              <text x="80" y="34" text-anchor="middle">Decide</text>
+              <text class="roles-sub" x="80" y="54" text-anchor="middle">policy, integration</text>
+              <text class="roles-who" x="80" y="88" text-anchor="middle">who decides</text>
+              <text class="roles-who" x="80" y="104" text-anchor="middle">what to mark</text>
+            </g>
+            <g class="roles-inside">
+              <rect x="170" y="10" width="140" height="56" rx="4" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5" />
+              <text x="240" y="34" text-anchor="middle">Mark</text>
+              <text class="roles-sub" x="240" y="54" text-anchor="middle">producer encodes</text>
+              <text class="roles-who" x="240" y="88" text-anchor="middle">who adds</text>
+              <text class="roles-who" x="240" y="104" text-anchor="middle">the marks</text>
+            </g>
+            <g class="roles-outside">
+              <rect x="330" y="10" width="140" height="56" rx="4" fill="var(--surface)" stroke="var(--line)" stroke-dasharray="4 3" />
+              <text x="400" y="34" text-anchor="middle">Preserve</text>
+              <text class="roles-sub" x="400" y="54" text-anchor="middle">file, clipboard, wire</text>
+              <text class="roles-who" x="400" y="88" text-anchor="middle">what keeps</text>
+              <text class="roles-who" x="400" y="104" text-anchor="middle">them intact</text>
+            </g>
+            <g class="roles-inside">
+              <rect x="490" y="10" width="140" height="56" rx="4" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5" />
+              <text x="560" y="34" text-anchor="middle">Read</text>
+              <text class="roles-sub" x="560" y="54" text-anchor="middle">consumer decodes</text>
+              <text class="roles-who" x="560" y="88" text-anchor="middle">who interprets</text>
+              <text class="roles-who" x="560" y="104" text-anchor="middle">the marks</text>
+            </g>
+            <g class="roles-arrows" fill="none" stroke="var(--muted)" stroke-width="1.2">
+              <path d="M150 38 h20 m-5 -4 l5 4 l-5 4" />
+              <path d="M310 38 h20 m-5 -4 l5 4 l-5 4" />
+              <path d="M470 38 h20 m-5 -4 l5 4 l-5 4" />
+            </g>
+            <g class="roles-legend">
+              <rect x="170" y="128" width="22" height="12" rx="2" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5" />
+              <text x="200" y="138">defined by TextProv</text>
+              <rect x="352" y="128" width="22" height="12" rx="2" fill="var(--surface)" stroke="var(--line)" stroke-dasharray="4 3" />
+              <text x="382" y="138">outside the protocol</text>
+            </g>
+          </svg>
+        </figure>
+        <p>The protocol defines only two of these: how a producer encodes a state and how a consumer decodes it. It says nothing about how the state was chosen, whether the declaration is honest, or whether the consumer should act on it. A false declaration can be correctly encoded, and a valid decoder can report it without endorsing it.</p>
         <p>An advisory protocol can still be useful. <a href="https://www.rfc-editor.org/rfc/rfc9309.html"><code>robots.txt</code></a>, canonical links, <a href="https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions/">SPDX license expressions</a>, Semantic Versioning, and RSS all standardize a declaration without proving it is true. Honest participants benefit from a shared vocabulary; adversarial ones cannot be stopped by the format itself. TextProv makes the same trade for origin labels.</p>
         <p>If you need cryptographic proof of who produced a file and whether it has been altered, that is a different problem. One answer is <a href="https://c2pa.org">C2PA</a>: a signed <em>manifest</em> bound to a file's bytes, shown to readers as Content Credentials. Plain text needs a sidecar file for this — the <a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html#_external_manifests">specification, section 11.4</a>, gives <code>.txt</code> as its example of a format that cannot embed a manifest.</p>
         <p>The two approaches survive different things. Select a passage and paste it into a message, and the sidecar, manifest, and signature stay behind with the original file; TextProv labels live in the character sequence itself and travel with the passage. The approaches combine cleanly: mark the text with TextProv, then sign the marked file with C2PA. A copied passage keeps its labels but not the file's signature, so it does not inherit the file's verified status.</p>
@@ -100,31 +143,21 @@
 
       <section id="use-cases" aria-labelledby="use-cases-title">
         <h2 id="use-cases-title">Use cases</h2>
-        <p class="use-cases-intro">TextProv can carry passage-level origin labels through workflows where text moves between files, tools, and people.</p>
+        <p>TextProv marks origin per-character so it moves with text between files, tools, copying and pasting.</p>
 
-        <div class="use-case-grid">
-          <article class="use-case-card">
-            <h3>Writers tracking drafts</h3>
-            <p>Bloggers, journalists, and other writers can distinguish their own prose from AI-generated passages while drafting. The labels remain attached when compatible tools preserve the Unicode marks.</p>
-          </article>
+        <h3>Writers tracking drafts</h3>
+        <p>Bloggers, journalists, and other writers can distinguish their own prose from AI-generated passages while drafting. The labels remain attached when compatible tools preserve the Unicode marks.</p>
 
-          <article class="use-case-card">
-            <h3>Developers reviewing AI-assisted code</h3>
-            <p>Developers can mark generated code and comments so collaborators know which passages may need extra review, testing, or explanation.</p>
-          </article>
+        <h3>Developers reviewing AI-assisted code</h3>
+        <p>Developers can mark generated code and comments so collaborators know which passages may need extra review, testing, or explanation.</p>
 
-          <article class="use-case-card">
-            <h3>Auditing content</h3>
-            <p>Auditors, editors, and compliance reviewers can inspect labelled passages in place, without relying on a particular document format or a separate metadata file.</p>
-          </article>
+        <h3>Auditing content</h3>
+        <p>Auditors, editors, and compliance reviewers can inspect labelled passages in place, without relying on a particular document format or a separate metadata file.</p>
 
-          <article class="use-case-card">
-            <h3>Publishing and collaboration tools</h3>
-            <p>Applications can retain origin labels when accepting, storing, displaying, and exporting text. Implementations are available for <a href="https://github.com/textprov/textprov/blob/main/python/README.md">Python</a>, <a href="https://github.com/textprov/textprov/blob/main/js/README.md">JavaScript</a>, and <a href="https://github.com/textprov/textprov/blob/main/ruby/README.md">Ruby</a>.</p>
-          </article>
-        </div>
+        <h3>Publishing and collaboration tools</h3>
+        <p>Applications can retain origin labels when accepting, storing, displaying, and exporting text. Implementations are available for <a href="https://github.com/textprov/textprov/blob/main/python/README.md">Python</a>, <a href="https://github.com/textprov/textprov/blob/main/js/README.md">JavaScript</a>, and <a href="https://github.com/textprov/textprov/blob/main/ruby/README.md">Ruby</a>.</p>
 
-        <p class="note use-cases-note">A TextProv label records a claim about a passage's origin. It does not prove authorship, accuracy, or whether the passage was later edited.</p>
+        <p class="note">A TextProv label records a claim about a passage's origin. It does not prove authorship, accuracy, or whether the passage was later edited.</p>
       </section>
 
       <section id="ide-fonts" aria-labelledby="ide-fonts-title">
@@ -209,7 +242,7 @@ r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 result</code></pre>
     </main>
 
     <footer>
-      <p><a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a> · <a href="https://github.com/textprov/textprov">Source</a> · Origin labels that travel with text.</p>
+      <p><a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a> · <a href="https://github.com/textprov/textprov">Source</a> · Updated: 2026-09-21.</p>
     </footer>
   </body>
 </html>
