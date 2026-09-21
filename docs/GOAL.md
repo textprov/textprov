@@ -21,7 +21,7 @@ and the original prototype measurements.
 
 ## Non-goals
 
-- Defining a visual style. The contract defines classes and an attribute; CSS
+- Defining a visual style. The specification defines classes and an attribute; CSS
   is an integration choice.
 - Adding marks to text. That is the producer's job, which lives in this
   repository too but is a separate role
@@ -36,7 +36,7 @@ The [JavaScript](../js/README.md), [Python](../python/README.md), and
 [Ruby](../ruby/README.md) implementations are in this repository. JavaScript
 decorates browser text nodes; Python and Ruby can render marked text as HTML
 fragments. Follow those guides for package usage and the
-[specification](../SPEC.md#markup) for the markup contract.
+[specification](../SPEC.md#markup) for the markup specification.
 
 [ADR 0006](adr/0006-decorator-packages-and-repository.md#remaining-work)
 records remaining package work and the requirement to turn a breakage report

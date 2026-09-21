@@ -52,7 +52,7 @@ workflow, where it is correctly scoped.
 
 ### What moved
 
-- `SPEC.md`, written for this repository. The contract existed only as the
+- `SPEC.md`, written for this repository. The specification existed only as the
   fork's `DECORATOR.md`, which described a decorator rather than a protocol;
   the specification now covers states, both encodings, the registry and its
   stability rules, vendoring, the decoder, and the markup.
@@ -100,7 +100,7 @@ convert round trips, which test the encoder it still owns.
 Each package vendors the registry and no package depends on another. A browser
 script cannot load JSON synchronously, so `js/textprov.js` embeds the tables the
 registry reduces to — the selector table, the allocated PUA ranges, and the
-mapping version — and exposes them as `textprov.mapping`. The Python package
+registry version — and exposes them as `textprov.mapping`. The Python package
 ships a copy of `mapping.json` inside the package directory. Each test suite
 compares its copy to the canonical file on every run, so drift fails the build.
 The JavaScript runner also asserts the two registry rules that the embedding

@@ -43,7 +43,7 @@ document boundary: AI2 in one file is not AI2 in another.
    selector names the state it belongs to. A decoder that does not know the
    slot table reports the state. A decoder that recognizes the slot table reports the state and
    the slot ordinal. The meaning of an ordinal is declared by the container
-   under point 2. This is a contract version bump and is not scheduled.
+   under point 2. This is a specification version bump and is not scheduled.
 
 ## Evidence
 

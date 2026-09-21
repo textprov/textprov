@@ -13,7 +13,7 @@ CoreText, which drops the selectors.
 
 A decorator pass finds marked runs in the text and wraps them in
 `<span class="prov prov-STATE" data-prov="STATE">`. CSS styles the spans.
-The producer and the in-band encoding are unchanged. At the time, the contract
+The producer and the in-band encoding are unchanged. At the time, the specification
 was `src/glyphs/provenance/decorator/DECORATOR.md` in the Nerd Fonts fork; its
 canonical successor is this repository's `SPEC.md`.
 

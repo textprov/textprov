@@ -8,9 +8,9 @@ criteria below.
 
 | Stage | Guarantee |
 | --- | --- |
-| Draft | Contract behavior may change incompatibly. Pin an exact commit or immutable release tag. |
+| Draft | Specification behavior may change incompatibly. Pin an exact commit or immutable release tag. |
 | Candidate | A revision is frozen for public review. It may be promoted, revised, or withdrawn to Draft. |
-| Stable | Required contract behavior is immutable. Behavior changes require a new contract version. |
+| Stable | Required specification behavior is immutable. Behavior changes require a new specification version. |
 | Deprecated | Not recommended for new integrations. Existing documents and allocations keep their meaning. |
 
 Published allocations remain protected at every stage under the
@@ -21,7 +21,7 @@ Published allocations remain protected at every stage under the
 **Draft → Candidate:**
 
 - Pin the specification, registry, and fixtures to an exact commit or immutable
-  tag, recording both contract and registry versions.
+  tag, recording both specification and registry versions.
 - Have one maintained implementation passing applicable fixture, producer, and
   vendored-registry checks.
 - Resolve blocking ambiguities; document compatibility effects and known limits,
@@ -47,15 +47,15 @@ outcome, versions, revision, and links to test results and remaining limitations
 
 ## Compatibility and retirement
 
-- Implementations state their contract and registry versions, plus the tested
+- Implementations state their specification and registry versions, plus the tested
   revision during Draft and Candidate. Release snapshots remain available.
 - Stable releases cannot return to Draft or Candidate. Required behavior changes,
-  including bug fixes, need a new contract version and Candidate review.
+  including bug fixes, need a new specification version and Candidate review.
 - Editorial changes and new fixtures may clarify only existing requirements.
   Treat uncertain or disputed changes as behavioral.
 - Registry versions advance independently. Additions preserve published meanings
   and document compatibility and test evidence; incompatible consumer behavior
-  also requires a new contract version. Stable status applies to the registry
+  also requires a new specification version. Stable status applies to the registry
   revision reviewed for that release.
 - Deprecation requires a notice for the release being retired, explaining the
   reason, any replacement, migration guidance, and support dates. Specifications,
