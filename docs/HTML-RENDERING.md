@@ -1,59 +1,112 @@
-# Rendering provenance marks in HTML without the font
+# Rendering provenance marks in HTML without a special font
 
-Status: prototype, not in the repository. Measured 2026-09-11 on macOS
-(Darwin 27) with Playwright builds of Chromium (1243) and WebKit 26.5 (2358),
-system font only, no P+ font loaded. Prototype code lived in a session
-scratchpad and is described here in enough detail to be rewritten.
+A TextProv decorator reads provenance marks already present in text and wraps
+marked runs in HTML spans. CSS then displays the states without requiring a
+provenance font or support for its variant glyphs. This is for page authors
+and integrators who control the HTML or DOM; it does not determine whether a
+provenance claim is true.
 
-## Problem
+The decorator is implemented in this repository. Start with the
+[JavaScript guide](../js/README.md) for browser integration or the
+[Python guide](../python/README.md) for rendering text as HTML on the server.
+This page explains the approach and records the original prototype measurements;
+[SPEC.md](../SPEC.md#decoder) defines the current decoding rules.
 
-Marked text depends on a font that carries the variant glyphs and on a shaper
-that honours them. That excludes:
+## Why use spans instead of a font?
 
-- Mobile browsers. Readers cannot install fonts or override page fonts.
-- Every iOS browser, which shapes through WebKit on CoreText. CoreText drops
-  the selectors (see README.md, verified renderers).
-- Any page where the author controls the markup but not the reader's fonts.
+Font-based rendering needs both a matching provenance font (called a **P+
+font**) and a text shaper that selects its decorated glyphs. Installing or
+serving the font alone is not enough. In the recorded CoreText tests, selectors
+remained in the text but did not select those glyphs. See the
+[font and interchange guide](SELECTORS-PUA-AND-INTERCHANGE.md#what-zed-on-macos-reveals)
+for the evidence and limits.
 
-## Approach
+A span decorator avoids that font-substitution dependency. Readers need no
+special font installation. The page author must supply the decorator output
+and CSS; client-side decoration also requires JavaScript and `Intl.Segmenter`.
 
-Keep the encoding in the Unicode text. Add a decorator pass that finds marked
-runs and wraps them in `<span class="prov prov-STATE" data-prov="STATE">`.
-CSS styles the spans. The font is not consulted. The producer is unchanged.
+## How decoration works
 
-This is not CSS alone. CSS cannot select a code point, so a DOM or HTML
-rewrite is required once. The class of library is a text decorator, the same
-shape as twemoji, linkify, or a syntax highlighter: scan plain text, wrap
-matches, pass everything else through byte for byte.
+The input is marked Unicode text. A decoder splits it into runs, each with a
+state or no state. A renderer emits marked runs as:
 
-## Algorithm
+```html
+<span class="prov prov-STATE" data-prov="STATE">TEXT</span>
+```
 
-Input: a string. Output: a list of runs `(state | null, text)`.
+`STATE` is a recognized label such as `ai`; `TEXT` is the run's text, escaped
+when serialized as HTML. Unmarked runs remain text. The `data-prov` attribute
+carries the state, while the classes let CSS style it.
 
-1. Split into grapheme clusters. Client: `Intl.Segmenter` with granularity
-   `grapheme`. Server: `cluster_end` from the Python package (`python/textprov`), so
-   the renderer and the marker agree on cluster boundaries.
-2. Classify each cluster.
-   - Ends in U+E0100..U+E0104 and has more than one code point: state from
-     `mapping.json` `variation_selectors`. Keep the selector in the output text.
-   - Single code point in the `mapping.json` `pua` table: state from the
-     table. Replace with the base character; PUA is tofu without the font.
-   - Whitespace only: provisional state `ws`.
-   - Otherwise: no state.
-3. Coalesce adjacent clusters with equal state.
-4. A `ws` run between two runs of the same non-null state joins them.
-   Remaining `ws` runs become no state. Coalesce again.
-5. Emit runs with a state as spans, the rest as text.
+This requires a text-processing pass, not CSS alone: CSS cannot select a code
+point inside a text node. The decorator preserves selector-encoded text by
+default and converts registered Private Use Area (PUA) characters to ordinary
+base characters plus their selectors. It does not change the producer's role
+of adding marks.
 
-Client-side: walk text nodes with a TreeWalker, skip `script`, `style`,
-`textarea` and nodes already inside `.prov`, replace each matching text node
-with the fragment from step 5. Server-side: run on the text nodes of rendered
-HTML, not on markdown source.
+### Decoding rules
 
-## Verified
+The [normative algorithm](../SPEC.md#algorithm) defines classification order,
+including whitespace and lone selectors. In summary:
 
-Input was the producer fork's `example-marked.txt` (PUA) and its
-`nfprov convert --from pua --to vs` output. Two paragraphs, 322 selectors.
+1. Identify grapheme clusters: a base character and the code points that belong
+   with it, such as combining marks. JavaScript uses `Intl.Segmenter`; Python
+   uses the package's `cluster_end` helper. Their segmentation is not guaranteed
+   to agree for every Unicode sequence; see the
+   [specification's limits](../SPEC.md#not-specified).
+2. Read recognized selectors (`U+E0100`–`U+E0104`) or registered PUA entries
+   using the [registry](../mapping.json). A lone selector or a selector after
+   whitespace is not a mark under the contract.
+3. Coalesce adjacent clusters with the same state. By default, absorb
+   whitespace between two runs of the same non-null state, then coalesce again.
+4. Emit spans for marked runs and text for the rest.
+
+### Where to apply the pass
+
+**In the browser**, `textprov.render(root)` walks text nodes and replaces
+matching nodes with text and spans. It skips `script`, `style`, `textarea`,
+and nodes already inside `.prov` (or the configured prefix class). Runs are
+detected within each text node, not across element boundaries.
+
+**On the server**, Python's `to_html(text)` accepts text, not an HTML document.
+It escapes the input and returns an HTML fragment. To decorate existing HTML,
+your integration must parse that HTML and apply the pass to eligible text
+nodes. Passing a whole HTML document to `to_html` escapes its tags rather than
+preserving its structure. For Markdown, render to HTML first and then decorate
+the text nodes; do not wrap Markdown source in spans before parsing it.
+
+## Text preservation and display options
+
+- **Retain selectors by default.** Keeping selectors in span text lets a
+  selection retain the encoding. Clipboard and destination behavior still need
+  testing in the target workflow; the prototype measured selection strings, not
+  physical clipboard round-trips.
+- **Use `strip` only when losing plain-text copy provenance is acceptable.**
+  It removes recognized mark selectors from run text while leaving the state on
+  the span. This may help text matching, but find-in-page was not measured.
+- **Merge whitespace by default.** Whitespace between equal-state runs joins
+  the span for display. Producers do not mark whitespace. Set
+  `merge_whitespace` to `false` to disable the merge.
+- **Decode PUA to base plus selector.** The current implementations and
+  [specification](../SPEC.md#encodings) use this form so the ordinary text and
+  its state remain available without a P+ font. With `strip`, only the base
+  character remains.
+
+The markup and decoder options are part of the contract. The visual style is
+not. The optional [stylesheet](../js/textprov.css) uses a wavy underline for
+`ai`, a solid underline for `unknown`, and other styles for the remaining states.
+
+## Original prototype measurements
+
+Measured 2026-09-11 on macOS (Darwin 27) with Playwright builds of Chromium
+(1243) and WebKit 26.5 (2358), using a system font with no P+ font loaded.
+The original prototype lived in a session scratchpad, not in this repository.
+These results are historical measurements, not a fresh test of the current
+packages.
+
+Input was the Nerd Fonts producer fork's `example-marked.txt` (PUA) and its
+`nfprov convert --from pua --to vs` output: two paragraphs, with 322 selectors
+in the selector-encoded form.
 
 | Check | Chromium | WebKit |
 | --- | --- | --- |
@@ -67,49 +120,36 @@ Input was the producer fork's `example-marked.txt` (PUA) and its
 | Selectors in a selection of the client-rendered section | 322 | 322 |
 | Selectors in a selection of the PUA-decoded section | 0 | 0 |
 
-The selection string is what browsers place on the plain-text clipboard. A
-paste into an editor with a P+ font and a HarfBuzz shaper therefore receives
-the selector encoding intact. A paste into a CoreText host receives plain
-text, as it does today.
+At measurement time, the prototype decoded PUA to bare base characters. That
+explains the zero in the last row. It was subsequently changed to emit base
+plus selector, as the current contract requires; the table does not measure
+that revised behavior.
 
-## Not verified
+A destination that preserves the selection's selectors receives the encoding
+intact. Whether it displays the provenance is a separate question: a compatible
+font and shaper can show the marks, while the tested CoreText path shows plain
+base glyphs without removing the selectors from the stored text.
 
-- A physical clipboard paste into a P+ editor. Only the selection string was
+### Not verified by the prototype
+
+- A physical clipboard paste into a P+ editor; only the selection string was
   read.
 - Find-in-page with selectors retained in the DOM.
-- Firefox. Its shaper is HarfBuzz; no reason to expect a difference, but it
-  was not run.
-- A real iOS device. WebKit 26.5 on macOS is the same engine, not the same
-  platform.
-- Screen reader behaviour.
+- Firefox.
+- A real iOS device; the WebKit test ran on macOS, not iOS.
+- Screen reader behavior.
 - Markdown source containing selectors adjacent to syntax characters. This is
-  a producer concern that exists independently of this renderer.
+  a producer and parser integration concern independent of the decorator.
 
-## Decisions that are view choices, not protocol
+## Implementations and related work
 
-- Selectors are retained inside spans so copy round-trips. A `strip` option
-  removes them from the visible text and keeps the state only on the
-  attribute; it improves search and breaks copy round-trip. Default off.
-- Whitespace between two runs of the same state is absorbed into one span.
-  The producer never marks whitespace; the merge is cosmetic.
-- PUA input should be decoded to base plus the matching selector, not to bare
-  base, so a PUA page copies out in the selector encoding. The prototype
-  decoded to bare base when measured; that is the zero in the last table
-  row. Both prototypes were changed afterwards and [SPEC.md](../SPEC.md) specifies
-  base plus selector.
+- [JavaScript](../js/README.md): `runs` detects runs; `render` decorates DOM
+  text nodes. The package includes optional CSS.
+- [Python](../python/README.md): `runs` detects runs; `to_html` renders text as
+  an escaped HTML fragment.
+- [Ruby](../ruby/README.md): another producer, decoder, and HTML renderer.
 
-## Where the pieces live
-
-- `python/textprov`: the server-side pass, `runs` and `to_html`.
-- `js/textprov.js`, `js/textprov.css`: the client-side pass and the shared
-  styles. The styles reproduce the font's visual language (sawtooth for ai, bar
-  for unknown).
-- The producer fork's verified-renderers table carries a WebKit row qualified
-  as the span path, not the font path.
-
-## Related, not done
-
-Editors expose decoration APIs (VS Code `TextEditorDecorationType`, CodeMirror
-decorations) that attach a class to a range without changing the buffer. The
-same run detection would drive them. That would cover CoreText editors from an
-extension, without the format 14 question. Not prototyped.
+Editor decoration APIs could use the same run detection without rewriting the
+buffer. [ADR 0009](adr/0009-editor-decoration-apis.md) proposes this path for
+editors with suitable extension APIs; it has not been prototyped, and a usable
+Zed decoration API has not been established.

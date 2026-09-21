@@ -1,8 +1,9 @@
 # Why TextProv publishes selectors instead of PUA text
 
-TextProv has two ways to encode the same provenance state. Both are useful, but
-only one is intended to cross an uncontrolled boundary such as a published
-file, a web page, a clipboard, or an archive.
+Use selector encoding when publishing, copying, or archiving TextProv text.
+Reserve Private Use Area (PUA) encoding for controlled font workflows where the
+consumer has the matching font or decoder. This guide explains why the two
+encodings have different fallback behavior and how to compare them locally.
 
 The distinction becomes clear in a practical case: opening marked text in Zed
 on macOS.
@@ -34,8 +35,8 @@ the same way when the decoder or provenance font is absent.
 
 ## The selector form keeps the text intact
 
-A consumer that does not understand TextProv can ignore or consume the selector
-and still render `A`. The provenance decoration may disappear, but the base
+A consumer that does not understand TextProv can ignore the selector when
+rendering and still display `A`. The provenance decoration may disappear, but the base
 text remains available as an ordinary Unicode character.
 
 That fallback is the reason selector encoding is the interchange form. A
@@ -44,7 +45,10 @@ text can pass through systems that know nothing about the provenance convention
 without replacing every supported character with an unknown private one.
 
 The fallback is deliberately conservative: failure to display provenance
-becomes plain, legible text rather than damaged text.
+normally leaves plain, legible text rather than missing letters. This does not
+guarantee that software preserves the selectors or treats marked and unmarked
+strings as equal for search. Editors may also display invisible-character
+indicators, as the Zed example below shows.
 
 ## The PUA form delegates meaning to a private agreement
 
@@ -53,8 +57,10 @@ point. Its meaning comes from an agreement among the producer, font, and
 decoder. Under TextProv's registry, `U+100041` means the AI form of `A`; outside
 that agreement, it is only a private code point.
 
-A consumer without the matching P+ font may show a missing-glyph box. A
-consumer without the registry cannot infer that the code point stands for `A`.
+A consumer without a matching provenance font (called a **P+ font**) may show
+a missing-glyph box. A
+A consumer without the private mapping cannot infer from Unicode alone that
+the code point stands for `A`.
 Copying it preserves the private code point, not the ordinary letter. Search,
 indexing, speech output, spell-checking, and other text operations therefore
 cannot be assumed to recover the base text.
@@ -83,9 +89,10 @@ it portable outside that ecosystem.
 
 ## What Zed on macOS reveals
 
-The P+ provenance font contains mappings from a base-plus-selector sequence to
-a decorated glyph. HarfBuzz follows those mappings. Zed on macOS shapes text
-through CoreText, and a direct CoreText test did not select the decorated glyph
+The tested P+ font contains mappings from a base-plus-selector sequence to
+a decorated glyph. HarfBuzz honored those mappings in the recorded tests. The
+tested Zed version on macOS shapes text through CoreText, and a direct
+CoreText test did not select the decorated glyph
 for `<base, U+E0101>`. CoreText consumed the selector and emitted the plain base
 glyph. The text stayed readable and aligned, but the sawtooth provenance mark
 disappeared.
@@ -127,26 +134,60 @@ a normal font, then select the matching P+ font. The files state the expected
 outcomes and distinguish verified behavior from editor paths that have not yet
 been tested.
 
-Use the included commands to inspect the stored provenance independently of
-what the editor draws.
+### CLI prerequisite and current checkout limitation
+
+The commands below require Python 3.9+ and a working TextProv registry loader.
+Validation of this checkout on 2026-09-20 failed before processing any input:
+`ValueError: invalid literal for int() with base 0: 'U+E0100'`. The Python loader
+uses `int(value, 0)`, which does not accept the registry's `U+` notation.
+Inspection and conversion are blocked until the loader and registry format
+agree; changing the input document will not resolve this error. These commands
+describe the CLI interface, but could not be validated end to end in this
+checkout.
+
+Once that prerequisite is met, run these commands from the repository root to
+inspect stored provenance independently of what the editor draws. No package
+installation is needed:
+
+```sh
+PYTHONPATH=python python3 -m textprov inspect docs/examples/provenance-vs.txt
+PYTHONPATH=python python3 -m textprov inspect docs/examples/provenance-pua.txt
+```
+
+Both reports should identify AI-marked text; they also include the unmarked
+instructions in each file.
 
 ## Publishing and local display are different boundaries
 
 Keep selector-encoded text as the canonical copy. A local tool may derive a PUA
-copy for an editor or renderer that has the matching font:
+copy for an editor or renderer that has the matching font. From the repository
+root, with Python 3.9+ and your selector-encoded `document.md` in that directory:
 
 ```sh
-python3 -m textprov -o document-pua.md convert --from vs --to pua document.md
+PYTHONPATH=python python3 -m textprov -o document-pua.md convert --from vs --to pua document.md
 ```
+
+This writes a separate UTF-8 file and leaves `document.md` unchanged. Choose an
+output path you can overwrite; `-o` replaces an existing file. If the Python
+package is installed in your environment, omit `PYTHONPATH=python` and run from
+the directory containing your document.
 
 Registry version 1 has PUA assignments only for the AI state and supported base
 characters in `U+0021`–`U+00FF`, excluding whitespace, control, and format
 characters. Unsupported grapheme clusters remain selector-encoded, so a
 converted file may contain both forms.
 
-Do not publish the derived PUA copy as the canonical document. Convert it back
-to selector encoding before it leaves the controlled workflow. This keeps the
-ordinary Unicode text available even where provenance rendering is absent.
+Publish the canonical selector copy, not the derived PUA copy. If you edited
+the PUA copy, convert it back before sharing it:
+
+```sh
+PYTHONPATH=python python3 -m textprov -o document-vs.md convert --from pua --to vs document-pua.md
+```
+
+This writes the edited text in selector encoding without overwriting either
+input copy. It keeps ordinary Unicode letters available even where provenance
+rendering is absent. For web pages, use an
+[HTML decorator](HTML-RENDERING.md) to display the labels without a P+ font.
 
 ## Evidence and limits
 
