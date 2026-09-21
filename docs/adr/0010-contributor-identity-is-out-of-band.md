@@ -60,8 +60,8 @@ several selectors to the same variant glyph.
 
 ## Consequences
 
-- `human`, `ai`, `unknown`, `edited`, and `mixed` remain the complete in-band
-  set. `edited` and `mixed` are proposed: their selectors are allocated in the
+- `human`, `ai`, `mixed`, `edited`, and `unknown` remain the complete in-band
+  set. `edited` and `unknown` are proposed: their selectors are allocated in the
   registry but no producer emits them yet and no font renders them.
 - A page that wants per-contributor colour styles by container, not by
   mark. The decorator's `data-prov` stays a state name.
