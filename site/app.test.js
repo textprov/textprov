@@ -89,19 +89,36 @@ test("reader reports existing labels without changing the input", () => {
   assert.equal(element("check-status").textContent, "Waiting for text.");
 });
 
-test("static sample matches all font examples and reveals labels when pasted", () => {
+test("font examples are distinct, self-describing, and carry the expected labels", () => {
+  const html = readFileSync(new URL("./index.html", import.meta.url), "utf8");
+  const examples = [
+    ...html.matchAll(/<p class="font-sample[^"]*" data-example="([^"]+)">([^<]+)<\/p>/g),
+  ];
+  assert.deepEqual(
+    examples.map(([, name]) => name),
+    ["ordinary", "local", "maryheather", "zilla"],
+  );
+  const visible = examples.map(([, , marked]) => marked.replace(/[\u{E0100}-\u{E01EF}]/gu, ""));
+  assert.equal(new Set(visible).size, examples.length);
+  assert.match(visible[0], /ordinary font should make it look like normal prose/);
+  assert.match(visible[1], /sawtooth underline when a compatible P\+ font is installed/);
+  assert.match(visible[2], /Maryheather is loaded from this page/);
+  assert.match(visible[3], /Zilla Slab is the active webfont/);
+  assert.doesNotMatch(examples[0][2], /\u{E0100}/u);
+  for (const [, name, marked] of examples.slice(1)) {
+    assert.match(marked, /\u{E0100}/u, `${name} includes Human labels`);
+    assert.match(marked, /\u{E0101}/u, `${name} includes AI labels`);
+  }
+});
+
+test("long static sample reveals Human and AI labels when pasted", () => {
   const file = readFileSync(new URL("./public/samples/marked-text.txt", import.meta.url), "utf8");
   assert.equal(file.codePointAt(0), 0xfeff, "UTF-8 BOM lets browsers identify the text encoding");
   const sample = file.slice(1);
-  const html = readFileSync(new URL("./index.html", import.meta.url), "utf8");
-  const examples = [...html.matchAll(/<p class="font-sample[^"]*">([^<]+)<\/p>/g)];
-  assert.equal(examples.length, 4);
-  for (const [, encoded] of examples) {
-    const text = encoded.replace(/&#x([0-9a-f]+);/gi, (_, cp) =>
-      String.fromCodePoint(parseInt(cp, 16)),
-    );
-    assert.equal(text + "\n", sample);
-  }
+  const visible = sample.replace(/[\u{E0100}-\u{E01EF}]/gu, "");
+  assert.match(visible, /This paragraph declares itself Human/);
+  assert.match(visible, /This paragraph declares itself AI/);
+  assert.ok(visible.length > 300);
   const { element } = demo();
   element("check-input").value = sample;
   element("check-input").listeners.input();
