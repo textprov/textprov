@@ -1,0 +1,47 @@
+[
+  {
+    "source": "patched-fonts/maryheather/webfonts/MaryheatherNerdFontPropoP+-Regular.woff2",
+    "sha256": "5ccefe02f649091b355ae173dc8da5f3fdf28d559f63d4d942df28504c07fd45",
+    "family": "Maryheather TextProv Demo P+",
+    "selectors": [
+      "U+E0100",
+      "U+E0101"
+    ]
+  },
+  {
+    "source": "patched-fonts/zilla/webfonts/ZillaSlabNerdFontPropoP+-Regular.woff2",
+    "sha256": "03548525954d5fb2113a14e7b2a5178d79deb5bd0289d49ad7b5517791e5a3e0",
+    "family": "Zilla Slab TextProv Demo P+",
+    "selectors": [
+      "U+E0100",
+      "U+E0101"
+    ]
+  },
+  {
+    "source": "temp/agave-pplus/AgaveNerdFontMonoP+-Regular.ttf",
+    "sha256": "3c92276a8d6a40115416f3b1e8187b2309f2a5b6f29a72ae90e31c6e7896924e",
+    "family": "Agave Mono TextProv Demo P+",
+    "selectors": [
+      "U+E0100",
+      "U+E0101"
+    ]
+  },
+  {
+    "source": "temp/agave-pplus/AgaveNerdFontP+-Regular.ttf",
+    "sha256": "f9fdca60e49a8ab9b8cfc36d298b1bf0ec43f2b675963ce8c138d645c02749cf",
+    "family": "Agave TextProv Demo P+",
+    "selectors": [
+      "U+E0100",
+      "U+E0101"
+    ]
+  },
+  {
+    "source": "temp/agave-pplus/AgaveNerdFontPropoP+-Regular.ttf",
+    "sha256": "c8073d82f24915351fc0578b4a98c4795acadbd994d9fa383f23b82f38d45998",
+    "family": "Agave Propo TextProv Demo P+",
+    "selectors": [
+      "U+E0100",
+      "U+E0101"
+    ]
+  }
+]

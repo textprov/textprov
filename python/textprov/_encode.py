@@ -224,7 +224,7 @@ def convert(text, from_mode, to_mode, mapping=None):
     """Convert the ai state between the "vs" and "pua" encodings.
 
     Every other state and every unmarked character passes through: only ai has
-    a PUA allocation in registry version 1.
+    a PUA allocation in registry version 0.1.
     """
     mapping = mapping or default_mapping()
     return _convert(

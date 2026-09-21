@@ -47,6 +47,46 @@ class TestVendoredRegistry(unittest.TestCase):
             self.assertEqual(pua - 0x100000, base, f"U+{pua:06X}")
             self.assertEqual(state, "ai", f"U+{pua:06X}")
 
+    def test_loader_parses_u_plus_notation(self):
+        # Regression: an earlier refactor replaced the explicit "U+" strip with
+        # int(value, 0), which rejects "U+E0100" and left every public API path
+        # broken on first use of default_mapping(). Load the vendored registry
+        # from scratch and assert the canonical selector and PUA values.
+        from textprov._core import load_mapping
+
+        _, selectors, pua2base, base2pua = load_mapping()
+        self.assertEqual(selectors["human"], 0xE0100)
+        self.assertEqual(selectors["ai"], 0xE0101)
+        self.assertEqual(selectors["mixed"], 0xE0102)
+        self.assertEqual(selectors["edited"], 0xE0103)
+        self.assertEqual(selectors["unknown"], 0xE0104)
+        self.assertEqual(pua2base[0x100021], (0x0021, "ai"))
+        self.assertEqual(base2pua[0x0021], 0x100021)
+
+    def test_codepoint_parser_accepts_registry_notation(self):
+        # Positive cases: canonical "U+HHHH" strings from the registry.
+        from textprov._core import _codepoint
+
+        self.assertEqual(_codepoint("U+E0100"), 0xE0100)
+        self.assertEqual(_codepoint("U+0021"), 0x0021)
+        self.assertEqual(_codepoint("U+100021"), 0x100021)
+
+    def test_codepoint_parser_rejects_non_registry_notation(self):
+        # Negative cases: everything a well-meaning refactor might substitute.
+        # Each must raise ValueError so drift is loud, not silent.
+        from textprov._core import _codepoint
+
+        for bad in (
+            "0xE0100",   # Python literal prefix, what int(_, 0) accepts
+            "E0100",     # bare hex, no U+ prefix
+            "u+E0100",   # lowercase prefix, not the canonical form
+            "U+GGGG",    # not hex digits
+            "",          # empty
+            "U+",        # prefix with no digits
+        ):
+            with self.assertRaises(ValueError, msg=repr(bad)):
+                _codepoint(bad)
+
 
 class TestFixtures(unittest.TestCase):
     """fixtures.json defines conformance (ADR 0004)."""

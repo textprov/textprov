@@ -13,7 +13,7 @@ from pathlib import Path
 
 MAPPING_PATH = Path(__file__).with_name("mapping.json")
 
-CONTRACT_VERSION = 1  # see SPEC.md
+CONTRACT_VERSION = "0.1"  # see SPEC.md
 GENERATED_STATES = ("human", "ai", "mixed")
 PROPOSED_STATES = ("edited", "unknown")
 
@@ -48,19 +48,31 @@ def default_mapping():
     return _DEFAULT
 
 
+def _codepoint(value):
+    # Registry format is exactly "U+HHHH" (matches the JS and Ruby loaders).
+    # Do NOT collapse to int(value, 0): that parses Python literals like
+    # "0xE0100" but rejects "U+E0100", silently breaking every public API
+    # path on first use of default_mapping(). Reject bare hex too so a
+    # future refactor cannot drift silently. See TestVendoredRegistry
+    # .test_codepoint_parser_* for the regression guards.
+    if not (isinstance(value, str) and value.startswith("U+") and len(value) > 2):
+        raise ValueError(f"expected registry codepoint 'U+HHHH', got {value!r}")
+    return int(value[2:], 16)
+
+
 def load_mapping(path=MAPPING_PATH):
     """Load mapping.json and return (mapping, selectors, pua2base, base2pua)."""
     with open(path, encoding="utf-8") as handle:
         mapping = json.load(handle)
     selectors = {
-        name: int(value, 0)
+        name: _codepoint(value)
         for name, value in mapping["variation_selectors"].items()
     }
     pua2base = {}
     base2pua = {}
     for pua_string, entry in mapping["pua"].items():
-        pua = int(pua_string, 0)
-        base = int(entry["base"], 0)
+        pua = _codepoint(pua_string)
+        base = _codepoint(entry["base"])
         pua2base[pua] = (base, entry.get("provenance", "ai"))
         if entry.get("provenance", "ai") == "ai":
             base2pua[base] = pua
@@ -132,7 +144,7 @@ def _strip(text, selectors, pua2base):
 def _runs(text, selectors, pua2base, strip=False, merge_whitespace=True):
     """Split `text` into an ordered list of (state, text) runs.
 
-    Implements the decorator contract in SPEC.md version 1. `state` is a
+    Implements the decorator contract in SPEC.md version 0.1. `state` is a
     selector name from mapping.json's variation_selectors, or None.
     """
     sel_cps = set(selectors.values())

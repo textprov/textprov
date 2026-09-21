@@ -53,8 +53,8 @@ given. Text is read and written as UTF-8 verbatim, so CRLF survives.
 
 ## Contract and mapping versions
 
-- Contract version 1 (see [SPEC.md](../SPEC.md)).
-- Mapping version 1 (see [mapping.json](../mapping.json)). `lib/textprov/mapping.json`
+- Draft contract version 0.1 (see [SPEC.md](../SPEC.md)).
+- Draft registry version 0.1 (see [mapping.json](../mapping.json)). `lib/textprov/mapping.json`
   is a vendored copy and the test suite fails if it drifts from the canonical
   file.
 

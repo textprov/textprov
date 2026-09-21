@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test": "node --test app.test.js",
     "spec": "node build-spec.js",
     "predev": "node build-spec.js",
     "prebuild": "node build-spec.js",

@@ -8,15 +8,16 @@ export default defineConfig({
   base: "./",
   server: {
     fs: {
-      allow: [searchForWorkspaceRoot(process.cwd())]
-    }
+      allow: [searchForWorkspaceRoot(process.cwd())],
+    },
   },
   build: {
     rollupOptions: {
       input: {
         main: resolve(here, "index.html"),
-        spec: resolve(here, "spec.html")
-      }
-    }
-  }
+        encoder: resolve(here, "encoder.html"),
+        spec: resolve(here, "spec.html"),
+      },
+    },
+  },
 });

@@ -3,8 +3,8 @@
 /*
  *# textprov.css: provenance decorator styles
  *# TextProv protocol: https://github.com/textprov/textprov
- *# Contract version: 1 (see ../SPEC.md)
- *# Mapping version: 1 (see ../mapping.json)
+ *# Contract version: 0.1 (see ../SPEC.md)
+ *# Mapping version: 0.1 (see ../mapping.json)
  *#
  *# Pairs with textprov.js. Not part of the decorator contract (SPEC.md
  *# "Not specified: Visual style") but reproduces the P+ font's own marks so a

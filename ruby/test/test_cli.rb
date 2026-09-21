@@ -97,6 +97,6 @@ class TestCli < Minitest::Test
       $stdout = original
     end
 
-    assert_match(/\Atextprov \d+\.\d+\.\d+ \(contract 1, mapping 1\)/, buffer.string)
+    assert_match(/\Atextprov \d+\.\d+\.\d+ \(contract 0\.1, mapping 0\.1\)/, buffer.string)
   end
 end

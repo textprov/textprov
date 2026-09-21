@@ -6,7 +6,7 @@ require "cgi"
 require "json"
 
 module Textprov
-  CONTRACT_VERSION = 1
+  CONTRACT_VERSION = "0.1"
   GENERATED_STATES = %w[human ai mixed].freeze
   PROPOSED_STATES  = %w[edited unknown].freeze
 

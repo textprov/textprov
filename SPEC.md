@@ -4,27 +4,46 @@
 
 # TextProv protocol specification
 
-TextProv carries provenance in the text itself. A run of characters can say
-whether a person wrote it, a machine generated it, or its origin is unknown.
-The state travels as Unicode code points, so it survives copy, paste, and
-plain-text storage, and needs no side-channel, no wrapper format, and no
-metadata the transport can drop.
+> **Status: Draft — experimental.** Contract version: 0.1. Registry version: 0.1.
+> Contract behavior may change incompatibly before Stable. Implementers should
+> pin an immutable revision. Published registry allocations remain reserved and
+> will not be reassigned or removed. Stable contract compatibility guarantees
+> have not yet taken effect. See the [maturity lifecycle](docs/MATURITY.md).
+
+TextProv carries origin labels in the text itself: human-written,
+AI-generated, mixed, edited, or unknown. It gives cooperating producers and
+consumers a shared way to preserve and display disclosures about text's origin.
+For example, a writing integration can label generated passages so an editor
+can see those disclosures during review.
+
+Labels are stored as Unicode code points within the text, rather than in a
+separate metadata field or wrapper. They can survive copying, pasting, and
+plain-text storage when the software involved preserves those code points.
+Software that removes the marks also removes the labels.
 
 This document defines the in-band encodings, registry rules, producer behavior,
 decoder behavior, and renderer markup. It does not define how an integration
 determines which provenance state applies or how a renderer presents that state
 visually.
 
-TextProv carries provenance labels, not proof of provenance. Any text processor
-can add, remove, or change a mark. Authentication, signatures, tamper evidence,
+TextProv carries provenance labels, not proof of provenance. A label expresses
+a claim about origin, not a judgment about the text's quality, accuracy, or
+trustworthiness. Any text processor can add, remove, or change a mark; unmarked
+text makes no claim about its origin.
+
+Decoding a label establishes which claim is present, not whether it is true.
+Confidence in a claim depends on evidence about its source and workflow, not
+on the mark alone. Decisions that depend on accurate authorship require
+evidence beyond TextProv labels. Authentication, signatures, tamper evidence,
 and verification of a producer's claim are outside this protocol.
 
-Two version numbers appear in this spec. **Contract version 1** covers the
-algorithms and rules below — the encodings, the decoder, and producer
-conformance. **Registry version 1** covers `mapping.json`: which base
-characters have PUA slots and which states exist. The registry rolls forward as
-coverage grows (see [Registry](#registry)); the contract stays put until a rule
-changes. The fixture and reference APIs call the registry version
+Two compatibility versions appear in this draft. **Contract version 0.1**
+covers the algorithms and rules below — the encodings, the decoder, and
+producer conformance. **Registry version 0.1** covers `mapping.json`: which
+base characters have PUA slots and which states exist. These versions are
+Draft: contract behavior is experimental, but published registry allocations
+remain protected. The registry and contract advance independently. The fixture
+and reference APIs call the registry version
 `mapping_version`; "mapping version" and "registry version" refer to the same
 value.
 
@@ -53,7 +72,7 @@ producer ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)).
 | `edited` | `U+E0103` | Optional |
 | `unknown` | `U+E0104` | Optional |
 
-A contract-version-1 decoder recognizes every selector in the table. A
+A contract-version-0.1 decoder recognizes every selector in the table. A
 conforming producer must support `human`, `ai`, and `mixed`; support for
 producing `edited` and `unknown` is optional.
 
@@ -107,7 +126,7 @@ whitespace, or with no preceding cluster, is not a mark.
 
 ```json
 {
-  "version": 1,
+  "version": "0.1",
   "variation_selectors": {
     "human": "U+E0100",
     "ai": "U+E0101",
@@ -121,18 +140,26 @@ whitespace, or with no preceding cluster, is not a mark.
 }
 ```
 
-Version 1 covers `U+0021`–`U+00FF` minus the general categories `Zs`, `Cc`, and
-`Cf`: 188 entries, every one state `ai`. The formula reserves the rest of the
-range; a later version must not give those code points a different meaning.
+Registry version 0.1 covers `U+0021`–`U+00FF` minus the general categories
+`Zs`, `Cc`, and `Cf`: 188 entries, every one state `ai`. The formula reserves
+the rest of the range; a later version must not give those code points a
+different meaning. This reservation applies during Draft and Candidate as well
+as Stable.
 
 Although the PUA formula is fixed, a consumer must read the `pua` table rather
 than compute it. A future version may restrict an entry or attach metadata.
 
 ### Stability rules
 
-- Published code points are never reassigned or removed.
+These rules apply from the first publication of an allocation, including
+**Draft** and **Candidate** status.
+
+- Published selector and PUA code points are never reassigned or removed.
+- Obsolete allocations remain reserved and documented with their original
+  meanings.
 - A version that adds base characters or states increments `version` and
-  appends entries only.
+  appends entries only. An addition is not automatically compatible with older
+  decoders; compatibility is reviewed under the [maturity lifecycle](docs/MATURITY.md).
 
 ### Vendoring
 
@@ -163,7 +190,7 @@ A producer marks text. It must hold the following.
 
 In the PUA encoding, a producer replaces a base character with its PUA
 counterpart only when the cluster is exactly one code point and the registry
-allocates it for that state. Registry version 1 allocates `U+0021`-`U+00FF` and
+allocates it for that state. Registry version 0.1 allocates `U+0021`-`U+00FF` and
 the `ai` state only, so every other cluster keeps the selector encoding. The
 two encodings therefore mix freely in one document, and converting between
 them changes only the clusters that have a counterpart.
@@ -184,7 +211,7 @@ the registry.
 - Unmarked text, lone selectors, unallocated bases, and states without a PUA
   allocation remain unchanged.
 
-Registry version 1 provides PUA allocations only for `ai`.
+Registry version 0.1 provides PUA allocations only for `ai`.
 
 ### Non-normative edit helper
 
@@ -207,7 +234,7 @@ the four properties above hold for text of its own choosing — the reference
 suite tests them as properties, not only as recorded cases, because the cases
 cannot cover every input.
 
-Producer conformance is defined at contract version 1. It documents what the
+Producer conformance is defined at contract version 0.1. It documents what the
 reference producer already did; no behaviour changed when it was written down.
 
 ## Decoder
@@ -279,8 +306,8 @@ instead ([ADR 0009](docs/adr/0009-editor-decoration-apis.md)).
 ([ADR 0004](docs/adr/0004-shared-fixture-for-conformance.md)):
 
 ```json
-{ "contract_version": 1,
-  "mapping_version": 1,
+{ "contract_version": "0.1",
+  "mapping_version": "0.1",
   "cases":          [ { "name": "...", "input": "...", "options": {}, "runs": [ { "state": "ai", "text": "..." } ] } ],
   "producer_cases": [ { "name": "...", "input": "...", "options": { "state": "ai", "mode": "vs" }, "output": "..." } ],
   "convert_cases":  [ { "name": "...", "input": "...", "options": { "from": "vs", "to": "pua" }, "output": "..." } ] }
@@ -298,9 +325,33 @@ bytes.
 
 ## Versioning
 
-The contract version changes when the algorithm or markup changes. The registry
-version changes independently, under the stability rules above. An
-implementation states both versions it implements.
+Version numbers identify the contract rules and registry contents. Maturity
+status defines the change and compatibility promises; a version number or
+package publication alone does not establish maturity.
+
+| Artifact | Current version | Status | Changes with |
+| --- | --- | --- | --- |
+| Contract (`SPEC.md`, decoder, producer rules, `fixtures.json`) | 0.1 | Draft | Algorithm, markup, or conformance-rule changes |
+| Registry (`mapping.json` and vendored copies) | 0.1 | Draft | Additions to published allocations or registry metadata changes |
+
+The [maturity lifecycle](docs/MATURITY.md) defines entry and exit criteria for
+**Draft → Candidate → Stable**, and retirement through **Deprecated**.
+Promotion requires a public maintainer decision with evidence; a short release
+note is sufficient. Candidate review lasts at least 30 days without changes to
+required behavior. Stable requires passing applicable checks from at least one
+maintained implementation and no unresolved release blockers; independent
+implementation or external participation is not required. See the lifecycle for
+the full criteria. No promotion is implied by this document's version numbers.
+
+The contract and registry versions advance independently. Each promotion record
+identifies the exact pair reviewed together. Registry allocation protections
+apply at every stage. Stable contract behavior is immutable; incompatible
+changes require a new contract version, not withdrawal of the old guarantees.
+
+An implementation states both versions it implements. During Draft and
+Candidate, it also identifies the immutable release revision used for
+conformance. The live `SPEC.md` and `mapping.json` URLs describe the current
+draft, not pinned release artifacts.
 
 ## Not specified
 
@@ -312,7 +363,7 @@ implementation states both versions it implements.
 - Behaviour on text nodes inside `pre` or `code`. Implementations may skip
   them; the fixture does not cover it.
 - Unicode-version differences in grapheme segmentation beyond the fixture.
-  Implementations must use extended grapheme clusters, but contract version 1
+  Implementations must use extended grapheme clusters, but contract version 0.1
   does not pin a Unicode version. Clients using `Intl.Segmenter` and servers
   using this repository's `cluster_end` agreed on every case tested; they may
   differ where Unicode versions or segmentation coverage differ.
