@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import vm from "node:vm";
 
-function demo() {
+function demo(intl = Intl) {
   const elements = new Map();
   function element(id) {
     if (!elements.has(id)) {
@@ -26,7 +26,7 @@ function demo() {
   const downloads = [];
   const copied = [];
   const context = vm.createContext({
-    Intl,
+    Intl: intl,
     Blob,
     setTimeout: (callback) => callback(),
     URL: {
@@ -71,6 +71,16 @@ test("copy and UTF-8 download carry the same marked text", async () => {
   assert.equal(downloads[0].type, "text/plain;charset=utf-8");
   assert.equal(element("download-link").download, "textprov-sample.txt");
   assert.equal(element("copy-status").textContent, "Copied with marks");
+});
+
+test("reader initializes when Intl.Segmenter is unavailable", () => {
+  const legacyIntl = { ...Intl, Segmenter: undefined };
+  const { element } = demo(legacyIntl);
+  const input = element("check-input");
+  input.value = "A\u{E0101}";
+  input.listeners.input();
+  assert.equal(element("check-output").textContent, input.value);
+  assert.match(element("check-status").textContent, /Labels found: ai/);
 });
 
 test("reader reports existing labels without changing the input", () => {
@@ -144,8 +154,8 @@ test("marking pasted text replaces existing labels rather than stacking them", (
 
 test("homepage presents the reader and links to the separate encoder", () => {
   const html = readFileSync(new URL("./index.html", import.meta.url), "utf8");
-  assert.match(html, /Reveal labels in your text/);
-  assert.match(html, /Paste text to reveal labels/);
+  assert.match(html, /Check text for TextProv labels/);
+  assert.match(html, /Paste text to check for labels/);
   assert.match(html, /href="\.\/encoder\.html"/);
   assert.doesNotMatch(html, /<p><\/p>Paste text/);
   assert.doesNotMatch(html, /<p><\/p>Need to add labels/);
