@@ -17,7 +17,7 @@ import argparse
 import io
 import sys
 
-from . import CONTRACT_VERSION, GENERATED_STATES, __version__, default_mapping
+from . import GENERATED_STATES, SPEC_VERSION, __version__, default_mapping
 from ._core import strip_marks, to_html
 from ._encode import convert, inspect, mark, mark_added
 
@@ -74,7 +74,7 @@ def build_parser():
         action="version",
         version=(
             f"{PROG} {__version__} "
-            f"(contract {CONTRACT_VERSION}, mapping {mapping.version})"
+            f"(specification {SPEC_VERSION}, registry {mapping.version})"
         ),
     )
     parser.add_argument(

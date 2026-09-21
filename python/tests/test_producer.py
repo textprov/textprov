@@ -116,7 +116,7 @@ class TestProducerProperties(unittest.TestCase):
                 )
 
     def test_marked_text_decodes_to_the_state_it_was_marked_with(self):
-        # The producer and the decoder are the two halves of one contract.
+        # The producer and the decoder are the two halves of one specification.
         for state in textprov.GENERATED_STATES:
             for mode in ("vs", "pua"):
                 with self.subTest(state=state, mode=mode):

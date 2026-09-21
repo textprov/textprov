@@ -4,10 +4,10 @@
 
 # TextProv protocol specification
 
-> **Status: Draft — experimental.** Contract version: 0.1. Registry version: 0.1.
-> Contract behavior may change incompatibly before Stable. Implementers should
+> **Status: Draft — experimental.** Specification version: 0.1. Registry version: 0.1.
+> Specification behavior may change incompatibly before Stable. Implementers should
 > pin an immutable revision. Published registry allocations remain reserved and
-> will not be reassigned or removed. Stable contract compatibility guarantees
+> will not be reassigned or removed. Stable specification compatibility guarantees
 > have not yet taken effect. See the [maturity lifecycle](docs/MATURITY.md).
 
 TextProv carries origin labels in the text itself: human-written,
@@ -37,15 +37,14 @@ on the mark alone. Decisions that depend on accurate authorship require
 evidence beyond TextProv labels. Authentication, signatures, tamper evidence,
 and verification of a producer's claim are outside this protocol.
 
-Two compatibility versions appear in this draft. **Contract version 0.1**
+Two compatibility versions appear in this draft. **Specification version 0.1**
 covers the algorithms and rules below — the encodings, the decoder, and
 producer conformance. **Registry version 0.1** covers `mapping.json`: which
 base characters have PUA slots and which states exist. These versions are
-Draft: contract behavior is experimental, but published registry allocations
-remain protected. The registry and contract advance independently. The fixture
-and reference APIs call the registry version
-`mapping_version`; "mapping version" and "registry version" refer to the same
-value.
+Draft: specification behavior is experimental, but published registry allocations
+remain protected. The registry and specification advance independently. Fixtures and reference
+APIs expose these values as `spec_version` and `registry_version` (or the
+language-appropriate camel-case equivalents).
 
 ## Roles
 
@@ -72,7 +71,7 @@ producer ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)).
 | `edited` | `U+E0103` | Optional |
 | `unknown` | `U+E0104` | Optional |
 
-A contract-version-0.1 decoder recognizes every selector in the table. A
+A specification-version-0.1 decoder recognizes every selector in the table. A
 conforming producer must support `human`, `ai`, and `mixed`; support for
 producing `edited` and `unknown` is optional.
 
@@ -234,7 +233,7 @@ the four properties above hold for text of its own choosing — the reference
 suite tests them as properties, not only as recorded cases, because the cases
 cannot cover every input.
 
-Producer conformance is defined at contract version 0.1. It documents what the
+Producer conformance is defined at specification version 0.1. It documents what the
 reference producer already did; no behaviour changed when it was written down.
 
 ## Decoder
@@ -246,9 +245,9 @@ reference producer already did; no behaviour changed when it was written down.
 | `strip` | false | Remove selectors from run text. State is still reported. |
 | `merge_whitespace` | true | Whitespace between two runs of the same state joins them. |
 
-`merge_whitespace` is the contract spelling. An implementation in a language
+`merge_whitespace` is the specification spelling. An implementation in a language
 whose convention is camel case may accept `mergeWhitespace` as an alias, but
-must accept the contract spelling, because the fixture uses it.
+must accept the specification spelling, because the fixture uses it.
 
 ### Algorithm
 
@@ -284,7 +283,7 @@ For each run with a state, emit
 ```
 
 with `TEXT` HTML-escaped. Runs with no state are emitted as escaped text.
-`data-prov` is the machine-readable contract; the classes exist for CSS. An
+`data-prov` is the machine-readable specification; the classes exist for CSS. An
 implementation may accept a class prefix option, and `prov` is the default.
 A custom prefix changes the classes only; `data-prov` does not move.
 
@@ -306,8 +305,8 @@ instead ([ADR 0009](docs/adr/0009-editor-decoration-apis.md)).
 ([ADR 0004](docs/adr/0004-shared-fixture-for-conformance.md)):
 
 ```json
-{ "contract_version": "0.1",
-  "mapping_version": "0.1",
+{ "spec_version": "0.1",
+  "registry_version": "0.1",
   "cases":          [ { "name": "...", "input": "...", "options": {}, "runs": [ { "state": "ai", "text": "..." } ] } ],
   "producer_cases": [ { "name": "...", "input": "...", "options": { "state": "ai", "mode": "vs" }, "output": "..." } ],
   "convert_cases":  [ { "name": "...", "input": "...", "options": { "from": "vs", "to": "pua" }, "output": "..." } ] }
@@ -316,7 +315,7 @@ instead ([ADR 0009](docs/adr/0009-editor-decoration-apis.md)).
 `cases` is the decoder suite: `state` is a string from `variation_selectors` or
 `null`, and `options` uses the option names in this document. An implementation
 claiming conformance to a fixture pair must advertise the fixture's
-`contract_version` and `mapping_version` and reproduce every applicable case.
+`spec_version` and `registry_version` and reproduce every applicable case.
 A decoder-only implementation runs `cases`; an implementation that also
 produces or converts marks additionally runs `producer_cases` and
 `convert_cases`. A `note` on a case is prose for a human and carries no
@@ -325,13 +324,13 @@ bytes.
 
 ## Versioning
 
-Version numbers identify the contract rules and registry contents. Maturity
+Version numbers identify the specification rules and registry contents. Maturity
 status defines the change and compatibility promises; a version number or
 package publication alone does not establish maturity.
 
 | Artifact | Current version | Status | Changes with |
 | --- | --- | --- | --- |
-| Contract (`SPEC.md`, decoder, producer rules, `fixtures.json`) | 0.1 | Draft | Algorithm, markup, or conformance-rule changes |
+| Specification (`SPEC.md`, decoder, producer rules, `fixtures.json`) | 0.1 | Draft | Algorithm, markup, or conformance-rule changes |
 | Registry (`mapping.json` and vendored copies) | 0.1 | Draft | Additions to published allocations or registry metadata changes |
 
 The [maturity lifecycle](docs/MATURITY.md) defines entry and exit criteria for
@@ -343,10 +342,10 @@ maintained implementation and no unresolved release blockers; independent
 implementation or external participation is not required. See the lifecycle for
 the full criteria. No promotion is implied by this document's version numbers.
 
-The contract and registry versions advance independently. Each promotion record
+The specification and registry versions advance independently. Each promotion record
 identifies the exact pair reviewed together. Registry allocation protections
-apply at every stage. Stable contract behavior is immutable; incompatible
-changes require a new contract version, not withdrawal of the old guarantees.
+apply at every stage. Stable specification behavior is immutable; incompatible
+changes require a new specification version, not withdrawal of the old guarantees.
 
 An implementation states both versions it implements. During Draft and
 Candidate, it also identifies the immutable release revision used for
@@ -356,14 +355,14 @@ draft, not pinned release artifacts.
 ## Not specified
 
 - How a producer decides which state applies to a given run of text.
-- Visual style. The contract defines classes and an attribute; CSS is an
+- Visual style. The specification defines classes and an attribute; CSS is an
   integration choice. `js/textprov.css` is one such choice, not part of this
   document.
 - Inferring provenance from text that has no marks.
 - Behaviour on text nodes inside `pre` or `code`. Implementations may skip
   them; the fixture does not cover it.
 - Unicode-version differences in grapheme segmentation beyond the fixture.
-  Implementations must use extended grapheme clusters, but contract version 0.1
+  Implementations must use extended grapheme clusters, but specification version 0.1
   does not pin a Unicode version. Clients using `Intl.Segmenter` and servers
   using this repository's `cluster_end` agreed on every case tested; they may
   differ where Unicode versions or segmentation coverage differ.

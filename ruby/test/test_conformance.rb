@@ -25,8 +25,8 @@ class TestFixtures < Minitest::Test
   FX = JSON.parse(File.read(FIXTURES_PATH, encoding: "UTF-8"))
 
   def test_versions_match_the_implementation
-    assert_equal FX["contract_version"], Textprov::CONTRACT_VERSION
-    assert_equal FX["mapping_version"], MAPPING.version
+    assert_equal FX["spec_version"], Textprov::SPEC_VERSION
+    assert_equal FX["registry_version"], MAPPING.version
   end
 
   def test_every_case

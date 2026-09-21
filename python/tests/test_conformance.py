@@ -96,8 +96,8 @@ class TestFixtures(unittest.TestCase):
         cls.fx = json.loads(FIXTURES_PATH.read_text(encoding="utf-8"))
 
     def test_versions_match_the_implementation(self):
-        self.assertEqual(textprov.CONTRACT_VERSION, self.fx["contract_version"])
-        self.assertEqual(MAPPING.version, self.fx["mapping_version"])
+        self.assertEqual(textprov.SPEC_VERSION, self.fx["spec_version"])
+        self.assertEqual(MAPPING.version, self.fx["registry_version"])
 
     def test_every_case(self):
         for case in self.fx["cases"]:
