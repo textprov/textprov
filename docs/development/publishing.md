@@ -1,225 +1,301 @@
-# docs/development/publishing.md
+# Publishing packages
 
----
+This guide covers manual releases of the Python, JavaScript, and Ruby packages
+in this repository. Run commands from the repository root unless a section says
+otherwise.
 
-# Publishing
+The packages have independent versions. Release and tag each package separately.
+Do not reuse a package version that has already been published: package
+registries treat published artifacts as immutable.
 
-## LICENSE — one file per package directory
+## Before any release
 
-PyPI sdists, npm tarballs, and RubyGems packages are meant to be self-contained:
-their build tools only read files inside the package directory, not parent
-paths. So each package directory keeps its own copy of the license:
+1. Check out the branch that should contain the release.
+2. Confirm that the working tree is clean.
+3. Update the package version and any package-specific release notes.
+4. Run the package's tests.
+5. Commit the release changes.
+6. Build and inspect the exact artifact that will be uploaded from that commit.
+7. Publish with an account protected by multi-factor authentication (MFA).
+8. Install the published artifact in a clean environment and run a smoke test.
+9. Create and push a package-specific Git tag for the release commit.
 
-```
-LICENSE                # canonical
-python/LICENSE         # copy, consumed by setuptools via license-files
-js/LICENSE             # copy, auto-detected by npm
-ruby/LICENSE           # copy, included by textprov.gemspec
-```
+If an upload is interrupted, inspect the registry before retrying. A registry
+may have accepted one artifact even if the command reported a failure.
 
-The `license-drift` job in `.github/workflows/conformance.yml` fails CI if the
-copies diverge from the root. If you ever relicense, update all three files in
-the same commit. This is what protobuf, grpc, and Apache Arrow do; symlinks
-work locally but break on Windows checkouts and confuse some archive tools.
+## License files
 
-## PyPI — publishing `textprov`
+Each package directory contains its own `LICENSE` because package build tools
+normally include files from the package directory, not its parent:
 
-All commands in this section run from the `python/` subdirectory of the repo,
-where `pyproject.toml` lives. `cd` there first:
-
-```bash
-cd /Users/d/Projects/dev/textprov/textprov/python
-pwd            # confirm .../textprov/textprov/python
-ls pyproject.toml   # should print pyproject.toml
-```
-
-**One-time setup:**
-```bash
-# Create PyPI account at https://pypi.org/account/register/
-# Enable 2FA, then create an API token: https://pypi.org/manage/account/token/
-# Store token in ~/.pypirc:
-cat > ~/.pypirc <<'EOF'
-[pypi]
-username = __token__
-password = pypi-AgEI...<your-token>
-
-[testpypi]
-username = __token__
-password = pypi-AgEI...<your-testpypi-token>
-EOF
-chmod 600 ~/.pypirc
-
-pip install --upgrade build twine
+```text
+LICENSE          canonical repository license
+python/LICENSE   included in Python distributions
+js/LICENSE       included in npm packages
+ruby/LICENSE     included in the Ruby gem
 ```
 
-**Per-release** (still in `python/`):
-```bash
-cd /Users/d/Projects/dev/textprov/textprov/python
+Keep every copy identical to the root file. The `license-drift` job in
+`.github/workflows/conformance.yml` currently verifies the Python and
+JavaScript copies. Check the Ruby copy manually until CI covers it as well.
+Use copies rather than symlinks because symlinks can cause problems in Windows
+checkouts and package archives.
 
-# 1. Bump version in pyproject.toml (e.g. 0.1.0 -> 0.1.1).
-#    `textprov/__init__.py` reads it from installed metadata, so nothing else
-#    to edit. Confirm with:
-#      python -c "import textprov; print(textprov.__version__)"
-#    (run after `pip install -e .` so metadata reflects the new number)
+## Publish the Python package to PyPI
 
-# 2. Clean any prior build
-rm -rf dist/ build/ *.egg-info
+### Prerequisites
 
-# 3. Build sdist + wheel
-python -m build
-# produces: dist/textprov-0.1.0.tar.gz and dist/textprov-0.1.0-py3-none-any.whl
+- Python 3.9 or newer
+- Accounts on [PyPI](https://pypi.org/account/register/) and, when testing there,
+  [TestPyPI](https://test.pypi.org/account/register/)
+- MFA enabled on both accounts
+- A separate API token for each registry
+- Current packaging tools:
 
-# 4. Sanity check the wheel
-twine check dist/*
-unzip -l dist/textprov-0.1.0-py3-none-any.whl | grep mapping.json  # confirm package-data landed
-
-# 5. Test on TestPyPI first (recommended for a 0.1.0)
-twine upload --repository testpypi dist/*
-pip install --index-url https://test.pypi.org/simple/ --no-deps textprov
-python -c "import textprov; print(textprov.__file__)"
-
-# 6. Real upload
-twine upload dist/*
-
-# 7. Tag the release
-git tag -a python-v0.1.2 -m "textprov python 0.1.2"
-git push origin python-v0.1.2
+```sh
+python3 -m pip install --upgrade build twine
 ```
 
-**Verify:**
-```bash
-pip install textprov
-textprov --version                                    # prints "textprov 0.1.0 (contract 1, mapping 1)"
-echo -n "hello" | textprov mark --human - | textprov inspect -
+Do not commit tokens or place them directly in shell commands. The upload
+commands below prompt for a token after `--username __token__`. A trusted
+publishing workflow is preferable if releases are later automated in CI.
+
+### Build and check the release
+
+From the repository root:
+
+```sh
+cd python
+
+# Update version in pyproject.toml, replace X.Y.Z below, then run the tests.
+python3 -m unittest discover -s tests -t .
+
+# Commit the version change before continuing.
+git add pyproject.toml
+git commit -m "release(python): X.Y.Z"
+
+# Remove artifacts from earlier builds and build an sdist and wheel.
+rm -rf build dist *.egg-info
+python3 -m build
+
+# Check package metadata and inspect both archives.
+python3 -m twine check dist/*
+python3 -m zipfile -l dist/*.whl
+
+tar -tzf dist/*.tar.gz
 ```
 
-## npm — publishing `textprov`
+Confirm that the archives contain `README.md`, `LICENSE`, the `textprov`
+package, and `textprov/mapping.json`.
 
-All commands in this section run from the `js/` subdirectory of the repo,
-where `package.json` lives. `cd` there first:
+### Test on TestPyPI
 
-```bash
-cd /Users/d/Projects/dev/textprov/textprov/js
-pwd              # confirm .../textprov/textprov/js
-ls package.json  # should print package.json
+Upload with the TestPyPI token when prompted:
+
+```sh
+python3 -m twine upload \
+  --repository testpypi \
+  --username __token__ \
+  dist/*
 ```
 
-**One-time setup:**
-```bash
-# Create npm account: https://www.npmjs.com/signup
-# Enable 2FA on the account
+Install the uploaded version in a clean virtual environment. Replace `X.Y.Z`
+with the version in `pyproject.toml`:
+
+```sh
+rm -rf /tmp/textprov-testpypi
+python3 -m venv /tmp/textprov-testpypi
+/tmp/textprov-testpypi/bin/python -m pip install \
+  --index-url https://test.pypi.org/simple/ \
+  --no-deps \
+  textprov==X.Y.Z
+/tmp/textprov-testpypi/bin/textprov --version
+```
+
+TestPyPI is a separate registry. An account or token from PyPI does not grant
+access to it.
+
+### Publish and verify
+
+```sh
+python3 -m twine upload --username __token__ dist/*
+
+rm -rf /tmp/textprov-pypi
+python3 -m venv /tmp/textprov-pypi
+/tmp/textprov-pypi/bin/python -m pip install textprov==X.Y.Z
+/tmp/textprov-pypi/bin/textprov --version
+printf 'hello' | /tmp/textprov-pypi/bin/textprov mark --human - \
+  | /tmp/textprov-pypi/bin/textprov inspect -
+```
+
+From `python/`, tag the exact commit that produced the artifacts:
+
+```sh
+git tag -a python-vX.Y.Z -m "textprov python X.Y.Z"
+git push origin python-vX.Y.Z
+```
+
+## Publish the JavaScript package to npm
+
+### Prerequisites
+
+- Node.js 18 or newer; CI uses Node.js 20
+- An [npm account](https://www.npmjs.com/signup) with two-factor authentication
+- Permission to publish the unscoped `textprov` package
+
+Authenticate and verify the active account:
+
+```sh
 npm login
-npm whoami   # confirm the right user
+npm whoami
 ```
 
-**Per-release** (still in `js/`):
-```bash
-cd /Users/d/Projects/dev/textprov/textprov/js
+### Build and check the release
 
-# 1. Version bump (uses semver: patch|minor|major). This edits package.json
-#    AND creates a git commit + tag.
-npm version patch    # 0.1.0 -> 0.1.1
+From the repository root:
 
-# 2. Dry-run to see exactly what will be published
-npm publish --dry-run
-# Confirm the file list matches "files": [...] in package.json
-# (should be README, LICENSE, package.json, textprov.js, textprov.css)
+```sh
+cd js
 
-# 3. Test the tarball locally. npm pack names the file after the version
-#    in package.json; the command below reads it back out.
-npm pack
-tar -tzf "textprov-$(node -p 'require("./package.json").version').tgz"
+# Choose patch, minor, or major. This updates package.json and package-lock.json
+# without creating a generic Git tag.
+npm version <patch|minor|major> --no-git-tag-version
 
-# 4. Run the test suite one more time
 npm test
+npm publish --dry-run
 
-# 5. Publish. Unscoped packages default to public, no flag needed.
+rm -rf /tmp/textprov-npm
+mkdir /tmp/textprov-npm
+npm pack --pack-destination /tmp/textprov-npm
+```
+
+Inspect the file list printed by `npm publish --dry-run` and `npm pack`. The
+package should contain `README.md`, `LICENSE`, `package.json`, `textprov.js`, and
+`textprov.css`. `prepublishOnly` runs `npm test` again during publication.
+
+Test the tarball in a clean temporary project. Replace `X.Y.Z` with the version
+in `package.json`:
+
+```sh
+(
+  cd /tmp/textprov-npm
+  npm init -y
+  npm install ./textprov-X.Y.Z.tgz
+  node -e 'console.log(require("textprov").contractVersion)'
+)
+```
+
+The subshell returns to `js/` when the test finishes. Commit the version files
+before publishing:
+
+```sh
+git add package.json package-lock.json
+git commit -m "release(js): X.Y.Z"
+```
+
+### Publish and verify
+
+```sh
 npm publish
-
-# 6. Push the tag npm version created
-git push origin main --follow-tags
+npm view textprov@X.Y.Z
 ```
 
-**Verify:**
-```bash
-npm view textprov
-mkdir /tmp/test && cd /tmp/test && npm init -y && npm install textprov
-node -e "console.log(require('textprov'))"
+Then install the registry package in a clean temporary project:
+
+```sh
+rm -rf /tmp/textprov-npm-registry
+mkdir /tmp/textprov-npm-registry
+(
+  cd /tmp/textprov-npm-registry
+  npm init -y
+  npm install textprov@X.Y.Z
+  node -e 'console.log(require("textprov").contractVersion)'
+)
 ```
 
-## RubyGems — publishing `textprov`
+From `js/`, tag the release commit. Replace `X.Y.Z` before running these
+commands:
 
-All commands in this section run from the `ruby/` subdirectory of the repo,
-where `textprov.gemspec` lives. Ruby 3.2 or newer is required.
-
-```bash
-cd /Users/d/Projects/dev/textprov/textprov/ruby
-pwd                    # confirm .../textprov/textprov/ruby
-ls textprov.gemspec     # should print textprov.gemspec
+```sh
+git tag -a js-vX.Y.Z -m "textprov javascript X.Y.Z"
+git push origin HEAD
+git push origin js-vX.Y.Z
 ```
 
-**One-time setup:**
-```bash
-# Create an account at https://rubygems.org/sign_up
-# Enable MFA, then sign in from RubyGems:
+## Publish the Ruby gem to RubyGems
+
+### Prerequisites
+
+- Ruby 3.2 or newer
+- A [RubyGems account](https://rubygems.org/sign_up) with MFA enabled
+- Bundler
+
+From the repository root:
+
+```sh
+cd ruby
 gem signin
-
-# Install development dependencies:
 bundle install
 ```
 
-`gem signin` stores a RubyGems API key in the local credentials file. Protect
-that file with the permissions RubyGems requests, and do not commit it.
+`gem signin` stores credentials in RubyGems' local credentials file. Use the
+permissions RubyGems requests and never commit that file.
 
-**Per-release** (still in `ruby/`):
-```bash
-cd /Users/d/Projects/dev/textprov/textprov/ruby
+### Build and check the release
 
-# 1. Bump Textprov::VERSION in lib/textprov/version.rb
-#    (e.g. 0.1.0 -> 0.1.1), then confirm it:
+```sh
+# Update Textprov::VERSION in lib/textprov/version.rb, replace X.Y.Z below,
+# then run the tests.
 bundle exec ruby -Ilib -rtextprov -e 'puts Textprov::VERSION'
-
-# 2. Run the test suite
 bundle exec rake test
 
-# 3. Remove prior packages and build the gem
+# Commit the version change before continuing.
+git add lib/textprov/version.rb
+git commit -m "release(ruby): X.Y.Z"
+
 rm -f textprov-*.gem
 gem build textprov.gemspec
-# produces: textprov-0.1.1.gem
+```
 
-# 4. Inspect the package metadata and file list
-#    (replace the version below with the version you just built)
-gem specification textprov-0.1.1.gem
+Replace `X.Y.Z` below with the version printed above:
+
+```sh
+gem specification textprov-X.Y.Z.gem
 rm -rf /tmp/textprov-gem
-gem unpack textprov-0.1.1.gem --target /tmp/textprov-gem
-find /tmp/textprov-gem/textprov-0.1.1 -type f | sort
-# Confirm the gem includes README.md, LICENSE, exe/textprov, and lib/**.
+gem unpack textprov-X.Y.Z.gem --target /tmp/textprov-gem
+find /tmp/textprov-gem/textprov-X.Y.Z -type f | sort
+```
 
-# 5. Install and test the exact package locally
-gem install --local textprov-0.1.1.gem
+Confirm that the gem contains `README.md`, `LICENSE`, `exe/textprov`, and the
+files under `lib/`. Install and test the artifact itself:
+
+```sh
+gem install --local textprov-X.Y.Z.gem
 textprov --version
-
-# 6. Publish. RubyGems prompts for an MFA code when required.
-gem push textprov-0.1.1.gem
-
-# 7. Tag the release
-git tag -a ruby-v0.1.1 -m "textprov ruby 0.1.1"
-git push origin ruby-v0.1.1
+printf 'hello' | textprov mark --human - | textprov inspect -
 ```
 
-**Verify:**
-```bash
+### Publish and verify
+
+```sh
+gem push textprov-X.Y.Z.gem
 gem info textprov --remote
-gem install textprov
-textprov --version                                  # prints "textprov 0.1.1 (contract 1, mapping 1)"
-echo -n "hello" | textprov mark --human - | textprov inspect -
 ```
 
-## Publishing best practices
+RubyGems prompts for an MFA code when required. From `ruby/`, tag the exact
+commit that produced the gem:
 
-- **Enable two-factor authentication (2FA).** Keep 2FA enabled on PyPI, npm, and RubyGems maintainer accounts. Store recovery codes securely and keep your authenticator available when publishing.
-- **Protect publishing credentials.** Use the narrowest token permissions available, restrict access to local credential files, and never commit tokens. Revoke and replace any exposed credentials.
-- **Validate release artifacts.** Inspect package contents and test the built package before uploading. Run `twine check dist/*` for PyPI metadata and description checks.
-- **Keep release checks enabled.** Run the package's test suite before publishing; do not bypass publish-time checks to force a release through.
-- **Treat published artifacts as immutable.** Publish corrections under a new version. After an interrupted upload, check the registry to determine what succeeded before retrying.
-- **Verify each release.** Install the published version in a clean environment, run a smoke test, and confirm the release tag matches the source used to build it.
+```sh
+git tag -a ruby-vX.Y.Z -m "textprov ruby X.Y.Z"
+git push origin ruby-vX.Y.Z
+```
+
+## Credential and release safety
+
+- Give publishing tokens the narrowest available permissions.
+- Keep MFA recovery codes separate from publishing credentials.
+- Revoke and replace an exposed token immediately.
+- Do not bypass tests or publish-time checks to force a release through.
+- Never modify an artifact after inspecting it; rebuild, inspect, and test again.
+- Verify that each release tag identifies the source used to build the published
+  artifact.

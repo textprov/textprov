@@ -137,10 +137,10 @@ above. Website development instructions are in [`site/`](site/README.md).
 ## Status
 
 The project is early-stage. The JavaScript package is published on
-[npm](https://www.npmjs.com/package/textprov), and the Python package is
-published on [PyPI](https://pypi.org/project/textprov/). The Ruby gem lives in
-[`ruby/`](ruby/) and is not yet published to rubygems.org. The version 1
-protocol is treated as stable.
+[npm](https://www.npmjs.com/package/textprov), the Python package is published
+on [PyPI](https://pypi.org/project/textprov/), and the Ruby gem is published on
+[RubyGems](https://rubygems.org/gems/textprov). The version 1 protocol is
+treated as stable.
 
 ## Acknowledgements
 
