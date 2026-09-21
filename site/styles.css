@@ -91,10 +91,10 @@
 :root {
   color-scheme: light dark;
   --background: #ffffff;
-  --surface: #f6f8fa;
+  --surface: #f4f2ee;
   --text: #1f2328;
   --muted: #656d76;
-  --line: #d1d9e0;
+  --line: #cfc9be;
   --accent: #0969da;
   --focus: #0969da;
   --human: #1a7f37;
@@ -103,27 +103,26 @@
   --human-bg: rgba(26, 127, 55, 0.1);
   --ai-bg: rgba(188, 76, 0, 0.1);
   --mixed-bg: rgba(110, 119, 129, 0.12);
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: serif;
   font-synthesis: none;
   line-height: 1.55;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0d1117;
-    --surface: #161b22;
-    --text: #e6edf3;
-    --muted: #9198a1;
-    --line: #30363d;
-    --accent: #4493f8;
-    --focus: #4493f8;
-    --human: #3fb950;
-    --ai: #db6d28;
-    --mixed: #8b949e;
-    --human-bg: rgba(63, 185, 80, 0.14);
-    --ai-bg: rgba(219, 109, 40, 0.14);
-    --mixed-bg: rgba(139, 148, 158, 0.14);
+    --background: #2a2724;
+    --surface: #35322e;
+    --text: #e8e4dc;
+    --muted: #a8a49c;
+    --line: #4a4640;
+    --accent: #7ab4f0;
+    --focus: #7ab4f0;
+    --human: #6cc776;
+    --ai: #e08c4a;
+    --mixed: #a8a49c;
+    --human-bg: rgba(108, 199, 118, 0.14);
+    --ai-bg: rgba(224, 140, 74, 0.14);
+    --mixed-bg: rgba(168, 164, 156, 0.14);
   }
 }
 
@@ -255,55 +254,38 @@ p {
   font-size: 1.02rem;
 }
 
-.pipeline {
+.roles {
   margin: 0.5rem 0 1.25rem;
-  padding: 0.6rem 0.85rem;
-  border: 1px dashed var(--line);
-  border-radius: 4px;
-  background: var(--surface);
-  color: var(--text);
-  font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-  font-size: 0.86rem;
-  white-space: pre-wrap;
-  overflow-x: auto;
 }
 
-.use-cases-intro {
-  max-width: 62ch;
-  color: var(--muted);
+.roles svg {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  font-family: inherit;
 }
-.use-case-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 1.5rem 0;
+
+.roles text {
+  fill: var(--text);
+  font-size: 15px;
+  font-weight: 600;
 }
-.use-case-card {
-  padding: 1.1rem 1.2rem;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--surface);
+
+.roles .roles-sub,
+.roles .roles-who,
+.roles .roles-legend text {
+  fill: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
 }
-.use-case-card h3 {
-  margin: 0 0 0.55rem;
-  font-size: 1rem;
-  line-height: 1.35;
-}
-.use-case-card p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-.use-cases-note {
-  max-width: 72ch;
-  margin: 0;
-  padding-left: 0.9rem;
-  border-left: 2px solid var(--line);
+
+.roles .roles-outside text:not(.roles-sub):not(.roles-who) {
+  fill: var(--muted);
 }
 
 .version-line {
-  margin: 0.25rem 0 0;
+  margin: -0.25rem 0 1rem;
   color: var(--muted);
   font:
     0.8rem/1.5 ui-monospace,
