@@ -6,7 +6,7 @@
     <meta name="description" content="Label text as human-written, AI-generated, or mixed. Try TextProv in your browser and see how origin labels can travel with plain text.">
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#111311" media="(prefers-color-scheme: dark)">
-    <title>TextProv — provenance that travels with the text</title>
+    <title>TextProv — origin labels that travel with text</title>
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="app.js"></script>
   </head>
@@ -28,9 +28,10 @@
     <main id="main">
       <section class="intro">
         <h1>TextProv</h1>
-        <p class="tagline">Text that carries labels about its origin: human-written, AI-generated, mixed, edited, or unknown. TextProv is an open protocol for keeping those labels in the text itself, rather than in a separate file or one application's metadata.</p>
-                <p class="tagline">Use it in an editor or content pipeline to label what you know about the text. The labels can travel through copy, paste, and plain-text storage, as long as the receiving software preserves the marks.</p>
-                <p class="note">A label is a claim, not proof. TextProv does not detect AI writing or verify authorship. Anyone can add, change, or remove marks; unmarked text does not mean human-written.</p>
+        <p class="tagline">Origin labels that travel with text: human-written, AI-generated, mixed, edited, or unknown. TextProv is an open protocol for keeping those disclosures in the text itself, rather than in a separate file or one application's metadata.</p>
+        <p class="tagline">Use it in an editor or content pipeline to label what you know about the text. For example, an AI-writing integration can label the passages it generates so an editor can see those disclosures during review. TextProv gives cooperating tools a shared way to preserve and display labels; it does not enforce honest disclosure.</p>
+        <p>The labels can travel through copy, paste, and plain-text storage, as long as the receiving software preserves the marks.</p>
+        <p class="note">A label is a claim about origin, not proof of authorship or a judgment about quality, accuracy, or trustworthiness. TextProv does not detect AI writing or authenticate the source of a claim. Anyone can add, change, or remove marks; unmarked text makes no claim about its origin.</p>
         <p class="version-line">Contract v1 · Registry v1 · MIT licensed</p>
       </section>
 
@@ -145,7 +146,7 @@ ruby -I ruby/lib -r textprov -e 'puts Textprov.to_html(Textprov.mark("Hello", st
     </main>
 
     <footer>
-      <p><a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a> · <a href="https://github.com/textprov/textprov">Source</a> · Text that carries its own provenance.</p>
+      <p><a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a> · <a href="https://github.com/textprov/textprov">Source</a> · Origin labels that travel with text.</p>
     </footer>
   </body>
 </html>

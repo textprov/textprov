@@ -4,19 +4,31 @@
 
 # TextProv protocol specification
 
-TextProv carries provenance in the text itself. A run of characters can say
-whether a person wrote it, a machine generated it, or its origin is unknown.
-The state travels as Unicode code points, so it survives copy, paste, and
-plain-text storage, and needs no side-channel, no wrapper format, and no
-metadata the transport can drop.
+TextProv carries origin labels in the text itself: human-written,
+AI-generated, mixed, edited, or unknown. It gives cooperating producers and
+consumers a shared way to preserve and display disclosures about text's origin.
+For example, a writing integration can label generated passages so an editor
+can see those disclosures during review.
+
+Labels are stored as Unicode code points within the text, rather than in a
+separate metadata field or wrapper. They can survive copying, pasting, and
+plain-text storage when the software involved preserves those code points.
+Software that removes the marks also removes the labels.
 
 This document defines the in-band encodings, registry rules, producer behavior,
 decoder behavior, and renderer markup. It does not define how an integration
 determines which provenance state applies or how a renderer presents that state
 visually.
 
-TextProv carries provenance labels, not proof of provenance. Any text processor
-can add, remove, or change a mark. Authentication, signatures, tamper evidence,
+TextProv carries provenance labels, not proof of provenance. A label expresses
+a claim about origin, not a judgment about the text's quality, accuracy, or
+trustworthiness. Any text processor can add, remove, or change a mark; unmarked
+text makes no claim about its origin.
+
+Decoding a label establishes which claim is present, not whether it is true.
+Confidence in a claim depends on evidence about its source and workflow, not
+on the mark alone. Decisions that depend on accurate authorship require
+evidence beyond TextProv labels. Authentication, signatures, tamper evidence,
 and verification of a producer's claim are outside this protocol.
 
 Two version numbers appear in this spec. **Contract version 1** covers the
