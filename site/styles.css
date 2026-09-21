@@ -145,9 +145,13 @@ nav a {
   color: var(--muted);
   text-decoration: none;
 }
-nav a:hover {
+nav a:hover,
+nav a[aria-current="page"] {
   color: var(--text);
   text-decoration: none;
+}
+nav a[aria-current="page"] {
+  font-weight: 600;
 }
 
 main {
@@ -247,6 +251,8 @@ pre.tree {
   background: var(--surface);
 }
 .demo-panel > label,
+.encoder-column > label,
+.encoder-column .output-heading > label,
 fieldset legend,
 .output-heading > span {
   color: var(--muted);
@@ -311,6 +317,29 @@ fieldset legend {
 .state-options input:focus-visible + span {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
+}
+.encoder-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.encoder-column {
+  min-width: 0;
+}
+.encoder-column textarea {
+  min-height: 15rem;
+  margin-bottom: 0;
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", Consolas, monospace;
+  font-size: 0.86rem;
+}
+.encoder-column textarea[readonly] {
+  color: var(--text);
+}
+.encoder-panel > .note {
+  margin: 0.75rem 0 1rem;
+}
+.preview-heading {
+  margin-top: 0.25rem;
 }
 .output-heading {
   display: flex;
@@ -415,6 +444,9 @@ footer a:hover {
   }
   .state-options {
     flex-direction: column;
+  }
+  .encoder-grid {
+    grid-template-columns: 1fr;
   }
 }
 

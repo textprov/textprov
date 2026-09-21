@@ -141,3 +141,22 @@ test("marking pasted text replaces existing labels rather than stacking them", (
   assert.equal(element("demo-output").value, "A\u{E0100} B\u{E0100}");
   assert.equal(element("demo-preview").textContent, "A\u{E0100} B\u{E0100}");
 });
+
+test("homepage presents the reader and links to the separate encoder", () => {
+  const html = readFileSync(new URL("./index.html", import.meta.url), "utf8");
+  assert.match(html, /Reveal labels in your text/);
+  assert.match(html, /Paste text to reveal labels/);
+  assert.match(html, /href="\.\/encoder\.html"/);
+  assert.doesNotMatch(html, /<p><\/p>Paste text/);
+  assert.doesNotMatch(html, /<p><\/p>Need to add labels/);
+  assert.doesNotMatch(html, /id="demo-input"/);
+});
+
+test("encoder provides side-by-side source and marked output", () => {
+  const html = readFileSync(new URL("./encoder.html", import.meta.url), "utf8");
+  assert.match(html, /class="encoder-grid"/);
+  assert.match(html, /id="demo-input"/);
+  assert.match(html, /id="demo-output"[^>]*readonly/);
+  assert.match(html, /id="demo-preview"/);
+  assert.match(html, /does not detect AI writing or verify authorship/);
+});

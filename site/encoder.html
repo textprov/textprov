@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Add TextProv origin labels to text in your browser, then copy or download the marked UTF-8 text.">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#111311" media="(prefers-color-scheme: dark)">
+    <title>TextProv Encoder — add origin labels to text</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="wordmark" href="./">TextProv</a>
+      <nav aria-label="Primary navigation">
+        <a href="./#try-it">Reader</a>
+        <a href="./encoder.html" aria-current="page">Encoder</a>
+        <a href="./#font-examples">See it</a>
+        <a href="./#use">Use it</a>
+        <a href="./spec.html">Specification</a>
+        <a href="https://github.com/textprov/textprov">GitHub&nbsp;↗</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="intro">
+        <h1>TextProv encoder</h1>
+        <p class="tagline">Add a declared origin to text, then copy or download the marked result. TextProv stores the label as normally invisible Unicode characters within the text.</p>
+        <p class="note">A label is a claim, not proof. This tool does not detect AI writing or verify authorship.</p>
+      </section>
+
+      <section aria-labelledby="encode-title">
+        <h2 id="encode-title">Encode text</h2>
+        <p>Choose a label and enter text on the left. The marked UTF-8 result appears on the right. Processing happens in your browser; your text is not sent to a server.</p>
+        <noscript><p>This encoder needs JavaScript.</p></noscript>
+
+        <div class="demo-panel encoder-panel">
+          <fieldset>
+            <legend>Declared origin</legend>
+            <div class="state-options">
+              <label><input type="radio" name="state" value="human"><span>Human</span></label>
+              <label><input type="radio" name="state" value="ai" checked><span>AI</span></label>
+              <label><input type="radio" name="state" value="mixed"><span>Mixed</span></label>
+            </div>
+          </fieldset>
+
+          <div class="encoder-grid">
+            <div class="encoder-column">
+              <label for="demo-input">Text to mark</label>
+              <textarea id="demo-input" rows="10" placeholder="Paste or type text here">Some words have a story worth carrying.</textarea>
+            </div>
+            <div class="encoder-column">
+              <div class="output-heading">
+                <label for="demo-output">Marked UTF-8 text</label>
+                <div class="demo-actions">
+                  <button id="copy-button" type="button">Copy</button>
+                  <button id="download-button" type="button">Download .txt</button>
+                </div>
+              </div>
+              <textarea id="demo-output" rows="10" readonly aria-describedby="encoder-help"></textarea>
+            </div>
+          </div>
+
+          <p id="encoder-help" class="note">The embedded marks are normally invisible, so the two text areas may look identical. Copy or download the result without changing its encoding.</p>
+          <div class="output-heading preview-heading">
+            <span>Label preview</span>
+          </div>
+          <div id="demo-preview" class="demo-output" aria-live="polite"></div>
+          <div class="output-meta">
+            <span id="run-count">0 marked runs</span>
+            <span id="copy-status" role="status"></span>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="next-title">
+        <h2 id="next-title">Check the result</h2>
+        <p>Copy the marked text into another application, then paste it into the <a href="./#try-it">TextProv reader</a>. Applications that remove invisible Unicode characters may remove the labels.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p><a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a> · <a href="https://github.com/textprov/textprov">Source</a> · Text that carries its own provenance.</p>
+    </footer>
+  </body>
+</html>
