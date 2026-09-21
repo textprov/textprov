@@ -69,13 +69,15 @@
   font-family: "TextProv Web Zilla", Georgia, serif;
 }
 .font-agave-mono {
-  font-family: "TextProv Web Agave Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-family:
+    "TextProv Web Agave Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
 .font-agave-fixed {
   font-family: "TextProv Web Agave", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
 .font-agave-propo {
-  font-family: "TextProv Web Agave Propo", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-family:
+    "TextProv Web Agave Propo", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
 .code-sample {
   font-size: 0.95rem;
@@ -243,6 +245,41 @@ p {
   color: var(--muted);
   font-size: 0.86rem;
 }
+
+.use-cases-intro {
+  max-width: 62ch;
+  color: var(--muted);
+}
+.use-case-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.use-case-card {
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+}
+.use-case-card h3 {
+  margin: 0 0 0.55rem;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+.use-case-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.use-cases-note {
+  max-width: 72ch;
+  margin: 0;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--line);
+}
+
 .version-line {
   margin: 0.25rem 0 0;
   color: var(--muted);
@@ -251,6 +288,86 @@ p {
     "SFMono-Regular",
     Consolas,
     monospace;
+}
+
+.font-download-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.font-download-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+}
+.font-download-card h3 {
+  margin: 0.2rem 0 0.75rem;
+  font-size: 1.2rem;
+}
+.font-use {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.font-card-sample {
+  min-height: 5rem;
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--background);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+pre.font-card-sample {
+  white-space: pre-wrap;
+}
+.download-link {
+  margin-top: auto;
+  font-weight: 600;
+}
+.download-link span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+.setup-steps {
+  padding-left: 1.4rem;
+}
+.setup-steps li {
+  margin-bottom: 0.35rem;
+  padding-left: 0.25rem;
+}
+.font-warning {
+  margin: 1.5rem 0;
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+}
+details {
+  border-top: 1px solid var(--line);
+}
+details:last-child {
+  border-bottom: 1px solid var(--line);
+}
+summary {
+  padding: 0.9rem 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+details[open] {
+  padding-bottom: 0.75rem;
+}
+details > :not(summary) {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
 }
 
 code,
@@ -492,11 +609,13 @@ footer a:hover {
   h2 {
     font-size: 1.2rem;
   }
+  .font-download-grid,
+  .encoder-grid,
+  .use-case-grid {
+    grid-template-columns: 1fr;
+  }
   .state-options {
     flex-direction: column;
-  }
-  .encoder-grid {
-    grid-template-columns: 1fr;
   }
 }
 
