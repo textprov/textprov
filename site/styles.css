@@ -455,6 +455,15 @@ footer a:hover {
   color: var(--text);
 }
 
+.sample-warning {
+  margin: 0.4rem 0 1rem;
+  padding: 0.5rem 0.75rem;
+  border-left: 3px solid var(--ai);
+  background: var(--ai-bg);
+  color: var(--text);
+  font-size: 0.82rem;
+}
+
 .prov-human {
   background: var(--human-bg);
 }

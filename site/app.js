@@ -111,4 +111,84 @@ import "../js/textprov.js";
   if (checkInput) {
     checkInput.addEventListener("input", checkText);
   }
+
+  function detectSelectorRendering() {
+    try {
+      if (!document.fonts || typeof document.fonts.ready === "undefined") return;
+      var canvas = document.createElement("canvas");
+      var ctx = canvas.getContext && canvas.getContext("2d");
+      if (!ctx) return;
+
+      var ua = navigator.userAgent || "";
+      var isSafari =
+        /Safari/.test(ua) && !/Chrome|Chromium|Android/.test(ua);
+      var message = isSafari
+        ? "Your browser did not render the variation-selector marks for this sample. This is a known limitation of Safari with the current demo fonts."
+        : "Your browser did not render the variation-selector marks for this sample.";
+
+      var aiSelector = String.fromCodePoint(0xe0101);
+      var base = "A";
+      var samples = document.querySelectorAll(".font-sample[data-example]");
+
+      samples.forEach(function (el) {
+        if (el.dataset.example === "ordinary") return;
+        if (el.nextElementSibling && el.nextElementSibling.classList.contains("sample-warning")) return;
+
+        var cs = window.getComputedStyle(el);
+        var size = Math.max(parseFloat(cs.fontSize) || 16, 64);
+        var font =
+          cs.fontStyle + " " + cs.fontWeight + " " + size + "px " + cs.fontFamily;
+
+        canvas.width = Math.ceil(size * 3);
+        canvas.height = Math.ceil(size * 2);
+
+        function renderTo(text) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.font = font;
+          ctx.textBaseline = "top";
+          ctx.fillStyle = "#000";
+          ctx.fillText(text, 0, 0);
+          return ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        }
+
+        var plain = renderTo(base);
+        var marked = renderTo(base + aiSelector);
+
+        var diff = 0;
+        for (var i = 0; i < plain.length; i += 4) {
+          if (
+            Math.abs(plain[i] - marked[i]) > 4 ||
+            Math.abs(plain[i + 1] - marked[i + 1]) > 4 ||
+            Math.abs(plain[i + 2] - marked[i + 2]) > 4 ||
+            Math.abs(plain[i + 3] - marked[i + 3]) > 4
+          ) {
+            diff++;
+            if (diff > 3) break;
+          }
+        }
+        if (diff > 3) return;
+
+        var warning = document.createElement("p");
+        warning.className = "note sample-warning";
+        warning.textContent = message;
+        el.insertAdjacentElement("afterend", warning);
+      });
+    } catch (_) {
+      // swallow
+    }
+  }
+
+  function runDetection() {
+    if (!document.fonts || !document.fonts.ready) {
+      detectSelectorRendering();
+      return;
+    }
+    document.fonts.ready.then(detectSelectorRendering, function () {});
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", runDetection);
+  } else {
+    runDetection();
+  }
 })();
