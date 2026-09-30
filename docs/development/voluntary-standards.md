@@ -47,6 +47,12 @@ Applications may present marked and unmarked text differently, but any decision
 that depends on accurate authorship needs evidence outside TextProv. The source
 and handling of a declaration determine its credibility, not its code point.
 
+The same holds when the consumer is a program. A model harness could use `ai`
+marks to separate model output an operator pasted into a prompt from the text
+they wrote, and weight the two differently. The protocol supplies the shared
+structure for that; how the harness uses the labels is its own to work out
+([ADR 0013](../adr/0013-the-protocol-defines-structure-not-use.md)).
+
 TextProv marks are closer to in-band annotations than to security credentials.
 Their rendering can resemble styling, but the marks carry machine-readable
 states even when no visual style is applied.

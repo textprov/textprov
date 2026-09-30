@@ -24,7 +24,8 @@ the labels.
 
 This document defines the text encodings, label registry, producer and decoder
 behavior, and renderer markup. It does not define how a producer decides which
-label applies or how a renderer presents labels visually.
+label applies, how a renderer presents labels visually, or what a consumer does
+with a label once it is decoded.
 
 A TextProv label is a claim, not proof. Decoding identifies the claim attached
 to a passage; it does not establish who made the claim or whether the claim is
@@ -58,6 +59,13 @@ segmentation, but no font, shaping engine, DOM, or other renderer. Rendering
 depends on the target surface: a span renderer needs a DOM, while a font
 renderer needs a font toolchain. A font is one renderer among three, not the
 producer ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)).
+
+A **consumer** is whatever acts on decoded runs. It may be a renderer showing
+states to a person, or a program that reads the states itself, such as an audit
+tool or a model harness separating pasted model output from the operator's own
+text. The protocol gives consumers a shared structure and vocabulary, and
+leaves how they use it open
+([ADR 0013](docs/adr/0013-the-protocol-defines-structure-not-use.md)).
 
 ## States
 
@@ -362,6 +370,10 @@ draft, not pinned release artifacts.
 ## Not specified
 
 - How a producer decides which state applies to a given run of text.
+- What a consumer does with a decoded state. The specification defines the
+  structure and encoding so that consumers agree on what a label says; how
+  they act on it, such as weighting labelled text, is theirs to work out
+  ([ADR 0013](docs/adr/0013-the-protocol-defines-structure-not-use.md)).
 - Visual style. The specification defines classes and an attribute; CSS is an
   integration choice. `js/textprov.css` is one such choice, not part of this
   document.
