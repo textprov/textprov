@@ -75,10 +75,10 @@ a conforming producer must support them. `edited` and `unknown` are proposed
 allocations reserved for future stabilization; producers must not emit them and
 decoders may ignore them until they are promoted.
 
-Selectors are drawn from Unicode's Supplemental Tag Characters block,
+Selectors are drawn from Unicode's Variation Selectors Supplement block,
 `U+E0100`–`U+E01EF`, giving 240 code points total. Registry 0.1 uses five,
 leaving 235 unallocated. Future selectors reserved by a later registry version
-must fall inside this block; the adjacent Tag Characters block
+must fall inside this block; the adjacent Tags block
 (`U+E0000`–`U+E007F`) is out of scope.
 
 Unmarked text is deliberately distinct from `human`: there is no code point for
