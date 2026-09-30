@@ -114,7 +114,10 @@ prints `Hello` without marks. Rendering HTML does not add visual styling by
 itself. This example labels the text supplied to `mark()`; it does not analyze
 who wrote it.
 
-Marks can also be displayed with a patched font. The
+Marks can also be displayed with a patched font. A patched font reveals marks
+in any application without TextProv-aware software, which makes it a tool for
+inspecting and demonstrating the encoding rather than the intended way to read
+labels; applications are expected to show them in their own interfaces. The
 [font and interchange guide](docs/SELECTORS-PUA-AND-INTERCHANGE.md) explains that
 workflow and when to use it.
 

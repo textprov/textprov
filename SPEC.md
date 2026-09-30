@@ -58,7 +58,11 @@ Producing is text processing: it requires the registry and cluster
 segmentation, but no font, shaping engine, DOM, or other renderer. Rendering
 depends on the target surface: a span renderer needs a DOM, while a font
 renderer needs a font toolchain. A font is one renderer among three, not the
-producer ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)).
+producer ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)). A font
+renderer reveals marks without any TextProv-aware software, which suits
+inspection and demonstration; applications are expected to present labels
+through their own interfaces
+([ADR 0014](docs/adr/0014-fonts-are-for-inspection-and-demonstration.md)).
 
 A **consumer** is whatever acts on decoded runs. It may be a renderer showing
 states to a person, or a program that reads the states itself, such as an audit
