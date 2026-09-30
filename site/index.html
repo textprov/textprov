@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Label text as human-written, AI-generated, or mixed. Try TextProv in your browser and see how origin labels can travel with plain text.">
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#2a2724" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#ffffff">
     <title>TextProv — origin labels that travel with text</title>
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="app.js"></script>
@@ -13,19 +12,16 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header">
-      <a class="wordmark" href="./">TextProv</a>
-      <nav aria-label="Primary navigation">
-        <a href="#how">How it works</a>
-        <a href="#font-examples">Examples</a>
-        <a href="#try-it">Try it</a>
-        <a href="#use-cases">Use cases</a>
-        <a href="/spec.html">Spec</a>
-      </nav>
-    </header>
+    <nav aria-label="Primary navigation">
+      <a href="#how">How it works</a>
+      <a href="#font-examples">Examples</a>
+      <a href="#try-it">Try it</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="/spec.html">Spec</a>
+    </nav>
 
     <main id="main">
-      <section class="intro">
+      <section>
         <h1>TextProv</h1>
         <p class="version-line">Draft · Specification v0.1 · Registry v0.1 · Updated 2026-09-21</p>
         <p class="tagline">Origin labels that travel with text: human-written, AI-generated, mixed, edited, or unknown. TextProv is an open protocol for keeping those disclosures in the text itself, rather than in a separate file or one application's metadata.</p>
@@ -94,42 +90,42 @@
             <title id="roles-svg-title">Four separate responsibilities around a TextProv label</title>
             <desc id="roles-svg-desc">Four boxes in a row: decide, mark, preserve, read. Mark and read have solid outlines and are defined by TextProv. Decide and preserve have dashed outlines and are outside the protocol.</desc>
             <g class="roles-outside">
-              <rect x="10" y="10" width="140" height="56" rx="4" fill="var(--surface)" stroke="var(--line)" stroke-dasharray="4 3" />
+              <rect x="10" y="10" width="140" height="56" fill="#fff" stroke="#666" stroke-dasharray="4 3" />
               <text x="80" y="34" text-anchor="middle">Decide</text>
               <text class="roles-sub" x="80" y="54" text-anchor="middle">policy, integration</text>
               <text class="roles-who" x="80" y="88" text-anchor="middle">who decides</text>
               <text class="roles-who" x="80" y="104" text-anchor="middle">what to mark</text>
             </g>
             <g class="roles-inside">
-              <rect x="170" y="10" width="140" height="56" rx="4" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5" />
+              <rect x="170" y="10" width="140" height="56" fill="#fff" stroke="#000" stroke-width="1.5" />
               <text x="240" y="34" text-anchor="middle">Mark</text>
               <text class="roles-sub" x="240" y="54" text-anchor="middle">producer encodes</text>
               <text class="roles-who" x="240" y="88" text-anchor="middle">who adds</text>
               <text class="roles-who" x="240" y="104" text-anchor="middle">the marks</text>
             </g>
             <g class="roles-outside">
-              <rect x="330" y="10" width="140" height="56" rx="4" fill="var(--surface)" stroke="var(--line)" stroke-dasharray="4 3" />
+              <rect x="330" y="10" width="140" height="56" fill="#fff" stroke="#666" stroke-dasharray="4 3" />
               <text x="400" y="34" text-anchor="middle">Preserve</text>
               <text class="roles-sub" x="400" y="54" text-anchor="middle">file, clipboard, wire</text>
               <text class="roles-who" x="400" y="88" text-anchor="middle">what keeps</text>
               <text class="roles-who" x="400" y="104" text-anchor="middle">them intact</text>
             </g>
             <g class="roles-inside">
-              <rect x="490" y="10" width="140" height="56" rx="4" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5" />
+              <rect x="490" y="10" width="140" height="56" fill="#fff" stroke="#000" stroke-width="1.5" />
               <text x="560" y="34" text-anchor="middle">Read</text>
               <text class="roles-sub" x="560" y="54" text-anchor="middle">consumer decodes</text>
               <text class="roles-who" x="560" y="88" text-anchor="middle">who interprets</text>
               <text class="roles-who" x="560" y="104" text-anchor="middle">the marks</text>
             </g>
-            <g class="roles-arrows" fill="none" stroke="var(--muted)" stroke-width="1.2">
+            <g class="roles-arrows" fill="none" stroke="#444" stroke-width="1.2">
               <path d="M150 38 h20 m-5 -4 l5 4 l-5 4" />
               <path d="M310 38 h20 m-5 -4 l5 4 l-5 4" />
               <path d="M470 38 h20 m-5 -4 l5 4 l-5 4" />
             </g>
             <g class="roles-legend">
-              <rect x="170" y="128" width="22" height="12" rx="2" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5" />
+              <rect x="170" y="128" width="22" height="12" fill="#fff" stroke="#000" stroke-width="1.5" />
               <text x="200" y="138">defined by TextProv</text>
-              <rect x="352" y="128" width="22" height="12" rx="2" fill="var(--surface)" stroke="var(--line)" stroke-dasharray="4 3" />
+              <rect x="352" y="128" width="22" height="12" fill="#fff" stroke="#666" stroke-dasharray="4 3" />
               <text x="382" y="138">outside the protocol</text>
             </g>
           </svg>
