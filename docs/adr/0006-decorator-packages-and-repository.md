@@ -7,6 +7,10 @@ producer boundary is superseded. The marker is text processing and belongs in
 this repository; the font patcher is a renderer. Read ADR 0011 alongside the
 "What moved" and "What stayed in the fork" sections below.
 
+Naming supplemented by [ADR 0013](0013-use-p9e-as-provenance-shorthand.md):
+`p9e` / `P9E` is the provenance shorthand, with `P9E` succeeding `P+` as the
+font suffix convention. Protocol and package identities remain as recorded here.
+
 ## Context
 
 The decorator has implementations in more than one language. ADR 0004 makes the
@@ -35,6 +39,7 @@ easy to confuse with the W3C standard.
 | Role | Name |
 | --- | --- |
 | Protocol and specification | TextProv, `SPEC.md` |
+| Provenance shorthand / font suffix convention | `p9e` / `P9E` ([ADR 0013](0013-use-p9e-as-provenance-shorthand.md)) |
 | GitHub organisation and repository | `textprov/textprov` |
 | JavaScript package (npm) | `textprov` (browser decoder + CSS) |
 | Python package and import (PyPI) | `textprov` (producer, decoder, CLI) |
