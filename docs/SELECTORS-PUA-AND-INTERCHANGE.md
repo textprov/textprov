@@ -5,8 +5,23 @@ Reserve Private Use Area (PUA) encoding for controlled font workflows where the
 consumer has the matching font or decoder. This guide explains why the two
 encodings have different fallback behavior and how to compare them locally.
 
-The distinction becomes clear in a practical case: opening marked text in Zed
-on macOS.
+## The role of P+ fonts
+
+A **P+ font** is a font modified to display provenance marks. Its primary role
+is development, debugging, and demonstration: with a compatible text shaper,
+it can reveal supported marks in an ordinary text view without a separate
+inspection tool. It also serves as a stopgap for demonstrating TextProv's
+utility while applications develop their own integrations.
+
+Sawtooth underlines and other glyph designs are presentation choices. An
+application can expose provenance on demand, use its own interface, or consume
+the decoded states without displaying them. Everyday use does not require
+continuous decoration; the shared encoding supports these different uses
+independently of how a font draws it.
+
+P+ fonts can support selector encoding, PUA encoding, or both; P+ does not imply
+PUA. The distinction between the encodings becomes clear in a practical case:
+opening marked text in Zed on macOS.
 
 ## A marked letter in two forms
 
@@ -57,7 +72,7 @@ point. Its meaning comes from an agreement among the producer, font, and
 decoder. Under TextProv's registry, `U+100041` means the AI form of `A`; outside
 that agreement, it is only a private code point.
 
-A consumer without a matching provenance font (called a **P+ font**) may show
+A consumer without a matching P+ font may show
 a missing-glyph box. A consumer without the private mapping cannot infer from
 Unicode alone that the code point stands for `A`.
 Copying it preserves the private code point, not the ordinary letter. Search,

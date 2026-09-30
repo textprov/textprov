@@ -12,9 +12,10 @@
 
 TextProv is a protocol for attaching origin labels to passages of text. A label
 states that a passage is human-written, AI-generated, mixed, edited, or of
-unknown origin. Cooperating tools can preserve and display these labels as text
-moves between them. For example, a writing integration can label a generated
-passage so an editor can identify it during review.
+unknown origin. Cooperating tools can preserve, interpret, and display these
+labels as text moves between them. For example, a writing integration can
+label a generated passage so an editor can identify it during review or an
+agent integration can distinguish it from the operator's surrounding input.
 
 TextProv stores labels as Unicode code points within the character sequence,
 not in a separate metadata field or document wrapper. The labels can therefore
@@ -22,9 +23,14 @@ survive copying, pasting, and plain-text storage, provided every tool in the
 path preserves those code points. A tool that removes the marks also removes
 the labels.
 
+TextProv provides a shared foundation: a common structure, encoding, and
+vocabulary for exchanging provenance information. Applications can agree on
+what a label means while choosing how to use it.
+
 This document defines the text encodings, label registry, producer and decoder
-behavior, and renderer markup. It does not define how a producer decides which
-label applies or how a renderer presents labels visually.
+behavior, and renderer markup. How a producer assigns labels, how a consumer
+uses them in decisions, and how a renderer presents them are integration
+choices.
 
 A TextProv label is a claim, not proof. Decoding identifies the claim attached
 to a passage; it does not establish who made the claim or whether the claim is
@@ -59,6 +65,12 @@ depends on the target surface: a span renderer needs a DOM, while a font
 renderer needs a font toolchain. A font is one renderer among three, not the
 producer ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)).
 
+Consumers can use decoded states without displaying them. P+ fonts primarily
+support development, debugging, and demonstrations: a compatible font and text
+shaper can reveal supported marks without a separate inspection tool. Their
+glyph designs, including sawtooth underlines, are presentation choices.
+Applications can expose provenance on demand or use it internally.
+
 ## States
 
 | State | Selector | Producer support |
@@ -88,6 +100,28 @@ decides what that means ([ADR 0010](docs/adr/0010-contributor-identity-is-out-of
 The state vocabulary is deliberately small and says nothing about *who*. Author
 identity, model names, and timestamps are out-of-band data; see
 [ADR 0010](docs/adr/0010-contributor-identity-is-out-of-band.md).
+
+## Application use (non-normative)
+
+An agent prompt can combine an operator's own instructions with passages
+copied from model output. When that output carries TextProv marks and the
+copying path preserves them, an integration can recover a distinction that
+plain, unlabelled text would lose. The decoded provenance gives the application
+additional context for interpreting the combined prompt.
+
+For example, an integration could experiment with giving operator-written
+input a weight of `1.2` and AI-labelled passages a weight of `0.9` in its
+decision process. This use requires further integration to decode the marks,
+apply a policy, and evaluate its effect. The numbers illustrate one possible
+application; the protocol supplies shared provenance states, and applications
+choose how to use them. A selector retains the same meaning across consumers
+with different policies. TextProv does not implement model weighting.
+
+A workflow may treat unmarked input as operator-written based on how it was
+collected. That is a local assumption: decoding still reports no state, as
+specified above. Provenance alone does not establish instruction authority or
+verify authorship. These distinctions let integrations experiment with the
+same encoded information while retaining its shared meaning.
 
 ## Encodings
 
@@ -362,6 +396,8 @@ draft, not pinned release artifacts.
 ## Not specified
 
 - How a producer decides which state applies to a given run of text.
+- How a consumer uses provenance in decisions, including weighting passages in
+  agent prompts. See [application use](#application-use-non-normative).
 - Visual style. The specification defines classes and an attribute; CSS is an
   integration choice. `js/textprov.css` is one such choice, not part of this
   document.

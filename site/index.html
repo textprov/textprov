@@ -29,6 +29,7 @@
         <h1>TextProv</h1>
         <p class="tagline">Origin labels that travel with text: human-written, AI-generated, mixed, edited, or unknown. TextProv is an open protocol for keeping those disclosures in the text itself, rather than in a separate file or one application's metadata.</p>
         <p>Use it in an editor or content pipeline when you know how text was produced. For example, an AI-writing integration can label the passages it generates for review. TextProv lets cooperating tools preserve and display those labels; it does not enforce honest disclosure.</p>
+        <p>TextProv provides a shared structure, encoding, and vocabulary for provenance. Applications can exchange the same information and choose how best to use it, from displaying labels to interpreting agent prompts.</p>
         <p><a href="#try-it">Read labels in your browser</a>, <a href="./encoder.html">add labels with the encoder</a>, or <a href="#use-cases">explore use cases</a>. No special font is needed for these tasks.</p>
         <p>The labels can travel through copy, paste, and plain-text storage, as long as the receiving software preserves the marks.</p>
         <p class="note">A label is a claim about origin, not proof of authorship or a judgment about quality, accuracy, or trustworthiness. TextProv does not detect AI writing or authenticate the source of a claim. Anyone can add, change, or remove marks; unmarked text makes no claim about its origin.</p>
@@ -38,6 +39,8 @@
       <section id="font-examples" aria-labelledby="examples-title">
         <h2 id="examples-title">What does it look like?</h2>
         <p>These examples show how fonts affect the display of marked text. The first passage is labelled AI; the others contain Human- and AI-labelled sentences. The labels are already in the text; JavaScript does not add them. A “P+” font is a font modified to display provenance marks.</p>
+
+        <p>P+ fonts primarily serve development, debugging, and demonstrations. With compatible rendering, they reveal supported marks without a separate inspection tool and help demonstrate TextProv while application integrations develop. Sawtooth underlines are one display choice; apps can reveal provenance on demand or use it internally without continuously decorating the text.</p>
 
         <h3>Ordinary font</h3>
         <p class="font-sample" data-example="ordinary">T󠄁h󠄁i󠄁s󠄁 e󠄁n󠄁t󠄁i󠄁r󠄁e󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁I󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 f󠄁o󠄁n󠄁t󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 m󠄁a󠄁k󠄁e󠄁 i󠄁t󠄁 l󠄁o󠄁o󠄁k󠄁 l󠄁i󠄁k󠄁e󠄁 n󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁.󠄁</p>
@@ -124,6 +127,9 @@
           </article>
         </div>
 
+        <h3>Agent prompt integrations</h3>
+        <p>A prompt can combine an operator's instructions with text copied from model output. TextProv marks can preserve that distinction, giving an agent integration context that would otherwise be lost. An integration could use the decoded states to experiment with how much weight to give each passage. This requires further integration; TextProv provides the common foundation, and applications choose their policies. Treating unmarked input as operator-written depends on the workflow. See the <a href="./spec.html#application-use-non-normative">application use discussion</a>.</p>
+
         <p class="note use-cases-note">A TextProv label records a claim about a passage's origin. It does not prove authorship, accuracy, or whether the passage was later edited.</p>
       </section>
 
@@ -141,8 +147,8 @@ d󠄁e󠄁f󠄁 󠄁r󠄁a󠄁n󠄁k󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁)󠄁:󠄁
       </section>
 
       <section id="fonts" aria-labelledby="fonts-title">
-        <h2 id="fonts-title">See labels in your editor</h2>
-        <p>These demo fonts can display Human and AI labels in TextProv-marked text. Installing a</p> font does not add labels to ordinary text.</p>
+        <h2 id="fonts-title">Inspect labels with demo fonts</h2>
+        <p>Use these fonts for local debugging and demonstrations of Human and AI labels in TextProv-marked text. Installing a font does not add labels to ordinary text.</p>
 
         <div class="font-download-grid">
           <article class="font-download-card">
