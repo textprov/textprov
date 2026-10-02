@@ -5,6 +5,8 @@ dist/
 node_modules/
 *.tgz
 .agent-worktrees/
+.textprov/
 
 [0-9][0-9][0-9][0-9]-*.md
 *.txt
+.DS_Store
