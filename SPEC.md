@@ -84,24 +84,21 @@ Producing is text processing: it requires the registry and cluster
 segmentation, but no font, shaping engine, DOM, or other renderer. Rendering
 depends on the target surface: a span renderer needs a DOM, while a font
 renderer needs a font toolchain. A font is one renderer among three, not the
-producer ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)). A font
-renderer reveals marks without any TextProv-aware software, which suits
-inspection and demonstration; applications are expected to present labels
-through their own interfaces
-([ADR 0014](docs/adr/0014-fonts-are-for-inspection-and-demonstration.md)).
+producer ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)).
 
 A **consumer** is whatever acts on decoded runs. It may be a renderer showing
 states to a person, or a program that reads the states itself, such as an audit
 tool or a model harness separating pasted model output from the operator's own
 text. The protocol gives consumers a shared structure and vocabulary, and
 leaves how they use it open
-([ADR 0013](docs/adr/0013-the-protocol-defines-structure-not-use.md)).
+([ADR 0014](docs/adr/0014-the-protocol-defines-structure-not-use.md)).
 
 Consumers can use decoded states without displaying them. P9E utility fonts primarily
 support development, debugging, and demonstrations: a compatible font and text
 shaper can reveal supported marks without a separate inspection tool. Their
 glyph designs, including sawtooth underlines, are presentation choices.
-Applications can expose provenance on demand or use it internally.
+Applications can expose provenance on demand or use it internally
+([ADR 0015](docs/adr/0015-fonts-are-for-inspection-and-demonstration.md)).
 
 ## States
 
@@ -430,7 +427,8 @@ draft, not pinned release artifacts.
 
 - How a producer decides which state applies to a given run of text.
 - How a consumer uses provenance in decisions, including weighting passages in
-  agent prompts. See [application use](#application-use-non-normative).
+  agent prompts. See [application use](#application-use-non-normative) and
+  [ADR 0014](docs/adr/0014-the-protocol-defines-structure-not-use.md).
 - Visual style. The specification defines classes and an attribute; CSS is an
   integration choice. `js/textprov.css` is one such choice, not part of this
   document.
