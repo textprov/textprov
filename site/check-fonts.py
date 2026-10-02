@@ -1,8 +1,7 @@
-"""Report ccmp and cmap-14 UVS coverage for the TextProv selectors in each demo TTF.
+"""Report ccmp and cmap-14 coverage in the earlier TextProv demo TTFs.
 
-Safari (CoreText) only renders private variation selectors when the font implements
-them via GSUB ccmp. Chrome/Firefox (HarfBuzz) additionally honour cmap format-14
-UVS subtables. This script reports both paths for U+E0100 and U+E0101.
+This structural report does not establish browser or editor compatibility.
+Use check-utility-fonts.py for the new suite's exhaustive shaping validation.
 """
 
 import argparse
@@ -27,13 +26,11 @@ def cmap14_coverage(uvs):
     return {sel: bool(uvs.get(sel)) for sel in SELECTORS}
 
 
-def vs_glyphs(uvs):
-    glyphs = set()
-    for sel in SELECTORS:
-        for _cp, glyph in uvs.get(sel, ()) or ():
-            if glyph:
-                glyphs.add(glyph)
-    return glyphs
+def vs_glyphs(font):
+    # Ligature inputs contain the selector glyphs, not the variant outputs
+    # stored in cmap format 14. Test each supported selector separately.
+    cmap = font.getBestCmap()
+    return {cmap[selector] for selector in SELECTORS if selector in cmap}
 
 
 def ccmp_lookups(font):
@@ -56,11 +53,10 @@ def ccmp_lookups(font):
 def ccmp_covers(lookups, vs_set):
     if not lookups or not vs_set:
         return False
-    for lookup in lookups:
-        for sub in lookup.SubTable:
-            if _subtable_covers(sub, vs_set):
-                return True
-    return False
+    return len(vs_set) == len(SELECTORS) and all(
+        any(_subtable_covers(sub, {glyph}) for lookup in lookups for sub in lookup.SubTable)
+        for glyph in vs_set
+    )
 
 
 def _subtable_covers(sub, vs_set):
@@ -106,7 +102,7 @@ def check(path):
     font = TTFont(path)
     uvs = uvs_map(font)
     cmap14 = cmap14_coverage(uvs)
-    vs = vs_glyphs(uvs)
+    vs = vs_glyphs(font)
     lookups = ccmp_lookups(font)
     has_ccmp = lookups is not None and len(lookups) > 0
     ccmp_ok = has_ccmp and ccmp_covers(lookups, vs)
