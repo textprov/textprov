@@ -6,7 +6,7 @@ import vm from "node:vm";
 const homepage = readFileSync(new URL("./index.html", import.meta.url), "utf8");
 const inlineSample = homepage.match(/<p id="sample-passage"[^>]*>([^<]+)<\/p>/)[1];
 
-export function demo({ withSample = false, appSource } = {}) {
+export function demo({ withSample = false, appSource, intl = Intl } = {}) {
   const elements = new Map();
   function element(id) {
     if (id === "sample-passage" && !withSample) return null;
@@ -102,7 +102,7 @@ test("copy and UTF-8 download carry the same marked text", async () => {
 
 test("reader initializes when Intl.Segmenter is unavailable", () => {
   const legacyIntl = { ...Intl, Segmenter: undefined };
-  const { element } = demo(legacyIntl);
+  const { element } = demo({ intl: legacyIntl });
   const input = element("check-input");
   input.value = "A\u{E0101}";
   input.listeners.input();
