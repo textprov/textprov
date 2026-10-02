@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Add TextProv origin labels to text in your browser, then copy or download the marked UTF-8 text.">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#111311" media="(prefers-color-scheme: dark)">
     <title>TextProv Encoder — add origin labels to text</title>
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="app.js"></script>
@@ -23,9 +24,9 @@
     </header>
 
     <main id="main">
-      <section>
+      <section class="intro">
         <h1>TextProv encoder</h1>
-        <p>Add a declared origin to text, then copy or download the marked result. TextProv stores the label as normally invisible Unicode characters within the text.</p>
+        <p class="tagline">Add a declared origin to text, then copy or download the marked result. TextProv stores the label as normally invisible Unicode characters within the text.</p>
         <p class="note">A label is a claim, not proof. This tool does not detect AI writing or verify authorship.</p>
       </section>
 
@@ -80,7 +81,7 @@
     </main>
 
     <footer>
-      <p><a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a> · <a href="https://github.com/textprov/textprov">Source</a></p>
+      <p><a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a> · <a href="https://github.com/textprov/textprov">Source</a> · Text that carries its own provenance.</p>
     </footer>
   </body>
 </html>
