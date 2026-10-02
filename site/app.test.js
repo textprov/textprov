@@ -6,10 +6,6 @@ import vm from "node:vm";
 const homepage = readFileSync(new URL("./index.html", import.meta.url), "utf8");
 const inlineSample = homepage.match(/<p id="sample-passage"[^>]*>([^<]+)<\/p>/)[1];
 
-function visibleText(text) {
-  return text.replace(/[\u{E0100}-\u{E01EF}]/gu, "");
-}
-
 function demo({ withSample = false } = {}) {
   const elements = new Map();
   function element(id) {
@@ -145,7 +141,7 @@ test("marking pasted text replaces existing labels rather than stacking them", (
 });
 
 test("homepage presents the reader and links to the separate encoder", () => {
-  const html = visibleText(readFileSync(new URL("./index.html", import.meta.url), "utf8"));
+  const html = readFileSync(new URL("./index.html", import.meta.url), "utf8");
   assert.match(html, /Try a marked passage/);
   assert.match(html, /Paste text to reveal labels/);
   assert.match(html, /href="\.\/encoder\.html"/);

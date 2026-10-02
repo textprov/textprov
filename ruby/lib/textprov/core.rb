@@ -7,7 +7,7 @@ require "json"
 require "set"
 
 module Textprov
-  SPEC_VERSION = "0.1"
+  SPEC_VERSION = "0.2"
   GENERATED_STATES = %w[human ai mixed].freeze
   PROPOSED_STATES  = %w[edited unknown].freeze
 

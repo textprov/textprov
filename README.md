@@ -1,6 +1,6 @@
 # TextProv
 
-TextProv is a protocol that lets text carry labels about its origin:
+TextProv is a protocol that lets p󠄁r󠄁o󠄁s󠄁e󠄁 carry labels about its origin:
 human-written, AI-generated, mixed, edited, or unknown. The labels are part of
 the text, rather than metadata kept in a separate file or tied to one application.
 
@@ -33,6 +33,18 @@ the labels, so test the copy-and-paste and storage paths your application uses.
 
 Adding marks and displaying them are separate tasks. You do not need a special
 font to mark text or show its provenance in a browser.
+
+## Marking scope
+
+T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 a󠄁d󠄁d󠄁r󠄁e󠄁s󠄁s󠄁e󠄁s󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 e󠄁x󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 p󠄁e󠄁o󠄁p󠄁l󠄁e󠄁.󠄁 S󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁
+e󠄁x󠄁c󠄁l󠄁u󠄁d󠄁e󠄁d󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁s󠄁,󠄁 d󠄁o󠄁c󠄁s󠄁t󠄁r󠄁i󠄁n󠄁g󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 i󠄁n󠄁s󠄁i󠄁d󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁.󠄁 S󠄁o󠄁u󠄁r󠄁c󠄁e󠄁
+c󠄁o󠄁d󠄁e󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 b󠄁e󠄁l󠄁o󠄁n󠄁g󠄁s󠄁 t󠄁o󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁 a󠄁n󠄁d󠄁 d󠄁e󠄁v󠄁e󠄁l󠄁o󠄁p󠄁m󠄁e󠄁n󠄁t󠄁 w󠄁o󠄁r󠄁k󠄁f󠄁l󠄁o󠄁w󠄁s󠄁.󠄁
+
+C󠄁o󠄁d󠄁e󠄁 s󠄁n󠄁i󠄁p󠄁p󠄁e󠄁t󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁 a󠄁n󠄁 a󠄁r󠄁t󠄁i󠄁c󠄁l󠄁e󠄁,󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁,󠄁 o󠄁r󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 m󠄁a󠄁y󠄁 b󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁,󠄁 b󠄁u󠄁t󠄁
+m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁m󠄁 i󠄁s󠄁 o󠄁p󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁.󠄁 S󠄁u󠄁c󠄁h󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁e󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁;󠄁 t󠄁h󠄁e󠄁y󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 m󠄁a󠄁k󠄁e󠄁 a󠄁 s󠄁n󠄁i󠄁p󠄁p󠄁e󠄁t󠄁
+s󠄁u󠄁i󠄁t󠄁a󠄁b󠄁l󠄁e󠄁 f󠄁o󠄁r󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁 e󠄁x󠄁e󠄁c󠄁u󠄁t󠄁i󠄁o󠄁n󠄁.󠄁 I󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁 e󠄁l󠄁i󠄁g󠄁i󠄁b󠄁l󠄁e󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁;󠄁 t󠄁h󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁e󠄁r󠄁
+d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁c󠄁o󠄁g󠄁n󠄁i󠄁z󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 t󠄁y󠄁p󠄁e󠄁s󠄁 o󠄁r󠄁 p󠄁r󠄁o󠄁g󠄁r󠄁a󠄁m󠄁m󠄁i󠄁n󠄁g󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁.󠄁 S󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁'󠄁s󠄁
+[m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁](SPEC.md#marking-scope).󠄁
 
 ## What the labels mean
 
@@ -167,7 +179,7 @@ above. Website development instructions are in [`site/`](site/README.md).
 
 ## Status
 
-The protocol is **Draft 0.1**, last updated 2026-09-20. Specification behavior may
+The protocol is **Draft 0.2**, last updated 2026-10-02. Specification behavior may
 change incompatibly; implementers should pin an immutable revision. Published
 registry allocations remain reserved and are never reassigned or removed. The
 JavaScript package is published on [npm](https://www.npmjs.com/package/textprov),
