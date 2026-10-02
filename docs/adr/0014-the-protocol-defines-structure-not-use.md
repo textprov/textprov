@@ -1,4 +1,4 @@
-# 0013. The protocol defines structure and encoding; how labels are used is left open
+# 0014. The protocol defines structure and encoding; how labels are used is left open
 
 Status: accepted. Date: 2026-09-30.
 
@@ -79,7 +79,8 @@ These are observations for anyone building this use, not requirements.
 
 - `SPEC.md` describes the consumer beside the roles and lists consumer
   behaviour under "Not specified". No algorithm, fixture, or registry entry
-  changes, so the specification and registry versions stay 0.1.
+  changes, so this decision changes neither the specification nor the
+  registry version.
 - Uses can be built and compared in integrations without a specification
   change.
 - If practice shows that consumers need a distinction the vocabulary lacks,

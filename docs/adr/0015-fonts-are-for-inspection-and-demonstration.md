@@ -1,10 +1,10 @@
-# 0014. P+ fonts are for inspection and demonstration, not everyday display
+# 0015. P9E fonts are for inspection and demonstration, not everyday display
 
 Status: accepted. Date: 2026-09-30.
 
 ## Context
 
-A P+ font is a font patched to draw a variant glyph for a marked cluster, so
+A P9E font is a font patched to draw a variant glyph for a marked cluster, so
 marked text shows its state wherever that font is used. It is one of three
 renderers ([ADR 0011](0011-the-producer-is-text-processing.md)).
 
@@ -23,7 +23,7 @@ text with it shows which clusters are marked.
 
 ## Decision
 
-1. A P+ font has two purposes:
+1. A P9E font has two purposes:
    - **Inspection.** It shows whether marks are present, and where, in any
      application. That serves people building and debugging producers,
      decoders, and integrations, and anyone checking whether a copy, paste,
@@ -50,5 +50,5 @@ text with it shows which clusters are marked.
 - The font remains a conforming renderer. Its encoding guidance does not
   change: publish selectors, keep PUA to controlled font workflows
   ([ADR 0008](0008-do-not-publish-pua-to-the-web.md)).
-- Documentation and the website present P+ fonts as a way to look at the
+- Documentation and the website present P9E fonts as a way to look at the
   encoding, not as how TextProv is meant to be experienced.

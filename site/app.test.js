@@ -3,13 +3,22 @@ import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import vm from "node:vm";
 
-function demo(intl = Intl) {
+const homepage = readFileSync(new URL("./index.html", import.meta.url), "utf8");
+const inlineSample = homepage.match(/<p id="sample-passage"[^>]*>([^<]+)<\/p>/)[1];
+
+export function demo({ withSample = false, appSource, intl = Intl } = {}) {
   const elements = new Map();
   function element(id) {
+    if (id === "sample-passage" && !withSample) return null;
     if (!elements.has(id)) {
       elements.set(id, {
         value: id === "demo-input" ? "Hello" : "",
-        textContent: "",
+        textContent: id === "sample-passage" ? inlineSample : "",
+        hidden: true,
+        attributes: {},
+        setAttribute(name, value) {
+          this.attributes[name] = value;
+        },
         listeners: {},
         addEventListener(event, callback) {
           this.listeners[event] = callback;
@@ -28,6 +37,9 @@ function demo(intl = Intl) {
   const context = vm.createContext({
     Intl: intl,
     Blob,
+    module: { exports: {} },
+    window: { isSecureContext: true },
+    NodeFilter: { SHOW_TEXT: 4, FILTER_ACCEPT: 1, FILTER_REJECT: 2 },
     setTimeout: (callback) => callback(),
     URL: {
       createObjectURL(blob) {
@@ -48,18 +60,33 @@ function demo(intl = Intl) {
       getElementById: element,
       querySelector: () => state,
       querySelectorAll: () => [state],
-      createElement: () => element("download-link"),
+      createElement: () =>
+        Object.assign(element("download-link"), { relList: { supports: () => true } }),
+      createTreeWalker: () => ({ nextNode: () => null }),
       body: { appendChild() {} },
     },
   });
   vm.runInContext(readFileSync(new URL("../js/textprov.js", import.meta.url), "utf8"), context);
+  const api = context.module.exports;
   // Use real decoding; DOM styling is outside these unit tests.
-  context.textprov.render = (output) =>
-    context.textprov.runs(output.textContent).filter((run) => run.state).length;
-  const source = readFileSync(new URL("./app.js", import.meta.url), "utf8");
-  vm.runInContext(source.replace('import "../js/textprov.js";', ""), context);
-  return { element, state, downloads, copied };
+  api.render = (output) => api.runs(output.textContent).filter((run) => run.state).length;
+  const source = appSource ?? readFileSync(new URL("./app.js", import.meta.url), "utf8");
+  const script = source.replace(
+    /^import(?:\s+(\w+)\s+from)?\s+"(?:textprov|\.\.\/js\/textprov\.js)";/m,
+    (_, binding) => (binding ? `const ${binding} = module.exports;` : ""),
+  );
+  vm.runInContext(script, context);
+  return { element, state, downloads, copied, context };
 }
+
+test("site consumes CommonJS exports without a browser-global API", () => {
+  const { context, element } = demo({ withSample: true });
+  assert.equal(context.textprov, undefined);
+  assert.equal(context.window.textprov, undefined);
+  assert.equal(element("demo-output").value, "H\u{E0101}e\u{E0101}l\u{E0101}l\u{E0101}o\u{E0101}");
+  element("reveal-button").listeners.click();
+  assert.equal(element("reveal-button").attributes["aria-pressed"], "true");
+});
 
 test("copy and UTF-8 download carry the same marked text", async () => {
   const { element, downloads, copied } = demo();
@@ -75,7 +102,7 @@ test("copy and UTF-8 download carry the same marked text", async () => {
 
 test("reader initializes when Intl.Segmenter is unavailable", () => {
   const legacyIntl = { ...Intl, Segmenter: undefined };
-  const { element } = demo(legacyIntl);
+  const { element } = demo({ intl: legacyIntl });
   const input = element("check-input");
   input.value = "A\u{E0101}";
   input.listeners.input();
@@ -99,48 +126,36 @@ test("reader reports existing labels without changing the input", () => {
   assert.equal(element("check-status").textContent, "Waiting for text.");
 });
 
-test("font examples are distinct, self-describing, and carry the expected labels", () => {
-  const html = readFileSync(new URL("./index.html", import.meta.url), "utf8");
-  const examples = [
-    ...html.matchAll(/<p class="font-sample[^"]*" data-example="([^"]+)">([^<]+)<\/p>/g),
-  ];
-  assert.deepEqual(
-    examples.map(([, name]) => name),
-    ["ordinary", "local", "maryheather", "zilla"],
-  );
-  const visible = examples.map(([, , marked]) => marked.replace(/[\u{E0100}-\u{E01EF}]/gu, ""));
-  assert.equal(new Set(visible).size, examples.length);
-  assert.match(visible[0], /ordinary font should make it look like normal prose/);
-  assert.match(visible[1], /sawtooth underline when a compatible P\+ font is installed/);
-  assert.match(visible[2], /Maryheather is loaded from this page/);
-  assert.match(visible[3], /Zilla Slab is the active webfont/);
-  assert.doesNotMatch(examples[0][2], /\u{E0100}/u);
-  for (const [, name, marked] of examples.slice(1)) {
-    assert.match(marked, /\u{E0100}/u, `${name} includes Human labels`);
-    assert.match(marked, /\u{E0101}/u, `${name} includes AI labels`);
+test("reveal and hide preserve the exact embedded marks, including copied text", async () => {
+  const { element, copied } = demo({ withSample: true });
+  const passage = element("sample-passage");
+  const reveal = element("reveal-button");
+  assert.equal(reveal.hidden, false);
+  element("sample-copy-button").listeners.click();
+  await Promise.resolve();
+  assert.equal(copied[0], inlineSample);
+  for (const expected of ["true", "false", "true"]) {
+    reveal.listeners.click();
+    assert.equal(reveal.attributes["aria-pressed"], expected);
+    assert.equal(element("sample-legend").hidden, expected === "false");
+    assert.equal(passage.textContent, inlineSample);
+    element("sample-copy-button").listeners.click();
+    await Promise.resolve();
+    assert.equal(copied.at(-1), inlineSample);
   }
+  assert.equal(element("reader").open, true);
+  assert.match(element("sample-copy-status").textContent, /Copied with marks/);
 });
 
-test("long static sample reveals Human and AI labels when pasted", () => {
+test("the downloadable UTF-8 sample contains the same marks as the interactive passage", () => {
   const file = readFileSync(new URL("./public/samples/marked-text.txt", import.meta.url), "utf8");
   assert.equal(file.codePointAt(0), 0xfeff, "UTF-8 BOM lets browsers identify the text encoding");
-  const sample = file.slice(1);
-  const visible = sample.replace(/[\u{E0100}-\u{E01EF}]/gu, "");
-  assert.match(visible, /This paragraph declares itself Human/);
-  assert.match(visible, /This paragraph declares itself AI/);
-  assert.ok(visible.length > 300);
+  assert.equal(file.slice(1).trimEnd(), inlineSample);
   const { element } = demo();
-  element("check-input").value = sample;
+  element("check-input").value = file;
   element("check-input").listeners.input();
-  assert.equal(element("check-output").textContent, sample);
+  assert.equal(element("check-output").textContent, file);
   assert.match(element("check-status").textContent, /Labels found: human, ai\./);
-});
-
-test("local-font example cannot download a webfont", () => {
-  const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
-  const rule = css.match(/@font-face\s*\{[^}]*font-family: "TextProv Local P\+"[^}]*\}/)[0];
-  assert.match(rule, /local\("Maryheather TextProv Demo P\+"\)/);
-  assert.doesNotMatch(rule, /url\(/);
 });
 
 test("marking pasted text replaces existing labels rather than stacking them", () => {
@@ -154,8 +169,8 @@ test("marking pasted text replaces existing labels rather than stacking them", (
 
 test("homepage presents the reader and links to the separate encoder", () => {
   const html = readFileSync(new URL("./index.html", import.meta.url), "utf8");
-  assert.match(html, /Check text for TextProv labels/);
-  assert.match(html, /Paste text to check for labels/);
+  assert.match(html, /Try a marked passage/);
+  assert.match(html, /Paste text to reveal labels/);
   assert.match(html, /href="\.\/encoder\.html"/);
   assert.doesNotMatch(html, /<p><\/p>Paste text/);
   assert.doesNotMatch(html, /<p><\/p>Need to add labels/);

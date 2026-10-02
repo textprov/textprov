@@ -1,6 +1,6 @@
 # TextProv
 
-TextProv is a protocol that lets text carry labels about its origin:
+TextProv is a protocol that lets p󠄁r󠄁o󠄁s󠄁e󠄁 carry labels about its origin:
 human-written, AI-generated, mixed, edited, or unknown. The labels are part of
 the text, rather than metadata kept in a separate file or tied to one application.
 
@@ -8,6 +8,11 @@ Use TextProv in an editor or content pipeline when you know how text was
 produced and want that information to accompany copied passages.
 [Try the browser reader](https://textprov.org/#try-it) without installing
 anything, or [start with a package](#using-textprov).
+
+TextProv provides a shared structure, encoding, and vocabulary so applications
+can exchange the same provenance information and choose how best to use it.
+Displaying labels, interpreting agent prompts, and other integrations can
+build on that common foundation.
 
 This repository holds the protocol specification, implementations, and website
 source.
@@ -20,13 +25,26 @@ AI-generated, while leaving the surrounding text unchanged.
 
 The marks use Unicode characters and travel with the text through copy, paste,
 and plain-text storage, provided the receiving software preserves them. A
-TextProv-aware application can read those marks and make the labels visible.
+TextProv-aware application can read those marks to inform its own processing
+or make the labels visible.
 With the default encoding, other applications normally display the ordinary
 text without showing its provenance. Software that strips the marks removes
 the labels, so test the copy-and-paste and storage paths your application uses.
 
 Adding marks and displaying them are separate tasks. You do not need a special
 font to mark text or show its provenance in a browser.
+
+## Marking scope
+
+T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 a󠄁d󠄁d󠄁r󠄁e󠄁s󠄁s󠄁e󠄁s󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 e󠄁x󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 p󠄁e󠄁o󠄁p󠄁l󠄁e󠄁.󠄁 S󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁
+e󠄁x󠄁c󠄁l󠄁u󠄁d󠄁e󠄁d󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁s󠄁,󠄁 d󠄁o󠄁c󠄁s󠄁t󠄁r󠄁i󠄁n󠄁g󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 i󠄁n󠄁s󠄁i󠄁d󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁.󠄁 S󠄁o󠄁u󠄁r󠄁c󠄁e󠄁
+c󠄁o󠄁d󠄁e󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 b󠄁e󠄁l󠄁o󠄁n󠄁g󠄁s󠄁 t󠄁o󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁 a󠄁n󠄁d󠄁 d󠄁e󠄁v󠄁e󠄁l󠄁o󠄁p󠄁m󠄁e󠄁n󠄁t󠄁 w󠄁o󠄁r󠄁k󠄁f󠄁l󠄁o󠄁w󠄁s󠄁.󠄁
+
+C󠄁o󠄁d󠄁e󠄁 s󠄁n󠄁i󠄁p󠄁p󠄁e󠄁t󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁 a󠄁n󠄁 a󠄁r󠄁t󠄁i󠄁c󠄁l󠄁e󠄁,󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁,󠄁 o󠄁r󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 m󠄁a󠄁y󠄁 b󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁,󠄁 b󠄁u󠄁t󠄁
+m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁m󠄁 i󠄁s󠄁 o󠄁p󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁.󠄁 S󠄁u󠄁c󠄁h󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁e󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁;󠄁 t󠄁h󠄁e󠄁y󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 m󠄁a󠄁k󠄁e󠄁 a󠄁 s󠄁n󠄁i󠄁p󠄁p󠄁e󠄁t󠄁
+s󠄁u󠄁i󠄁t󠄁a󠄁b󠄁l󠄁e󠄁 f󠄁o󠄁r󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁 e󠄁x󠄁e󠄁c󠄁u󠄁t󠄁i󠄁o󠄁n󠄁.󠄁 I󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁 e󠄁l󠄁i󠄁g󠄁i󠄁b󠄁l󠄁e󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁;󠄁 t󠄁h󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁e󠄁r󠄁
+d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁c󠄁o󠄁g󠄁n󠄁i󠄁z󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 t󠄁y󠄁p󠄁e󠄁s󠄁 o󠄁r󠄁 p󠄁r󠄁o󠄁g󠄁r󠄁a󠄁m󠄁m󠄁i󠄁n󠄁g󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁.󠄁 S󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁'󠄁s󠄁
+[m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁](SPEC.md#marking-scope).󠄁
 
 ## What the labels mean
 
@@ -41,8 +59,23 @@ The labels do not identify an author, model, or timestamp. Store that informatio
 separately if your workflow needs it. An explicit `unknown` label is also
 different from unmarked text: one records a claim; the other has no label.
 
-The protocol gives applications a shared way to represent these labels, without
-requiring them to use the same tools or visual styles.
+The protocol gives applications a shared way to represent these labels, while
+leaving decision policies and presentation to each integration.
+
+## Agent prompt integrations
+
+A prompt can combine an operator's instructions with text copied from model
+output. TextProv marks can preserve that distinction across copying, giving
+an agent integration context that would otherwise be lost. An integration
+could use the decoded states to experiment with how much weight to give each
+passage in its decision process.
+
+This is a potential use that requires further integration to read the marks,
+apply a policy, and evaluate its effect. The protocol supplies a common
+foundation for that work. Unmarked text remains unlabelled; treating it as
+operator-written depends on the input workflow. The specification's
+[application use discussion](SPEC.md#application-use-non-normative) gives an
+illustrative weighting example and explains the integration boundary.
 
 ## Alongside C2PA and sidecar metadata
 
@@ -114,12 +147,16 @@ prints `Hello` without marks. Rendering HTML does not add visual styling by
 itself. This example labels the text supplied to `mark()`; it does not analyze
 who wrote it.
 
-Marks can also be displayed with a patched font. A patched font reveals marks
-in any application without TextProv-aware software, which makes it a tool for
-inspecting and demonstrating the encoding rather than the intended way to read
-labels; applications are expected to show them in their own interfaces. The
-[font and interchange guide](docs/SELECTORS-PUA-AND-INTERCHANGE.md) explains that
-workflow and when to use it.
+The **TextProv Utility P9E fonts** are development and debugging adjuncts.
+The suite provides Sans, Serif, Fixed, Mono, and Proportional families that
+reveal supported provenance marks with compatible rendering. Their visible
+patterns make stored encoding easier to inspect and demonstrate; consuming
+applications and sites choose the presentation that fits their users. See the
+[utility font guide](docs/FONT-UTILITIES.md) for downloads, rebuilding, licensing,
+and compatibility, and the
+[font and interchange guide](docs/SELECTORS-PUA-AND-INTERCHANGE.md) for the
+choice between selector and PUA encoding. `P9E` is the provenance shorthand
+that succeeds the earlier `P+` font suffix.
 
 ## Exploring the protocol
 
@@ -142,7 +179,7 @@ above. Website development instructions are in [`site/`](site/README.md).
 
 ## Status
 
-The protocol is **Draft 0.1**, last updated 2026-09-20. Specification behavior may
+The protocol is **Draft 0.2**, last updated 2026-10-02. Specification behavior may
 change incompatibly; implementers should pin an immutable revision. Published
 registry allocations remain reserved and are never reassigned or removed. The
 JavaScript package is published on [npm](https://www.npmjs.com/package/textprov),
@@ -159,4 +196,7 @@ text and by the Nerd Fonts tooling workflow that made the approach practical.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+Project code is MIT licensed. See [LICENSE](LICENSE). Bundled utility fonts
+and their derivatives are licensed under the SIL Open Font License 1.1; each
+font bundle includes its upstream copyright and license. See
+[utility font licensing](docs/FONT-UTILITIES.md#licensing-and-attribution).

@@ -11,13 +11,17 @@ CoreText through a `ccmp` ligature. The numbering is shared, so a number
 appears in one repository or the other, never both.
 
 Two records set scope rather than mechanism.
-[ADR 0013](0013-the-protocol-defines-structure-not-use.md) keeps the
+[ADR 0014](0014-the-protocol-defines-structure-not-use.md) keeps the
 protocol to structure and encoding, a shared baseline, and leaves how labels
-are used to consumers. [ADR 0014](0014-fonts-are-for-inspection-and-demonstration.md)
-positions P+ fonts as an inspection and demonstration tool.
+are used to consumers. [ADR 0015](0015-fonts-are-for-inspection-and-demonstration.md)
+positions P9E fonts as an inspection and demonstration tool.
 
 Records written before the repository split use the Nerd Fonts fork's original
 paths. They remain historical records; use
 [ADR 0006](0006-decorator-packages-and-repository.md) for the split and
 [ADR 0011](0011-the-producer-is-text-processing.md) for the current producer
 boundary.
+
+[ADR 0013](0013-use-p9e-as-provenance-shorthand.md) records the shorthand
+`p9e` / `P9E` and its transition from the `P+` font suffix. Earlier records
+retain `P+` when describing the fonts and measurements they recorded.

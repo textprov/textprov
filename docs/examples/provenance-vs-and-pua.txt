@@ -7,8 +7,8 @@ VS SAMPLE:  A󠄁I󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 s󠄁t
 PUA SAMPLE: 􀁁􀁉 􀁰􀁲􀁯􀁶􀁥􀁮􀁡􀁮􀁣􀁥 􀁳􀁴􀁡􀁹􀁳 􀁲􀁥􀁡􀁤􀁡􀁢􀁬􀁥 􀁷􀁨􀁥􀁮 􀁩􀁴􀁳 􀁤􀁥􀁣􀁯􀁲􀁡􀁴􀁩􀁯􀁮 􀁤􀁩􀁳􀁡􀁰􀁰􀁥􀁡􀁲􀁳􀀮
 
 Expected display:
-- Without a P+ font: VS SAMPLE remains readable without a sawtooth; PUA SAMPLE normally shows missing-glyph boxes.
-- With a P+ font and a shaper that honors format-14 mappings: both samples can appear as readable text with a sawtooth underline.
+- Without a P9E font: VS SAMPLE remains readable without a sawtooth; PUA SAMPLE normally shows missing-glyph boxes.
+- With a P9E font and a shaper that honors format-14 mappings: both samples can appear as readable text with a sawtooth underline.
 - With CoreText on macOS: VS SAMPLE renders as plain base glyphs. Direct tests selected the PUA glyphs, but each editor path must be checked separately.
 - In Zed on macOS: VS SAMPLE may also show spacing and green invisible-character marks if highlighting separates selectors from their bases.
 

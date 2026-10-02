@@ -36,3 +36,24 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: python -m unittest discover -s tests -t .
         working-directory: python
+
+  utility-fonts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: site/font-build-requirements.txt
+      - name: Install font build and shaping dependencies
+        run: python -m pip install -r site/font-build-requirements.txt
+      - name: Rebuild utility fonts from pinned sources
+        run: python site/build-utility-fonts.py --output "$RUNNER_TEMP/textprov-utility-fonts"
+      - name: Validate rebuilt utility fonts
+        run: python site/check-utility-fonts.py --output "$RUNNER_TEMP/textprov-utility-fonts" --strict
+      - name: Validate shipped utility fonts and notices
+        run: python site/check-utility-fonts.py --strict
+      - name: Test website examples
+        run: npm test
+        working-directory: site

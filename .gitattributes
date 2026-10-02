@@ -1,0 +1,3 @@
+# Preserve the exact upstream licence bytes, including original line endings
+# and whitespace, recorded in font manifests.
+site/public/fonts/utility/*-OFL.txt -text whitespace=-trailing-space,cr-at-eol

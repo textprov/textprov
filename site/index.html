@@ -3,242 +3,130 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Label text as human-written, AI-generated, or mixed. Try TextProv in your browser and see how origin labels can travel with plain text.">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="TextProv is a draft specification for character-level origin labels in prose. Try the demo, open a marked .txt file, and help shape the proposal.">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
     <title>TextProv — origin labels that travel with text</title>
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="app.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-
-    <nav aria-label="Primary navigation">
-      <a href="#how">How it works</a>
-      <a href="#font-examples">Examples</a>
-      <a href="#try-it">Try it</a>
-      <a href="#use-cases">Use cases</a>
-      <a href="/spec.html">Spec</a>
-    </nav>
+    <header class="site-header">
+      <a class="wordmark" href="./">TextProv</a>
+      <nav aria-label="Primary navigation">
+        <a href="#try-it">Try it</a>
+        <a href="#how">How it works</a>
+        <a href="./spec.html">Specification</a>
+        <a href="#contribute">Contribute</a>
+      </nav>
+    </header>
 
     <main id="main">
-      <section>
-        <h1>TextProv</h1>
-        <p class="version-line">Draft · Specification v0.1 · Registry v0.1 · Updated 2026-09-21</p>
-        <p class="tagline">Origin labels that travel with text: human-written, AI-generated, mixed, edited, or unknown. TextProv is an open protocol for keeping those disclosures in the text itself, rather than in a separate file or one application's metadata.</p>
-        <p>Use it in an editor or content pipeline when you know how text was produced. For example, an AI-writing integration can label the passages it generates for review. TextProv lets cooperating tools preserve and display those labels; it does not enforce honest disclosure.</p>
-        <p><a href="#try-it">Read labels in your browser</a>, <a href="./encoder.html">add labels with the encoder</a>, or <a href="#use-cases">explore use cases</a>. No special font is needed for these tasks.</p>
-        <p>The labels can travel through copy, paste, and plain-text storage, as long as the receiving software preserves the marks.</p>
-        <p class="note">A label is a claim about origin, not proof of authorship or a judgment about quality, accuracy, or trustworthiness. TextProv does not detect AI writing or authenticate the source of a claim. Anyone can add, change, or remove marks; unmarked text makes no claim about its origin.</p>
-      </section>
-
-      <section id="font-examples" aria-labelledby="examples-title">
-        <h2 id="examples-title">What does it look like?</h2>
-        <p>These examples show how fonts affect the display of marked text. The first passage is labelled AI; the others contain Human- and AI-labelled sentences. The labels are already in the text; JavaScript does not add them. A “P+” font is a font modified to display provenance marks.</p>
-
-        <h3>Ordinary font</h3>
-        <p class="font-sample" data-example="ordinary">T󠄁h󠄁i󠄁s󠄁 e󠄁n󠄁t󠄁i󠄁r󠄁e󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁I󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 f󠄁o󠄁n󠄁t󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 m󠄁a󠄁k󠄁e󠄁 i󠄁t󠄁 l󠄁o󠄁o󠄁k󠄁 l󠄁i󠄁k󠄁e󠄁 n󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁.󠄁</p>
-        <p class="note">Expected: ordinary text with no visible provenance decoration. The sentence is still labelled AI.</p>
-
-        <h3>P+ font installed on your device</h3>
-        <p class="font-sample font-local" data-example="local">T󠄀h󠄀i󠄀s󠄀 o󠄀p󠄀e󠄀n󠄀i󠄀n󠄀g󠄀 s󠄀e󠄀n󠄀t󠄀e󠄀n󠄀c󠄀e󠄀 i󠄀s󠄀 l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀 a󠄀n󠄀d󠄀 s󠄀h󠄀o󠄀u󠄀l󠄀d󠄀 s󠄀t󠄀a󠄀y󠄀 p󠄀l󠄀a󠄀i󠄀n󠄀.󠄀 T󠄁h󠄁i󠄁s󠄁 s󠄁e󠄁c󠄁o󠄁n󠄁d󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁I󠄁 a󠄁n󠄁d󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 g󠄁a󠄁i󠄁n󠄁 a󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁 w󠄁h󠄁e󠄁n󠄁 a󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁t󠄁i󠄁b󠄁l󠄁e󠄁 P󠄁+󠄁 f󠄁o󠄁n󠄁t󠄁 i󠄁s󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁.󠄁</p>
-        <p class="note">Expected with a compatible installed font and rendering engine: the first sentence stays plain and the second gains a sawtooth underline. Otherwise, both look ordinary. This example never downloads a font.</p>
-
-        <h3>Maryheather webfont supplied by this page</h3>
-        <p class="font-sample font-maryheather" data-example="maryheather">M󠄀a󠄀r󠄀y󠄀h󠄀e󠄀a󠄀t󠄀h󠄀e󠄀r󠄀 i󠄀s󠄀 l󠄀o󠄀a󠄀d󠄀e󠄀d󠄀 f󠄀r󠄀o󠄀m󠄀 t󠄀h󠄀i󠄀s󠄀 p󠄀a󠄀g󠄀e󠄀,󠄀 a󠄀n󠄀d󠄀 t󠄀h󠄀i󠄀s󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀-󠄀l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 s󠄀e󠄀n󠄀t󠄀e󠄀n󠄀c󠄀e󠄀 s󠄀h󠄀o󠄀u󠄀l󠄀d󠄀 r󠄀e󠄀m󠄀a󠄀i󠄀n󠄀 p󠄀l󠄀a󠄀i󠄀n󠄀.󠄀 T󠄁h󠄁i󠄁s󠄁 A󠄁I󠄁-󠄁l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 a󠄁p󠄁p󠄁e󠄁a󠄁r󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 t󠄁y󠄁p󠄁e󠄁f󠄁a󠄁c󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁.󠄁</p>
-        <p class="note">Expected with compatible webfont rendering: Maryheather throughout, with a sawtooth underline only beneath the AI-labelled second sentence.</p>
-
-        <h3>Zilla Slab webfont supplied by this page</h3>
-        <p class="font-sample font-zilla" data-example="zilla">Z󠄀i󠄀l󠄀l󠄀a󠄀 S󠄀l󠄀a󠄀b󠄀 i󠄀s󠄀 t󠄀h󠄀e󠄀 a󠄀c󠄀t󠄀i󠄀v󠄀e󠄀 w󠄀e󠄀b󠄀f󠄀o󠄀n󠄀t󠄀 f󠄀o󠄀r󠄀 t󠄀h󠄀i󠄀s󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀-󠄀l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 s󠄀e󠄀n󠄀t󠄀e󠄀n󠄀c󠄀e󠄀,󠄀 s󠄀o󠄀 i󠄀t󠄀 s󠄀h󠄀o󠄀u󠄀l󠄀d󠄀 r󠄀e󠄀m󠄀a󠄀i󠄀n󠄀 p󠄀l󠄀a󠄀i󠄀n󠄀.󠄀 T󠄁h󠄁e󠄁 f󠄁o󠄁l󠄁l󠄁o󠄁w󠄁i󠄁n󠄁g󠄁 A󠄁I󠄁-󠄁l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 u󠄁s󠄁e󠄁 Z󠄁i󠄁l󠄁l󠄁a󠄁 S󠄁l󠄁a󠄁b󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁.󠄁</p>
-        <p class="note">Expected with compatible webfont rendering: Zilla Slab throughout, with a sawtooth underline only beneath the AI-labelled second sentence.</p>
-
-        <p class="note">The font examples use no JavaScript decoration. A browser can load a font but ignore its selector mappings. <a href="#check-input">The reader below</a> reveals labels independently of font support.</p>
-        <p><a href="./samples/marked-text.txt" target="_blank" rel="noopener">Open a longer marked text file in a new tab ↗</a> · <a href="./samples/marked-text.txt" download>Download the sample</a></p>
-        <p class="note">The file contains plain UTF-8 text, no HTML or JavaScript. Copy it normally, return here, and paste it into the reader. No copy handler adds labels to your clipboard: they are already in the file.</p>
+      <section class="intro" aria-labelledby="intro-title">
+        <p class="version-line">Draft 0.2 · Open for feedback and contributions</p>
+        <h1 id="intro-title">Origin labels that travel with text</h1>
+        <p class="tagline">TextProv is a draft specification for marking the origin of individual characters within prose. Start with one person and one AI: keep track of text from each as passages are copied, combined, and reused.</p>
+        <p>A small shared vocabulary, carried in the text itself. Applications choose how to display and use it.</p>
       </section>
 
       <section id="try-it" aria-labelledby="try-title">
-        <h2 id="try-title">Check text for TextProv labels</h2>
-        <p>Copy any of the text above and paste it below. To try a labelled example, use the text above or the <a href="./samples/marked-text.txt" target="_blank" rel="noopener">static sample file ↗</a>. This reader does not add labels, detect AI writing, or verify authorship.</p>
-        <p>No installation or special font is needed. Your text stays in your browser.</p>
-        <noscript><p>This reader needs JavaScript. You can also inspect marked text with the Python example below.</p></noscript>
-        <div class="demo-panel">
-          <label for="check-input">Paste text below</label>
-          <textarea id="check-input" rows="3" aria-describedby="check-help" placeholder="Paste your marked text here"></textarea>
-          <div id="check-output" class="demo-output"></div>
-          <p id="check-status" class="note" role="status"></p>
+        <h2 id="try-title">Try a marked passage</h2>
+        <p>In this example, a person writes the opening and an AI completes the sentence.</p>
+        <div class="passage-demo">
+          <p id="sample-passage" class="sample-passage">M󠄀a󠄀k󠄀e󠄀 i󠄀t󠄀 s󠄀i󠄀m󠄀p󠄀l󠄀e󠄀,󠄀 t󠄁h󠄁e󠄁n󠄁 m󠄁a󠄁k󠄁e󠄁 i󠄁t󠄁 u󠄁s󠄁e󠄁f󠄁u󠄁l󠄁.󠄁</p>
+          <div class="demo-toolbar">
+            <div class="demo-actions">
+              <button id="reveal-button" type="button" aria-pressed="false" aria-controls="sample-passage sample-legend" hidden>Reveal labels</button>
+              <button id="sample-copy-button" type="button" hidden>Copy passage</button>
+            </div>
+            <span id="sample-copy-status" class="note" role="status"></span>
+          </div>
+          <p id="sample-legend" class="sample-legend" hidden><span class="legend-human">Human: “Make it simple,”</span> <span class="legend-ai">AI: “then make it useful.”</span></p>
+          <p id="sample-reveal-status" class="sr-only" role="status"></p>
         </div>
-        <p>Need to add labels first? Use the <a href="./encoder.html">TextProv encoder</a> to produce marked UTF-8 text.</p>
+        <p class="note">The marks are already in this text. Revealing them changes only the display; the colours and underlines are this demo’s choices.</p>
+
+        <div class="text-file">
+          <div>
+            <a class="text-file-link" href="./samples/marked-text.txt" target="_blank" rel="noopener">Open the marked .txt file ↗</a>
+            <p class="note">The same passage, in plain UTF-8. Copy it into another app, then paste it below.</p>
+          </div>
+          <a href="./samples/marked-text.txt" download>Download .txt</a>
+        </div>
+
+        <details class="reader" id="reader">
+          <summary>Paste text to reveal labels</summary>
+          <p class="note" id="check-help">Paste an excerpt from the passage or file. Your text stays in your browser.</p>
+          <label for="check-input">Text to inspect</label>
+          <textarea id="check-input" rows="3" aria-describedby="check-help" placeholder="Paste text here"></textarea>
+          <div class="output-heading"><span>Labels in your text</span></div>
+          <div id="check-output" class="demo-output"></div>
+          <p id="check-status" class="note" role="status">Waiting for text.</p>
+          <p class="reader-next">To mark your own text, use the <a href="./encoder.html">encoder</a>.</p>
+        </details>
+        <noscript><p>Revealing labels and using the reader need JavaScript. The marked passage and .txt file already contain their labels.</p></noscript>
+        <p class="note limits">Marks record supplied labels; they do not detect AI writing or verify authorship. They travel where software preserves them.</p>
       </section>
 
       <section id="how" aria-labelledby="how-title">
-        <h2 id="how-title">How does it work?</h2>
-        <p>TextProv's default encoding adds normally invisible Unicode characters called <em>variation selectors</em> after the letters or symbols being labelled. A TextProv reader recognizes these marks and can show their meaning using underlines, colours, or other decorations.</p>
-        <p>Labels do not identify an author, model, or timestamp; a workflow must store those details separately. An explicit unknown label differs from unmarked text, which has no label.</p>
-                <p>A <em>code point</em> is a number identifying a character in Unicode. For example, <code>U+0041</code> identifies <code>A</code>. TextProv uses <code>U+E0101</code> as the AI label:</p>
-<pre><code>U+0041  U+E0101
-   A    AI mark</code></pre>
-        <p>Unicode defines the characters; <strong>UTF-8</strong> encodes them as bytes in a file or message. TextProv is not a replacement for UTF-8. A UTF-8 file can store both the letters and their marks; older encodings such as <strong>Latin-1</strong> cannot store these marks.</p>
-        <p class="note">These label meanings are a TextProv convention, not Unicode-registered variation sequences. Software that does not understand TextProv usually shows the ordinary letters. Software that strips invisible characters can remove the labels, so test the path your text takes.</p>
-      </section>
-
-      <section id="c2pa" aria-labelledby="c2pa-title">
-        <h2 id="c2pa-title">Does TextProv prove an AI wrote it?</h2>
-        <p class="thesis">No. TextProv is just markup data; it does not verify who or what applied it.</p>
-        <p>TextProv separates who decides what to mark, who adds the marks, what keeps them intact, and who interprets them.</p>
-        <figure class="roles">
-          <svg viewBox="0 0 640 150" role="img" aria-labelledby="roles-svg-title roles-svg-desc" xmlns="http://www.w3.org/2000/svg">
-            <title id="roles-svg-title">Four separate responsibilities around a TextProv label</title>
-            <desc id="roles-svg-desc">Four boxes in a row: decide, mark, preserve, read. Mark and read have solid outlines and are defined by TextProv. Decide and preserve have dashed outlines and are outside the protocol.</desc>
-            <g class="roles-outside">
-              <rect x="10" y="10" width="140" height="56" fill="#fff" stroke="#666" stroke-dasharray="4 3" />
-              <text x="80" y="34" text-anchor="middle">Decide</text>
-              <text class="roles-sub" x="80" y="54" text-anchor="middle">policy, integration</text>
-              <text class="roles-who" x="80" y="88" text-anchor="middle">who decides</text>
-              <text class="roles-who" x="80" y="104" text-anchor="middle">what to mark</text>
-            </g>
-            <g class="roles-inside">
-              <rect x="170" y="10" width="140" height="56" fill="#fff" stroke="#000" stroke-width="1.5" />
-              <text x="240" y="34" text-anchor="middle">Mark</text>
-              <text class="roles-sub" x="240" y="54" text-anchor="middle">producer encodes</text>
-              <text class="roles-who" x="240" y="88" text-anchor="middle">who adds</text>
-              <text class="roles-who" x="240" y="104" text-anchor="middle">the marks</text>
-            </g>
-            <g class="roles-outside">
-              <rect x="330" y="10" width="140" height="56" fill="#fff" stroke="#666" stroke-dasharray="4 3" />
-              <text x="400" y="34" text-anchor="middle">Preserve</text>
-              <text class="roles-sub" x="400" y="54" text-anchor="middle">file, clipboard, wire</text>
-              <text class="roles-who" x="400" y="88" text-anchor="middle">what keeps</text>
-              <text class="roles-who" x="400" y="104" text-anchor="middle">them intact</text>
-            </g>
-            <g class="roles-inside">
-              <rect x="490" y="10" width="140" height="56" fill="#fff" stroke="#000" stroke-width="1.5" />
-              <text x="560" y="34" text-anchor="middle">Read</text>
-              <text class="roles-sub" x="560" y="54" text-anchor="middle">consumer decodes</text>
-              <text class="roles-who" x="560" y="88" text-anchor="middle">who interprets</text>
-              <text class="roles-who" x="560" y="104" text-anchor="middle">the marks</text>
-            </g>
-            <g class="roles-arrows" fill="none" stroke="#444" stroke-width="1.2">
-              <path d="M150 38 h20 m-5 -4 l5 4 l-5 4" />
-              <path d="M310 38 h20 m-5 -4 l5 4 l-5 4" />
-              <path d="M470 38 h20 m-5 -4 l5 4 l-5 4" />
-            </g>
-            <g class="roles-legend">
-              <rect x="170" y="128" width="22" height="12" fill="#fff" stroke="#000" stroke-width="1.5" />
-              <text x="200" y="138">defined by TextProv</text>
-              <rect x="352" y="128" width="22" height="12" fill="#fff" stroke="#666" stroke-dasharray="4 3" />
-              <text x="382" y="138">outside the protocol</text>
-            </g>
-          </svg>
+        <h2 id="how-title">A mark alongside each character</h2>
+        <p>TextProv adds a normally invisible Unicode mark after each character being labelled. Copy a passage and its marks can come along, without a separate metadata file.</p>
+        <figure class="encoding-figure">
+          <div class="encoding-example">
+            <div class="character-pair">
+              <span class="base-character">M<span>letter</span></span>
+              <span class="stored-mark human-mark"><code>U+E0100</code><span>human mark</span></span>
+            </div>
+            <span class="encoding-gap" aria-hidden="true">…</span>
+            <div class="character-pair">
+              <span class="base-character">t<span>letter</span></span>
+              <span class="stored-mark ai-mark"><code>U+E0101</code><span>AI mark</span></span>
+            </div>
+          </div>
+          <figcaption>Two characters from the example, with their normally invisible marks exposed. The file stores the letters and the marks together.</figcaption>
         </figure>
-        <p>The protocol defines only two of these: how a producer encodes a state and how a consumer decodes it. It says nothing about how the state was chosen, whether the declaration is honest, or whether the consumer should act on it. A false declaration can be correctly encoded, and a valid decoder can report it without endorsing it.</p>
-        <p>An advisory protocol can still be useful. <a href="https://www.rfc-editor.org/rfc/rfc9309.html"><code>robots.txt</code></a>, canonical links, <a href="https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions/">SPDX license expressions</a>, Semantic Versioning, and RSS all standardize a declaration without proving it is true. Honest participants benefit from a shared vocabulary; adversarial ones cannot be stopped by the format itself. TextProv makes the same trade for origin labels.</p>
-        <p>If you need cryptographic proof of who produced a file and whether it has been altered, that is a different problem. One answer is <a href="https://c2pa.org">C2PA</a>: a signed <em>manifest</em> bound to a file's bytes, shown to readers as Content Credentials. Plain text needs a sidecar file for this — the <a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html#_external_manifests">specification, section 11.4</a>, gives <code>.txt</code> as its example of a format that cannot embed a manifest.</p>
-        <p>The two approaches survive different things. Select a passage and paste it into a message, and the sidecar, manifest, and signature stay behind with the original file; TextProv labels live in the character sequence itself and travel with the passage. The approaches combine cleanly: mark the text with TextProv, then sign the marked file with C2PA. A copied passage keeps its labels but not the file's signature, so it does not inherit the file's verified status.</p>
-        <p class="note">TextProv does not create or validate C2PA manifests, and its labels are not Content Credentials. Neither an origin label nor a valid signature says anything about whether the text is factually correct.</p>
+        <p class="note">The encoding follows visible characters (grapheme clusters); spaces in this example are unmarked. These label meanings are a TextProv convention, not Unicode-registered variation sequences.</p>
       </section>
 
-      <section id="use-cases" aria-labelledby="use-cases-title">
-        <h2 id="use-cases-title">Use cases</h2>
-        <p>TextProv marks origin per-character so it moves with text between files, tools, copying and pasting.</p>
-
-        <h3>Writers tracking drafts</h3>
-        <p>Bloggers, journalists, and other writers can distinguish their own prose from AI-generated passages while drafting. The labels remain attached when compatible tools preserve the Unicode marks.</p>
-
-        <h3>Developers reviewing AI-assisted code</h3>
-        <p>Developers can mark generated code and comments so collaborators know which passages may need extra review, testing, or explanation.</p>
-
-        <h3>Auditing content</h3>
-        <p>Auditors, editors, and compliance reviewers can inspect labelled passages in place, without relying on a particular document format or a separate metadata file.</p>
-
-        <h3>Publishing and collaboration tools</h3>
-        <p>Applications can retain origin labels when accepting, storing, displaying, and exporting text. Implementations are available for <a href="https://github.com/textprov/textprov/blob/main/python/README.md">Python</a>, <a href="https://github.com/textprov/textprov/blob/main/js/README.md">JavaScript</a>, and <a href="https://github.com/textprov/textprov/blob/main/ruby/README.md">Ruby</a>.</p>
-
-        <p class="note">A TextProv label records a claim about a passage's origin. It does not prove authorship, accuracy, or whether the passage was later edited.</p>
-      </section>
-
-      <section id="ide-fonts" aria-labelledby="ide-fonts-title">
-        <h2 id="ide-fonts-title">Try it in code</h2>
-        <p>A marked snippet rendered in the P+ variant of <a href="https://github.com/blobject/agave">Agave</a>, a monospaced code font. The first line is labelled Human; the two below it are labelled AI.</p>
-
-        <h3>Agave P+ (fixed-width text, double-width icons)</h3>
-        <pre class="font-sample font-agave-fixed code-sample" data-example="agave-fixed">#󠄀 󠄀h󠄀u󠄀m󠄀a󠄀n󠄀 󠄀n󠄀o󠄀t󠄀e󠄀:󠄀 󠄀k󠄀e󠄀e󠄀p󠄀 󠄀t󠄀h󠄀e󠄀 󠄀s󠄀o󠄀r󠄀t󠄀 󠄀s󠄀t󠄀a󠄀b󠄀l󠄀e󠄀
-d󠄁e󠄁f󠄁 󠄁r󠄁a󠄁n󠄁k󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁)󠄁:󠄁
- 󠄁 󠄁 󠄁 󠄁r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 󠄁s󠄁o󠄁r󠄁t󠄁e󠄁d󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁,󠄁 󠄁k󠄁e󠄁y󠄁=󠄁l󠄁a󠄁m󠄁b󠄁d󠄁a󠄁 󠄁x󠄁:󠄁 󠄁(󠄁-󠄁x󠄁.󠄁s󠄁c󠄁o󠄁r󠄁e󠄁,󠄁 󠄁x󠄁.󠄁n󠄁a󠄁m󠄁e󠄁)󠄁)󠄁</pre>
-        <p class="note">Terminal-friendly default: text is fixed-width, but Nerd Font icons occupy two cells so they align in a shell.</p>
-
-        <p>Install one of these TTFs in your editor to see marked source files render with the sawtooth underline in place. The <a href="#fonts">downloads below</a> include TTF, WOFF2, and licence notices.</p>
-      </section>
-
-      <section id="fonts" aria-labelledby="fonts-title">
-        <h2 id="fonts-title">See labels in your editor</h2>
-        <p>These demo fonts can display Human and AI labels in TextProv-marked text. Installing a font does not add labels to ordinary text. The fonts are a tool for inspecting and demonstrating the encoding: they reveal marks in any application without other software. Applications that support TextProv are expected to show labels in their own interfaces.</p>
-
-        <div class="font-download-grid">
-          <article class="font-download-card">
-            <p class="font-use">For reading and writing</p>
-            <h3>Maryheather</h3>
-            <p class="font-card-sample font-maryheather">Human text stays plain. A󠄁I󠄁 t󠄁e󠄁x󠄁t󠄁 gains a mark.</p>
-            <p>A serif font for prose, derived from Merriweather.</p>
-            <a class="download-link" href="./fonts/maryheather-textprov-demo.zip" download>Download Maryheather <span>(ZIP, about 52 KB)</span></a>
-          </article>
-          <article class="font-download-card">
-            <p class="font-use">For code</p>
-            <h3>Agave Mono</h3>
-            <pre class="font-card-sample font-agave-mono"><code># human note
-r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 result</code></pre>
-            <p>A monospaced font for code with single-width cells.</p>
-            <a class="download-link" href="./fonts/agave-mono-textprov-demo.zip" download>Download Agave Mono <span>(ZIP, about 45 KB)</span></a>
-          </article>
-        </div>
-
-        <h3>Try a font</h3>
-        <ol class="setup-steps">
-          <li>Download and unzip it.</li>
-          <li>Install the <code>.ttf</code> font file.</li>
-          <li>Select its “TextProv Demo P+” family in your editor.</li>
-          <li>Open the <a href="./samples/marked-text.txt" download>marked text sample</a>. Reload this page to update the local-font example above.</li>
-        </ol>
-
-        <p class="font-warning"><strong>Mac users:</strong> In the project's recorded tests, some rendering systems showed ordinary characters instead of labels. The labels remained in the text, but installing a font does not guarantee they will appear. <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md#known-limitation-selector-glyphs-on-macos-coretext">View compatibility details</a>.</p>
-
+      <section id="proposal" aria-labelledby="proposal-title">
+        <h2 id="proposal-title">A small vocabulary to build on</h2>
+        <p>The person–AI example starts with two labels. The current draft requires producers to support three:</p>
+        <table class="state-table">
+          <thead><tr><th scope="col">Label</th><th scope="col">Code point</th><th scope="col">Declared origin</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><code>human</code></th><td><code>U+E0100</code></td><td>Human-written</td></tr>
+            <tr><th scope="row"><code>ai</code></th><td><code>U+E0101</code></td><td>AI-generated</td></tr>
+            <tr><th scope="row"><code>mixed</code></th><td><code>U+E0102</code></td><td>Combined origin</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Shared labels; application choices.</strong> A label has a common meaning across tools. How it looks, whether to show it, and how it affects an application’s behaviour are up to that application.</p>
+        <p class="note">Unmarked text has no label. Labels do not identify a particular person or model, or assign a trust level.</p>
+        <p class="note">For prose communicated between people. Source code files, including comments and docstrings, are excluded. Code snippets within prose may be marked. See the <a href="./spec.html#marking-scope">marking scope</a>.</p>
         <details>
-          <summary>More font choices</summary>
-          <ul>
-            <li><a href="./fonts/zilla-textprov-demo.zip" download>Zilla Slab</a> — serif prose font derived from Zilla Slab (ZIP, about 63 KB).</li>
-            <li><a href="./fonts/agave-fixed-textprov-demo.zip" download>Agave</a> — fixed-width text with double-width icons (ZIP, about 45 KB).</li>
-            <li><a href="./fonts/agave-propo-textprov-demo.zip" download>Agave Propo</a> — proportional font derived from Agave (ZIP, about 45 KB).</li>
-          </ul>
-        </details>
-
-        <details>
-          <summary>What is included and supported?</summary>
-          <p>Each ZIP contains an installable TTF, a WOFF2 webfont, and licence notices. These are regular-weight Latin-text subsets from our <a href="https://github.com/delano/nerd-fonts">Nerd Fonts fork</a>, not full replacement fonts.</p>
-          <p>They include Human and AI variants only. Mixed, edited, and unknown labels are displayed by the browser reader, not these fonts.</p>
-        </details>
-
-        <details>
-          <summary>Where these fonts come from</summary>
-          <p>The demo fonts are built from <a href="https://github.com/delano/nerd-fonts">delano/nerd-fonts</a>, a fork of <a href="https://github.com/ryanoasis/nerd-fonts">ryanoasis/nerd-fonts</a> that adds a TextProv provenance patch. The fork's font patcher inserts <code>cmap</code> format 14 mappings for the Human and AI selectors, so the resulting <code>P+</code> variants render marks the base fonts otherwise ignore.</p>
-          <p>To reproduce a build, clone the fork, install the patcher's dependencies, and run it against an unpatched source font with the <code>--provenance</code> option. The <a href="https://github.com/delano/nerd-fonts#textprov-provenance-marks">fork README</a> documents the flags; the <a href="./fonts/README.txt">font build notes</a> record the exact sources and options used for the ZIPs above.</p>
-        </details>
-
-        <details>
-          <summary>Licensing and technical details</summary>
-          <p>Maryheather and Zilla Slab are available under the <a href="./fonts/maryheather-OFL.txt">SIL Open Font License</a>. The Agave variants use the <a href="./fonts/agave-OFL.txt">SIL Open Font License</a>.</p>
-          <p>The source fonts' older third selector has a different meaning from TextProv 0.1, so it is deliberately excluded from these subsets. See the <a href="./fonts/README.txt">font build notes and attribution</a> or the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md">font and interchange guide</a>.</p>
-          <p>The demo fonts use <code>cmap</code> format 14 mappings. Keep selector-encoded text for sharing; font rendering is only one way to display its labels.</p>
+          <summary>What is settled, and what is open?</summary>
+          <p>Published code-point allocations remain reserved and will not be reassigned. Specification behaviour is experimental and may change before Stable.</p>
+          <p><code>edited</code> (<code>U+E0103</code>) and <code>unknown</code> (<code>U+E0104</code>) are reserved proposals. Current conforming producers must not emit them. Further vocabulary and editing rules are open for discussion; presentation and application policies remain integration choices.</p>
+          <p>See the <a href="./spec.html#states">draft’s state definitions</a> and <a href="https://github.com/textprov/textprov/blob/main/docs/MATURITY.md">maturity policy</a>.</p>
         </details>
       </section>
 
-      <section id="repo" aria-labelledby="repo-title">
-        <h2 id="repo-title">Implement the protocol</h2>
-        <p>The protocol is Draft 0.1 and may change incompatibly. Start with the <a href="./spec.html">specification</a> for its maturity, label meanings, and encoding rules; the <a href="https://github.com/textprov/textprov/blob/main/mapping.json">code-point registry</a> for the assigned marks; and the <a href="https://github.com/textprov/textprov/blob/main/fixtures.json">conformance fixtures</a> to check your implementation.</p>
-        <p><a href="https://github.com/textprov/textprov">Browse the repository ↗</a> · <a href="https://github.com/textprov/textprov/discussions">Join the discussion</a> · <a href="https://github.com/textprov/textprov/issues">Report an issue</a></p>
+      <section id="contribute" aria-labelledby="contribute-title">
+        <h2 id="contribute-title">Help shape the draft</h2>
+        <p>Try it in a real workflow. Small experiments and specific questions will help make the next draft better.</p>
+        <ul class="contribution-list">
+          <li><strong>Test a text journey.</strong> Where do marks survive copying, editing, and saving? Where do they disappear?</li>
+          <li><strong>Discuss the vocabulary.</strong> What should happen when a person edits AI text, or several sources contribute?</li>
+          <li><strong>Build an integration.</strong> Try marking and reading text in a prose editor, conversation, or content pipeline.</li>
+        </ul>
+        <p class="resource-links"><a href="https://github.com/textprov/textprov/discussions">Join the discussion</a> <a href="https://github.com/textprov/textprov/issues">Report a finding</a> <a href="./spec.html">Read the specification</a></p>
+        <p class="note">Start building with <a href="https://github.com/textprov/textprov/blob/main/python/README.md">Python</a>, <a href="https://github.com/textprov/textprov/blob/main/js/README.md">JavaScript</a>, or <a href="https://github.com/textprov/textprov/blob/main/ruby/README.md">Ruby</a>. See the <a href="https://github.com/textprov/textprov/blob/main/mapping.json">registry</a> and <a href="https://github.com/textprov/textprov/blob/main/fixtures.json">conformance examples</a>.</p>
+        <p class="note" id="fonts">Further reading: <a href="https://github.com/textprov/textprov/blob/main/docs/FONT-UTILITIES.md">utility fonts for inspection</a> (<a href="./fonts/utility/textprov-utility-p9e.zip" download>download</a>) · <a href="https://github.com/textprov/textprov#alongside-c2pa-and-sidecar-metadata">C2PA and sidecar metadata</a>.</p>
       </section>
     </main>
 
     <footer>
-      <p><a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a> · <a href="https://github.com/textprov/textprov">Source</a> · Updated: 2026-09-21.</p>
+      <p><a href="https://github.com/textprov/textprov">Source and contributions</a> · <a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a></p>
     </footer>
   </body>
 </html>
