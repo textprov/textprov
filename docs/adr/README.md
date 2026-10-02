@@ -21,3 +21,7 @@ paths. They remain historical records; use
 [ADR 0006](0006-decorator-packages-and-repository.md) for the split and
 [ADR 0011](0011-the-producer-is-text-processing.md) for the current producer
 boundary.
+
+[ADR 0013](0013-use-p9e-as-provenance-shorthand.md) records the shorthand
+`p9e` / `P9E` and its transition from the `P+` font suffix. Earlier records
+retain `P+` when describing the fonts and measurements they recorded.

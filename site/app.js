@@ -1,4 +1,4 @@
-import "../js/textprov.js";
+import textprov from "textprov";
 
 (function () {
   "use strict";
@@ -109,50 +109,6 @@ import "../js/textprov.js";
     });
   }
 
-  function addSampleCopyButtons() {
-    var selectorPattern = /[\u{E0100}-\u{E01EF}]/u;
-    var targets = new Set(document.querySelectorAll("blockquote"));
-
-    document.querySelectorAll("main p, main pre").forEach(function (element) {
-      if (selectorPattern.test(element.textContent)) targets.add(element);
-    });
-
-    targets.forEach(function (target) {
-      if (!target || !target.dataset || typeof target.insertAdjacentElement !== "function") return;
-      if (target.dataset.copyButton === "true") return;
-      target.dataset.copyButton = "true";
-
-      var button = document.createElement("button");
-      button.type = "button";
-      button.className = "sample-copy-button";
-      button.textContent = "Copy";
-      button.setAttribute(
-        "aria-label",
-        selectorPattern.test(target.textContent) ? "Copy marked text" : "Copy sample text",
-      );
-
-      button.addEventListener("click", function () {
-        copyText(target.textContent).then(
-          function () {
-            button.textContent = "Copied";
-          },
-          function () {
-            button.textContent = "Copy failed";
-          },
-        );
-        window.setTimeout(function () {
-          button.textContent = "Copy";
-        }, 2000);
-      });
-
-      var wrapper = document.createElement("div");
-      wrapper.className = "sample-copy-wrapper";
-      target.insertAdjacentElement("beforebegin", wrapper);
-      wrapper.appendChild(target);
-      wrapper.appendChild(button);
-    });
-  }
-
   function checkText() {
     var text = document.getElementById("check-input").value;
     var output = document.getElementById("check-output");
@@ -191,83 +147,39 @@ import "../js/textprov.js";
     checkInput.addEventListener("input", checkText);
   }
 
-  addSampleCopyButtons();
+  var passage = document.getElementById("sample-passage");
+  if (passage) {
+    // Keep the original character sequence: revealing and copying never add marks.
+    var sampleText = passage.textContent;
+    var revealed = false;
+    var revealButton = document.getElementById("reveal-button");
+    var sampleCopyButton = document.getElementById("sample-copy-button");
+    revealButton.hidden = false;
+    sampleCopyButton.hidden = false;
 
-  function detectSelectorRendering() {
-    try {
-      if (!document.fonts || typeof document.fonts.ready === "undefined") return;
-      var canvas = document.createElement("canvas");
-      var ctx = canvas.getContext && canvas.getContext("2d");
-      if (!ctx) return;
+    revealButton.addEventListener("click", function () {
+      revealed = !revealed;
+      passage.textContent = sampleText;
+      if (revealed) textprov.render(passage);
+      revealButton.setAttribute("aria-pressed", String(revealed));
+      revealButton.textContent = revealed ? "Hide labels" : "Reveal labels";
+      document.getElementById("sample-legend").hidden = !revealed;
+      document.getElementById("sample-reveal-status").textContent = revealed
+        ? "Labels revealed. The opening is labelled human; the completion is labelled AI."
+        : "Labels hidden. The text still contains its marks.";
+    });
 
-      var ua = navigator.userAgent || "";
-      var isSafari = /Safari/.test(ua) && !/Chrome|Chromium|Android/.test(ua);
-      var message = isSafari
-        ? "Your browser did not render the variation-selector marks for this sample. This is a known limitation of Safari with the current demo fonts."
-        : "Your browser did not render the variation-selector marks for this sample.";
-
-      var aiSelector = String.fromCodePoint(0xe0101);
-      var base = "A";
-      var samples = document.querySelectorAll(".font-sample[data-example]");
-
-      samples.forEach(function (el) {
-        if (el.dataset.example === "ordinary") return;
-        if (el.nextElementSibling && el.nextElementSibling.classList.contains("sample-warning"))
-          return;
-        var cs = window.getComputedStyle(el);
-        var size = Math.max(parseFloat(cs.fontSize) || 16, 64);
-        var font = cs.fontStyle + " " + cs.fontWeight + " " + size + "px " + cs.fontFamily;
-
-        canvas.width = Math.ceil(size * 3);
-        canvas.height = Math.ceil(size * 2);
-
-        function renderTo(text) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.font = font;
-          ctx.textBaseline = "top";
-          ctx.fillStyle = "#000";
-          ctx.fillText(text, 0, 0);
-          return ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-        }
-
-        var plain = renderTo(base);
-        var marked = renderTo(base + aiSelector);
-
-        var diff = 0;
-        for (var i = 0; i < plain.length; i += 4) {
-          if (
-            Math.abs(plain[i] - marked[i]) > 4 ||
-            Math.abs(plain[i + 1] - marked[i + 1]) > 4 ||
-            Math.abs(plain[i + 2] - marked[i + 2]) > 4 ||
-            Math.abs(plain[i + 3] - marked[i + 3]) > 4
-          ) {
-            diff++;
-            if (diff > 3) break;
-          }
-        }
-        if (diff > 3) return;
-
-        var warning = document.createElement("p");
-        warning.className = "note sample-warning";
-        warning.textContent = message;
-        el.insertAdjacentElement("afterend", warning);
-      });
-    } catch (_) {
-      // swallow
-    }
-  }
-
-  function runDetection() {
-    if (!document.fonts || !document.fonts.ready) {
-      detectSelectorRendering();
-      return;
-    }
-    document.fonts.ready.then(detectSelectorRendering, function () {});
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", runDetection);
-  } else {
-    runDetection();
+    sampleCopyButton.addEventListener("click", function () {
+      var status = document.getElementById("sample-copy-status");
+      copyText(sampleText).then(
+        function () {
+          status.textContent = "Copied with marks. Paste it into the reader below.";
+          document.getElementById("reader").open = true;
+        },
+        function () {
+          status.textContent = "Select the passage and copy it with your keyboard.";
+        },
+      );
+    });
   }
 })();

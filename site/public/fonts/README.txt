@@ -1,3 +1,16 @@
+Earlier TextProv demos (family naming updated to P9E)
+====================================================
+
+The new TextProv Utility P9E set lives in utility/. These older subsets remain
+available at their existing URLs. Their cmap-14-only behavior differs from the
+new utility fonts; see utility/README.txt for the development/debugging set.
+
+Output family names now use P9E. Historical source input filenames below use
+P+ because those are the actual upstream files used by these legacy builders.
+The old Agave Propo variant has fixed-width Latin text; only its icon-width
+mode was proportional. Use TextProv Proportional Utility P9E for a genuinely
+variable-width text comparison.
+
 TextProv example fonts
 ======================
 
@@ -48,26 +61,25 @@ reader to display all five states.
 Human variants look plain. AI variants have a sawtooth underline. HarfBuzz
 shaping was checked for both subsets; this is not a guarantee for every
 browser or platform. A browser can load a webfont yet ignore its variation
-selector mappings. The website's local-font example uses local() only and
-never falls back to downloading a webfont.
+s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁 w󠄁e󠄁b󠄁s󠄁i󠄁t󠄁e󠄁'󠄁s󠄁 r󠄁e󠄁a󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁v󠄁e󠄁a󠄁l󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁 i󠄁n󠄁d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁e󠄁n󠄁t󠄁l󠄁y󠄁 o󠄁f󠄁
+f󠄁o󠄁n󠄁t󠄁 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁.󠄁
 
 Installation
 ------------
 
 Unzip a download and install the TTF using your operating system's font
 manager. Select the matching family in your editor, then open
-../samples/marked-text.txt as UTF-8. Reload the homepage to try its
-local-font example. Local font access may be restricted by browser
-privacy settings.
+../samples/marked-text.txt a󠄁s󠄁 U󠄁T󠄁F󠄁-󠄁8󠄁.󠄁 P󠄁a󠄁s󠄁t󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁p󠄁l󠄁e󠄁 i󠄁n󠄁t󠄁o󠄁 t󠄁h󠄁e󠄁 h󠄁o󠄁m󠄁e󠄁p󠄁a󠄁g󠄁e󠄁
+r󠄁e󠄁a󠄁d󠄁e󠄁r󠄁 t󠄁o󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁 i󠄁t󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁 i󠄁n󠄁d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁e󠄁n󠄁t󠄁l󠄁y󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 f󠄁o󠄁n󠄁t󠄁.󠄁
 
 Family names:
 
-- Maryheather TextProv Demo P+
-- Zilla Slab TextProv Demo P+
-- Agave Mono TextProv Demo P+   (single-width cells + icons, best for IDEs)
-- Agave TextProv Demo P+        (fixed-width text, double-width icons,
-                                 the terminal-friendly default)
-- Agave Propo TextProv Demo P+  (proportional text)
+- Maryheather TextProv Demo P9E
+- Zilla Slab TextProv Demo P9E
+- Agave Mono TextProv Demo P9E   (fixed-width Latin text)
+- Agave TextProv Demo P9E        (fixed-width Latin text)
+- Agave Propo TextProv Demo P9E  (fixed-width Latin text; historical source
+                                 variant name, not a proportional-text font)
 
 The WOFF2 files are for embedding on a web page via CSS @font-face.
 

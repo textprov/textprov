@@ -6,10 +6,10 @@ Only the SAMPLE line below is provenance-marked. This explanatory text is ordina
 Stored form: each supported SAMPLE character is replaced by one TextProv Supplementary PUA-B code point. Spaces remain ordinary spaces.
 
 Expected display:
-- Without the matching P+ font: SAMPLE characters normally appear as missing-glyph boxes; the original letters are not present.
-- With the matching P+ font: direct PUA mappings can show the readable letters with a sawtooth underline.
+- Without the matching P9E font: SAMPLE characters normally appear as missing-glyph boxes; the original letters are not present.
+- With the matching P9E font: direct PUA mappings can show the readable letters with a sawtooth underline.
 - In Zed on macOS: direct CoreText tests selected the PUA glyphs, but the complete Zed editor path is not yet verified.
-- In other editors: the result depends on selecting the matching P+ font and retaining its private mapping.
+- In other editors: the result depends on selecting the matching P9E font and retaining its private mapping.
 
 SAMPLE: 􀁁􀁉 􀁰􀁲􀁯􀁶􀁥􀁮􀁡􀁮􀁣􀁥 􀁳􀁴􀁡􀁹􀁳 􀁲􀁥􀁡􀁤􀁡􀁢􀁬􀁥 􀁷􀁨􀁥􀁮 􀁩􀁴􀁳 􀁤􀁥􀁣􀁯􀁲􀁡􀁴􀁩􀁯􀁮 􀁤􀁩􀁳􀁡􀁰􀁰􀁥􀁡􀁲􀁳􀀮
 

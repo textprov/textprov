@@ -6,8 +6,8 @@ Only the SAMPLE line below is provenance-marked. This explanatory text is ordina
 Stored form: each non-whitespace grapheme in SAMPLE is followed by U+E0101.
 
 Expected display:
-- Without a P+ font: SAMPLE remains readable as plain text; no sawtooth is shown.
-- With a P+ font and a shaper that honors the format-14 mapping: SAMPLE is readable with a sawtooth underline.
+- Without a P9E font: SAMPLE remains readable as plain text; no sawtooth is shown.
+- With a P9E font and a shaper that honors the format-14 mapping: SAMPLE is readable with a sawtooth underline.
 - In Zed on macOS: CoreText renders plain base glyphs. Zed may also show spacing and green invisible-character marks if it separates selectors from their bases.
 - In other editors: installing the font is necessary but not sufficient; the text shaper must honor the mapping.
 
