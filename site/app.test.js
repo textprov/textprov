@@ -96,14 +96,15 @@ test("font examples are distinct, self-describing, and carry the expected labels
   ];
   assert.deepEqual(
     examples.map(([, name]) => name),
-    ["ordinary", "local", "maryheather", "zilla"],
+    ["ordinary", "local", "utility-sans", "utility-serif", "utility-proportional"],
   );
   const visible = examples.map(([, , marked]) => marked.replace(/[\u{E0100}-\u{E01EF}]/gu, ""));
   assert.equal(new Set(visible).size, examples.length);
-  assert.match(visible[0], /ordinary font should make it look like normal prose/);
-  assert.match(visible[1], /sawtooth underline when a compatible P\+ font is installed/);
-  assert.match(visible[2], /Maryheather is loaded from this page/);
-  assert.match(visible[3], /Zilla Slab is the active webfont/);
+  assert.match(visible[0], /ordinary font should display normal prose/);
+  assert.match(visible[1], /sawtooth with a compatible P9E font/);
+  assert.match(visible[2], /Sans utility font/);
+  assert.match(visible[3], /Serif utility view/);
+  assert.match(visible[4], /keep their proportional spacing/);
   assert.doesNotMatch(examples[0][2], /\u{E0100}/u);
   for (const [, name, marked] of examples.slice(1)) {
     assert.match(marked, /\u{E0100}/u, `${name} includes Human labels`);
@@ -128,7 +129,10 @@ test("long static sample reveals Human and AI labels when pasted", () => {
 
 test("local-font example cannot download a webfont", () => {
   const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
-  const rule = css.match(/@font-face\s*\{[^}]*font-family: "TextProv Local P\+"[^}]*\}/)[0];
+  const rule = css.match(/@font-face\s*\{[^}]*font-family: "TextProv Local P9E"[^}]*\}/)[0];
+  for (const family of ["Sans", "Serif", "Fixed", "Mono", "Proportional"]) {
+    assert.ok(rule.includes(`local("TextProv ${family} Utility P9E")`));
+  }
   assert.match(rule, /local\("Maryheather TextProv Demo P\+"\)/);
   assert.doesNotMatch(rule, /url\(/);
 });

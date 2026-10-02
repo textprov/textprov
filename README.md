@@ -9,6 +9,11 @@ produced and want that information to accompany copied passages.
 [Try the browser reader](https://textprov.org/#try-it) without installing
 anything, or [start with a package](#using-textprov).
 
+TextProv provides a shared structure, encoding, and vocabulary so applications
+can exchange the same provenance information and choose how best to use it.
+Displaying labels, interpreting agent prompts, and other integrations can
+build on that common foundation.
+
 This repository holds the protocol specification, implementations, and website
 source.
 
@@ -20,7 +25,8 @@ AI-generated, while leaving the surrounding text unchanged.
 
 The marks use Unicode characters and travel with the text through copy, paste,
 and plain-text storage, provided the receiving software preserves them. A
-TextProv-aware application can read those marks and make the labels visible.
+TextProv-aware application can read those marks to inform its own processing
+or make the labels visible.
 With the default encoding, other applications normally display the ordinary
 text without showing its provenance. Software that strips the marks removes
 the labels, so test the copy-and-paste and storage paths your application uses.
@@ -41,8 +47,23 @@ The labels do not identify an author, model, or timestamp. Store that informatio
 separately if your workflow needs it. An explicit `unknown` label is also
 different from unmarked text: one records a claim; the other has no label.
 
-The protocol gives applications a shared way to represent these labels, without
-requiring them to use the same tools or visual styles.
+The protocol gives applications a shared way to represent these labels, while
+leaving decision policies and presentation to each integration.
+
+## Agent prompt integrations
+
+A prompt can combine an operator's instructions with text copied from model
+output. TextProv marks can preserve that distinction across copying, giving
+an agent integration context that would otherwise be lost. An integration
+could use the decoded states to experiment with how much weight to give each
+passage in its decision process.
+
+This is a potential use that requires further integration to read the marks,
+apply a policy, and evaluate its effect. The protocol supplies a common
+foundation for that work. Unmarked text remains unlabelled; treating it as
+operator-written depends on the input workflow. The specification's
+[application use discussion](SPEC.md#application-use-non-normative) gives an
+illustrative weighting example and explains the integration boundary.
 
 ## Alongside C2PA and sidecar metadata
 
@@ -114,9 +135,16 @@ prints `Hello` without marks. Rendering HTML does not add visual styling by
 itself. This example labels the text supplied to `mark()`; it does not analyze
 who wrote it.
 
-Marks can also be displayed with a patched font. The
-[font and interchange guide](docs/SELECTORS-PUA-AND-INTERCHANGE.md) explains that
-workflow and when to use it.
+The **TextProv Utility P9E fonts** are development and debugging adjuncts.
+The suite provides Sans, Serif, Fixed, Mono, and Proportional families that
+reveal supported provenance marks with compatible rendering. Their visible
+patterns make stored encoding easier to inspect and demonstrate; consuming
+applications and sites choose the presentation that fits their users. See the
+[utility font guide](docs/FONT-UTILITIES.md) for downloads, rebuilding, licensing,
+and compatibility, and the
+[font and interchange guide](docs/SELECTORS-PUA-AND-INTERCHANGE.md) for the
+choice between selector and PUA encoding. `P9E` is the provenance shorthand
+that succeeds the earlier `P+` font suffix.
 
 ## Exploring the protocol
 
@@ -156,4 +184,7 @@ text and by the Nerd Fonts tooling workflow that made the approach practical.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+Project code is MIT licensed. See [LICENSE](LICENSE). Bundled utility fonts
+and their derivatives are licensed under the SIL Open Font License 1.1; each
+font bundle includes its upstream copyright and license. See
+[utility font licensing](docs/FONT-UTILITIES.md#licensing-and-attribution).

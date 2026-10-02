@@ -190,11 +190,8 @@ import "../js/textprov.js";
       var ctx = canvas.getContext && canvas.getContext("2d");
       if (!ctx) return;
 
-      var ua = navigator.userAgent || "";
-      var isSafari = /Safari/.test(ua) && !/Chrome|Chromium|Android/.test(ua);
-      var message = isSafari
-        ? "Your browser did not render the variation-selector marks for this sample. This is a known limitation of Safari with the current demo fonts."
-        : "Your browser did not render the variation-selector marks for this sample.";
+      var message =
+        "Your browser did not render the provenance marks for this sample. Use the reader below to inspect its labels.";
 
       var aiSelector = String.fromCodePoint(0xe0101);
       var base = "A";
