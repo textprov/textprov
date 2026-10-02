@@ -4,6 +4,7 @@
 
 require "cgi"
 require "json"
+require "set"
 
 module Textprov
   SPEC_VERSION = "0.1"
