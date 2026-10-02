@@ -37,30 +37,29 @@
       </section>
 
       <section id="font-examples" aria-labelledby="examples-title">
-        <h2 id="examples-title">What does it look like?</h2>
-        <p>These examples show how fonts affect the display of marked text. The first passage is labelled AI; the others contain Human- and AI-labelled sentences. The labels are already in the text; JavaScript does not add them. A “P+” font is a font modified to display provenance marks.</p>
-
-        <p>P+ fonts primarily serve development, debugging, and demonstrations. With compatible rendering, they reveal supported marks without a separate inspection tool and help demonstrate TextProv while application integrations develop. Sawtooth underlines are one display choice; apps can reveal provenance on demand or use it internally without continuously decorating the text.</p>
+        <h2 id="examples-title">Inspect the marks with utility fonts</h2>
+        <p>The TextProv Utility P9E families are development and debugging adjuncts. They reveal supported marks in a compatible text renderer, without a separate inspection tool. The labels in these samples are already part of the text; JavaScript does not add them.</p>
+        <p>Applications and sites displaying the content are best placed to decide how to interpret and present provenance. These fonts offer one diagnostic view: Human-labelled text stays plain and AI-labelled text gains a sawtooth. Everyday interfaces can reveal provenance on demand or use it internally.</p>
 
         <h3>Ordinary font</h3>
-        <p class="font-sample" data-example="ordinary">T󠄁h󠄁i󠄁s󠄁 e󠄁n󠄁t󠄁i󠄁r󠄁e󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁I󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 f󠄁o󠄁n󠄁t󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 m󠄁a󠄁k󠄁e󠄁 i󠄁t󠄁 l󠄁o󠄁o󠄁k󠄁 l󠄁i󠄁k󠄁e󠄁 n󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁.󠄁</p>
-        <p class="note">Expected: ordinary text with no visible provenance decoration. The sentence is still labelled AI.</p>
+        <p class="font-sample" data-example="ordinary">T󠄁h󠄁i󠄁s󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁I󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 f󠄁o󠄁n󠄁t󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 n󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁.󠄁</p>
+        <p class="note">Expected: ordinary text with no visible provenance decoration. The sentence still carries its AI labels.</p>
 
-        <h3>P+ font installed on your device</h3>
-        <p class="font-sample font-local" data-example="local">T󠄀h󠄀i󠄀s󠄀 o󠄀p󠄀e󠄀n󠄀i󠄀n󠄀g󠄀 s󠄀e󠄀n󠄀t󠄀e󠄀n󠄀c󠄀e󠄀 i󠄀s󠄀 l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀 a󠄀n󠄀d󠄀 s󠄀h󠄀o󠄀u󠄀l󠄀d󠄀 s󠄀t󠄀a󠄀y󠄀 p󠄀l󠄀a󠄀i󠄀n󠄀.󠄀 T󠄁h󠄁i󠄁s󠄁 s󠄁e󠄁c󠄁o󠄁n󠄁d󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁I󠄁 a󠄁n󠄁d󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 g󠄁a󠄁i󠄁n󠄁 a󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁 w󠄁h󠄁e󠄁n󠄁 a󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁t󠄁i󠄁b󠄁l󠄁e󠄁 P󠄁+󠄁 f󠄁o󠄁n󠄁t󠄁 i󠄁s󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁.󠄁</p>
-        <p class="note">Expected with a compatible installed font and rendering engine: the first sentence stays plain and the second gains a sawtooth underline. Otherwise, both look ordinary. This example never downloads a font.</p>
+        <h3>Utility P9E font installed on your device</h3>
+        <p class="font-sample font-local" data-example="local">T󠄀h󠄀i󠄀s󠄀 o󠄀p󠄀e󠄀r󠄀a󠄀t󠄀o󠄀r󠄀 n󠄀o󠄀t󠄀e󠄀 i󠄀s󠄀 l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀.󠄀 T󠄁h󠄁i󠄁s󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁d󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 i󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁I󠄁 a󠄁n󠄁d󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 g󠄁a󠄁i󠄁n󠄁 a󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁t󠄁i󠄁b󠄁l󠄁e󠄁 P󠄁9󠄁E󠄁 f󠄁o󠄁n󠄁t󠄁.󠄁</p>
+        <p class="note">This sample only checks locally installed fonts; it never downloads a font. If none is available, it looks like ordinary text.</p>
 
-        <h3>Maryheather webfont supplied by this page</h3>
-        <p class="font-sample font-maryheather" data-example="maryheather">M󠄀a󠄀r󠄀y󠄀h󠄀e󠄀a󠄀t󠄀h󠄀e󠄀r󠄀 i󠄀s󠄀 l󠄀o󠄀a󠄀d󠄀e󠄀d󠄀 f󠄀r󠄀o󠄀m󠄀 t󠄀h󠄀i󠄀s󠄀 p󠄀a󠄀g󠄀e󠄀,󠄀 a󠄀n󠄀d󠄀 t󠄀h󠄀i󠄀s󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀-󠄀l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 s󠄀e󠄀n󠄀t󠄀e󠄀n󠄀c󠄀e󠄀 s󠄀h󠄀o󠄀u󠄀l󠄀d󠄀 r󠄀e󠄀m󠄀a󠄀i󠄀n󠄀 p󠄀l󠄀a󠄀i󠄀n󠄀.󠄀 T󠄁h󠄁i󠄁s󠄁 A󠄁I󠄁-󠄁l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 a󠄁p󠄁p󠄁e󠄁a󠄁r󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 t󠄁y󠄁p󠄁e󠄁f󠄁a󠄁c󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁.󠄁</p>
-        <p class="note">Expected with compatible webfont rendering: Maryheather throughout, with a sawtooth underline only beneath the AI-labelled second sentence.</p>
+        <h3>TextProv Sans Utility P9E</h3>
+        <p class="font-sample font-utility-sans" data-example="utility-sans">T󠄀h󠄀i󠄀s󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀-󠄀l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 s󠄀e󠄀n󠄀t󠄀e󠄀n󠄀c󠄀e󠄀 s󠄀t󠄀a󠄀y󠄀s󠄀 p󠄀l󠄀a󠄀i󠄀n󠄀.󠄀 T󠄁h󠄁i󠄁s󠄁 A󠄁I󠄁-󠄁l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 r󠄁e󠄁v󠄁e󠄁a󠄁l󠄁s󠄁 t󠄁h󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁e󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 S󠄁a󠄁n󠄁s󠄁 u󠄁t󠄁i󠄁l󠄁i󠄁t󠄁y󠄁 f󠄁o󠄁n󠄁t󠄁.󠄁</p>
 
-        <h3>Zilla Slab webfont supplied by this page</h3>
-        <p class="font-sample font-zilla" data-example="zilla">Z󠄀i󠄀l󠄀l󠄀a󠄀 S󠄀l󠄀a󠄀b󠄀 i󠄀s󠄀 t󠄀h󠄀e󠄀 a󠄀c󠄀t󠄀i󠄀v󠄀e󠄀 w󠄀e󠄀b󠄀f󠄀o󠄀n󠄀t󠄀 f󠄀o󠄀r󠄀 t󠄀h󠄀i󠄀s󠄀 H󠄀u󠄀m󠄀a󠄀n󠄀-󠄀l󠄀a󠄀b󠄀e󠄀l󠄀l󠄀e󠄀d󠄀 s󠄀e󠄀n󠄀t󠄀e󠄀n󠄀c󠄀e󠄀,󠄀 s󠄀o󠄀 i󠄀t󠄀 s󠄀h󠄀o󠄀u󠄀l󠄀d󠄀 r󠄀e󠄀m󠄀a󠄀i󠄀n󠄀 p󠄀l󠄀a󠄀i󠄀n󠄀.󠄀 T󠄁h󠄁e󠄁 f󠄁o󠄁l󠄁l󠄁o󠄁w󠄁i󠄁n󠄁g󠄁 A󠄁I󠄁-󠄁l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 s󠄁e󠄁n󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 u󠄁s󠄁e󠄁 Z󠄁i󠄁l󠄁l󠄁a󠄁 S󠄁l󠄁a󠄁b󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁.󠄁</p>
-        <p class="note">Expected with compatible webfont rendering: Zilla Slab throughout, with a sawtooth underline only beneath the AI-labelled second sentence.</p>
+        <h3>TextProv Serif Utility P9E</h3>
+        <p class="font-sample font-utility-serif" data-example="utility-serif">A󠄀 S󠄀e󠄀r󠄀i󠄀f󠄀 u󠄀t󠄀i󠄀l󠄀i󠄀t󠄀y󠄀 v󠄀i󠄀e󠄀w󠄀 f󠄀o󠄀r󠄀 i󠄀n󠄀s󠄀p󠄀e󠄀c󠄀t󠄀i󠄀n󠄀g󠄀 p󠄀r󠄀o󠄀s󠄀e󠄀.󠄀 T󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 A󠄁I󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 u󠄁s󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 d󠄁i󠄁a󠄁g󠄁n󠄁o󠄁s󠄁t󠄁i󠄁c󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁.󠄁</p>
 
-        <p class="note">The font examples use no JavaScript decoration. A browser can load a font but ignore its selector mappings. <a href="#check-input">The reader below</a> reveals labels independently of font support.</p>
-        <p><a href="./samples/marked-text.txt" target="_blank" rel="noopener">Open a longer marked text file in a new tab ↗</a> · <a href="./samples/marked-text.txt" download>Download the sample</a></p>
-        <p class="note">The file contains plain UTF-8 text, no HTML or JavaScript. Copy it normally, return here, and paste it into the reader. No copy handler adds labels to your clipboard: they are already in the file.</p>
+        <h3>TextProv Proportional Utility P9E</h3>
+        <p class="font-sample font-utility-proportional" data-example="utility-proportional">C󠄀o󠄀m󠄀p󠄀a󠄀r󠄀e󠄀 n󠄀a󠄀r󠄀r󠄀o󠄀w󠄀 i󠄀 a󠄀n󠄀d󠄀 w󠄀i󠄀d󠄀e󠄀 W󠄀,󠄀 o󠄀r󠄀 O󠄀0󠄀 a󠄀n󠄀d󠄀 I󠄀l󠄀1󠄀.󠄀 T󠄁h󠄁e󠄁s󠄁e󠄁 A󠄁I󠄁-󠄁l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁r󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 s󠄁p󠄁a󠄁c󠄁i󠄁n󠄁g󠄁.󠄁</p>
+        <p class="note">These webfont examples use font rendering without JavaScript decoration. If your renderer does not show the marks, <a href="#check-input">the reader below</a> reveals their labels independently.</p>
+        <p><a href="./samples/marked-text.txt" target="_blank" rel="noopener">Open a longer marked text file ↗</a> · <a href="./samples/marked-text.txt" download>Download the sample</a></p>
+        <p class="note">The sample file is plain UTF-8 text. Its labels travel with a normal copy; no clipboard handler adds them.</p>
       </section>
 
       <section id="try-it" aria-labelledby="try-title">
@@ -134,76 +133,92 @@
       </section>
 
       <section id="ide-fonts" aria-labelledby="ide-fonts-title">
-        <h2 id="ide-fonts-title">Try it in code</h2>
-        <p>A marked snippet rendered in the P+ variant of <a href="https://github.com/blobject/agave">Agave</a>, a monospaced code font. The first line is labelled Human; the two below it are labelled AI.</p>
-
-        <h3>Agave P+ (fixed-width text, double-width icons)</h3>
-        <pre class="font-sample font-agave-fixed code-sample" data-example="agave-fixed">#󠄀 󠄀h󠄀u󠄀m󠄀a󠄀n󠄀 󠄀n󠄀o󠄀t󠄀e󠄀:󠄀 󠄀k󠄀e󠄀e󠄀p󠄀 󠄀t󠄀h󠄀e󠄀 󠄀s󠄀o󠄀r󠄀t󠄀 󠄀s󠄀t󠄀a󠄀b󠄀l󠄀e󠄀
-d󠄁e󠄁f󠄁 󠄁r󠄁a󠄁n󠄁k󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁)󠄁:󠄁
- 󠄁 󠄁 󠄁 󠄁r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 󠄁s󠄁o󠄁r󠄁t󠄁e󠄁d󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁,󠄁 󠄁k󠄁e󠄁y󠄁=󠄁l󠄁a󠄁m󠄁b󠄁d󠄁a󠄁 󠄁x󠄁:󠄁 󠄁(󠄁-󠄁x󠄁.󠄁s󠄁c󠄁o󠄁r󠄁e󠄁,󠄁 󠄁x󠄁.󠄁n󠄁a󠄁m󠄁e󠄁)󠄁)󠄁</pre>
-        <p class="note">Terminal-friendly default: text is fixed-width, but Nerd Font icons occupy two cells so they align in a shell.</p>
-
-        <p>Install one of these TTFs in your editor to see marked source files render with the sawtooth underline in place. The <a href="#fonts">downloads below</a> include TTF, WOFF2, and licence notices.</p>
+        <h2 id="ide-fonts-title">Compare code and table views</h2>
+        <p>The Fixed and Mono families both use equal-width text cells. Their distinct source designs provide two comparison views for logs, columns, and source code. These utility subsets do not include Nerd Fonts icons.</p>
+        <h3>TextProv Fixed Utility P9E</h3>
+        <pre class="font-sample font-utility-fixed code-sample" data-example="utility-fixed">#󠄀 o󠄀p󠄀e󠄀r󠄀a󠄀t󠄀o󠄀r󠄀 n󠄀o󠄀t󠄀e󠄀:󠄀 k󠄀e󠄀e󠄀p󠄀 t󠄀h󠄀e󠄀 s󠄀o󠄀r󠄀t󠄀 s󠄀t󠄀a󠄀b󠄀l󠄀e󠄀
+d󠄁e󠄁f󠄁 r󠄁a󠄁n󠄁k󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁)󠄁:󠄁
+    r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 s󠄁o󠄁r󠄁t󠄁e󠄁d󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁,󠄁 k󠄁e󠄁y󠄁=󠄁l󠄁a󠄁m󠄁b󠄁d󠄁a󠄁 x󠄁:󠄁 (󠄁-󠄁x󠄁.󠄁s󠄁c󠄁o󠄁r󠄁e󠄁,󠄁 x󠄁.󠄁n󠄁a󠄁m󠄁e󠄁)󠄁)󠄁</pre>
+        <h3>TextProv Mono Utility P9E</h3>
+        <pre class="font-sample font-utility-mono code-sample" data-example="utility-mono">#󠄀 o󠄀p󠄀e󠄀r󠄀a󠄀t󠄀o󠄀r󠄀 n󠄀o󠄀t󠄀e󠄀:󠄀 k󠄀e󠄀e󠄀p󠄀 t󠄀h󠄀e󠄀 s󠄀o󠄀r󠄀t󠄀 s󠄀t󠄀a󠄀b󠄀l󠄀e󠄀
+d󠄁e󠄁f󠄁 r󠄁a󠄁n󠄁k󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁)󠄁:󠄁
+    r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 s󠄁o󠄁r󠄁t󠄁e󠄁d󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁,󠄁 k󠄁e󠄁y󠄁=󠄁l󠄁a󠄁m󠄁b󠄁d󠄁a󠄁 x󠄁:󠄁 (󠄁-󠄁x󠄁.󠄁s󠄁c󠄁o󠄁r󠄁e󠄁,󠄁 x󠄁.󠄁n󠄁a󠄁m󠄁e󠄁)󠄁)󠄁</pre>
+        <p class="note">Marking changes the diagnostic glyphs while preserving their character advances. The first line is labelled Human; the function is labelled AI.</p>
       </section>
 
       <section id="fonts" aria-labelledby="fonts-title">
-        <h2 id="fonts-title">Inspect labels with demo fonts</h2>
-        <p>Use these fonts for local debugging and demonstrations of Human and AI labels in TextProv-marked text. Installing a font does not add labels to ordinary text.</p>
-
+        <h2 id="fonts-title">TextProv Utility P9E font family</h2>
+        <p>Use these fonts for development, debugging, and demonstrations of Human and AI labels. Installing a font does not add labels to text. The “Utility” name identifies their role as inspection adjuncts; applications and sites choose the visual interpretation appropriate to their content.</p>
+        <p><a class="download-link" href="./fonts/utility/textprov-utility-p9e.zip" download>Download all five utility families</a> · <a href="./fonts/utility/sources.json">Source revisions and checksums</a></p>
         <div class="font-download-grid">
           <article class="font-download-card">
-            <p class="font-use">For reading and writing</p>
-            <h3>Maryheather</h3>
-            <p class="font-card-sample font-maryheather">Human text stays plain. A󠄁I󠄁 t󠄁e󠄁x󠄁t󠄁 gains a mark.</p>
-            <p>A serif font for prose, derived from Merriweather.</p>
-            <a class="download-link" href="./fonts/maryheather-textprov-demo.zip" download>Download Maryheather <span>(ZIP, about 52 KB)</span></a>
+            <p class="font-use">UI and general text inspection</p>
+            <h3>TextProv Sans Utility P9E</h3>
+            <p class="font-card-sample font-utility-sans">C󠄁o󠄁m󠄁p󠄁a󠄁r󠄁e󠄁 O󠄁0󠄁,󠄁 I󠄁l󠄁1󠄁,󠄁 a󠄁n󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁</p>
+            <p>Derived from Source Sans 3; regular-weight Latin text under SIL OFL 1.1.</p>
+            <a class="download-link" href="./fonts/utility/textprov-sans-utility-p9e.zip" download>Download Sans Utility <span>(ZIP · TTF + WOFF2)</span></a>
           </article>
           <article class="font-download-card">
-            <p class="font-use">For code</p>
-            <h3>Agave Mono</h3>
-            <pre class="font-card-sample font-agave-mono"><code># human note
-r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 result</code></pre>
-            <p>A monospaced font for code with single-width cells.</p>
-            <a class="download-link" href="./fonts/agave-mono-textprov-demo.zip" download>Download Agave Mono <span>(ZIP, about 45 KB)</span></a>
+            <p class="font-use">Prose and serif rendering inspection</p>
+            <h3>TextProv Serif Utility P9E</h3>
+            <p class="font-card-sample font-utility-serif">C󠄁h󠄁e󠄁c󠄁k󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 i󠄁n󠄁 a󠄁 s󠄁e󠄁r󠄁i󠄁f󠄁 v󠄁i󠄁e󠄁w󠄁.󠄁</p>
+            <p>Derived from Source Serif 4; regular-weight Latin text under SIL OFL 1.1.</p>
+            <a class="download-link" href="./fonts/utility/textprov-serif-utility-p9e.zip" download>Download Serif Utility <span>(ZIP · TTF + WOFF2)</span></a>
+          </article>
+          <article class="font-download-card">
+            <p class="font-use">Logs, tables, and column inspection</p>
+            <h3>TextProv Fixed Utility P9E</h3>
+            <p class="font-card-sample font-utility-fixed">C󠄁o󠄁l󠄁u󠄁m󠄁n󠄁  0󠄁0󠄁1󠄁  A󠄁I󠄁  H󠄁u󠄁m󠄁a󠄁n󠄁</p>
+            <p>Derived from IBM Plex Mono; regular-weight Latin text under SIL OFL 1.1.</p>
+            <a class="download-link" href="./fonts/utility/textprov-fixed-utility-p9e.zip" download>Download Fixed Utility <span>(ZIP · TTF + WOFF2)</span></a>
+          </article>
+          <article class="font-download-card">
+            <p class="font-use">Code and terminal text inspection</p>
+            <h3>TextProv Mono Utility P9E</h3>
+            <p class="font-card-sample font-utility-mono">r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 s󠄁o󠄁r󠄁t󠄁e󠄁d󠄁(󠄁i󠄁t󠄁e󠄁m󠄁s󠄁)󠄁</p>
+            <p>Derived from Source Code Pro; regular-weight Latin text under SIL OFL 1.1.</p>
+            <a class="download-link" href="./fonts/utility/textprov-mono-utility-p9e.zip" download>Download Mono Utility <span>(ZIP · TTF + WOFF2)</span></a>
+          </article>
+          <article class="font-download-card">
+            <p class="font-use">Variable-width glyph inspection</p>
+            <h3>TextProv Proportional Utility P9E</h3>
+            <p class="font-card-sample font-utility-proportional">C󠄁o󠄁m󠄁p󠄁a󠄁r󠄁e󠄁 n󠄁a󠄁r󠄁r󠄁o󠄁w󠄁 i󠄁 w󠄁i󠄁t󠄁h󠄁 w󠄁i󠄁d󠄁e󠄁 W󠄁.󠄁</p>
+            <p>Derived from Atkinson Hyperlegible; regular-weight Latin text under SIL OFL 1.1.</p>
+            <a class="download-link" href="./fonts/utility/textprov-proportional-utility-p9e.zip" download>Download Proportional Utility <span>(ZIP · TTF + WOFF2)</span></a>
           </article>
         </div>
 
-        <h3>Try a font</h3>
+        <h3>Try a utility font</h3>
         <ol class="setup-steps">
-          <li>Download and unzip it.</li>
-          <li>Install the <code>.ttf</code> font file.</li>
-          <li>Select its “TextProv Demo P+” family in your editor.</li>
-          <li>Open the <a href="./samples/marked-text.txt" download>marked text sample</a>. Reload this page to update the local-font example above.</li>
+          <li>Download and unzip one family or the complete set.</li>
+          <li>Install its <code>.ttf</code> file.</li>
+          <li>Select the “TextProv … Utility P9E” family in your editor. Older family menus may list the Proportional family as “TextProv Propo Utility P9E”.</li>
+          <li>Open the <a href="./samples/marked-text.txt" download>marked text sample</a>. Reload this page to check the local-font example.</li>
         </ol>
-
-        <p class="font-warning"><strong>Mac users:</strong> In the project's recorded tests, some rendering systems showed ordinary characters instead of labels. The labels remained in the text, but installing a font does not guarantee they will appear. <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md#known-limitation-selector-glyphs-on-macos-coretext">View compatibility details</a>.</p>
-
-        <details>
-          <summary>More font choices</summary>
-          <ul>
-            <li><a href="./fonts/zilla-textprov-demo.zip" download>Zilla Slab</a> — serif prose font derived from Zilla Slab (ZIP, about 63 KB).</li>
-            <li><a href="./fonts/agave-fixed-textprov-demo.zip" download>Agave</a> — fixed-width text with double-width icons (ZIP, about 45 KB).</li>
-            <li><a href="./fonts/agave-propo-textprov-demo.zip" download>Agave Propo</a> — proportional font derived from Agave (ZIP, about 45 KB).</li>
-          </ul>
-        </details>
+        <p class="font-warning">Font rendering varies across applications. These utility fonts include selector mappings and a glyph-substitution fallback; if labels do not appear, inspect the text with the browser reader. See the <a href="https://github.com/textprov/textprov/blob/main/docs/FONT-UTILITIES.md">utility font guide</a> for build instructions and tested rendering paths.</p>
 
         <details>
           <summary>What is included and supported?</summary>
-          <p>Each ZIP contains an installable TTF, a WOFF2 webfont, and licence notices. These are regular-weight Latin-text subsets from our <a href="https://github.com/delano/nerd-fonts">Nerd Fonts fork</a>, not full replacement fonts.</p>
-          <p>They include Human and AI variants only. Mixed, edited, and unknown labels are displayed by the browser reader, not these fonts.</p>
+          <p>Each family ZIP includes an installable TTF, a WOFF2 webfont, its upstream OFL licence, and a README with attribution and source details. The combined ZIP contains all five families and their notices.</p>
+          <p>These are regular-weight Latin subsets with common punctuation, not full replacements for the original fonts. Human and AI states are supported; the browser reader can display other TextProv states. Fixed and Mono have the same spacing classification but distinct designs; Sans, Serif, and Proportional have variable-width text.</p>
+          <p>Keep selector-encoded text for sharing. Glyph decoration is a debugging view, and its sawtooth style does not define how an application should display provenance.</p>
         </details>
-
         <details>
-          <summary>Where these fonts come from</summary>
-          <p>The demo fonts are built from <a href="https://github.com/delano/nerd-fonts">delano/nerd-fonts</a>, a fork of <a href="https://github.com/ryanoasis/nerd-fonts">ryanoasis/nerd-fonts</a> that adds a TextProv provenance patch. The fork's font patcher inserts <code>cmap</code> format 14 mappings for the Human and AI selectors, so the resulting <code>P+</code> variants render marks the base fonts otherwise ignore.</p>
-          <p>To reproduce a build, clone the fork, install the patcher's dependencies, and run it against an unpatched source font with the <code>--provenance</code> option. The <a href="https://github.com/delano/nerd-fonts#textprov-provenance-marks">fork README</a> documents the flags; the <a href="./fonts/README.txt">font build notes</a> record the exact sources and options used for the ZIPs above.</p>
+          <summary>Sources, licences, and reproducible builds</summary>
+          <p>The utility set derives from Source Sans 3, Source Serif 4, IBM Plex Mono, Source Code Pro, and Atkinson Hyperlegible. Each modified font remains licensed under SIL OFL 1.1; the build code is MIT licensed. Original copyright and licence notices are retained, and the fonts receive their own TextProv family names.</p>
+          <p>The <a href="./fonts/utility/sources.json">build manifest</a> records pinned source revisions and input/output checksums. The <a href="./fonts/utility/README.txt">utility build notes</a> describe the scope, source licences, and reproducible build command.</p>
         </details>
-
         <details>
-          <summary>Licensing and technical details</summary>
-          <p>Maryheather and Zilla Slab are available under the <a href="./fonts/maryheather-OFL.txt">SIL Open Font License</a>. The Agave variants use the <a href="./fonts/agave-OFL.txt">SIL Open Font License</a>.</p>
-          <p>The source fonts' older third selector has a different meaning from TextProv 0.1, so it is deliberately excluded from these subsets. See the <a href="./fonts/README.txt">font build notes and attribution</a> or the <a href="https://github.com/textprov/textprov/blob/main/docs/SELECTORS-PUA-AND-INTERCHANGE.md">font and interchange guide</a>.</p>
-          <p>The demo fonts use <code>cmap</code> format 14 mappings. Keep selector-encoded text for sharing; font rendering is only one way to display its labels.</p>
+          <summary>Earlier font demos</summary>
+          <p>The earlier Latin subsets remain available at their existing download URLs, with their family names updated to “TextProv Demo P9E”. They use selector mappings only; their rendering behavior differs from the new utility set.</p>
+          <ul>
+            <li><a href="./fonts/maryheather-textprov-demo.zip" download>Maryheather</a> — derived from Merriweather.</li>
+            <li><a href="./fonts/zilla-textprov-demo.zip" download>Zilla Slab</a> — serif demo.</li>
+            <li><a href="./fonts/agave-mono-textprov-demo.zip" download>Agave Mono</a> — single-width demo.</li>
+            <li><a href="./fonts/agave-fixed-textprov-demo.zip" download>Agave</a> — fixed-width demo.</li>
+            <li><a href="./fonts/agave-propo-textprov-demo.zip" download>Agave Propo</a> — the source's proportional-icon variant; its Latin text is fixed-width.</li>
+          </ul>
+          <p>Installers using the older P+ names need to select the newly installed P9E family. <a href="./fonts/README.txt">Earlier font build notes and licence notices</a>.</p>
         </details>
       </section>
 

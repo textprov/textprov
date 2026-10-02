@@ -135,13 +135,16 @@ prints `Hello` without marks. Rendering HTML does not add visual styling by
 itself. This example labels the text supplied to `mark()`; it does not analyze
 who wrote it.
 
-Patched **P+ fonts** primarily support development, debugging, and
-demonstrations. With compatible rendering, they reveal supported marks without
-a separate inspection tool and help demonstrate TextProv while application
-integrations develop. Their sawtooth underlines are one display choice;
-applications can use provenance internally or reveal it on demand. The
-[font and interchange guide](docs/SELECTORS-PUA-AND-INTERCHANGE.md) explains
-that workflow and when to use it.
+The **TextProv Utility P9E fonts** are development and debugging adjuncts.
+The suite provides Sans, Serif, Fixed, Mono, and Proportional families that
+reveal supported provenance marks with compatible rendering. Their visible
+patterns make stored encoding easier to inspect and demonstrate; consuming
+applications and sites choose the presentation that fits their users. See the
+[utility font guide](docs/FONT-UTILITIES.md) for downloads, rebuilding, licensing,
+and compatibility, and the
+[font and interchange guide](docs/SELECTORS-PUA-AND-INTERCHANGE.md) for the
+choice between selector and PUA encoding. `P9E` is the provenance shorthand
+that succeeds the earlier `P+` font suffix.
 
 ## Exploring the protocol
 
@@ -181,4 +184,7 @@ text and by the Nerd Fonts tooling workflow that made the approach practical.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+Project code is MIT licensed. See [LICENSE](LICENSE). Bundled utility fonts
+and their derivatives are licensed under the SIL Open Font License 1.1; each
+font bundle includes its upstream copyright and license. See
+[utility font licensing](docs/FONT-UTILITIES.md#licensing-and-attribution).

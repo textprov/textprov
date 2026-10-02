@@ -1,52 +1,58 @@
 @import "../js/textprov.css";
 
+/* Local inspection never fetches a font. Earlier family names remain valid
+   lookups for already-installed copies during the P9E transition. */
 @font-face {
-  font-family: "TextProv Local P+";
+  font-family: "TextProv Local P9E";
   src:
-    local("Maryheather TextProv Demo P+"), local("MaryheatherTextProvDemoPPlus"),
-    local("Zilla Slab TextProv Demo P+"), local("ZillaSlabTextProvDemoPPlus"),
-    local("Maryheather Nerd Font Propo P+"), local("MaryheatherNFPP+"),
-    local("ZillaSlab Nerd Font Propo P+"), local("ZillaSlabNFPP+");
+    local("TextProv Sans Utility P9E"), local("TextProvSansUtilityP9E-Regular"),
+    local("TextProv Serif Utility P9E"), local("TextProvSerifUtilityP9E-Regular"),
+    local("TextProv Fixed Utility P9E"), local("TextProvFixedUtilityP9E-Regular"),
+    local("TextProv Mono Utility P9E"), local("TextProvMonoUtilityP9E-Regular"),
+    local("TextProv Proportional Utility P9E"), local("TextProvPropoUtilityP9E"),
+    local("TextProv Propo Utility P9E"), local("TextProvProportionalUtilityP9E-Regular"),
+    local("Maryheather TextProv Demo P9E"), local("Maryheather TextProv Demo P+"),
+    local("Zilla Slab TextProv Demo P9E"), local("Zilla Slab TextProv Demo P+");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "TextProv Web Maryheather";
-  src: url("/fonts/maryheather-textprov-demo.woff2") format("woff2");
+  font-family: "TextProv Sans Utility P9E";
+  src: url("/fonts/utility/textprov-sans-utility-p9e.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "TextProv Web Zilla";
-  src: url("/fonts/zilla-textprov-demo.woff2") format("woff2");
+  font-family: "TextProv Serif Utility P9E";
+  src: url("/fonts/utility/textprov-serif-utility-p9e.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "TextProv Web Agave Mono";
-  src: url("/fonts/agave-mono-textprov-demo.woff2") format("woff2");
+  font-family: "TextProv Fixed Utility P9E";
+  src: url("/fonts/utility/textprov-fixed-utility-p9e.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "TextProv Web Agave";
-  src: url("/fonts/agave-fixed-textprov-demo.woff2") format("woff2");
+  font-family: "TextProv Mono Utility P9E";
+  src: url("/fonts/utility/textprov-mono-utility-p9e.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "TextProv Web Agave Propo";
-  src: url("/fonts/agave-propo-textprov-demo.woff2") format("woff2");
+  font-family: "TextProv Proportional Utility P9E";
+  src: url("/fonts/utility/textprov-proportional-utility-p9e.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -60,25 +66,24 @@
   overflow-wrap: anywhere;
 }
 .font-local {
-  font-family: "TextProv Local P+", Georgia, serif;
+  font-family: "TextProv Local P9E", Georgia, serif;
 }
-.font-maryheather {
-  font-family: "TextProv Web Maryheather", Georgia, serif;
+.font-utility-sans {
+  font-family: "TextProv Sans Utility P9E", system-ui, sans-serif;
 }
-.font-zilla {
-  font-family: "TextProv Web Zilla", Georgia, serif;
+.font-utility-serif {
+  font-family: "TextProv Serif Utility P9E", Georgia, serif;
 }
-.font-agave-mono {
-  font-family:
-    "TextProv Web Agave Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+.font-utility-fixed {
+  font-family: "TextProv Fixed Utility P9E", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
-.font-agave-fixed {
-  font-family: "TextProv Web Agave", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+.font-utility-mono {
+  font-family: "TextProv Mono Utility P9E", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
-.font-agave-propo {
-  font-family:
-    "TextProv Web Agave Propo", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+.font-utility-proportional {
+  font-family: "TextProv Proportional Utility P9E", system-ui, sans-serif;
 }
+
 .code-sample {
   font-size: 0.95rem;
   line-height: 1.65;

@@ -14,8 +14,8 @@ This page explains the approach and records the original prototype measurements;
 
 ## Why use spans instead of a font?
 
-Font-based rendering needs both a matching provenance font (called a **P+
-font**) and a text shaper that selects its decorated glyphs. Installing or
+Font-based rendering needs both a matching provenance font (called a **P9E
+font**, formerly **P+**) and a text shaper that selects its decorated glyphs. Installing or
 serving the font alone is not enough. In the recorded CoreText tests, selectors
 remained in the text but did not select those glyphs. See the
 [font and interchange guide](SELECTORS-PUA-AND-INTERCHANGE.md#known-limitation-selector-glyphs-on-macos-coretext)

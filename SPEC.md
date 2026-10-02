@@ -65,7 +65,7 @@ depends on the target surface: a span renderer needs a DOM, while a font
 renderer needs a font toolchain. A font is one renderer among three, not the
 producer ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)).
 
-Consumers can use decoded states without displaying them. P+ fonts primarily
+Consumers can use decoded states without displaying them. P9E utility fonts primarily
 support development, debugging, and demonstrations: a compatible font and text
 shaper can reveal supported marks without a separate inspection tool. Their
 glyph designs, including sawtooth underlines, are presentation choices.

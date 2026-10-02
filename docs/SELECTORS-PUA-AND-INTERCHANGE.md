@@ -5,23 +5,25 @@ Reserve Private Use Area (PUA) encoding for controlled font workflows where the
 consumer has the matching font or decoder. This guide explains why the two
 encodings have different fallback behavior and how to compare them locally.
 
-## The role of P+ fonts
+## The role of P9E utility fonts
 
-A **P+ font** is a font modified to display provenance marks. Its primary role
-is development, debugging, and demonstration: with a compatible text shaper,
-it can reveal supported marks in an ordinary text view without a separate
-inspection tool. It also serves as a stopgap for demonstrating TextProv's
-utility while applications develop their own integrations.
+A **P9E font** is a font modified to display provenance marks; `P9E` succeeds
+the earlier `P+` suffix. The [TextProv Utility P9E suite](FONT-UTILITIES.md)
+provides five families for development, debugging, and demonstration. With a
+compatible text shaper, a utility font reveals supported marks in an ordinary
+text view without a separate inspection tool. This helps developers inspect
+the encoding and demonstrate its utility while applications integrate it.
 
-Sawtooth underlines and other glyph designs are presentation choices. An
-application can expose provenance on demand, use its own interface, or consume
-the decoded states without displaying them. Everyday use does not require
-continuous decoration; the shared encoding supports these different uses
-independently of how a font draws it.
+Sawtooth underlines and other glyph patterns are presentation choices.
+Applications and sites that display content have the context to choose useful
+visual interpretations of the Unicode marks. They can expose provenance on
+demand, use their own interface, or consume decoded states internally.
+Everyday use does not require continuous decoration; the shared encoding
+supports these uses independently of how a utility font draws it.
 
-P+ fonts can support selector encoding, PUA encoding, or both; P+ does not imply
-PUA. The distinction between the encodings becomes clear in a practical case:
-opening marked text in Zed on macOS.
+P9E fonts can support selector encoding, PUA encoding, or both; the suffix does
+not imply PUA. The distinction between the encodings becomes clear in a
+practical case: opening marked text in Zed on macOS.
 
 ## A marked letter in two forms
 
@@ -72,7 +74,7 @@ point. Its meaning comes from an agreement among the producer, font, and
 decoder. Under TextProv's registry, `U+100041` means the AI form of `A`; outside
 that agreement, it is only a private code point.
 
-A consumer without a matching P+ font may show
+A consumer without a matching P9E font may show
 a missing-glyph box. A consumer without the private mapping cannot infer from
 Unicode alone that the code point stands for `A`.
 Copying it preserves the private code point, not the ordinary letter. Search,
@@ -103,27 +105,32 @@ it portable outside that ecosystem.
 
 ## Known limitation: selector glyphs on macOS CoreText
 
-In the project's recorded tests, HarfBuzz selected the P+ font's decorated
-glyphs for TextProv's base-plus-selector sequences. macOS CoreText rendered the
-plain base glyphs instead. The selectors remained in the stored text, so this
-was a font-display failure rather than loss of the provenance encoding.
+In the project's recorded tests of the earlier **P+ demo fonts**, HarfBuzz
+selected decorated glyphs for TextProv's base-plus-selector sequences. macOS
+CoreText rendered the plain base glyphs instead. The selectors remained in the
+stored text, so this was a font-display failure rather than loss of the
+provenance encoding.
 
-The demo fonts expose their Human and AI selector variants through a `cmap`
-format 14 Unicode Variation Sequences (UVS) subtable. The build scripts verify
-that the subtable contains `U+E0100` and `U+E0101`. TextProv's sequences are a
-private convention, not Unicode-registered variation sequences. HarfBuzz
-honored these private UVS mappings in the recorded tests; CoreText did not.
+Those legacy fonts expose their Human and AI selector variants through a
+`cmap` format 14 Unicode Variation Sequences (UVS) subtable. The legacy build
+scripts verify `U+E0100` and `U+E0101`. TextProv's sequences are a private
+convention, not Unicode-registered variation sequences. HarfBuzz honored
+these private UVS mappings in the recorded tests; CoreText did not. Rebuilding
+the legacy demo assets with `P9E` names does not change that shaping mechanism.
 
-A separate font design can use `ccmp` glyph-substitution rules instead of
-relying only on the format 14 mapping. That is a proposed CoreText compatibility
-route in the Nerd Fonts fork, not a feature of these demo fonts or a TextProv
-protocol requirement. Loading a P+ font is therefore not, by itself, a
-compatibility guarantee.
+The new TextProv Utility P9E suite includes `ccmp` glyph-substitution rules in
+addition to format 14 mappings. This supplies a different font rendering path;
+its structure and compatibility limits are described in the
+[utility font guide](FONT-UTILITIES.md#rendering-and-coverage). Font shaping is
+an implementation choice, independent of the protocol's encoding rules.
+Loading a P9E font alone does not establish that an application will display
+its supported provenance patterns.
 
-On the tested macOS paths, Chromium used HarfBuzz and displayed the selector
-variants, while WebKit and the tested Zed version used CoreText and did not.
-Treat this as a record of tested engine paths, not a permanent guarantee about
-all Chrome, Safari, WebKit, or Zed versions.
+On the tested legacy macOS paths, Chromium used HarfBuzz and displayed the
+selector variants, while WebKit and the tested Zed version used CoreText and
+did not. Treat this as a record of tested engine paths, not a permanent
+guarantee about all Chrome, Safari, WebKit, or Zed versions, or a result for the
+new utility suite.
 
 ## Separate Zed invisible-character behavior
 
@@ -162,22 +169,13 @@ Open these UTF-8 files side by side in Zed, VS Code, or another editor:
 Each file keeps its instructions as ordinary unmarked text. This provides a
 readable control and lets the PUA sample demonstrate its missing-font behavior
 without making the whole explanation unreadable. Compare the files first with
-a normal font, then select the matching P+ font. The files state the expected
+a normal font, then select the matching P9E font. The files state the expected
 outcomes and distinguish verified behavior from editor paths that have not yet
 been tested.
 
-### CLI prerequisite and current checkout limitation
+### Inspect the stored marks
 
-The commands below require Python 3.9+ and a working TextProv registry loader.
-Validation of this checkout on 2026-09-20 failed before processing any input:
-`ValueError: invalid literal for int() with base 0: 'U+E0100'`. The Python loader
-uses `int(value, 0)`, which does not accept the registry's `U+` notation.
-Inspection and conversion are blocked until the loader and registry format
-agree; changing the input document will not resolve this error. These commands
-describe the CLI interface, but could not be validated end to end in this
-checkout.
-
-Once that prerequisite is met, run these commands from the repository root to
+The commands below require Python 3.9+. Run them from the repository root to
 inspect stored provenance independently of what the editor draws. No package
 installation is needed:
 
@@ -185,6 +183,11 @@ installation is needed:
 PYTHONPATH=python python3 -m textprov inspect docs/examples/provenance-vs.txt
 PYTHONPATH=python python3 -m textprov inspect docs/examples/provenance-pua.txt
 ```
+
+Both commands completed successfully in this checkout on 2026-10-01 using
+Python 3.14.7 and identified 53 AI-marked characters in their respective
+encodings. An earlier registry-loader failure recorded on 2026-09-20 has been
+resolved; it is no longer a prerequisite blocker.
 
 Both reports should identify AI-marked text; they also include the unmarked
 instructions in each file.
@@ -219,7 +222,7 @@ PYTHONPATH=python python3 -m textprov -o document-vs.md convert --from pua --to 
 This writes the edited text in selector encoding without overwriting either
 input copy. It keeps ordinary Unicode letters available even where provenance
 rendering is absent. For web pages, use an
-[HTML decorator](HTML-RENDERING.md) to display the labels without a P+ font.
+[HTML decorator](HTML-RENDERING.md) to display the labels without a P9E font.
 
 ## Evidence and limits
 

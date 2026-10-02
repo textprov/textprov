@@ -2,14 +2,15 @@
 
 Status: accepted (naming convention). Date: 2026-09-30.
 
-Font artifact and consumer-name migration remains pending.
+Updated: 2026-10-01. The utility suite and rebuilt legacy demo fonts implement
+the P9E naming convention; historical P+ records remain unchanged.
 
 ## Context
 
-Provenance-enabled fonts use `P+` in their names. The demo font builders assign
-families such as `Maryheather TextProv Demo P+`, and the website's local-font
-lookups refer to those names. Earlier records use `P+` to describe this font
-rendering path.
+Earlier provenance-enabled fonts used `P+` in their names. The demo font
+builders assigned families such as `Maryheather TextProv Demo P+`, and the
+website's local-font lookups referred to those names. Earlier records use
+`P+` to describe this font rendering path.
 
 TextProv provides a shared structure, encoding, and vocabulary that
 applications can use in different ways. Fonts primarily support development,
@@ -27,10 +28,17 @@ Use `p9e` as the compact shorthand for provenance, and `P9E` as its uppercase
 form in font suffixes and other display labels. The two spellings have the
 same meaning. Use the full word when introducing the shorthand to readers.
 
-`P9E` succeeds `P+` as the suffix convention for newly named
-provenance-enabled font variants. For example, a rebuilt demo font can use
-`Maryheather TextProv Demo P9E` where the existing artifact uses
-`Maryheather TextProv Demo P+`.
+`P9E` succeeds `P+` as the suffix convention for provenance-enabled font
+variants. The supported utility families use `TextProv {type} Utility P9E`:
+Sans, Serif, Fixed, Mono, and Proportional. `Utility` communicates their role
+as development and debugging adjuncts. Rebuilt legacy demos use names such as
+`Maryheather TextProv Demo P9E` in place of their earlier `P+` names.
+
+Applications and sites that display content choose how to interpret the
+Unicode marks visually. Utility fonts make supported encoding inspectable and
+provide demonstrations; their patterns do not establish a prescribed everyday
+presentation. The [utility font guide](../FONT-UTILITIES.md) records the chosen
+upstream fonts, licensing, build process, and rendering limits.
 
 TextProv remains the protocol name. Repository and package names, public APIs,
 CLI options, CSS classes, data attributes, registry states, and code-point
@@ -39,9 +47,17 @@ provenance; it does not prescribe how an application presents or uses it.
 
 ### Transition from P+
 
-Existing font artifacts retain the names embedded in them until they are
-rebuilt. Installation instructions, source filenames, build inputs, and
-local-font lookups continue to use the actual names of those artifacts.
+The five utility families are built directly from pinned, openly licensed
+upstream sources and distributed under the SIL Open Font License 1.1. Primary
+font names are replaced with TextProv names, respecting the upstream reserved
+font names. The Proportional family's legacy family-name field uses
+`TextProv Propo Utility P9E` for older naming limits; its typographic family
+name retains `TextProv Proportional Utility P9E`.
+
+Legacy demo fonts are rebuilt with `P9E` in their embedded family names and
+consumer lookups. Their existing download filenames remain stable. Older
+installed copies still contain `P+`, so readers should use the actual family
+name embedded in the installed artifact.
 
 A font rename coordinates the font's naming metadata, generated bundles and
 manifests, consumer lookups, and installation instructions. Consumers that
@@ -68,8 +84,12 @@ and behavior they recorded. New explanations introduce `p9e` or `P9E`, with
 - Existing readers need an explicit connection between `P+` and `P9E`.
 - Because `p9e` is a chosen mnemonic, documentation defines its meaning rather
   than presenting it as a strict numeronym calculation.
-- Font migration requires coordinated build and consumer updates; this record
-  establishes the naming convention and records that remaining work.
+- Font migration coordinates build metadata, consumer lookups, bundles, and
+  installation guidance. Rebuilt downloads carry P9E names; historical
+  records keep the names of the artifacts they measured.
+- Utility family labels cover different inspection contexts. Fixed and Mono
+  both use fixed-width text; Sans and Serif are also proportional designs.
+  The labels do not imply mutually exclusive typographic categories.
 
 ## Relationship to earlier decisions
 
