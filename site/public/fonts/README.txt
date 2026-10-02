@@ -61,17 +61,16 @@ reader to display all five states.
 Human variants look plain. AI variants have a sawtooth underline. HarfBuzz
 shaping was checked for both subsets; this is not a guarantee for every
 browser or platform. A browser can load a webfont yet ignore its variation
-selector mappings. The website's local-font example uses local() only and
-never falls back to downloading a webfont.
+s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁 w󠄁e󠄁b󠄁s󠄁i󠄁t󠄁e󠄁'󠄁s󠄁 r󠄁e󠄁a󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁v󠄁e󠄁a󠄁l󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁 i󠄁n󠄁d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁e󠄁n󠄁t󠄁l󠄁y󠄁 o󠄁f󠄁
+f󠄁o󠄁n󠄁t󠄁 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁.󠄁
 
 Installation
 ------------
 
 Unzip a download and install the TTF using your operating system's font
 manager. Select the matching family in your editor, then open
-../samples/marked-text.txt as UTF-8. Reload the homepage to try its
-local-font example. Local font access may be restricted by browser
-privacy settings.
+../samples/marked-text.txt a󠄁s󠄁 U󠄁T󠄁F󠄁-󠄁8󠄁.󠄁 P󠄁a󠄁s󠄁t󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁p󠄁l󠄁e󠄁 i󠄁n󠄁t󠄁o󠄁 t󠄁h󠄁e󠄁 h󠄁o󠄁m󠄁e󠄁p󠄁a󠄁g󠄁e󠄁
+r󠄁e󠄁a󠄁d󠄁e󠄁r󠄁 t󠄁o󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁 i󠄁t󠄁s󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁 i󠄁n󠄁d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁e󠄁n󠄁t󠄁l󠄁y󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 f󠄁o󠄁n󠄁t󠄁.󠄁
 
 Family names:
 

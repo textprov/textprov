@@ -4,13 +4,14 @@
 
 # TextProv protocol specification
 
-> **Status: Draft — experimental.** Specification version: 0.1. Registry version: 0.1.
+> **Status: Draft — experimental.** Specification version: 0.2. Registry version: 0.1.
+> Updated: 2026-10-02.
 > Specification behavior may change incompatibly before Stable. Implementers should
 > pin an immutable revision. Published registry allocations remain reserved and
 > will not be reassigned or removed. Stable specification compatibility guarantees
 > have not yet taken effect. See the [maturity lifecycle](docs/MATURITY.md).
 
-TextProv is a protocol for attaching origin labels to passages of text. A label
+TextProv is a protocol for attaching origin labels to passages of p󠄁r󠄁o󠄁s󠄁e󠄁. A label
 states that a passage is human-written, AI-generated, mixed, edited, or of
 unknown origin. Cooperating tools can preserve, interpret, and display these
 labels as text moves between them. For example, a writing integration can
@@ -41,7 +42,7 @@ evidence, and verification of producer claims are outside this protocol.
 
 This draft has two independent compatibility versions:
 
-- **Specification version 0.1** covers the encodings, decoding algorithm, and
+- **Specification version 0.2** covers the encodings, decoding algorithm, and
   conformance rules defined in this document.
 - **Registry version 0.1** covers `mapping.json`, including the available states
   and the base characters assigned Private Use Area (PUA) slots.
@@ -50,6 +51,26 @@ Both versions are Draft. Specification behavior remains experimental, while
 published registry allocations remain reserved. Fixtures and reference APIs
 expose the versions as `spec_version` and `registry_version`, or with the
 language-appropriate camel-case equivalents.
+
+## Marking scope
+
+T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 a󠄁d󠄁d󠄁r󠄁e󠄁s󠄁s󠄁e󠄁s󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁u󠄁n󠄁i󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 p󠄁e󠄁o󠄁p󠄁l󠄁e󠄁,󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁
+n󠄁e󠄁e󠄁d󠄁 t󠄁o󠄁 t󠄁r󠄁a󠄁v󠄁e󠄁l󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁 w󠄁o󠄁r󠄁d󠄁s󠄁.󠄁
+
+S󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁 o󠄁u󠄁t󠄁s󠄁i󠄁d󠄁e󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁s󠄁,󠄁
+d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 s󠄁t󠄁r󠄁i󠄁n󠄁g󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁e󠄁d󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁 t󠄁h󠄁o󠄁s󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁.󠄁 P󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁
+f󠄁o󠄁r󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 b󠄁e󠄁l󠄁o󠄁n󠄁g󠄁s󠄁 t󠄁o󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁 a󠄁n󠄁d󠄁 d󠄁e󠄁v󠄁e󠄁l󠄁o󠄁p󠄁m󠄁e󠄁n󠄁t󠄁 w󠄁o󠄁r󠄁k󠄁f󠄁l󠄁o󠄁w󠄁s󠄁.󠄁
+
+C󠄁o󠄁d󠄁e󠄁 s󠄁n󠄁i󠄁p󠄁p󠄁e󠄁t󠄁s󠄁 e󠄁m󠄁b󠄁e󠄁d󠄁d󠄁e󠄁d󠄁 i󠄁n󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 m󠄁a󠄁y󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 a󠄁s󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁
+s󠄁u󠄁r󠄁r󠄁o󠄁u󠄁n󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁o󠄁m󠄁m󠄁u󠄁n󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 f󠄁e󠄁n󠄁c󠄁e󠄁d󠄁 e󠄁x󠄁a󠄁m󠄁p󠄁l󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 i󠄁n󠄁l󠄁i󠄁n󠄁e󠄁 e󠄁x󠄁p󠄁r󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁s󠄁.󠄁
+I󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 m󠄁a󠄁y󠄁 l󠄁e󠄁a󠄁v󠄁e󠄁 s󠄁n󠄁i󠄁p󠄁p󠄁e󠄁t󠄁s󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁.󠄁 M󠄁a󠄁r󠄁k󠄁s󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁e󠄁d󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁;󠄁 t󠄁h󠄁e󠄁y󠄁
+d󠄁o󠄁 n󠄁o󠄁t󠄁 e󠄁s󠄁t󠄁a󠄁b󠄁l󠄁i󠄁s󠄁h󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁 s󠄁n󠄁i󠄁p󠄁p󠄁e󠄁t󠄁 i󠄁s󠄁 s󠄁u󠄁i󠄁t󠄁a󠄁b󠄁l󠄁e󠄁 f󠄁o󠄁r󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁 e󠄁x󠄁e󠄁c󠄁u󠄁t󠄁i󠄁o󠄁n󠄁.󠄁
+
+A󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁s󠄁 e󠄁l󠄁i󠄁g󠄁i󠄁b󠄁l󠄁e󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 p󠄁a󠄁s󠄁s󠄁i󠄁n󠄁g󠄁 i󠄁t󠄁 t󠄁o󠄁 a󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁.󠄁 E󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁
+a󠄁n󠄁d󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 o󠄁p󠄁e󠄁r󠄁a󠄁t󠄁e󠄁 o󠄁n󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁 s󠄁e󠄁q󠄁u󠄁e󠄁n󠄁c󠄁e󠄁s󠄁;󠄁 t󠄁h󠄁e󠄁y󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁c󠄁o󠄁g󠄁n󠄁i󠄁z󠄁e󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁
+l󠄁a󠄁n󠄁g󠄁u󠄁a󠄁g󠄁e󠄁s󠄁,󠄁 f󠄁i󠄁l󠄁e󠄁 r󠄁o󠄁l󠄁e󠄁s󠄁,󠄁 o󠄁r󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁.󠄁 T󠄁h󠄁e󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁-󠄁c󠄁o󠄁d󠄁e󠄁 e󠄁x󠄁e󠄁m󠄁p󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁 h󠄁o󠄁w󠄁
+a󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 h󠄁a󠄁n󠄁d󠄁l󠄁e󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 i󠄁t󠄁 r󠄁e󠄁c󠄁e󠄁i󠄁v󠄁e󠄁s󠄁.󠄁 U󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 n󠄁o󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁
+o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 e󠄁x󠄁e󠄁m󠄁p󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁y󠄁 h󠄁u󠄁m󠄁a󠄁n󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁s󠄁h󠄁i󠄁p󠄁.󠄁
 
 ## Roles
 
@@ -82,7 +103,7 @@ Applications can expose provenance on demand or use it internally.
 | `edited` | `U+E0103` | Proposed |
 | `unknown` | `U+E0104` | Proposed |
 
-A specification-version-0.1 decoder recognizes `human`, `ai`, and `mixed`, and
+A specification-version-0.2 decoder recognizes `human`, `ai`, and `mixed`, and
 a conforming producer must support them. `edited` and `unknown` are proposed
 allocations reserved for future stabilization; producers must not emit them and
 decoders may ignore them until they are promoted.
@@ -211,7 +232,8 @@ implementations here do that ([ADR 0006](docs/adr/0006-decorator-packages-and-re
 
 ## Producer
 
-A producer marks text. It must hold the following.
+A producer marks text s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 b󠄁y󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁 t󠄁h󠄁e󠄁
+[m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁](#marking-scope). It must hold the following.
 
 1. **One mark per cluster.** Split the text into clusters the same way a
    decoder does, and mark each one once, after the whole cluster: after
@@ -263,7 +285,7 @@ unchanged text.
 
 Nothing here says *how* a producer decides which state applies. That is the
 integration's problem: an editor watching who typed, a pipeline that knows a
-model wrote a paragraph, a marker run over a file by hand.
+model wrote a paragraph, a marker run over a p󠄁r󠄁o󠄁s󠄁e󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁 by hand.
 
 ### Producer conformance
 
@@ -274,7 +296,7 @@ the four properties above hold for text of its own choosing — the reference
 suite tests them as properties, not only as recorded cases, because the cases
 cannot cover every input.
 
-Producer conformance is defined at specification version 0.1. It documents what the
+Producer conformance is defined at specification version 0.2. It documents what the
 reference producer already did; no behaviour changed when it was written down.
 
 ## Decoder
@@ -346,7 +368,7 @@ instead ([ADR 0009](docs/adr/0009-editor-decoration-apis.md)).
 ([ADR 0004](docs/adr/0004-shared-fixture-for-conformance.md)):
 
 ```json
-{ "spec_version": "0.1",
+{ "spec_version": "0.2",
   "registry_version": "0.1",
   "cases":          [ { "name": "...", "input": "...", "options": {}, "runs": [ { "state": "ai", "text": "..." } ] } ],
   "producer_cases": [ { "name": "...", "input": "...", "options": { "state": "ai", "mode": "vs" }, "output": "..." } ],
@@ -371,7 +393,7 @@ package publication alone does not establish maturity.
 
 | Artifact | Current version | Status | Changes with |
 | --- | --- | --- | --- |
-| Specification (`SPEC.md`, decoder, producer rules, `fixtures.json`) | 0.1 | Draft | Algorithm, markup, or conformance-rule changes |
+| Specification (`SPEC.md`, decoder, producer rules, `fixtures.json`) | 0.2 | Draft | S󠄁c󠄁o󠄁p󠄁e󠄁,󠄁 a󠄁lgorithm, markup, or conformance-rule changes |
 | Registry (`mapping.json` and vendored copies) | 0.1 | Draft | Additions to published allocations or registry metadata changes |
 
 The [maturity lifecycle](docs/MATURITY.md) defines entry and exit criteria for
@@ -405,7 +427,7 @@ draft, not pinned release artifacts.
 - Behaviour on text nodes inside `pre` or `code`. Implementations may skip
   them; the fixture does not cover it.
 - Unicode-version differences in grapheme segmentation beyond the fixture.
-  Implementations must use extended grapheme clusters, but specification version 0.1
+  Implementations must use extended grapheme clusters, but specification version 0.2
   does not pin a Unicode version. Clients using `Intl.Segmenter` and servers
   using this repository's `cluster_end` agreed on every case tested; they may
   differ where Unicode versions or segmentation coverage differ.

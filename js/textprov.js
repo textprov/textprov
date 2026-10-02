@@ -4,7 +4,7 @@
  * textprov.js: client-side provenance decorator
  * TextProv protocol: https://github.com/textprov/textprov
  *
- * Specification version 0.1 (see ../SPEC.md).
+ * Specification version 0.2 (see ../SPEC.md).
  * Registry version 0.1 (see ../mapping.json; the registry is embedded below as
  * SELECTORS and PUA_RANGES and is never loaded at runtime).
  *
@@ -155,7 +155,7 @@
   var textprov = {
     runs: runs,
     render: render,
-    specVersion: "0.1",
+    specVersion: "0.2",
     registryVersion: REGISTRY_VERSION,
     mapping: { version: REGISTRY_VERSION, selectors: SELECTORS, puaRanges: PUA_RANGES },
   };

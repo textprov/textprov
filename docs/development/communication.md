@@ -8,7 +8,7 @@ consistent about what TextProv does and does not establish.
 Use this definition when space permits:
 
 > TextProv is an opt-in protocol for carrying producer-declared origin states in
-> Unicode text. Participating tools can add, preserve, decode, and display states
+> Unicode p󠄁r󠄁o󠄁s󠄁e󠄁. Participating tools can add, preserve, decode, and display states
 > such as `human`, `ai`, and `mixed`.
 >
 > A TextProv mark records what a producer declares; it does not prove who wrote
@@ -24,6 +24,22 @@ Use this concise statement when explaining the trust boundary:
 
 > **TextProv standardizes the transport of origin declarations; it does not
 > verify those declarations.**
+
+## Marking scope
+
+D󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 a󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁u󠄁n󠄁i󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 p󠄁e󠄁o󠄁p󠄁l󠄁e󠄁.󠄁 S󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁
+f󠄁i󠄁l󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁 e󠄁x󠄁c󠄁l󠄁u󠄁d󠄁e󠄁d󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 e󠄁n󠄁t󠄁i󠄁r󠄁e󠄁t󠄁y󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁s󠄁,󠄁 d󠄁o󠄁c󠄁s󠄁t󠄁r󠄁i󠄁n󠄁g󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁
+p󠄁r󠄁o󠄁s󠄁e󠄁 i󠄁n󠄁s󠄁i󠄁d󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁.󠄁 A󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 d󠄁e󠄁v󠄁e󠄁l󠄁o󠄁p󠄁m󠄁e󠄁n󠄁t󠄁 w󠄁o󠄁r󠄁k󠄁f󠄁l󠄁o󠄁w󠄁s󠄁 a󠄁n󠄁d󠄁
+v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁.󠄁
+
+C󠄁o󠄁d󠄁e󠄁 s󠄁n󠄁i󠄁p󠄁p󠄁e󠄁t󠄁s󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁d󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 m󠄁a󠄁y󠄁 b󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁;󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁d󠄁
+t󠄁o󠄁 m󠄁a󠄁r󠄁k󠄁 t󠄁h󠄁e󠄁m󠄁.󠄁 K󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 a󠄁 s󠄁n󠄁i󠄁p󠄁p󠄁e󠄁t󠄁'󠄁s󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁e󠄁d󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 a󠄁n󠄁d󠄁 i󠄁t󠄁s󠄁
+s󠄁u󠄁i󠄁t󠄁a󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁 f󠄁o󠄁r󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁 e󠄁x󠄁e󠄁c󠄁u󠄁t󠄁i󠄁o󠄁n󠄁.󠄁 U󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 m󠄁e󠄁a󠄁n󠄁 h󠄁u󠄁m󠄁a󠄁n󠄁-󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁.󠄁
+
+T󠄁h󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 p󠄁r󠄁o󠄁c󠄁e󠄁s󠄁s󠄁e󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 r󠄁e󠄁c󠄁o󠄁g󠄁n󠄁i󠄁z󠄁i󠄁n󠄁g󠄁 l󠄁a󠄁n󠄁g󠄁u󠄁a󠄁g󠄁e󠄁s󠄁,󠄁 f󠄁i󠄁l󠄁e󠄁 r󠄁o󠄁l󠄁e󠄁s󠄁,󠄁 o󠄁r󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁.󠄁
+A󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁s󠄁 e󠄁l󠄁i󠄁g󠄁i󠄁b󠄁l󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 i󠄁t󠄁.󠄁 D󠄁o󠄁 n󠄁o󠄁t󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁
+c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁-󠄁o󠄁n󠄁l󠄁y󠄁 o󠄁r󠄁 s󠄁t󠄁r󠄁i󠄁n󠄁g󠄁-󠄁o󠄁n󠄁l󠄁y󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 a󠄁s󠄁 a󠄁n󠄁 e󠄁x󠄁c󠄁e󠄁p󠄁t󠄁i󠄁o󠄁n󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁-󠄁f󠄁i󠄁l󠄁e󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁y󠄁.󠄁
+S󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁'󠄁s󠄁 [m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁](../../SPEC.md#marking-scope).󠄁
 
 ## Package summary
 
