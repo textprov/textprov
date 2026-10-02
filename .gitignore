@@ -9,3 +9,5 @@ node_modules/
 .venv-fonts/
 .textprov/
 .DS_Store
+.claude/worktrees
+*.txt
