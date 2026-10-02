@@ -6,6 +6,14 @@ const here = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   base: "./",
+  resolve: {
+    alias: {
+      textprov: resolve(here, "../js/textprov.js"),
+    },
+  },
+  optimizeDeps: {
+    include: ["textprov"],
+  },
   server: {
     fs: {
       allow: [searchForWorkspaceRoot(process.cwd())],

@@ -6,7 +6,7 @@ import vm from "node:vm";
 const homepage = readFileSync(new URL("./index.html", import.meta.url), "utf8");
 const inlineSample = homepage.match(/<p id="sample-passage"[^>]*>([^<]+)<\/p>/)[1];
 
-function demo({ withSample = false } = {}) {
+export function demo({ withSample = false, appSource } = {}) {
   const elements = new Map();
   function element(id) {
     if (id === "sample-passage" && !withSample) return null;
@@ -37,6 +37,9 @@ function demo({ withSample = false } = {}) {
   const context = vm.createContext({
     Intl,
     Blob,
+    module: { exports: {} },
+    window: { isSecureContext: true },
+    NodeFilter: { SHOW_TEXT: 4, FILTER_ACCEPT: 1, FILTER_REJECT: 2 },
     setTimeout: (callback) => callback(),
     URL: {
       createObjectURL(blob) {
@@ -57,19 +60,33 @@ function demo({ withSample = false } = {}) {
       getElementById: element,
       querySelector: () => state,
       querySelectorAll: () => [state],
-      createElement: () => element("download-link"),
+      createElement: () =>
+        Object.assign(element("download-link"), { relList: { supports: () => true } }),
+      createTreeWalker: () => ({ nextNode: () => null }),
       body: { appendChild() {} },
     },
   });
   vm.runInContext(readFileSync(new URL("../js/textprov.js", import.meta.url), "utf8"), context);
-  context.window = { isSecureContext: true };
+  const api = context.module.exports;
   // Use real decoding; DOM styling is outside these unit tests.
-  context.textprov.render = (output) =>
-    context.textprov.runs(output.textContent).filter((run) => run.state).length;
-  const source = readFileSync(new URL("./app.js", import.meta.url), "utf8");
-  vm.runInContext(source.replace('import "../js/textprov.js";', ""), context);
-  return { element, state, downloads, copied };
+  api.render = (output) => api.runs(output.textContent).filter((run) => run.state).length;
+  const source = appSource ?? readFileSync(new URL("./app.js", import.meta.url), "utf8");
+  const script = source.replace(
+    /^import(?:\s+(\w+)\s+from)?\s+"(?:textprov|\.\.\/js\/textprov\.js)";/m,
+    (_, binding) => (binding ? `const ${binding} = module.exports;` : ""),
+  );
+  vm.runInContext(script, context);
+  return { element, state, downloads, copied, context };
 }
+
+test("site consumes CommonJS exports without a browser-global API", () => {
+  const { context, element } = demo({ withSample: true });
+  assert.equal(context.textprov, undefined);
+  assert.equal(context.window.textprov, undefined);
+  assert.equal(element("demo-output").value, "H\u{E0101}e\u{E0101}l\u{E0101}l\u{E0101}o\u{E0101}");
+  element("reveal-button").listeners.click();
+  assert.equal(element("reveal-button").attributes["aria-pressed"], "true");
+});
 
 test("copy and UTF-8 download carry the same marked text", async () => {
   const { element, downloads, copied } = demo();
