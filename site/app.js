@@ -1,4 +1,4 @@
-import "../js/textprov.js";
+import textprov from "textprov";
 
 (function () {
   "use strict";
