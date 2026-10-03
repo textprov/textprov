@@ -11,6 +11,8 @@ module Textprov
   # control-break clusters, clusters ending in a provenance selector, lone selectors, and
   # PUA provenance characters are left alone, so the operation is idempotent.
   def _mark(text, state, mode, selectors, pua2base, base2pua)
+    raise ArgumentError, "invalid provenance state: #{state.inspect}" unless GENERATED_STATES.include?(state)
+
     sel_cps = selectors.values.to_set
     selector = selectors[state].chr(Encoding::UTF_8)
     out = String.new(encoding: "UTF-8")
@@ -87,7 +89,7 @@ module Textprov
   def _inspect(text, selectors, pua2base)
     sel2name = selectors.each_with_object({}) { |(name, cp), h| h[cp] = name }
     counts = { "unmarked" => 0, "human" => 0, "ai_vs" => 0, "ai_pua" => 0,
-               "unknown" => 0, "edited" => 0, "mixed" => 0, "whitespace" => 0 }
+               "whitespace" => 0 }
     unrecognised_selectors = []
     unrecognised_pua = []
 
@@ -121,7 +123,7 @@ module Textprov
     end
 
     lines = ["characters: #{chars.length}"]
-    %w[unmarked human ai_vs ai_pua unknown edited mixed whitespace].each do |key|
+    %w[unmarked human ai_vs ai_pua whitespace].each do |key|
       lines << "#{key}: #{counts[key]}"
     end
     sels = unrecognised_selectors.uniq.sort.map { |cp| format("U+%04X", cp) }.join(" ")

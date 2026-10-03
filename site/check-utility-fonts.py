@@ -249,11 +249,11 @@ def check_font(entry, recorded, args, registry):
                 result = shape(hb_path, face, chr(base) + chr(selector))
                 require(len(result) == 1 and result[0][0] == variants[selector][base], f"{label_path} failed U+{base:04X}+U+{selector:05X}")
                 require(result[0][1:] == plain[0][1:], f"{label_path} changes shaped per-glyph advance/position")
-        for state in ("mixed", "edited", "unknown"):
-            text = chr(base) + chr(cp(registry["variation_selectors"][state]))
+        for selector in (0xE0102, 0xE0103, 0xE0104):
+            text = chr(base) + chr(selector)
             expected = shape(hb_source, source, text)
             for label_path, hb_path, face in paths:
-                require(shape(hb_path, face, text) == expected, f"{label_path} gives unsupported {state} a visual variant")
+                require(shape(hb_path, face, text) == expected, f"{label_path} gives non-TextProv U+{selector:05X} a visual variant")
     for text in ["AVATAR", "office ffi", "caf\u00e9 na\u00efve", "\u00c5ngstr\u00f6m", "12345.67 \u20ac", "\u201cHello\u201d\u2014debug"]:
         if all(ord(character) in bases for character in text):
             require(shape(hb_font, font, text) == shape(hb_source, source, text), f"plain shaping changed: {text}")

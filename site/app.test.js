@@ -132,7 +132,14 @@ test("reader reports existing labels without changing the input", () => {
   input.value = "A\u{E0100} B\u{E0101} C\u{E0102} D\u{E0103} E\u{E0104}";
   input.listeners.input();
   assert.equal(element("check-output").textContent, input.value);
-  assert.match(element("check-status").textContent, /human, ai, mixed, edited, unknown/);
+  assert.equal(
+    element("check-status").textContent,
+    "Labels found: human, ai. These are claims, not verified origins.",
+  );
+  input.value = "C\u{E0102} D\u{E0103} E\u{E0104}";
+  input.listeners.input();
+  assert.equal(element("check-output").textContent, input.value);
+  assert.match(element("check-status").textContent, /No TextProv labels found/);
   input.value = "<script>ordinary text</script>";
   input.listeners.input();
   assert.equal(element("check-output").textContent, input.value);
@@ -183,6 +190,34 @@ test("marking pasted text replaces existing labels rather than stacking them", (
   assert.equal(element("demo-preview").textContent, "A\u{E0100} B\u{E0100}");
 });
 
+test("encoder rejects obsolete and other unsupported state names", () => {
+  const { element, state } = demo();
+  const output = element("demo-output").value;
+  for (const name of ["mixed", "edited", "unknown", "toString", "__proto__", ""]) {
+    state.value = name;
+    assert.throws(() => element("demo-input").listeners.input(), {
+      name: "RangeError",
+      message: "Unsupported provenance state: " + name,
+    });
+    assert.equal(element("demo-output").value, output);
+  }
+});
+
+test("encoder preserves non-TextProv selectors while replacing human/AI labels", () => {
+  const { element, state } = demo();
+  for (const [name, selector] of [
+    ["human", "\u{E0100}"],
+    ["ai", "\u{E0101}"],
+  ]) {
+    state.value = name;
+    element("demo-input").value = "A\u{E0102} B\u{E0103} C\u{E0104} D\u{E0100} E\u{E0101}";
+    element("demo-input").listeners.input();
+    const expected = `A\u{E0102}${selector} B\u{E0103}${selector} C\u{E0104}${selector} D${selector} E${selector}`;
+    assert.equal(element("demo-output").value, expected);
+    assert.equal(element("demo-preview").textContent, expected);
+  }
+});
+
 test("homepage presents the reader and links to the separate encoder", () => {
   const html = readFileSync(new URL("./index.html", import.meta.url), "utf8");
   assert.match(html, /Try a marked passage/);
@@ -191,6 +226,11 @@ test("homepage presents the reader and links to the separate encoder", () => {
   assert.doesNotMatch(html, /<p><\/p>Paste text/);
   assert.doesNotMatch(html, /<p><\/p>Need to add labels/);
   assert.doesNotMatch(html, /id="demo-input"/);
+  assert.doesNotMatch(html, /\b(?:mixed|edited|unknown)\b/i);
+  assert.deepEqual(
+    Array.from(html.matchAll(/<th scope="row"><code>(\w+)<\/code>/g), (match) => match[1]),
+    ["human", "ai"],
+  );
 });
 
 test("encoder provides side-by-side source and marked output", () => {
@@ -200,4 +240,8 @@ test("encoder provides side-by-side source and marked output", () => {
   assert.match(html, /id="demo-output"[^>]*readonly/);
   assert.match(html, /id="demo-preview"/);
   assert.match(html, /does not detect AI writing or verify authorship/);
+  assert.deepEqual(
+    Array.from(html.matchAll(/name="state" value="(\w+)"/g), (match) => match[1]),
+    ["human", "ai"],
+  );
 });

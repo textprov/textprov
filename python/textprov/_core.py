@@ -16,8 +16,7 @@ from ._grapheme import UNICODE_VERSION, segments  # noqa: F401 (re-exported)
 MAPPING_PATH = Path(__file__).with_name("mapping.json")
 
 SPEC_VERSION = "0.2"  # see SPEC.md
-GENERATED_STATES = ("human", "ai", "mixed")
-PROPOSED_STATES = ("edited", "unknown")
+GENERATED_STATES = ("human", "ai")
 
 
 class Mapping:
@@ -208,6 +207,6 @@ def to_html(
 
 
 def strip_marks(text, mapping=None):
-    """Remove every selector and map PUA entries back to their base character."""
+    """Remove TextProv selectors and map PUA entries back to their base character."""
     mapping = mapping or default_mapping()
     return _strip(text, mapping.selectors, mapping.pua2base)

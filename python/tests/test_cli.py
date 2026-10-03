@@ -5,7 +5,7 @@
 import io
 import tempfile
 import unittest
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 import textprov
@@ -60,6 +60,33 @@ class TestCli(unittest.TestCase):
             self.run_cli("mark", "--mode", "pua", path),
             textprov.mark("Hi", "ai", "pua"),
         )
+
+    def test_obsolete_state_flags_are_rejected(self):
+        path = self.write("s.txt", "Hi")
+        for state in ("mixed", "edited", "unknown"):
+            for command, paths in (
+                ("mark", [path]),
+                ("mark-added", [path, path]),
+            ):
+                for args in (["--" + state, *paths], [*paths, "--" + state]):
+                    with self.subTest(state=state, command=command, args=args):
+                        with redirect_stderr(io.StringIO()):
+                            with self.assertRaises(SystemExit) as error:
+                                main([command, *args])
+                        self.assertEqual(error.exception.code, 2)
+
+    def test_obsolete_selectors_are_preserved(self):
+        text = "a\U000e0102b\U000e0103c\U000e0104"
+        path = self.write("s.txt", text)
+        self.assertEqual(self.run_cli("strip", path), text)
+        self.assertEqual(self.run_cli("render", "--strip", path), text)
+        self.assertEqual(
+            self.run_cli("convert", "--from", "vs", "--to", "pua", path), text
+        )
+        report = self.run_cli("inspect", path)
+        self.assertIn("unmarked: 3\n", report)
+        for state in ("mixed", "edited", "unknown"):
+            self.assertNotIn(state + ":", report)
 
     def test_mark_added(self):
         old = self.write("old.txt", "abc")

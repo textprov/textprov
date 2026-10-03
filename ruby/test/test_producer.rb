@@ -30,6 +30,18 @@ class TestProducerFixtures < Minitest::Test
 end
 
 class TestProducerProperties < Minitest::Test
+  def test_obsolete_states_are_rejected
+    %w[mixed edited unknown].each do |state|
+      %w[vs pua].each do |mode|
+        ["", "abc"].each do |text|
+          assert_raises(ArgumentError) { Textprov.mark(text, state: state, mode: mode) }
+          assert_raises(ArgumentError) { Textprov.mark_added(text, text, state: state, mode: mode) }
+          assert_raises(ArgumentError) { Textprov.mark_added("", text, state: state, mode: mode) }
+        end
+      end
+    end
+  end
+
   def test_strip_undoes_mark
     %w[vs pua].each do |mode|
       Textprov::GENERATED_STATES.each do |state|

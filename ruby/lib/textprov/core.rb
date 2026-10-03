@@ -11,8 +11,7 @@ require_relative "grapheme"
 module Textprov
   SPEC_VERSION = "0.2"
   UNICODE_VERSION = UCD::UNICODE_VERSION
-  GENERATED_STATES = %w[human ai mixed].freeze
-  PROPOSED_STATES  = %w[edited unknown].freeze
+  GENERATED_STATES = %w[human ai].freeze
 
   MAPPING_PATH = File.expand_path("mapping.json", __dir__)
 

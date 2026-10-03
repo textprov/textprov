@@ -49,6 +49,24 @@ class TestProducerFixtures(unittest.TestCase):
 class TestProducerProperties(unittest.TestCase):
     """The properties a conforming producer must hold, per SPEC.md."""
 
+    def test_obsolete_states_are_rejected(self):
+        for state in ("mixed", "edited", "unknown"):
+            for mode in ("vs", "pua"):
+                for text in ("", "abc"):
+                    with self.subTest(state=state, mode=mode, text=text):
+                        with self.assertRaisesRegex(
+                            ValueError, "invalid provenance state"
+                        ):
+                            textprov.mark(text, state, mode)
+                        with self.assertRaisesRegex(
+                            ValueError, "invalid provenance state"
+                        ):
+                            textprov.mark_added(text, text, state, mode)
+                        with self.assertRaisesRegex(
+                            ValueError, "invalid provenance state"
+                        ):
+                            textprov.mark_added("", text, state, mode)
+
     def test_strip_undoes_mark(self):
         for mode in ("vs", "pua"):
             for state in textprov.GENERATED_STATES:

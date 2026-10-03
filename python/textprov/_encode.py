@@ -10,7 +10,7 @@ Extracted from bin/scripts/nfprov.py in the nerd-fonts provenance fork, which
 uses these operations to mark its example text and keeps the font patcher.
 """
 
-from ._core import _blank, default_mapping, segments
+from ._core import GENERATED_STATES, _blank, default_mapping, segments
 from ._grapheme import _control_like
 
 
@@ -26,6 +26,8 @@ def _mark(text, state, mode, selectors, pua2base, base2pua):
     bases present in mapping.json are replaced by their PUA counterpart;
     every other base keeps the VS_AI encoding instead.
     """
+    if state not in GENERATED_STATES:
+        raise ValueError(f"invalid provenance state: {state!r}")
     sel_cps = set(selectors.values())
     selector = chr(selectors[state])
     out = []
@@ -113,9 +115,6 @@ def _inspect(text, selectors, pua2base):
             "human",
             "ai_vs",
             "ai_pua",
-            "unknown",
-            "edited",
-            "mixed",
             "whitespace",
         ),
         0,
@@ -156,9 +155,6 @@ def _inspect(text, selectors, pua2base):
         "human",
         "ai_vs",
         "ai_pua",
-        "unknown",
-        "edited",
-        "mixed",
         "whitespace",
     ):
         lines.append(f"{key}: {counts[key]}")

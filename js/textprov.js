@@ -34,9 +34,6 @@
   var SELECTORS = {
     human: 0xe0100,
     ai: 0xe0101,
-    mixed: 0xe0102,
-    edited: 0xe0103,
-    unknown: 0xe0104,
   };
   var PUA_AI = 0x100000; // ai plane: PUA_AI(cp) = 0x100000 + cp
   // Allocated PUA code points, inclusive ranges. Anything else in the plane is
@@ -584,7 +581,7 @@
     var provClass = o.prefix;
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
-        return /[\u{E0100}-\u{E0104}\u{100000}-\u{10FFFF}]/u.test(n.nodeValue) &&
+        return /[\u{E0100}-\u{E0101}\u{100000}-\u{10FFFF}]/u.test(n.nodeValue) &&
           !n.parentNode.closest("script,style,textarea,." + provClass)
           ? NodeFilter.FILTER_ACCEPT
           : NodeFilter.FILTER_REJECT;

@@ -89,21 +89,13 @@
    ]
   },
   {
-   "name": "mixed, edited, unknown states",
+   "name": "unallocated selectors do not declare a state",
    "input": "a\udb40\udd02b\udb40\udd03c\udb40\udd04",
    "options": {},
    "runs": [
     {
-     "state": "mixed",
-     "text": "a\udb40\udd02"
-    },
-    {
-     "state": "edited",
-     "text": "b\udb40\udd03"
-    },
-    {
-     "state": "unknown",
-     "text": "c\udb40\udd04"
+     "state": null,
+     "text": "a\udb40\udd02b\udb40\udd03c\udb40\udd04"
     }
    ]
   },
@@ -474,7 +466,7 @@
    ]
   },
   {
-   "name": "all five states in one input",
+   "name": "human and ai followed by unallocated selectors",
    "input": "a\udb40\udd00b\udb40\udd01c\udb40\udd02d\udb40\udd03e\udb40\udd04",
    "options": {},
    "runs": [
@@ -487,48 +479,42 @@
      "text": "b\udb40\udd01"
     },
     {
-     "state": "mixed",
-     "text": "c\udb40\udd02"
-    },
-    {
-     "state": "edited",
-     "text": "d\udb40\udd03"
-    },
-    {
-     "state": "unknown",
-     "text": "e\udb40\udd04"
+     "state": null,
+     "text": "c\udb40\udd02d\udb40\udd03e\udb40\udd04"
     }
    ]
   },
   {
-   "name": "mixed runs across whitespace",
+   "name": "unallocated U+E0102 across whitespace",
    "input": "a\udb40\udd02 b\udb40\udd02",
    "options": {},
    "runs": [
     {
-     "state": "mixed",
+     "state": null,
      "text": "a\udb40\udd02 b\udb40\udd02"
     }
    ]
   },
   {
-   "name": "edited runs across whitespace",
+   "name": "unallocated U+E0103 preserved when stripping",
    "input": "a\udb40\udd03 b\udb40\udd03",
-   "options": {},
+   "options": {
+    "strip": true
+   },
    "runs": [
     {
-     "state": "edited",
+     "state": null,
      "text": "a\udb40\udd03 b\udb40\udd03"
     }
    ]
   },
   {
-   "name": "unknown runs across whitespace",
+   "name": "unallocated U+E0104 across whitespace",
    "input": "a\udb40\udd04 b\udb40\udd04",
    "options": {},
    "runs": [
     {
-     "state": "unknown",
+     "state": null,
      "text": "a\udb40\udd04 b\udb40\udd04"
     }
    ]
