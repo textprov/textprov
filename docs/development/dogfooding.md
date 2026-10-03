@@ -41,7 +41,8 @@ b󠄁e󠄁c󠄁a󠄁u󠄁s󠄁e󠄁 i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t�
 The adapter delegates `UserPromptSubmit` to `record_prompt`, Write to
 `prepare_write`, and Edit to `prepare_edit`. The preparation methods return
 marked tool inputs without applying the write or edit; `None` leaves the input
-unchanged. An `Ambiguous` edit becomes a denial rather than a guessed match.
+unchanged. An `Ambiguous` edit becomes a d󠄁e󠄁n󠄁i󠄁a󠄁l󠄁,󠄁 o󠄁r󠄁 a󠄁n󠄁 e󠄁r󠄁r󠄁o󠄁r󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 `edit` c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁
+b󠄁e󠄁l󠄁o󠄁w󠄁,󠄁 rather than a guessed match.
 For Bash, the adapter calls `before_command(command, operation_id)` before
 execution and `after_command(operation_id)` on success or failure, using the
 same operation ID. Workspace marks the resulting files after the command.
@@ -49,12 +50,16 @@ same operation ID. Workspace marks the resulting files after the command.
 - **W󠄁r󠄁i󠄁t󠄁e󠄁.󠄁** A󠄁 `PreToolUse` h󠄁o󠄁o󠄁k󠄁 d󠄁i󠄁f󠄁f󠄁s󠄁 t󠄁h󠄁e󠄁 n󠄁e󠄁w󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁 a󠄁g󠄁a󠄁i󠄁n󠄁s󠄁t󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 o󠄁n󠄁
   d󠄁i󠄁s󠄁k󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁w󠄁r󠄁i󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁 t󠄁o󠄁o󠄁l󠄁 r󠄁u󠄁n󠄁s󠄁.󠄁 U󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 l󠄁i󠄁n󠄁e󠄁s󠄁 k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁
   m󠄁a󠄁r󠄁k󠄁s󠄁 t󠄁h󠄁e󠄁y󠄁 h󠄁a󠄁d󠄁,󠄁 e󠄁v󠄁e󠄁n󠄁 w󠄁h󠄁e󠄁n󠄁 t󠄁h󠄁e󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 r󠄁e󠄁t󠄁y󠄁p󠄁e󠄁d󠄁 t󠄁h󠄁e󠄁m󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁.󠄁
-- **E󠄁d󠄁i󠄁t󠄁.󠄁** T󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 h󠄁o󠄁o󠄁k󠄁 f󠄁i󠄁n󠄁d󠄁s󠄁 `old_string` i󠄁n󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 i󠄁g󠄁n󠄁o󠄁r󠄁e󠄁d󠄁,󠄁
-  s󠄁u󠄁b󠄁s󠄁t󠄁i󠄁t󠄁u󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁e󠄁 t󠄁o󠄁o󠄁l󠄁 n󠄁e󠄁e󠄁d󠄁s󠄁 f󠄁o󠄁r󠄁 a󠄁n󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁 m󠄁a󠄁t󠄁c󠄁h󠄁,󠄁 a󠄁n󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 w󠄁h󠄁a󠄁t󠄁
-  `new_string` a󠄁d󠄁d󠄁s󠄁.󠄁 W󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 t󠄁h󠄁i󠄁s󠄁 a󠄁n󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁 e󠄁d󠄁i󠄁t󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 f󠄁i󠄁l󠄁e󠄁,󠄁 b󠄁e󠄁c󠄁a󠄁u󠄁s󠄁e󠄁
-  i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁.󠄁 I󠄁n󠄁 C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 C󠄁o󠄁d󠄁e󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁 i󠄁n󠄁p󠄁u󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁
-  n󠄁o󠄁t󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁l󠄁y󠄁 t󠄁a󠄁k󠄁e󠄁 e󠄁f󠄁f󠄁e󠄁c󠄁t󠄁,󠄁 s󠄁o󠄁 E󠄁d󠄁i󠄁t󠄁 f󠄁a󠄁i󠄁l󠄁s󠄁 o󠄁n󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁;󠄁 s󠄁e󠄁e󠄁
-  [k󠄁n󠄁o󠄁w󠄁n󠄁 l󠄁i󠄁m󠄁i󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁](dogfooding-known-limitations.md#failure-behaviour).󠄁
+- **E󠄁d󠄁i󠄁t󠄁.󠄁** C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 C󠄁o󠄁d󠄁e󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁s󠄁 `old_string` a󠄁g󠄁a󠄁i󠄁n󠄁s󠄁t󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 i󠄁t󠄁 r󠄁u󠄁n󠄁s󠄁
+  a󠄁n󠄁y󠄁 h󠄁o󠄁o󠄁k󠄁,󠄁 a󠄁n󠄁d󠄁 a󠄁n󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁,󠄁 s󠄁o󠄁 t󠄁h󠄁e󠄁 E󠄁d󠄁i󠄁t󠄁 t󠄁o󠄁o󠄁l󠄁
+  r󠄁e󠄁f󠄁u󠄁s󠄁e󠄁s󠄁 a󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁 t󠄁o󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 a󠄁 h󠄁o󠄁o󠄁k󠄁 c󠄁a󠄁n󠄁 r󠄁e󠄁w󠄁r󠄁i󠄁t󠄁e󠄁 i󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁
+  p󠄁r󠄁o󠄁v󠄁i󠄁d󠄁e󠄁s󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁 r󠄁o󠄁u󠄁t󠄁e󠄁 i󠄁n󠄁s󠄁t󠄁e󠄁a󠄁d󠄁.󠄁 `python3 .claude/hooks/textprov_hook.py edit`
+  r󠄁e󠄁a󠄁d󠄁s󠄁 t󠄁h󠄁e󠄁 E󠄁d󠄁i󠄁t󠄁 t󠄁o󠄁o󠄁l󠄁'󠄁s󠄁 f󠄁i󠄁e󠄁l󠄁d󠄁s󠄁 a󠄁s󠄁 J󠄁S󠄁O󠄁N󠄁 o󠄁n󠄁 s󠄁t󠄁d󠄁i󠄁n󠄁,󠄁 f󠄁i󠄁n󠄁d󠄁s󠄁 `old_string` w󠄁i󠄁t󠄁h󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁
+  i󠄁g󠄁n󠄁o󠄁r󠄁e󠄁d󠄁,󠄁 a󠄁n󠄁d󠄁 w󠄁r󠄁i󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁m󠄁e󠄁n󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁 w󠄁h󠄁a󠄁t󠄁 `new_string` a󠄁d󠄁d󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁.󠄁 A󠄁
+  `SessionStart` h󠄁o󠄁o󠄁k󠄁 t󠄁e󠄁l󠄁l󠄁s󠄁 t󠄁h󠄁e󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 t󠄁o󠄁 u󠄁s󠄁e󠄁 i󠄁t󠄁,󠄁 a󠄁n󠄁d󠄁 a󠄁 `PostToolUse` h󠄁o󠄁o󠄁k󠄁
+  r󠄁e󠄁p󠄁e󠄁a󠄁t󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 w󠄁h󠄁e󠄁n󠄁 t󠄁h󠄁e󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 r󠄁e󠄁a󠄁d󠄁s󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 f󠄁i󠄁l󠄁e󠄁.󠄁 W󠄁h󠄁e󠄁r󠄁e󠄁 `old_string` a󠄁l󠄁r󠄁e󠄁a󠄁d󠄁y󠄁
+  m󠄁a󠄁t󠄁c󠄁h󠄁e󠄁s󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁l󠄁y󠄁,󠄁 a󠄁s󠄁 o󠄁n󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 l󠄁i󠄁n󠄁e󠄁s󠄁,󠄁 t󠄁h󠄁e󠄁 E󠄁d󠄁i󠄁t󠄁 t󠄁o󠄁o󠄁l󠄁 w󠄁o󠄁r󠄁k󠄁s󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁
+  `PreToolUse` h󠄁o󠄁o󠄁k󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 w󠄁h󠄁a󠄁t󠄁 `new_string` a󠄁d󠄁d󠄁s󠄁.󠄁
 - **B󠄁a󠄁s󠄁h󠄁.󠄁** A󠄁 `PreToolUse` h󠄁o󠄁o󠄁k󠄁 s󠄁n󠄁a󠄁p󠄁s󠄁h󠄁o󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 a󠄁
   `PostToolUse` h󠄁o󠄁o󠄁k󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 w󠄁h󠄁a󠄁t󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 a󠄁d󠄁d󠄁e󠄁d󠄁.󠄁 C󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 m󠄁o󠄁v󠄁e󠄁 t󠄁h󠄁e󠄁
   w󠄁o󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 t󠄁r󠄁e󠄁e󠄁 t󠄁o󠄁 a󠄁n󠄁o󠄁t󠄁h󠄁e󠄁r󠄁 r󠄁e󠄁v󠄁i󠄁s󠄁i󠄁o󠄁n󠄁,󠄁 s󠄁u󠄁c󠄁h󠄁 a󠄁s󠄁 `git checkout`,󠄁 a󠄁r󠄁e󠄁 s󠄁k󠄁i󠄁p󠄁p󠄁e󠄁d󠄁,󠄁 a󠄁s󠄁
@@ -102,6 +107,9 @@ S󠄁e󠄁e󠄁 [k󠄁n󠄁o󠄁w󠄁n󠄁 l󠄁i󠄁m󠄁i󠄁t󠄁a󠄁t󠄁i�
 # From the repository root, with textprov installed:
 python3 -m textprov inspect docs/development/dogfooding.md   # count states
 TEXTPROV_HOOK=off claude                                    # disable the adapter
+python3 .claude/hooks/textprov_hook.py edit <<'JSON'        # edit marked prose
+{"file_path": "docs/draft.md", "old_string": "old phrase", "new_string": "new phrase"}
+JSON
 
 # From python/:
 python3 -m unittest discover -s tests -t .                  # Python suite

@@ -129,6 +129,12 @@ shingles = workspace.load_shingles()
   and returns an exact replacement tuple, or `None` if the path is out of scope
   or no edit can be prepared. It propagates `Ambiguous`; the caller must refuse
   or disambiguate the edit.
+- `apply_edit(path, old_string, new_string, replace_all=False)` p󠄁r󠄁e󠄁p󠄁a󠄁r󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁
+  s󠄁a󠄁m󠄁e󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁m󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁d󠄁 w󠄁r󠄁i󠄁t󠄁e󠄁s󠄁 i󠄁t󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁,󠄁 f󠄁o󠄁r󠄁 c󠄁a󠄁l󠄁l󠄁e󠄁r󠄁s󠄁 w󠄁h󠄁o󠄁s󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁 t󠄁o󠄁o󠄁l󠄁
+  c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁 t󠄁a󠄁k󠄁e󠄁 a󠄁 r󠄁e󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁 i󠄁n󠄁p󠄁u󠄁t󠄁.󠄁 I󠄁t󠄁 r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 n󠄁u󠄁m󠄁b󠄁e󠄁r󠄁 o󠄁f󠄁 p󠄁l󠄁a󠄁c󠄁e󠄁s󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁d󠄁,󠄁 0󠄁
+  i󠄁f󠄁 t󠄁h󠄁e󠄁 p󠄁a󠄁t󠄁h󠄁 i󠄁s󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁 o󠄁r󠄁 `old_string` i󠄁s󠄁 a󠄁b󠄁s󠄁e󠄁n󠄁t󠄁,󠄁 a󠄁n󠄁d󠄁 p󠄁r󠄁o󠄁p󠄁a󠄁g󠄁a󠄁t󠄁e󠄁s󠄁
+  `Ambiguous` w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁.󠄁
+- `has_marks(path)` r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 a󠄁n󠄁 i󠄁n󠄁-󠄁s󠄁c󠄁o󠄁p󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁.󠄁
 - `before_command(command, operation_id)` snapshots scoped files before an
   externally executed command. `after_command(operation_id)` compares the
   snapshot with the resulting files and writes provenance marks for additions.
@@ -167,7 +173,11 @@ variables do not configure direct package calls.
 to `prepare_write` and `prepare_edit`. Bash pre-tool events map to
 `before_command`, and post-tool events, including failures, map to
 `after_command`. The adapter converts prepared values into updated tool inputs
-and `Ambiguous` into a denial. Workspace owns the reusable policy; editing
+and `Ambiguous` into a denial. C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 C󠄁o󠄁d󠄁e󠄁 v󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁e󠄁s󠄁 a󠄁n󠄁 E󠄁d󠄁i󠄁t󠄁 a󠄁g󠄁a󠄁i󠄁n󠄁s󠄁t󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁
+b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 a󠄁n󠄁y󠄁 h󠄁o󠄁o󠄁k󠄁 r󠄁u󠄁n󠄁s󠄁,󠄁 s󠄁o󠄁 a󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁 t󠄁o󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 n󠄁e󠄁v󠄁e󠄁r󠄁 r󠄁e󠄁a󠄁c󠄁h󠄁e󠄁s󠄁 `prepare_edit`.󠄁
+F󠄁o󠄁r󠄁 t󠄁h󠄁o󠄁s󠄁e󠄁 t󠄁h󠄁e󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁 h󠄁a󠄁s󠄁 a󠄁n󠄁 `edit` c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁 c󠄁a󠄁l󠄁l󠄁s󠄁 `apply_edit`,󠄁 a󠄁n󠄁d󠄁 i󠄁t󠄁
+a󠄁n󠄁s󠄁w󠄁e󠄁r󠄁s󠄁 `SessionStart` a󠄁n󠄁d󠄁 R󠄁e󠄁a󠄁d󠄁 e󠄁v󠄁e󠄁n󠄁t󠄁s󠄁 o󠄁n󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁 `has_marks` i󠄁s󠄁 t󠄁r󠄁u󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁
+a󠄁 n󠄁o󠄁t󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 t󠄁o󠄁 t󠄁h󠄁a󠄁t󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁.󠄁 Workspace owns the reusable policy; editing
 helpers own string transformations. Other editors and agents can provide their
 own adapters without depending on Claude's event format.
 
