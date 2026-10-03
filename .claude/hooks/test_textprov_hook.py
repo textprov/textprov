@@ -6,8 +6,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-import textprov  # noqa: E402  (path set up by the hook module)
-import textprov_hook as hook  # noqa: E402
+import textprov_hook as hook  # noqa: E402  (puts ../../python on the path)
+import textprov  # noqa: E402
 
 AI = "\U000E0101"
 HUMAN = "\U000E0100"
