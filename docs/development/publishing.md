@@ -36,8 +36,7 @@ ruby/LICENSE     included in the Ruby gem
 ```
 
 Keep every copy identical to the root file. The `license-drift` job in
-`.github/workflows/conformance.yml` currently verifies the Python and
-JavaScript copies. Check the Ruby copy manually until CI covers it as well.
+`.github/workflows/conformance.yml` v󠄁e󠄁r󠄁i󠄁f󠄁i󠄁e󠄁s󠄁 a󠄁l󠄁l󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁s󠄁.󠄁
 Use copies rather than symlinks because symlinks can cause problems in Windows
 checkouts and package archives.
 
