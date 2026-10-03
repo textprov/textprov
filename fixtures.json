@@ -543,6 +543,262 @@
      "text": "a\udb40\udd00 b\udb40\udd00"
     }
    ]
+  },
+  {
+   "name": "all Unicode White_Space code points between equal states: default",
+   "input": "a\udb40\udd01\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "all Unicode White_Space code points between equal states: strip",
+   "input": "a\udb40\udd01\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b"
+    }
+   ]
+  },
+  {
+   "name": "all Unicode White_Space code points between equal states: merge_whitespace",
+   "input": "a\udb40\udd01\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b\udb40\udd01",
+   "options": {
+    "merge_whitespace": false
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+001C is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u001cb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u001c"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+001D is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u001db\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u001d"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+001E is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u001eb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u001e"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+001F is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u001fb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u001f"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+FEFF is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\ufeffb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\ufeff"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+180E is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u180eb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u180e"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+200B is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u200bb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u200b"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+0085 is inert even with strip",
+   "input": "\u0085\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u0085\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+00A0 is inert even with strip",
+   "input": "\u00a0\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u00a0\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+1680 is inert even with strip",
+   "input": "\u1680\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u1680\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+2007 is inert even with strip",
+   "input": "\u2007\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u2007\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+202F is inert even with strip",
+   "input": "\u202f\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u202f\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+3000 is inert even with strip",
+   "input": "\u3000\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u3000\udb40\udd01"
+    }
+   ]
   }
  ],
  "producer_cases": [
@@ -721,6 +977,42 @@
    },
    "output": "\udbc0\udc48",
    "note": "a PUA character is already a mark"
+  },
+  {
+   "name": "all Unicode White_Space code points stay bare in vs mode",
+   "input": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
+  },
+  {
+   "name": "non-White_Space controls and format characters are marked in vs mode",
+   "input": "\u001c\u001d\u001e\u001f\ufeff\u180e\u200b",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\u001c\udb40\udd01\u001d\udb40\udd01\u001e\udb40\udd01\u001f\udb40\udd01\ufeff\udb40\udd01\u180e\udb40\udd01\u200b\udb40\udd01"
+  },
+  {
+   "name": "all Unicode White_Space code points stay bare in pua mode",
+   "input": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
+  },
+  {
+   "name": "non-White_Space controls and format characters are marked in pua mode",
+   "input": "\u001c\u001d\u001e\u001f\ufeff\u180e\u200b",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\u001c\udb40\udd01\u001d\udb40\udd01\u001e\udb40\udd01\u001f\udb40\udd01\ufeff\udb40\udd01\u180e\udb40\udd01\u200b\udb40\udd01"
   }
  ],
  "convert_cases": [

@@ -64,10 +64,9 @@ module Textprov
     attr_writer :default_mapping
   end
 
-  # Whitespace only, by Unicode's White_Space property (Ruby's \\s is ASCII
-  # only); matches Python's str.isspace and JavaScript's \\s.
+  # Exact Unicode White_Space set from SPEC.md, independent of runtime predicates.
   def blank?(text)
-    text.match?(/\A[[:space:]]+\z/)
+    text.match?(/\A[\u0009-\u000D\u0020\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+\z/)
   end
 
   # `text` is a String; we work over its per-codepoint characters. Ruby's

@@ -511,6 +511,13 @@
     return clusters;
   }
 
+  // Exact Unicode White_Space set from SPEC.md; JS \s omits U+0085 and includes U+FEFF.
+  function blank(text) {
+    return /^[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/.test(
+      text,
+    );
+  }
+
   function resolveOptions(opts) {
     opts = opts || {};
     var merge = opts.merge_whitespace !== undefined ? opts.merge_whitespace : opts.mergeWhitespace;
@@ -536,7 +543,7 @@
         out = segment;
       if (VS[last] !== undefined && cps.length > 1) {
         // Whitespace cannot carry a mark; a selector after it is inert.
-        if (!/^\s+$/.test(cps.slice(0, -1).join(""))) {
+        if (!blank(cps.slice(0, -1).join(""))) {
           state = VS[last];
           if (o.strip) out = cps.slice(0, -1).join("");
         }
@@ -545,7 +552,7 @@
         // PUA is unreadable without the font; re-emit as base + selector encoding.
         out =
           String.fromCodePoint(cp0 - PUA_AI) + (o.strip ? "" : String.fromCodePoint(SELECTORS.ai));
-      } else if (/^\s+$/.test(segment)) {
+      } else if (blank(segment)) {
         state = "ws";
       }
       var prev = items[items.length - 1];

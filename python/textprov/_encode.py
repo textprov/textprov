@@ -10,7 +10,7 @@ Extracted from bin/scripts/nfprov.py in the nerd-fonts provenance fork, which
 uses these operations to mark its example text and keeps the font patcher.
 """
 
-from ._core import default_mapping, segments
+from ._core import _blank, default_mapping, segments
 
 
 def _mark(text, state, mode, selectors, pua2base, base2pua):
@@ -31,7 +31,7 @@ def _mark(text, state, mode, selectors, pua2base, base2pua):
     for cluster in segments(text):
         first, last = ord(cluster[0]), ord(cluster[-1])
         single = len(cluster) == 1
-        if last in sel_cps or (single and first in pua2base) or cluster.isspace():
+        if last in sel_cps or (single and first in pua2base) or _blank(cluster):
             out.append(cluster)  # already marked, a lone selector, or inert
         elif mode == "pua" and state == "ai" and single and first in base2pua:
             out.append(chr(base2pua[first]))
@@ -128,18 +128,18 @@ def _inspect(text, selectors, pua2base):
                 counts["ai_pua"] += 1
             elif 0x100000 <= cp <= 0x10FFFD:
                 unrecognised_pua.add(cp)
-            elif cluster.isspace():
+            elif _blank(cluster):
                 counts["whitespace"] += 1
             else:
                 counts["unmarked"] += 1
-        elif last in sel2name and cluster[:-1].isspace():
+        elif last in sel2name and _blank(cluster[:-1]):
             # Whitespace cannot carry a mark; the selector is stray.
             counts["whitespace"] += 1
             unrecognised_selectors.add(last)
         elif last in sel2name:
             name = sel2name[last]
             counts["ai_vs" if name == "ai" else name] += 1
-        elif cluster.isspace():
+        elif _blank(cluster):
             counts["whitespace"] += 1
         else:
             counts["unmarked"] += 1

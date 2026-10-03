@@ -8,6 +8,7 @@ keeps the encoder. The functions here are the decoder and renderer halves.
 
 import html
 import json
+import re
 from pathlib import Path
 
 from ._grapheme import UNICODE_VERSION, segments  # noqa: F401 (re-exported)
@@ -80,6 +81,17 @@ def load_mapping(path=MAPPING_PATH):
     return mapping, selectors, pua2base, base2pua
 
 
+# Exact Unicode White_Space set from SPEC.md; str.isspace() also includes U+001C–U+001F.
+_WHITE_SPACE = re.compile(
+    r"[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a"
+    r"\u2028\u2029\u202f\u205f\u3000]+"
+)
+
+
+def _blank(text):
+    return _WHITE_SPACE.fullmatch(text) is not None
+
+
 # --- runs and markup -------------------------------------------------------
 
 
@@ -110,14 +122,14 @@ def _runs(text, selectors, pua2base, strip=False, merge_whitespace=True):
         state, out = None, cluster
         if last in sel2name and len(cluster) > 1:
             # Whitespace cannot carry a mark; a selector after it is inert.
-            if not cluster[:-1].isspace():
+            if not _blank(cluster[:-1]):
                 state = sel2name[last]
                 if strip:
                     out = cluster[:-1]
         elif len(cluster) == 1 and ord(cluster) in pua2base:
             base_cp, state = pua2base[ord(cluster)]
             out = chr(base_cp) if strip else chr(base_cp) + chr(selectors[state])
-        elif cluster.isspace():
+        elif _blank(cluster):
             state = "ws"
         if items and items[-1][0] == state:
             items[-1][1] += out
