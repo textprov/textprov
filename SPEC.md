@@ -161,7 +161,9 @@ displays as the base glyph `A`; the provenance selector may be invisible.
 **Selector encoding.** A marked grapheme cluster ends with one of the code
 points in `mapping.json` under `variation_selectors`. Because these selectors
 have the Unicode `Grapheme_Extend` property, segmentation treats the selector
-as part of the cluster it marks. The selectors are a private convention shared
+as part of an eligible cluster it marks. A cluster ending in a code point with
+`Grapheme_Cluster_Break=Control`, `CR`, or `LF` is not eligible: Unicode grapheme
+break rule GB4 forces a boundary before the selector. The selectors are a private convention shared
 by producers, decoders, and provenance-aware fonts; they are not registered
 Unicode variation sequences. A font that lacks the variants renders the plain
 base glyph, so unmarked-looking text is the fallback.
@@ -263,8 +265,15 @@ A producer marks text s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 b󠄁y󠄁 a󠄁n
    decoder does, and mark each one once, after the whole cluster: after
    combining marks, emoji variation selectors, skin-tone modifiers, ZWJ joins,
    and the second half of a regional-indicator pair.
-2. **Never mark whitespace.** A decoder relies on this: whitespace is what it
-   is allowed to absorb between two runs of the same state.
+2. **Never mark whitespace or control-break clusters.** A decoder relies on
+   unmarked whitespace: it is allowed to absorb it between two runs of the same
+   state. A cluster ending in a code point with `Grapheme_Cluster_Break=Control`,
+   `CR`, or `LF` must also remain unchanged in either encoding. This includes
+   NUL (U+0000), soft hyphen (U+00AD), zero-width space (U+200B), word joiner
+   (U+2060), and byte order mark (U+FEFF). A selector appended to such a cluster
+   would be a separate, orphan cluster, not a provenance mark. This rule uses
+   grapheme-break properties, not general category `Cf`: format characters
+   such as ZWJ, ZWNJ, and emoji tags can belong to markable clusters.
 3. **Be idempotent.** Marking text that is already marked returns it
    unchanged. A cluster that already carries a selector keeps the state it has,
    and a PUA character is left alone; a producer does not overwrite a state it
