@@ -182,6 +182,31 @@ class Workspace:
             min_words=self.human_min_words,
         )
 
+    def has_marks(self, path):
+        """Report whether an in-scope file carries provenance marks."""
+        if not self.in_scope(path):
+            return False
+        raw = read_text(self.resolve(path))
+        return raw is not None and plain_map(raw)[0] != raw
+
+    def apply_edit(self, path, old_string, new_string, replace_all=False):
+        """Apply a mark-aware replacement and return how many places changed.
+
+        For callers that cannot have their own edit rewritten by prepare_edit.
+        Returns 0 when the file is out of scope or old_string is absent;
+        ambiguous edits raise Ambiguous and leave the file alone.
+        """
+        result = self.prepare_edit(path, old_string, new_string, replace_all)
+        if result is None:
+            return 0
+        old, new = result
+        target = self.resolve(path)
+        raw = read_text(target)
+        count = raw.count(old) if replace_all else 1
+        if old != new:
+            write_text(target, raw.replace(old, new, count))
+        return count
+
     def snapshot_path(self, operation_id):
         # Provider IDs may contain separators, or differ only by case on macOS.
         name = hashlib.sha256(

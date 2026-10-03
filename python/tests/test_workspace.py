@@ -7,6 +7,7 @@ import unittest
 from pathlib import Path
 
 import textprov
+from textprov.editing import Ambiguous
 from textprov.workspace import GIT_MOVES_TREE, Workspace
 
 
@@ -179,6 +180,46 @@ class TestCommands(unittest.TestCase):
         Workspace(self.root).after_command("op")
         self.assertEqual(self.read(), "old\n" + ai("new line") + "\n")
         self.assertFalse(self.workspace.snapshot_path("op").exists())
+
+    def test_apply_edit_matches_with_marks_ignored(self):
+        human = textprov.mark("Kept words.", "human")
+        self.write(human + " " + ai("Old tail.") + "\n")
+        self.assertTrue(self.workspace.has_marks("a.md"))
+        self.assertEqual(
+            self.workspace.apply_edit("a.md", "Old tail.", "New tail."), 1
+        )
+        self.assertEqual(self.read(), human + " " + ai("New tail.") + "\n")
+
+    def test_apply_edit_replace_all_counts_places(self):
+        self.write(ai("One. Two. One.") + "\n")
+        self.assertEqual(
+            self.workspace.apply_edit("a.md", "One.", "Six.", True), 2
+        )
+        self.assertEqual(self.read(), ai("Six. Two. Six.") + "\n")
+
+    def test_apply_edit_without_a_match_or_scope_changes_nothing(self):
+        (self.root / "b.txt").write_text("old\n", encoding="utf-8")
+        self.assertEqual(self.workspace.apply_edit("a.md", "absent", "x"), 0)
+        self.assertEqual(self.workspace.apply_edit("b.txt", "old", "new"), 0)
+        self.assertEqual(self.workspace.apply_edit("none.md", "old", "x"), 0)
+        self.assertEqual(self.read(), "old\n")
+        self.assertEqual((self.root / "b.txt").read_text("utf-8"), "old\n")
+
+    def test_apply_edit_refuses_ambiguity(self):
+        self.write("Same. " + ai("Same.") + "\n")
+        before = self.read()
+        for replace_all in (False, True):
+            with self.assertRaises(Ambiguous):
+                self.workspace.apply_edit("a.md", "Same.", "x", replace_all)
+        self.assertEqual(self.read(), before)
+
+    def test_has_marks(self):
+        self.assertFalse(self.workspace.has_marks("a.md"))
+        self.assertFalse(self.workspace.has_marks("missing.md"))
+        (self.root / "b.txt").write_text(ai("x"), encoding="utf-8")
+        self.assertFalse(self.workspace.has_marks("b.txt"))
+        self.write(ai("x"))
+        self.assertTrue(self.workspace.has_marks("a.md"))
 
     def test_new_copy_is_not_marked(self):
         self.workspace.before_command("copy", "op")
