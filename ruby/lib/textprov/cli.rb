@@ -40,8 +40,8 @@ module Textprov
         Usage: #{PROG} [-o FILE] COMMAND [OPTIONS] ARGS...
 
         Commands:
-          mark [--human|--ai|--mixed] [--mode vs|pua] FILE
-          mark-added [--human|--ai|--mixed] [--mode vs|pua] OLD NEW
+          mark [--human|--ai] [--mode vs|pua] FILE
+          mark-added [--human|--ai] [--mode vs|pua] OLD NEW
           convert --from vs|pua --to vs|pua FILE
           strip FILE
           render [--strip] [--no-merge-whitespace] [--class-prefix P] FILE
@@ -58,7 +58,7 @@ module Textprov
       i = 0
       while i < argv.length
         case argv[i]
-        when "--human", "--ai", "--mixed"
+        when "--human", "--ai"
           opts[:state] = argv[i].sub(/^--/, "")
         when "--mode"
           opts[:mode] = argv[i + 1]
@@ -67,6 +67,8 @@ module Textprov
 
           i += 1
         else
+          raise ArgumentError, "invalid option #{argv[i]}" if argv[i].start_with?("--")
+
           rest << argv[i]
         end
         i += 1

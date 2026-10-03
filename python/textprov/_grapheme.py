@@ -29,6 +29,11 @@ def _property(cp):
     return CODES[bisect_right(BOUNDS, cp) - 1]
 
 
+def _control_like(cp):
+    """Whether GB4 forces a break after this code point, even before Extend."""
+    return _property(cp) & _GCB_MASK in _CONTROL_LIKE
+
+
 def segments(text):
     """Split `text` into extended grapheme clusters."""
     clusters = []

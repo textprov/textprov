@@ -2,6 +2,11 @@
 
 Status: accepted. Date: 2026-09-11.
 
+> **S󠄁t󠄁a󠄁t󠄁e󠄁 g󠄁u󠄁i󠄁d󠄁a󠄁n󠄁c󠄁e󠄁 u󠄁p󠄁d󠄁a󠄁t󠄁e󠄁d󠄁 (󠄁2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁3󠄁)󠄁:󠄁** T󠄁h󠄁e󠄁 `unknown` s󠄁t󠄁y󠄁l󠄁i󠄁n󠄁g󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁d󠄁
+> b󠄁e󠄁l󠄁o󠄁w󠄁 b󠄁e󠄁l󠄁o󠄁n󠄁g󠄁s󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁i󠄁c󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁t󠄁y󠄁p󠄁e󠄁,󠄁 n󠄁o󠄁t󠄁 t󠄁h󠄁e󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 v󠄁o󠄁c󠄁a󠄁b󠄁u󠄁l󠄁a󠄁r󠄁y󠄁.󠄁
+> O󠄁n󠄁l󠄁y󠄁 `human` a󠄁n󠄁d󠄁 `ai` a󠄁r󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁.󠄁 T󠄁h󠄁e󠄁 s󠄁p󠄁a󠄁n󠄁-󠄁r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁 i󠄁s󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁;󠄁
+> s󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁 [c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁 g󠄁u󠄁i󠄁d󠄁e󠄁](../HTML-RENDERING.md).󠄁
+
 ## Context
 
 Marked text is visible only with a provenance-enabled (P+) font and a shaper

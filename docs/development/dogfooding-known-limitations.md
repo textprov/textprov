@@ -15,6 +15,12 @@ f󠄁o󠄁u󠄁n󠄁d󠄁;󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁 a󠄁n󠄁 e󠄁n�
 - O󠄁t󠄁h󠄁e󠄁r󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁s󠄁 (󠄁C󠄁o󠄁d󠄁e󠄁x󠄁,󠄁 C󠄁u󠄁r󠄁s󠄁o󠄁r󠄁,󠄁 s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁s󠄁)󠄁 a󠄁r󠄁e󠄁 n󠄁o󠄁t󠄁 c󠄁o󠄁v󠄁e󠄁r󠄁e󠄁d󠄁.󠄁 T󠄁h󠄁e󠄁i󠄁r󠄁 o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁 i󠄁s󠄁
   u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁,󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 m󠄁a󠄁k󠄁e󠄁s󠄁 n󠄁o󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁;󠄁 i󠄁t󠄁 i󠄁s󠄁 n󠄁o󠄁t󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 `ai`.󠄁
 
+These are limits of automatic Claude-hook coverage, not of direct package
+use. Other editors, agents, and scripts can call the
+[Python integration APIs](../../python/README.md#editing-api) with their own
+adapter and an explicit workspace root. Importing the package does not install
+hooks or mark their output automatically.
+
 ## What counts as human
 
 - A󠄁 p󠄁r󠄁o󠄁m󠄁p󠄁t󠄁 i󠄁s󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁e󠄁d󠄁 a󠄁s󠄁 `human` b󠄁e󠄁c󠄁a󠄁u󠄁s󠄁e󠄁 y󠄁o󠄁u󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁t󠄁e󠄁d󠄁 i󠄁t󠄁.󠄁 T󠄁h󠄁a󠄁t󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁e󠄁s󠄁
@@ -27,6 +33,12 @@ f󠄁o󠄁u󠄁n󠄁d󠄁;󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁 a󠄁n󠄁 e󠄁n�
   o󠄁f󠄁 y󠄁o󠄁u󠄁r󠄁 w󠄁o󠄁r󠄁d󠄁s󠄁 i󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 `ai`.󠄁
 - T󠄁e󠄁x󠄁t󠄁 y󠄁o󠄁u󠄁 t󠄁y󠄁p󠄁e󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁l󠄁y󠄁 i󠄁n󠄁 a󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁 s󠄁t󠄁a󠄁y󠄁s󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁.󠄁 N󠄁o󠄁t󠄁h󠄁i󠄁n󠄁g󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁u󠄁i󠄁s󠄁h󠄁e󠄁s󠄁 i󠄁t󠄁
   f󠄁r󠄁o󠄁m󠄁 a󠄁 f󠄁o󠄁r󠄁m󠄁a󠄁t󠄁t󠄁e󠄁r󠄁 o󠄁r󠄁 a󠄁n󠄁o󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁o󠄁o󠄁l󠄁.󠄁
+
+The five-word threshold is the default. Direct callers configure
+`Workspace(..., human_min_words=5)` or pass the same `min_words` value to
+`human_shingles` and the editing function that consumes its result. The Claude
+adapter reads `TEXTPROV_HUMAN_MIN_WORDS`; the package does not read it. Pure
+editing functions do no prompt matching unless `shingles` is supplied.
 
 ## What counts as AI
 
@@ -71,6 +83,11 @@ f󠄁o󠄁u󠄁n󠄁d󠄁;󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁 a󠄁n󠄁 e󠄁n�
   s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁,󠄁 s󠄁o󠄁 i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁 a󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁.󠄁
 
 ## Failure behaviour
+
+The editing API and `Workspace.prepare_edit` raise `textprov.editing.Ambiguous`
+for the ambiguous replacements described below. Direct callers must handle
+that exception themselves; Claude denials, stderr reporting, and event-specific
+continuation behavior belong to the adapter.
 
 - A󠄁 h󠄁o󠄁o󠄁k󠄁 e󠄁r󠄁r󠄁o󠄁r󠄁 b󠄁l󠄁o󠄁c󠄁k󠄁s󠄁 t󠄁h󠄁e󠄁 W󠄁r󠄁i󠄁t󠄁e󠄁 o󠄁r󠄁 E󠄁d󠄁i󠄁t󠄁,󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁 e󠄁r󠄁r󠄁o󠄁r󠄁 o󠄁n󠄁 s󠄁t󠄁d󠄁e󠄁r󠄁r󠄁,󠄁 r󠄁a󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁n󠄁
   l󠄁e󠄁t󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁.󠄁 A󠄁n󠄁 e󠄁r󠄁r󠄁o󠄁r󠄁 o󠄁n󠄁 a󠄁 B󠄁a󠄁s󠄁h󠄁 o󠄁r󠄁 p󠄁r󠄁o󠄁m󠄁p󠄁t󠄁 e󠄁v󠄁e󠄁n󠄁t󠄁 i󠄁s󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁e󠄁d󠄁

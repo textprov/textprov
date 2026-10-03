@@ -49,11 +49,10 @@ TextProv decoder when you need that distinction or the complete state record.
 The subset includes available glyphs in `U+0020`–`U+00FF`,
 `U+2010`–`U+2027`, and the Euro, trademark, and minus signs. Selector variants
 are added only for printable, non-whitespace base characters present in the
-source. Whitespace, controls, and the soft hyphen are not decorated. Mixed,
-Edited, and Unknown states have no decorated variants in this suite; these
-marks remain part of the stored text, and their absence from the font's
-supported mappings does not change their protocol meaning. The generated
-[build manifest](../site/public/fonts/utility/sources.json) records the actual
+source. Whitespace, controls, and the soft hyphen are not decorated. H󠄁u󠄁m󠄁a󠄁n󠄁
+a󠄁n󠄁d󠄁 A󠄁I󠄁 a󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁 o󠄁n󠄁l󠄁y󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁.󠄁 S󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 a󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁
+h󠄁a󠄁v󠄁e󠄁 n󠄁o󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 m󠄁e󠄁a󠄁n󠄁i󠄁n󠄁g󠄁;󠄁 f󠄁o󠄁n󠄁t󠄁 c󠄁o󠄁v󠄁e󠄁r󠄁a󠄁g󠄁e󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁.󠄁 The
+g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 [build manifest](../site/public/fonts/utility/sources.json) records the actual
 coverage of each build.
 
 The builder adds a `cmap` format 14 variation-sequence table and `ccmp`
@@ -133,8 +132,8 @@ served by the website or repackaged with their accompanying notices.
 
 The checker validates font metadata and mappings, preserved glyph advances,
 decoration geometry, bundles and notices, and exact shaping of supported
-base-plus-selector sequences. It also checks unsupported-state fallback. Its
-strict checks use HarfBuzz through the pinned `uharfbuzz` dependency. Confirm
+base-plus-selector sequences. It also checks f󠄁a󠄁l󠄁l󠄁b󠄁a󠄁c󠄁k󠄁 f󠄁o󠄁r󠄁 u󠄁n󠄁a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁e󠄁d󠄁
+s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁.󠄁 I󠄁t󠄁s󠄁 strict checks use HarfBuzz through the pinned `uharfbuzz` dependency. Confirm
 the application's actual rendering separately when adopting a utility font.
 
 ## Licensing and attribution

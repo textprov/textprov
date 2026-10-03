@@ -54,7 +54,7 @@ including whitespace and lone selectors. In summary:
    uses the package's `cluster_end` helper. Their segmentation is not guaranteed
    to agree for every Unicode sequence; see the
    [specification's limits](../SPEC.md#not-specified).
-2. Read recognized selectors (`U+E0100`–`U+E0104`) or registered PUA entries
+2. Read recognized selectors (󠄁`U+E0100` a󠄁n󠄁d󠄁 `U+E0101`)󠄁 or registered PUA entries
    using the [registry](../mapping.json). A lone selector or a selector after
    whitespace is not a mark under the specification.
 3. Coalesce adjacent clusters with the same state. By default, absorb
@@ -94,7 +94,7 @@ the text nodes; do not wrap Markdown source in spans before parsing it.
 
 The markup and decoder options are part of the specification. The visual style is
 not. The optional [stylesheet](../js/textprov.css) uses a wavy underline for
-`ai`, a solid underline for `unknown`, and other styles for the remaining states.
+`ai`.󠄁 O󠄁n󠄁l󠄁y󠄁 `human` a󠄁n󠄁d󠄁 `ai` a󠄁r󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁;󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
 
 ## Original prototype measurements
 

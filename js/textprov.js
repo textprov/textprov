@@ -17,7 +17,8 @@
  *   <script>textprov.render(document.body);</script>
  *
  * Options (all optional, passed to both runs() and render()):
- *   strip           default false  Remove selectors from run text; state is
+ *   strip           default false  Remove mark selectors; keep inert selectors.
+ *                                  Decode PUA marks to bare bases; state is
  *                                  still reported via data-prov.
  *   merge_whitespace default true  Whitespace between two runs of the same
  *                                  state joins them into one run. This is the
@@ -34,9 +35,6 @@
   var SELECTORS = {
     human: 0xe0100,
     ai: 0xe0101,
-    mixed: 0xe0102,
-    edited: 0xe0103,
-    unknown: 0xe0104,
   };
   var PUA_AI = 0x100000; // ai plane: PUA_AI(cp) = 0x100000 + cp
   // Allocated PUA code points, inclusive ranges. Anything else in the plane is
@@ -511,6 +509,13 @@
     return clusters;
   }
 
+  // Exact Unicode White_Space set from SPEC.md; JS \s omits U+0085 and includes U+FEFF.
+  function blank(text) {
+    return /^[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/.test(
+      text,
+    );
+  }
+
   function resolveOptions(opts) {
     opts = opts || {};
     var merge = opts.merge_whitespace !== undefined ? opts.merge_whitespace : opts.mergeWhitespace;
@@ -536,7 +541,7 @@
         out = segment;
       if (VS[last] !== undefined && cps.length > 1) {
         // Whitespace cannot carry a mark; a selector after it is inert.
-        if (!/^\s+$/.test(cps.slice(0, -1).join(""))) {
+        if (!blank(cps.slice(0, -1).join(""))) {
           state = VS[last];
           if (o.strip) out = cps.slice(0, -1).join("");
         }
@@ -545,7 +550,7 @@
         // PUA is unreadable without the font; re-emit as base + selector encoding.
         out =
           String.fromCodePoint(cp0 - PUA_AI) + (o.strip ? "" : String.fromCodePoint(SELECTORS.ai));
-      } else if (/^\s+$/.test(segment)) {
+      } else if (blank(segment)) {
         state = "ws";
       }
       var prev = items[items.length - 1];
@@ -577,7 +582,7 @@
     var provClass = o.prefix;
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
-        return /[\u{E0100}-\u{E0104}\u{100000}-\u{10FFFF}]/u.test(n.nodeValue) &&
+        return /[\u{E0100}-\u{E0101}\u{100000}-\u{10FFFF}]/u.test(n.nodeValue) &&
           !n.parentNode.closest("script,style,textarea,." + provClass)
           ? NodeFilter.FILTER_ACCEPT
           : NodeFilter.FILTER_REJECT;

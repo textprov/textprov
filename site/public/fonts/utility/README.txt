@@ -7,7 +7,7 @@ do not authenticate authorship. These are Regular Latin subsets.
 
 Install each TTF in your operating system or use WOFF2 with @font-face.
 Base character + selector is canonical. Registry-allocated AI PUA aliases
-are available for compatibility. Mixed/edited/unknown have no variant.
+are available for compatibility. Only Human and AI are TextProv states.
 Source per-glyph advances and line metrics are retained; marked runs
 can shape differently (for example kerning or ligatures).
 

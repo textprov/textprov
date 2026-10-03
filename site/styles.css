@@ -11,10 +11,8 @@
   --focus: #0969da;
   --human: #1a7f37;
   --ai: #bc4c00;
-  --mixed: #6e7781;
   --human-bg: rgba(26, 127, 55, 0.1);
   --ai-bg: rgba(188, 76, 0, 0.1);
-  --mixed-bg: rgba(110, 119, 129, 0.12);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 18px;
   font-synthesis: none;
@@ -32,10 +30,8 @@
     --focus: #4493f8;
     --human: #3fb950;
     --ai: #db6d28;
-    --mixed: #8b949e;
     --human-bg: rgba(63, 185, 80, 0.14);
     --ai-bg: rgba(219, 109, 40, 0.14);
-    --mixed-bg: rgba(139, 148, 158, 0.14);
   }
 }
 
@@ -394,10 +390,6 @@ footer a:hover {
 .prov-ai {
   background: var(--ai-bg);
   text-decoration-color: var(--ai);
-}
-.prov-mixed {
-  background: var(--mixed-bg);
-  text-decoration-color: var(--mixed);
 }
 
 @media (max-width: 640px) {

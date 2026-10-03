@@ -91,13 +91,13 @@
 
       <section id="proposal" aria-labelledby="proposal-title">
         <h2 id="proposal-title">A small vocabulary to build on</h2>
-        <p>The person–AI example starts with two labels. The current draft requires producers to support three:</p>
+        <p>TextProv has two provenance labels:</p>
         <table class="state-table">
           <thead><tr><th scope="col">Label</th><th scope="col">Code point</th><th scope="col">Declared origin</th></tr></thead>
           <tbody>
             <tr><th scope="row"><code>human</code></th><td><code>U+E0100</code></td><td>Human-written</td></tr>
             <tr><th scope="row"><code>ai</code></th><td><code>U+E0101</code></td><td>AI-generated</td></tr>
-            <tr><th scope="row"><code>mixed</code></th><td><code>U+E0102</code></td><td>Combined origin</td></tr>
+
           </tbody>
         </table>
         <p><strong>Shared labels; application choices.</strong> A label has a common meaning across tools. How it looks, whether to show it, and how it affects an application’s behaviour are up to that application.</p>
@@ -106,7 +106,7 @@
         <details>
           <summary>What is settled, and what is open?</summary>
           <p>Published code-point allocations remain reserved and will not be reassigned. Specification behaviour is experimental and may change before Stable.</p>
-          <p><code>edited</code> (<code>U+E0103</code>) and <code>unknown</code> (<code>U+E0104</code>) are reserved proposals. Current conforming producers must not emit them. Further vocabulary and editing rules are open for discussion; presentation and application policies remain integration choices.</p>
+          <p>Only <code>human</code> and <code>ai</code> are provenance states. Other variation selectors are ordinary non-TextProv text, not additional labels. Presentation and application policies remain integration choices.</p>
           <p>See the <a href="./spec.html#states">draft’s state definitions</a> and <a href="https://github.com/textprov/textprov/blob/main/docs/MATURITY.md">maturity policy</a>.</p>
         </details>
       </section>

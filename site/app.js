@@ -6,11 +6,13 @@ import textprov from "textprov";
   var selectors = {
     human: String.fromCodePoint(0xe0100),
     ai: String.fromCodePoint(0xe0101),
-    mixed: String.fromCodePoint(0xe0102),
   };
   var markedText = "";
 
   function mark(text, state) {
+    if (!Object.prototype.hasOwnProperty.call(selectors, state)) {
+      throw new RangeError("Unsupported provenance state: " + state);
+    }
     var selector = selectors[state];
     text = textprov
       .runs(text, { strip: true })

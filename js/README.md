@@ -6,9 +6,9 @@ The Python package of the same name (`pip install textprov`) is the full SDK —
 
 - ~6 KB, no dependencies, browser-first (IIFE + `window.textprov`), also usable from Node (CJS) and via ESM default import.
 - Implements draft specification version 0.2 and registry version 0.1 (see [SPEC.md](https://github.com/textprov/textprov/blob/main/SPEC.md) and [mapping.json](https://github.com/textprov/textprov/blob/main/mapping.json)).
-- Optional companion stylesheet (`textprov.css`) reproduces the P+ font's mark styles (wavy for `ai`, dotted for `edited`, etc.).
+- Optional companion stylesheet (`textprov.css`) uses a wavy underline for `ai` and a faint tint for `human`.
 
-States: `human`, `ai`, `mixed`, `edited`, `unknown`.
+States: `human`, `ai`. Other variation selectors are ordinary non-TextProv text and are preserved, including with `strip: true`.
 
 ## Install
 

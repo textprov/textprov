@@ -2,8 +2,8 @@
 
 The Agave P+ variants are shipped as raw TTFs (no upstream WOFF2, no ZIP), so
 this script operates on the on-disk TTFs directly. It renames the family,
-strips the legacy U+E0102 mapping (source's "unknown" glyph, which collides
-with TextProv 0.1's `mixed`), keeps U+E0100/U+E0101, and emits TTF + WOFF2 +
+strips the legacy non-TextProv U+E0102 mapping, keeps U+E0100/U+E0101,
+and emits TTF + WOFF2 +
 ZIP bundles alongside the Maryheather and Zilla assets.
 
 Requires fonttools and brotli. Run:
@@ -28,9 +28,9 @@ target = Path(__file__).parent / "public" / "fonts"
 target.mkdir(parents=True, exist_ok=True)
 agave_dir = source / "temp" / "agave-pplus"
 fonts = [
-    ("agave-mono",  "Agave Mono",         "AgaveNerdFontMonoP+-Regular.ttf"),
-    ("agave-fixed", "Agave",              "AgaveNerdFontP+-Regular.ttf"),
-    ("agave-propo", "Agave Propo",        "AgaveNerdFontPropoP+-Regular.ttf"),
+    ("agave-mono", "Agave Mono", "AgaveNerdFontMonoP+-Regular.ttf"),
+    ("agave-fixed", "Agave", "AgaveNerdFontP+-Regular.ttf"),
+    ("agave-propo", "Agave Propo", "AgaveNerdFontPropoP+-Regular.ttf"),
 ]
 manifest = []
 for stem_prefix, display, filename in fonts:

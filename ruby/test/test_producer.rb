@@ -30,12 +30,45 @@ class TestProducerFixtures < Minitest::Test
 end
 
 class TestProducerProperties < Minitest::Test
+  def test_obsolete_states_are_rejected
+    %w[mixed edited unknown].each do |state|
+      %w[vs pua].each do |mode|
+        ["", "abc"].each do |text|
+          assert_raises(ArgumentError) { Textprov.mark(text, state: state, mode: mode) }
+          assert_raises(ArgumentError) { Textprov.mark_added(text, text, state: state, mode: mode) }
+          assert_raises(ArgumentError) { Textprov.mark_added("", text, state: state, mode: mode) }
+        end
+      end
+    end
+  end
+
   def test_strip_undoes_mark
     %w[vs pua].each do |mode|
       Textprov::GENERATED_STATES.each do |state|
         marked = Textprov.mark(SOURCE, state: state, mode: mode)
 
         assert_equal SOURCE, Textprov.strip_marks(marked), "state=#{state} mode=#{mode}"
+      end
+    end
+  end
+
+  # Rule 4 on input that already carries marks: the input itself cannot come
+  # back, but its text does.
+  def test_mark_changes_marks_never_text
+    m = Textprov.default_mapping
+    ai = m.selectors["ai"].chr(Encoding::UTF_8)
+    human = m.selectors["human"].chr(Encoding::UTF_8)
+    pua_a = m.base2pua["A".ord].chr(Encoding::UTF_8)
+    [
+      "A#{human}B", "A#{ai}B", "#{ai}A", "A#{ai}#{ai}", "A #{ai}B", "#{pua_a}B", "\u06001#{ai}2"
+    ].each do |text|
+      %w[vs pua].each do |mode|
+        Textprov::GENERATED_STATES.each do |state|
+          marked = Textprov.mark(text, state: state, mode: mode)
+
+          assert_equal Textprov.strip_marks(text), Textprov.strip_marks(marked),
+                       "text=#{text.inspect} state=#{state} mode=#{mode}"
+        end
       end
     end
   end
@@ -90,6 +123,27 @@ class TestProducerProperties < Minitest::Test
       after = chars[i + 1]
 
       refute (after && sel_cps.include?(after.ord)), "whitespace at #{i} was marked"
+    end
+  end
+
+  def test_control_break_clusters_are_never_marked
+    controls = "\x00\x1c\x7f\u00ad\u200b\ufeff\u2060\u2028\u2029\r\n"
+    %w[vs pua].each do |mode|
+      Textprov::GENERATED_STATES.each do |state|
+        assert_equal controls, Textprov.mark(controls, state: state, mode: mode)
+        source = "a" + controls + "b"
+        marked = Textprov.mark(source, state: state, mode: mode)
+        assert_equal marked, Textprov.mark(marked, state: state, mode: mode)
+        assert_equal source, Textprov.strip_marks(marked)
+        assert_equal [[state, "a"], [nil, controls], [state, "b"]], Textprov.runs(marked, strip: true)
+        assert_equal source, Textprov.mark_added("ab", source, state: state, mode: mode)
+      end
+    end
+  end
+
+  def test_extending_format_characters_remain_markable
+    ["a\u200c", FAMILY, "\u0600a", "\u{1f3f4 e0067 e007f}"].each do |cluster|
+      assert_equal cluster + AI, Textprov.mark(cluster)
     end
   end
 

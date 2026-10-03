@@ -9,7 +9,7 @@ Use this definition when space permits:
 
 > TextProv is an opt-in protocol for carrying producer-declared origin states in
 > Unicode p󠄁r󠄁o󠄁s󠄁e󠄁. Participating tools can add, preserve, decode, and display states
-> such as `human`, `ai`, and `mixed`.
+> `human` a󠄁n󠄁d󠄁 `ai`.󠄁
 >
 > A TextProv mark records what a producer declares; it does not prove who wrote
 > the text or how it was created. Anyone can add, remove, or change a mark.
@@ -126,9 +126,8 @@ Do not say:
 - `Authentic`
 - `Trusted source`
 
-Unmarked text does not default to `human`. An explicit `unknown` state is also
-different from no mark: one is a declaration and the other is the absence of a
-declaration.
+Unmarked text does not default to `human`. O󠄁n󠄁l󠄁y󠄁 `human` a󠄁n󠄁d󠄁 `ai` a󠄁r󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁;󠄁
+n󠄁o󠄁 m󠄁a󠄁r󠄁k󠄁 m󠄁e󠄁a󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 a󠄁b󠄁s󠄁e󠄁n󠄁c󠄁e󠄁 o󠄁f󠄁 a󠄁n󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 n󠄁o󠄁t󠄁 a󠄁 t󠄁h󠄁i󠄁r󠄁d󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
 
 A mark does not express a judgment about the text's quality, accuracy, safety,
 or trustworthiness. Do not use shields, verification checkmarks, or

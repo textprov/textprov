@@ -50,6 +50,28 @@ class TestCli < Minitest::Test
                  run_cli("mark", "--mode", "pua", path)
   end
 
+  def test_obsolete_state_flags_are_rejected
+    path = write("s.txt", "Hi")
+    %w[mixed edited unknown].each do |state|
+      [["mark", [path]], ["mark-added", [path, path]]].each do |command, paths|
+        [["--#{state}", *paths], [*paths, "--#{state}"]].each do |args|
+          capture_io { assert_equal 2, Textprov::CLI.main([command, *args]) }
+        end
+      end
+    end
+  end
+
+  def test_obsolete_selectors_are_preserved
+    text = "a\u{E0102}b\u{E0103}c\u{E0104}"
+    path = write("s.txt", text)
+    assert_equal text, run_cli("strip", path)
+    assert_equal text, run_cli("render", "--strip", path)
+    assert_equal text, run_cli("convert", "--from", "vs", "--to", "pua", path)
+    report = run_cli("inspect", path)
+    assert_includes report, "unmarked: 3\n"
+    %w[mixed edited unknown].each { |state| refute_includes report, "#{state}:" }
+  end
+
   def test_mark_added
     old = write("old.txt", "abc")
     new = write("new.txt", "abXc")

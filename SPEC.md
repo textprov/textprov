@@ -12,9 +12,8 @@
 > have not yet taken effect. See the [maturity lifecycle](docs/MATURITY.md).
 
 TextProv is a protocol for attaching origin labels to passages of p󠄁r󠄁o󠄁s󠄁e󠄁. A label
-states that a passage is human-written, AI-generated, mixed, edited, or of
-unknown origin. Cooperating tools can preserve, interpret, and display these
-labels as text moves between them. For example, a writing integration can
+states that a passage is h󠄁u󠄁m󠄁a󠄁n󠄁-󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁 o󠄁r󠄁 A󠄁I󠄁-󠄁g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁.󠄁 C󠄁o󠄁o󠄁p󠄁e󠄁r󠄁a󠄁t󠄁i󠄁n󠄁g󠄁 t󠄁o󠄁o󠄁l󠄁s󠄁 c󠄁a󠄁n󠄁
+preserve, interpret, and display these labels as text moves between them. For example, a writing integration can
 label a generated passage so an editor can identify it during review or an
 agent integration can distinguish it from the operator's surrounding input.
 
@@ -107,19 +106,16 @@ Applications can expose provenance on demand or use it internally
 | _unmarked_ | — | No state; the consumer decides what that means |
 | `human` | `U+E0100` | Required |
 | `ai` | `U+E0101` | Required |
-| `mixed` | `U+E0102` | Required |
-| `edited` | `U+E0103` | Proposed |
-| `unknown` | `U+E0104` | Proposed |
 
-A specification-version-0.2 decoder recognizes `human`, `ai`, and `mixed`, and
-a conforming producer must support them. `edited` and `unknown` are proposed
-allocations reserved for future stabilization; producers must not emit them and
-decoders may ignore them until they are promoted.
+A specification-version-0.2 decoder recognizes o󠄁n󠄁l󠄁y󠄁 `human` a󠄁n󠄁d󠄁 `ai`,󠄁 a󠄁n󠄁d󠄁 a󠄁
+c󠄁o󠄁n󠄁f󠄁o󠄁r󠄁m󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 m󠄁u󠄁s󠄁t󠄁 s󠄁u󠄁p󠄁p󠄁o󠄁r󠄁t󠄁 b󠄁o󠄁t󠄁h󠄁.󠄁 N󠄁o󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁 o󠄁r󠄁
+p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁.󠄁 S󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 a󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁e󠄁 a󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁
+s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
 
 Selectors are drawn from Unicode's Variation Selectors Supplement block,
-`U+E0100`–`U+E01EF`, giving 240 code points total. Registry 0.1 uses five,
-leaving 235 unallocated. Future selectors reserved by a later registry version
-must fall inside this block; the adjacent Tags block
+`U+E0100`–`U+E01EF`, giving 240 code points total. Registry 0.1 uses t󠄁w󠄁o󠄁,󠄁
+l󠄁e󠄁a󠄁v󠄁i󠄁n󠄁g󠄁 2󠄁3󠄁8󠄁 u󠄁n󠄁a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 (󠄁`U+E0102`–󠄁`U+E01EF`)󠄁.󠄁 Future selectors reserved by a
+l󠄁a󠄁t󠄁e󠄁r󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 must fall inside this block; the adjacent Tags block
 (`U+E0000`–`U+E007F`) is out of scope.
 
 Unmarked text is deliberately distinct from `human`: there is no code point for
@@ -161,7 +157,9 @@ displays as the base glyph `A`; the provenance selector may be invisible.
 **Selector encoding.** A marked grapheme cluster ends with one of the code
 points in `mapping.json` under `variation_selectors`. Because these selectors
 have the Unicode `Grapheme_Extend` property, segmentation treats the selector
-as part of the cluster it marks. The selectors are a private convention shared
+as part of an eligible cluster it marks. A cluster ending in a code point with
+`Grapheme_Cluster_Break=Control`, `CR`, or `LF` is not eligible: Unicode grapheme
+break rule GB4 forces a boundary before the selector. The selectors are a private convention shared
 by producers, decoders, and provenance-aware fonts; they are not registered
 Unicode variation sequences. A font that lacks the variants renders the plain
 base glyph, so unmarked-looking text is the fallback.
@@ -185,6 +183,22 @@ encoding, not a web or interchange one: do not publish PUA-encoded text
 PUA input to base plus selector
 ([ADR 0003](docs/adr/0003-decode-pua-to-base-plus-selector.md)).
 
+### Whitespace
+
+Throughout this specification, **whitespace** means a code point with the
+Unicode `White_Space` property. The exact set is:
+
+```text
+U+0009–U+000D, U+0020, U+0085, U+00A0, U+1680, U+2000–U+200A,
+U+2028, U+2029, U+202F, U+205F, U+3000
+```
+
+A whitespace-only string or cluster is nonempty and consists entirely of
+these code points. U+001C–U+001F and U+FEFF are not whitespace; U+0085 is.
+Language-native whitespace predicates must not substitute a different set.
+This definition applies to producers, decoder classification, and
+`merge_whitespace`.
+
 Whitespace is never marked by a conforming producer. A selector after
 whitespace, or with no preceding cluster, is not a mark.
 
@@ -197,10 +211,7 @@ whitespace, or with no preceding cluster, is not a mark.
   "version": "0.1",
   "variation_selectors": {
     "human": "U+E0100",
-    "ai": "U+E0101",
-    "mixed": "U+E0102",
-    "edited": "U+E0103",
-    "unknown": "U+E0104"
+    "ai": "U+E0101"
   },
   "pua": {
     "U+100041": { "base": "U+0041", "provenance": "ai" }
@@ -247,16 +258,24 @@ A producer marks text s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 b󠄁y󠄁 a󠄁n
    decoder does, and mark each one once, after the whole cluster: after
    combining marks, emoji variation selectors, skin-tone modifiers, ZWJ joins,
    and the second half of a regional-indicator pair.
-2. **Never mark whitespace.** A decoder relies on this: whitespace is what it
-   is allowed to absorb between two runs of the same state.
+2. **Never mark whitespace or control-break clusters.** A decoder relies on
+   unmarked whitespace: it is allowed to absorb it between two runs of the same
+   state. A cluster ending in a code point with `Grapheme_Cluster_Break=Control`,
+   `CR`, or `LF` must also remain unchanged in either encoding. This includes
+   NUL (U+0000), soft hyphen (U+00AD), zero-width space (U+200B), word joiner
+   (U+2060), and byte order mark (U+FEFF). A selector appended to such a cluster
+   would be a separate, orphan cluster, not a provenance mark. This rule uses
+   grapheme-break properties, not general category `Cf`: format characters
+   such as ZWJ, ZWNJ, and emoji tags can belong to markable clusters.
 3. **Be idempotent.** Marking text that is already marked returns it
    unchanged. A cluster that already carries a selector keeps the state it has,
    and a PUA character is left alone; a producer does not overwrite a state it
    did not set.
-4. **Be reversible.** Removing TextProv marks from marked output must reproduce
-   the producer's input exactly. Mark removal deletes recognized provenance
-   selectors and replaces every registered PUA code point with its registered
-   base character.
+4. **Be reversible.** A󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁,󠄁 n󠄁e󠄁v󠄁e󠄁r󠄁 t󠄁e󠄁x󠄁t󠄁:󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁i󠄁n󠄁g󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁
+   m󠄁a󠄁r󠄁k󠄁s󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁 y󠄁i󠄁e󠄁l󠄁d󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 r󠄁e󠄁s󠄁u󠄁l󠄁t󠄁 a󠄁s󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁m󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁
+   i󠄁n󠄁p󠄁u󠄁t󠄁.󠄁 F󠄁o󠄁r󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 i󠄁n󠄁p󠄁u󠄁t󠄁,󠄁 t󠄁h󠄁i󠄁s󠄁 r󠄁e󠄁p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 input exactly. Mark removal
+   d󠄁e󠄁l󠄁e󠄁t󠄁e󠄁s󠄁 r󠄁e󠄁c󠄁o󠄁g󠄁n󠄁i󠄁z󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁s󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁e󠄁r󠄁e󠄁d󠄁 P󠄁U󠄁A󠄁
+   c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁 i󠄁t󠄁s󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁e󠄁r󠄁e󠄁d󠄁 base character.
 
 In the PUA encoding, a producer replaces a base character with its PUA
 counterpart only when the cluster is exactly one code point and the registry
@@ -273,8 +292,9 @@ the registry.
 - When the source and target encodings are the same, the output equals the
   input.
 - Converting from selector to PUA encoding replaces a selector-encoded `ai`
-  cluster only when the cluster contains exactly one base code point and the
-  registry contains the corresponding `ai` PUA entry.
+  cluster only when the cluster i󠄁s󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁l󠄁y󠄁 a󠄁 b󠄁a󠄁s󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁 f󠄁o󠄁l󠄁l󠄁o󠄁w󠄁e󠄁d󠄁 b󠄁y󠄁 i󠄁t󠄁s󠄁
+  `ai` s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁r󠄁r󠄁e󠄁s󠄁p󠄁o󠄁n󠄁d󠄁i󠄁n󠄁g󠄁 `ai` P󠄁U󠄁A󠄁 e󠄁n󠄁t󠄁r󠄁y󠄁.󠄁 A󠄁
+  c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁n󠄁y󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 a󠄁 s󠄁e󠄁c󠄁o󠄁n󠄁d󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁,󠄁 i󠄁s󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁.󠄁
 - Converting from PUA to selector encoding replaces each registered PUA code
   point with its registered base followed by the selector for its registered
   state.
@@ -313,7 +333,7 @@ reference producer already did; no behaviour changed when it was written down.
 
 | Option | Default | Effect |
 | --- | --- | --- |
-| `strip` | false | Remove selectors from run text. State is still reported. |
+| `strip` | false | Remove mark selectors from run text; inert selectors are kept. Decode PUA marks to bare bases. State is still reported. |
 | `merge_whitespace` | true | Whitespace between two runs of the same state joins them. |
 
 `merge_whitespace` is the specification spelling. An implementation in a language
@@ -331,7 +351,8 @@ must accept the specification spelling, because the fixture uses it.
      over selector classification because whitespace cannot carry a mark.
    - Last code point is a selector and the cluster has more than one code
      point: state from `variation_selectors`. Text is the cluster, minus the
-     selector when `strip`.
+     final selector when `strip`. Earlier selectors in the cluster are kept;
+     the remaining text is not classified again.
    - The cluster is exactly one code point in `pua`: state from that entry.
      Text is the base character followed by the selector for that state, or
      the base character alone when `strip`.
@@ -344,6 +365,28 @@ must accept the specification spelling, because the fixture uses it.
 
 Output: an ordered list of `(state, text)`. Concatenating every `text`
 reproduces the input exactly unless `strip` is set or PUA input was present.
+
+For example, with `V = U+E0101` (`ai`), `A V V` is one `ai` cluster
+(spaces here separate code points; they are not part of the input).
+With `strip=true`, its text is `A V`, not `A`. Only the final selector
+supplies the state and is removed, even if earlier selectors name other states.
+Decoder stripping is a single pass and is not necessarily idempotent.
+
+### Mark removal
+
+Mark removal is a separate text-cleanup operation, not a shortcut for
+concatenating decoder runs with `strip=true`. Where provided, `strip_marks`:
+
+- Removes every code point listed in the registry's `variation_selectors`,
+  including lone selectors, selectors after whitespace, and repeated selectors.
+- Replaces each registered PUA code point with its registered base character.
+- Preserves all other code points, including unrecognized variation selectors
+  and unallocated PUA code points.
+
+This operation does not classify grapheme clusters or report states. It is
+lossy: recognized selectors are removed even where the decoder treats them as
+ordinary text. For example, `V A`, `A V V`, and `A` all become `A`.
+Providing this helper is not required for decoder conformance.
 
 ## Markup
 
@@ -442,3 +485,90 @@ draft, not pinned release artifacts.
   `GraphemeBreakTest.txt` (󠄁[A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁7󠄁](docs/adr/0017-vendor-grapheme-segmentation.md))󠄁;󠄁
   a󠄁n󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁n󠄁 a󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁t󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 m󠄁a󠄁y󠄁 p󠄁l󠄁a󠄁c󠄁e󠄁 a󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁
   b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁y󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁t󠄁l󠄁y󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁s󠄁.󠄁
+
+## Open questions
+
+T󠄁h󠄁e󠄁s󠄁e󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁 u󠄁n󠄁r󠄁e󠄁s󠄁o󠄁l󠄁v󠄁e󠄁d󠄁 a󠄁t󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 0󠄁.󠄁2󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 h󠄁a󠄁s󠄁 a󠄁
+d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 t󠄁h󠄁r󠄁e󠄁a󠄁d󠄁.󠄁 A󠄁 r󠄁e󠄁s󠄁o󠄁l󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁p󠄁d󠄁a󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 a󠄁f󠄁f󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 s󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁
+q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁i󠄁s󠄁 l󠄁i󠄁s󠄁t󠄁.󠄁
+
+### Marking and states
+
+T󠄁h󠄁e󠄁s󠄁e󠄁 c󠄁a󠄁m󠄁e󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 t󠄁h󠄁i󠄁s󠄁 r󠄁e󠄁p󠄁o󠄁s󠄁i󠄁t󠄁o󠄁r󠄁y󠄁'󠄁s󠄁 o󠄁w󠄁n󠄁 u󠄁s󠄁e󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁c󠄁o󠄁l󠄁
+(󠄁[d󠄁o󠄁g󠄁f󠄁o󠄁o󠄁d󠄁i󠄁n󠄁g󠄁](docs/development/dogfooding.md))󠄁.󠄁
+
+1. **C󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁** A󠄁r󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁,󠄁 p󠄁u󠄁l󠄁l󠄁 r󠄁e󠄁q󠄁u󠄁e󠄁s󠄁t󠄁
+   d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 i󠄁s󠄁s󠄁u󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁v󠄁i󠄁e󠄁w󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁 t󠄁h󠄁e󠄁
+   [m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁](#marking-scope)?󠄁 T󠄁h󠄁e󠄁y󠄁 a󠄁r󠄁e󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 p󠄁e󠄁o󠄁p󠄁l󠄁e󠄁,󠄁 b󠄁u󠄁t󠄁 t󠄁h󠄁e󠄁
+   t󠄁o󠄁o󠄁l󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 h󠄁o󠄁l󠄁d󠄁 t󠄁h󠄁e󠄁m󠄁 s󠄁e󠄁a󠄁r󠄁c󠄁h󠄁 a󠄁n󠄁d󠄁 p󠄁a󠄁r󠄁s󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁 a󠄁s󠄁 p󠄁l󠄁a󠄁i󠄁n󠄁 t󠄁e󠄁x󠄁t󠄁:󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 b󠄁r󠄁e󠄁a󠄁k󠄁
+   `git log --grep`,󠄁 C󠄁o󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 C󠄁o󠄁m󠄁m󠄁i󠄁t󠄁s󠄁 p󠄁a󠄁r󠄁s󠄁e󠄁r󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 s󠄁e󠄁a󠄁r󠄁c󠄁h󠄁.󠄁 A󠄁 g󠄁i󠄁t󠄁
+   t󠄁r󠄁a󠄁i󠄁l󠄁e󠄁r󠄁 w󠄁o󠄁u󠄁l󠄁d󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 b󠄁a󠄁n󠄁d󠄁,󠄁 f󠄁o󠄁r󠄁 a󠄁 w󠄁h󠄁o󠄁l󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 r󠄁a󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁n󠄁 a󠄁
+   p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁.󠄁 (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁3󠄁](https://github.com/textprov/textprov/discussions/13))󠄁
+2. **W󠄁h󠄁a󠄁t󠄁 `human` a󠄁s󠄁s󠄁e󠄁r󠄁t󠄁s󠄁.󠄁** D󠄁o󠄁e󠄁s󠄁 `human` s󠄁t󠄁a󠄁t󠄁e󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁,󠄁
+   o󠄁r󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁t󠄁e󠄁d󠄁 i󠄁t󠄁?󠄁 T󠄁h󠄁i󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁s󠄁 `human` a󠄁s󠄁
+   h󠄁u󠄁m󠄁a󠄁n󠄁-󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁s󠄁u󠄁a󠄁l󠄁l󠄁y󠄁 o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁s󠄁s󠄁i󠄁o󠄁n󠄁.󠄁 A󠄁
+   p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁 p󠄁a󠄁s󠄁t󠄁e󠄁d󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁,󠄁 a󠄁n󠄁d󠄁 a󠄁 s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁 n󠄁o󠄁
+   p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁.󠄁 (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁4󠄁](https://github.com/textprov/textprov/discussions/14))󠄁
+
+### Generational marking (proposed, non-normative)
+
+A󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 e󠄁x󠄁t󠄁e󠄁n󠄁s󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 a󠄁 s󠄁e󠄁c󠄁o󠄁n󠄁d󠄁 f󠄁a󠄁c󠄁t󠄁 b󠄁e󠄁s󠄁i󠄁d󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁:󠄁 h󠄁o󠄁w󠄁 m󠄁a󠄁n󠄁y󠄁 t󠄁i󠄁m󠄁e󠄁s󠄁 a󠄁
+c󠄀h󠄀a󠄀r󠄀a󠄀c󠄀t󠄀e󠄀r󠄀 h󠄀a󠄀s󠄀 b󠄀e󠄀e󠄀n󠄀 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁,󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁,󠄁 t󠄁a󠄁k󠄁e󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 o󠄁n󠄁e󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁'󠄁s󠄁
+t󠄀r󠄀a󠄀n󠄀s󠄀c󠄀r󠄀i󠄀p󠄀t󠄀 i󠄀n󠄀t󠄀o󠄀 t󠄀h󠄀e󠄀 i󠄀n󠄀p󠄀u󠄀t󠄀 o󠄀f󠄀 t󠄀h󠄀e󠄀 n󠄀e󠄀x󠄀t󠄀.󠄀 A󠄁 m󠄁a󠄁r󠄁k󠄁 b󠄁e󠄁c󠄁o󠄁m󠄁e󠄁s󠄁
+`U+E01gs`,󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁 `g` i󠄁s󠄁 t󠄁h󠄁e󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 `s` i󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁 (󠄁`0`
+`human`,󠄁 `1` `ai`;󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 `2`–󠄁`F` a󠄁r󠄁e󠄁 u󠄁n󠄁a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁)󠄁.󠄁 G󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁u󠄁n󠄁s󠄁
+f󠄁r󠄁o󠄁m󠄁 0󠄁 t󠄁o󠄁 9󠄁,󠄁 a󠄁n󠄁d󠄁 9󠄁 m󠄁e󠄁a󠄁n󠄁s󠄁 n󠄁i󠄁n󠄁e󠄁 o󠄁r󠄁 m󠄁o󠄁r󠄁e󠄁.󠄁 E󠄀a󠄀c󠄀h󠄀 t󠄀i󠄀m󠄀e󠄀 a󠄀 t󠄀r󠄀a󠄀n󠄀s󠄀c󠄀r󠄀i󠄀p󠄀t󠄀 b󠄀e󠄀c󠄀o󠄀m󠄀e󠄀s󠄀 i󠄀n󠄀p󠄀u󠄀t󠄀 t󠄀o󠄀
+a󠄀 n󠄀e󠄀w󠄀 c󠄀o󠄀n󠄀v󠄀e󠄀r󠄀s󠄀a󠄀t󠄀i󠄀o󠄀n󠄀,󠄀 e󠄀v󠄀e󠄀r󠄀y󠄀 m󠄀a󠄀r󠄀k󠄀 m󠄀o󠄀v󠄀e󠄀s󠄀 d󠄀o󠄀w󠄀n󠄀 o󠄀n󠄀e󠄀 r󠄀o󠄀w󠄀 (󠄁`+0x10`)󠄁;󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 d󠄁o󠄁e󠄁s󠄁
+n󠄁o󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 R󠄁o󠄁w󠄁 0󠄁 i󠄁s󠄁 t󠄁o󠄁d󠄁a󠄁y󠄁'󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁.󠄁 C󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 2󠄁–󠄁F󠄁 a󠄁r󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 f󠄁o󠄁r󠄁 f󠄁u󠄁t󠄁u󠄁r󠄁e󠄁
+s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁,󠄁 w󠄁i󠄁t󠄁h󠄁 n󠄁o󠄁 a󠄁d󠄁d󠄁i󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁
+(󠄁`U+E01A0`–󠄁`U+E01EF`)󠄁 f󠄁o󠄁r󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁,󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 a󠄁r󠄁e󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 e󠄁a󠄁c󠄁h󠄁
+k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 o󠄁w󠄁n󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁
+i󠄁s󠄁 n󠄁o󠄁t󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 0󠄁.󠄁2󠄁,󠄁 a󠄁n󠄁d󠄁 n󠄁o󠄁t󠄁h󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁 t󠄁h󠄁i󠄁s󠄁 s󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 i󠄁s󠄁 a󠄁
+r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁.󠄁
+F󠄁o󠄁u󠄁r󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁s󠄁 a󠄁r󠄁e󠄁 s󠄁e󠄁t󠄁t󠄁l󠄁e󠄁d󠄁.󠄁
+
+- R󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁i󠄁n󠄁g󠄁 i󠄀s󠄀 a󠄀 s󠄀e󠄀p󠄀a󠄀r󠄀a󠄀t󠄀e󠄀 o󠄀p󠄀e󠄀r󠄀a󠄀t󠄀i󠄀o󠄀n󠄀 f󠄀r󠄀o󠄀m󠄀 m󠄀a󠄀r󠄀k󠄀i󠄀n󠄀g󠄀.󠄀 P󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 r󠄁u󠄁l󠄁e󠄁 3󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁
+  g󠄁o󠄁v󠄁e󠄁r󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁i󠄁n󠄁g󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 t󠄁h󠄁e󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.󠄁
+- A󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁o󠄁r󠄁 i󠄁n󠄁c󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 m󠄁a󠄁r󠄁k󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁 g󠄁r󠄁i󠄁d󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁
+  i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 k󠄁n󠄁o󠄁w󠄁,󠄁 a󠄁n󠄁d󠄁 s󠄁a󠄁t󠄁u󠄁r󠄁a󠄁t󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 9󠄁.󠄁 A󠄁n󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 m󠄁a󠄁y󠄁
+  a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁 w󠄁i󠄁t󠄁h󠄁 f󠄁e󠄁w󠄁e󠄁r󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁.󠄁 A󠄁 c󠄁o󠄁a󠄁r󠄁s󠄁e󠄁r󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 s󠄁c󠄁a󠄁l󠄁e󠄁 i󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁.󠄁
+- P󠄁U󠄁A󠄁 s󠄁t󠄁a󠄁n󠄁d󠄁s󠄁 f󠄁o󠄁r󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 o󠄁n󠄁l󠄁y󠄁,󠄁 a󠄁s󠄁 a󠄁n󠄁 a󠄁d󠄁j󠄁u󠄁n󠄁c󠄁t󠄁 f󠄁o󠄁r󠄁m󠄁a󠄁t󠄁 f󠄁o󠄁r󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁t󠄁i󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁.󠄁 A󠄁
+  r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁o󠄁r󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁s󠄁 a󠄁 P󠄁U󠄁A󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁 t󠄁o󠄁 b󠄁a󠄁s󠄁e󠄁 p󠄁l󠄁u󠄁s󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁n󠄁
+  i󠄁n󠄁c󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁.󠄁
+- F󠄁o󠄁r󠄁 e󠄁a󠄁c󠄁h󠄁 m󠄁a󠄁r󠄁k󠄁 a󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 a󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.󠄁 F󠄁o󠄁r󠄁 a󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁
+  i󠄁n󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁 w󠄁h󠄁o󠄁s󠄁e󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁,󠄁 i󠄁t󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 a󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁
+  r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 v󠄁a󠄁l󠄁u󠄁e󠄁.󠄁
+
+T󠄁h󠄁e󠄁 [f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](docs/development/generations-formal-aka-9g.md) i󠄁s󠄁 t󠄁h󠄁e󠄁
+s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 a󠄁n󠄁d󠄁 i󠄁t󠄁s󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁.󠄁
+[A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁0󠄁](docs/adr/0010-contributor-identity-is-out-of-band.md) r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 t󠄁h󠄁e󠄁
+r󠄁e󠄁a󠄁s󠄁o󠄁n󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁h󠄁i󠄁n󠄁d󠄁 i󠄁t󠄁.󠄁
+
+3. **R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁e󠄁d󠄁.󠄁** W󠄁h󠄁e󠄁n󠄁 s󠄁o󠄁m󠄁e󠄁o󠄁n󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁
+   f󠄁r󠄁o󠄁m󠄁 a󠄁n󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 w󠄁h󠄁a󠄁t󠄁 d󠄁o󠄁 t󠄁h󠄁e󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁,󠄁 a󠄁n󠄁d󠄁
+   w󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁p󠄁p󠄁e󠄁n󠄁s󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁t󠄁?󠄁 M󠄁a󠄁r󠄁k󠄁s󠄁 a󠄁r󠄁e󠄁 p󠄁e󠄁r󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁,󠄁 s󠄁o󠄁 n󠄁e󠄁w󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 c󠄁o󠄁u󠄁l󠄁d󠄁
+   t󠄁a󠄁k󠄁e󠄁 t󠄁h󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁'󠄁s󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 w󠄁h󠄁i󠄁l󠄁e󠄁 u󠄁n󠄁t󠄁o󠄁u󠄁c󠄁h󠄁e󠄁d󠄁 o󠄁n󠄁e󠄁s󠄁 k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁s󠄁.󠄁
+   T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 f󠄁i󠄁x󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁c󠄁r󠄁o󠄁s󠄁s󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁;󠄁 h󠄁o󠄁w󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 a󠄁f󠄁f󠄁e󠄁c󠄁t󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁s󠄁
+   a󠄁n󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 n󠄁o󠄁t󠄁 a󠄁n󠄁 a󠄁d󠄁d󠄁i󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
+   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁6󠄁](https://github.com/textprov/textprov/discussions/16))󠄁
+4. **R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁** W󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁p󠄁p󠄁e󠄁n󠄁s󠄁 t󠄁o󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁 i󠄁n󠄁t󠄁o󠄁 a󠄁 n󠄁e󠄁w󠄁
+   c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁?󠄁 I󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁 m󠄁a󠄁r󠄁k󠄁 t󠄁o󠄁 m󠄁o󠄁v󠄁e󠄁 d󠄁o󠄁w󠄁n󠄁 a󠄁 r󠄁o󠄁w󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁r󠄁e󠄁 i󠄁s󠄁 n󠄁o󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁
+   f󠄁o󠄁r󠄁 "󠄁u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁,󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 1󠄁"󠄁.󠄁 L󠄁e󠄁a󠄁v󠄁i󠄁n󠄁g󠄁 i󠄁t󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁.󠄁
+   H󠄁o󠄁w󠄁 c󠄁a󠄁n󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 b󠄁a󠄁n󠄁d󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 i󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁
+   o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁?󠄁 A󠄁b󠄁s󠄁e󠄁n󠄁c󠄁e󠄁 o󠄁f󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁 `human` a󠄁n󠄁d󠄁 `ai`.󠄁
+   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁8󠄁](https://github.com/textprov/textprov/discussions/18))󠄁
+5. **S󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁 i󠄁n󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁.󠄁** H󠄁o󠄁w󠄁 d󠄁o󠄁e󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁
+   `U+E01A0`–󠄁`U+E01EF`?󠄁 U󠄁n󠄁d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁d󠄁:󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 u󠄁n󠄁i󠄁t󠄁 i󠄁s󠄁 a󠄁 w󠄁h󠄁o󠄁l󠄁e󠄁 r󠄁o󠄁w󠄁 o󠄁f󠄁 1󠄁6󠄁 o󠄁r󠄁
+   a󠄁n󠄁y󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁,󠄁 a󠄁n󠄁d󠄁 h󠄁o󠄁w󠄁 `mapping.json` r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁'󠄁s󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁 a󠄁n󠄁d󠄁 m󠄁e󠄁a󠄁n󠄁i󠄁n󠄁g󠄁.󠄁
+   E󠄁a󠄁c󠄁h󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 a󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁
+   r󠄁a󠄁n󠄁g󠄁e󠄁 s󠄁o󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁 s󠄁t󠄁a󠄁y󠄁s󠄁 r󠄁e󠄁a󠄁d󠄁a󠄁b󠄁l󠄁e󠄁 o󠄁u󠄁t󠄁s󠄁i󠄁d󠄁e󠄁 i󠄁t󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁o󠄁r󠄁 s󠄁l󠄁o󠄁t󠄁s󠄁
+   i󠄁n󠄁 [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁0󠄁](docs/adr/0010-contributor-identity-is-out-of-band.md) a󠄁r󠄁e󠄁 o󠄁n󠄁e󠄁
+   c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁.󠄁
+   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁9󠄁](https://github.com/textprov/textprov/discussions/19))󠄁
+6. **R󠄁u󠄁n󠄁s󠄁,󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁.󠄁** H󠄁o󠄁w󠄁 d󠄁o󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 A󠄁P󠄁I󠄁 e󠄁x󠄁p󠄁o󠄁s󠄁e󠄁
+   g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁?󠄁 W󠄁h󠄁a󠄁t󠄁 a󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 f󠄁o󠄁r󠄁 o󠄁n󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁 i󠄁s󠄁 s󠄁e󠄁t󠄁t󠄁l󠄁e󠄁d󠄁 a󠄁b󠄁o󠄁v󠄁e󠄁.󠄁 R󠄁u󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁
+   `(state, text)` t󠄁o󠄁d󠄁a󠄁y󠄁.󠄁 U󠄁n󠄁d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁d󠄁:󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 r󠄁u󠄁n󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁
+   s󠄁h󠄁a󠄁r󠄁e󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 b󠄁u󠄁t󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁 i󠄁n󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 m󠄁e󠄁r󠄁g󠄁e󠄁,󠄁 h󠄁o󠄁w󠄁 `merge_whitespace`
+   t󠄁r󠄁e󠄁a󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 w󠄁h󠄁i󠄁t󠄁e󠄁s󠄁p󠄁a󠄁c󠄁e󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 t󠄁h󠄁e󠄁m󠄁,󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁
+   b󠄁e󠄁s󠄁i󠄁d󠄁e󠄁 `data-prov`,󠄁 a󠄁n󠄁d󠄁 h󠄁o󠄁w󠄁 e󠄁x󠄁p󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 r󠄁u󠄁n󠄁s󠄁 i󠄁n󠄁 `fixtures.json` r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 i󠄁t󠄁.󠄁
+   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁2󠄁0󠄁](https://github.com/textprov/textprov/discussions/20))󠄁

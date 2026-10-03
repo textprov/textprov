@@ -7,8 +7,8 @@ choose their own visual interpretations of provenance. These cues are
 declarations, not proof of authorship or trust.
 
 Latin subset, with supported common punctuation. Spaces, controls and
-soft hyphen have no declared variation. Other TextProv states have no
-visual variant here. Registry-allocated AI PUA aliases are included for
+soft hyphen have no declared variation. Only Human and AI are TextProv
+states. Registry-allocated AI PUA aliases are included for
 compatibility; base character + selector is the canonical representation.
 Per-glyph advances and source line metrics are retained. Marked runs can
 shape differently from plain runs (for example kerning or ligatures).
