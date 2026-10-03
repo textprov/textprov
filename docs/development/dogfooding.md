@@ -6,8 +6,17 @@ a󠄁s󠄁k󠄁e󠄁d󠄁 t󠄁o󠄁 a󠄁p󠄁p󠄁l󠄁y󠄁 a󠄁 m󠄁a󠄁r
 m󠄁i󠄁s󠄁a󠄁p󠄁p󠄁l󠄁i󠄁e󠄁d󠄁 b󠄁y󠄁 i󠄁t󠄁.󠄁
 
 I󠄁n󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁r󠄁m󠄁s󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 [s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](../../SPEC.md#roles),󠄁 t󠄁h󠄁e󠄁 h󠄁o󠄁o󠄁k󠄁 s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁
-`.claude/hooks/textprov_hook.py` i󠄁s󠄁 t󠄁h󠄁e󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 t󠄁h󠄁a󠄁t󠄁 d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁s󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁
-a󠄁p󠄁p󠄁l󠄁i󠄁e󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 c󠄁o󠄁m󠄁e󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 i󠄁n󠄁 `python/textprov`.󠄁
+`.claude/hooks/textprov_hook.py` adapts Claude events, responses, and environment
+configuration to `textprov.workspace.Workspace`. Workspace owns scope, prompt
+persistence, and command snapshots; the pure functions in `textprov.editing`
+transform strings and decide which state applies.
+T󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 c󠄁o󠄁m󠄁e󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 i󠄁n󠄁 `python/textprov`.󠄁
+
+The [Python integration APIs](../../python/README.md#editing-api) describe the
+extraction boundary. Direct callers supply a workspace root explicitly, and
+relative paths resolve under that root. Editing helpers do not read files or
+environment variables; omitted `shingles` means no prompt matching. Workspace
+loads matching word sequences from its prompt log when preparing changes.
 
 ## What gets marked
 
@@ -28,6 +37,14 @@ w󠄁h󠄁a󠄁t󠄁 y󠄁o󠄁u󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁t󠄁e󠄁d�
 b󠄁e󠄁c󠄁a󠄁u󠄁s󠄁e󠄁 i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 m󠄁a󠄁t󠄁c󠄁h󠄁.󠄁
 
 ## How each tool is covered
+
+The adapter delegates `UserPromptSubmit` to `record_prompt`, Write to
+`prepare_write`, and Edit to `prepare_edit`. The preparation methods return
+marked tool inputs without applying the write or edit; `None` leaves the input
+unchanged. An `Ambiguous` edit becomes a denial rather than a guessed match.
+For Bash, the adapter calls `before_command(command, operation_id)` before
+execution and `after_command(operation_id)` on success or failure, using the
+same operation ID. Workspace marks the resulting files after the command.
 
 - **W󠄁r󠄁i󠄁t󠄁e󠄁.󠄁** A󠄁 `PreToolUse` h󠄁o󠄁o󠄁k󠄁 d󠄁i󠄁f󠄁f󠄁s󠄁 t󠄁h󠄁e󠄁 n󠄁e󠄁w󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁 a󠄁g󠄁a󠄁i󠄁n󠄁s󠄁t󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 o󠄁n󠄁
   d󠄁i󠄁s󠄁k󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁w󠄁r󠄁i󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁 t󠄁o󠄁o󠄁l󠄁 r󠄁u󠄁n󠄁s󠄁.󠄁 U󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 l󠄁i󠄁n󠄁e󠄁s󠄁 k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁
@@ -57,6 +74,21 @@ d󠄁e󠄁s󠄁t󠄁i󠄁n󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 r󠄁e󠄁f�
 m󠄁a󠄁r󠄁k󠄁e󠄁r󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 o󠄁f󠄁 i󠄁n󠄁l󠄁i󠄁n󠄁e󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁 a󠄁r󠄁e󠄁 l󠄁e󠄁f󠄁t󠄁 a󠄁l󠄁o󠄁n󠄁e󠄁,󠄁 s󠄁o󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 f󠄁i󠄁l󠄁e󠄁
 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 a󠄁s󠄁 a󠄁n󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 o󠄁n󠄁e󠄁 a󠄁n󠄁d󠄁 i󠄁t󠄁s󠄁 c󠄁o󠄁d󠄁e󠄁 s󠄁a󠄁m󠄁p󠄁l󠄁e󠄁s󠄁 c󠄁a󠄁n󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁 b󠄁e󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁d󠄁.󠄁
 
+## Workspace state and guards
+
+The default state directory remains `.textprov` under the explicit workspace
+root. Prompt matching uses the latest 300 entries in `prompts.jsonl`; command
+snapshots older than 24 hours are cleaned up. `state_dir` and `human_min_words`
+are explicit constructor options for direct callers, with a five-word matching
+minimum by default. The adapter translates `TEXTPROV_HUMAN_MIN_WORDS` into that
+option; `TEXTPROV_HOOK=off` disables the adapter, not direct package calls.
+
+Workspace retains the existing Markdown scope and exclusions, working-tree
+move checks, and commit guards. A single new commit on the snapshotted head is
+allowed; an amend or multiple commits are not. Changes made and committed in
+one command receive marks afterward in the working tree, not in that commit.
+Moved or copied files are not treated as new writing.
+
 ## Limits and open questions
 
 S󠄁e󠄁e󠄁 [k󠄁n󠄁o󠄁w󠄁n󠄁 l󠄁i󠄁m󠄁i󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁](dogfooding-known-limitations.md) a󠄁n󠄁d󠄁
@@ -65,7 +97,15 @@ S󠄁e󠄁e󠄁 [k󠄁n󠄁o󠄁w󠄁n󠄁 l󠄁i󠄁m󠄁i󠄁t󠄁a󠄁t󠄁i�
 ## Operating it
 
 ```sh
+# From the repository root, with textprov installed:
 python3 -m textprov inspect docs/development/dogfooding.md   # count states
-TEXTPROV_HOOK=off claude                                      # disable for a session
-python3 -m unittest discover -s .claude/hooks                # hook tests
+TEXTPROV_HOOK=off claude                                    # disable the adapter
+
+# From python/:
+python3 -m unittest discover -s tests -t .                  # Python suite
 ```
+
+The extraction moves editing, workspace, and adapter tests from `.claude/hooks/`
+to `python/tests/`. They use the same discovery command as the Python
+[conformance CI job](../../.github/workflows/conformance.yml), rather than a
+separate hook-test invocation.
