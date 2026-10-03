@@ -17,7 +17,8 @@
  *   <script>textprov.render(document.body);</script>
  *
  * Options (all optional, passed to both runs() and render()):
- *   strip           default false  Remove selectors from run text; state is
+ *   strip           default false  Remove mark selectors; keep inert selectors.
+ *                                  Decode PUA marks to bare bases; state is
  *                                  still reported via data-prov.
  *   merge_whitespace default true  Whitespace between two runs of the same
  *                                  state joins them into one run. This is the

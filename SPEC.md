@@ -331,7 +331,7 @@ reference producer already did; no behaviour changed when it was written down.
 
 | Option | Default | Effect |
 | --- | --- | --- |
-| `strip` | false | Remove selectors from run text. State is still reported. |
+| `strip` | false | Remove mark selectors from run text; inert selectors are kept. Decode PUA marks to bare bases. State is still reported. |
 | `merge_whitespace` | true | Whitespace between two runs of the same state joins them. |
 
 `merge_whitespace` is the specification spelling. An implementation in a language
@@ -349,7 +349,8 @@ must accept the specification spelling, because the fixture uses it.
      over selector classification because whitespace cannot carry a mark.
    - Last code point is a selector and the cluster has more than one code
      point: state from `variation_selectors`. Text is the cluster, minus the
-     selector when `strip`.
+     final selector when `strip`. Earlier selectors in the cluster are kept;
+     the remaining text is not classified again.
    - The cluster is exactly one code point in `pua`: state from that entry.
      Text is the base character followed by the selector for that state, or
      the base character alone when `strip`.
@@ -362,6 +363,28 @@ must accept the specification spelling, because the fixture uses it.
 
 Output: an ordered list of `(state, text)`. Concatenating every `text`
 reproduces the input exactly unless `strip` is set or PUA input was present.
+
+For example, with `V = U+E0101` (`ai`), `A V V` is one `ai` cluster
+(spaces here separate code points; they are not part of the input).
+With `strip=true`, its text is `A V`, not `A`. Only the final selector
+supplies the state and is removed, even if earlier selectors name other states.
+Decoder stripping is a single pass and is not necessarily idempotent.
+
+### Mark removal
+
+Mark removal is a separate text-cleanup operation, not a shortcut for
+concatenating decoder runs with `strip=true`. Where provided, `strip_marks`:
+
+- Removes every code point listed in the registry's `variation_selectors`,
+  including lone selectors, selectors after whitespace, and repeated selectors.
+- Replaces each registered PUA code point with its registered base character.
+- Preserves all other code points, including unrecognized variation selectors
+  and unallocated PUA code points.
+
+This operation does not classify grapheme clusters or report states. It is
+lossy: recognized selectors are removed even where the decoder treats them as
+ordinary text. For example, `V A`, `A V V`, and `A` all become `A`.
+Providing this helper is not required for decoder conformance.
 
 ## Markup
 
