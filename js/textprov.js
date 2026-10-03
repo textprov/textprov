@@ -54,7 +54,46 @@
     }
     return false;
   }
-  var seg = new Intl.Segmenter(undefined, { granularity: "grapheme" });
+  var seg =
+    typeof Intl === "object" && typeof Intl.Segmenter === "function"
+      ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
+      : null;
+
+  function isClusterExtension(cp) {
+    return (
+      (cp >= 0x0300 && cp <= 0x036f) ||
+      (cp >= 0x1ab0 && cp <= 0x1aff) ||
+      (cp >= 0x1dc0 && cp <= 0x1dff) ||
+      (cp >= 0x20d0 && cp <= 0x20ff) ||
+      (cp >= 0xfe00 && cp <= 0xfe0f) ||
+      (cp >= 0xfe20 && cp <= 0xfe2f) ||
+      (cp >= 0x1f3fb && cp <= 0x1f3ff) ||
+      (cp >= 0xe0100 && cp <= 0xe01ef)
+    );
+  }
+
+  function segments(text) {
+    if (seg) {
+      return Array.from(seg.segment(text), function (item) {
+        return item.segment;
+      });
+    }
+
+    var clusters = [];
+    var codepoints = Array.from(text);
+    for (var i = 0; i < codepoints.length; i++) {
+      var character = codepoints[i];
+      var cp = character.codePointAt(0);
+      var previous = clusters[clusters.length - 1];
+      var followsJoiner = previous && previous.codePointAt(previous.length - 1) === 0x200d;
+      if (previous && (isClusterExtension(cp) || cp === 0x200d || followsJoiner)) {
+        clusters[clusters.length - 1] += character;
+      } else {
+        clusters.push(character);
+      }
+    }
+    return clusters;
+  }
 
   function resolveOptions(opts) {
     opts = opts || {};
@@ -71,10 +110,9 @@
   function runs(text, opts) {
     var o = resolveOptions(opts);
     var items = [];
-    var iter = seg.segment(text);
-    var it, done;
-    for (it = iter[Symbol.iterator](); !(done = it.next()).done;) {
-      var segment = done.value.segment;
+    var textSegments = segments(text);
+    for (var segmentIndex = 0; segmentIndex < textSegments.length; segmentIndex++) {
+      var segment = textSegments[segmentIndex];
       var cps = Array.from(segment);
       var last = cps[cps.length - 1].codePointAt(0);
       var cp0 = cps[0].codePointAt(0);

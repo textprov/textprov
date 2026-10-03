@@ -86,11 +86,19 @@ depends on the target surface: a span renderer needs a DOM, while a font
 renderer needs a font toolchain. A font is one renderer among three, not the
 producer ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)).
 
+A **consumer** is whatever acts on decoded runs. It may be a renderer showing
+states to a person, or a program that reads the states itself, such as an audit
+tool or a model harness separating pasted model output from the operator's own
+text. The protocol gives consumers a shared structure and vocabulary, and
+leaves how they use it open
+([ADR 0014](docs/adr/0014-the-protocol-defines-structure-not-use.md)).
+
 Consumers can use decoded states without displaying them. P9E utility fonts primarily
 support development, debugging, and demonstrations: a compatible font and text
 shaper can reveal supported marks without a separate inspection tool. Their
 glyph designs, including sawtooth underlines, are presentation choices.
-Applications can expose provenance on demand or use it internally.
+Applications can expose provenance on demand or use it internally
+([ADR 0015](docs/adr/0015-fonts-are-for-inspection-and-demonstration.md)).
 
 ## States
 
@@ -108,10 +116,10 @@ a conforming producer must support them. `edited` and `unknown` are proposed
 allocations reserved for future stabilization; producers must not emit them and
 decoders may ignore them until they are promoted.
 
-Selectors are drawn from Unicode's Supplemental Tag Characters block,
+Selectors are drawn from Unicode's Variation Selectors Supplement block,
 `U+E0100`–`U+E01EF`, giving 240 code points total. Registry 0.1 uses five,
 leaving 235 unallocated. Future selectors reserved by a later registry version
-must fall inside this block; the adjacent Tag Characters block
+must fall inside this block; the adjacent Tags block
 (`U+E0000`–`U+E007F`) is out of scope.
 
 Unmarked text is deliberately distinct from `human`: there is no code point for
@@ -419,7 +427,8 @@ draft, not pinned release artifacts.
 
 - How a producer decides which state applies to a given run of text.
 - How a consumer uses provenance in decisions, including weighting passages in
-  agent prompts. See [application use](#application-use-non-normative).
+  agent prompts. See [application use](#application-use-non-normative) and
+  [ADR 0014](docs/adr/0014-the-protocol-defines-structure-not-use.md).
 - Visual style. The specification defines classes and an attribute; CSS is an
   integration choice. `js/textprov.css` is one such choice, not part of this
   document.

@@ -8,8 +8,18 @@ import textprov from "textprov";
     ai: String.fromCodePoint(0xe0101),
     mixed: String.fromCodePoint(0xe0102),
   };
-  var segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
+  var segmenter =
+    typeof Intl === "object" && typeof Intl.Segmenter === "function"
+      ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
+      : null;
   var markedText = "";
+
+  function segments(text) {
+    if (segmenter) return Array.from(segmenter.segment(text));
+    return Array.from(text, function (segment) {
+      return { segment: segment };
+    });
+  }
 
   function mark(text, state) {
     var selector = selectors[state];
@@ -19,7 +29,7 @@ import textprov from "textprov";
         return run.text;
       })
       .join("");
-    return Array.from(segmenter.segment(text), function (item) {
+    return Array.from(segments(text), function (item) {
       return /^\s+$/u.test(item.segment) ? item.segment : item.segment + selector;
     }).join("");
   }
