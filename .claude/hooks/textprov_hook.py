@@ -54,9 +54,11 @@ PROMPT_LOG_TAIL = 300
 SNAPSHOT_MAX_AGE = 24 * 3600
 
 # A command that moves the working tree to another revision changes files the
-# agent did not write.
+# agent did not write. Only the subcommand position counts, so `git commit -am`
+# or a commit message that says "merge" is not mistaken for one.
 GIT_MOVES_TREE = re.compile(
-    r"\bgit\b[^|;&\n]*\b(checkout|switch|merge|pull|rebase|stash|reset|restore"
+    r"\bgit(?:\s+(?:-[Cc]\s+\S+|-[-\w]+(?:=\S+)?))*\s+"
+    r"(checkout|switch|merge|pull|rebase|stash|reset|restore"
     r"|cherry-pick|revert|apply|am|worktree|bisect)\b"
 )
 
@@ -514,8 +516,20 @@ def scoped_files():
     return [rel for rel in listing.split("\0") if suffix_in_scope(rel)]
 
 
-def head():
-    return git("rev-parse", "--verify", "-q", "HEAD").stdout.strip()
+def head(suffix=""):
+    return git("rev-parse", "--verify", "-q", "HEAD" + suffix).stdout.strip()
+
+
+def committed_on(base):
+    """True when HEAD is a single commit made on top of `base`.
+
+    A commit moves HEAD without replacing the working tree, unlike a checkout
+    of a commit that happens to be a child of `base`.
+    """
+    return (
+        head("^") == base
+        and git("reflog", "-1", "--format=%gs").stdout.startswith("commit: ")
+    )
 
 
 # --- hook handlers ---------------------------------------------------------
@@ -609,7 +623,7 @@ def on_bash_after(event):
         return
     snapshot = json.loads(path.read_text(encoding="utf-8"))
     path.unlink()
-    if snapshot["head"] != head():
+    if snapshot["head"] != head() and not committed_on(snapshot["head"]):
         return
     before = snapshot["files"]
     known = None

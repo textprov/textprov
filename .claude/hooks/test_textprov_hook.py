@@ -1,8 +1,11 @@
 """Tests for textprov_hook.py: python3 -m unittest discover -s .claude/hooks"""
 
+import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).parent))
 
@@ -203,6 +206,73 @@ class TestEdit(unittest.TestCase):
         raw = "a cat\n" + ai("b cat") + "\n"
         with self.assertRaises(hook.Ambiguous):
             hook.rewrite_edit(raw, "cat", "dog", replace_all=True, shingles=set())
+
+
+class TestBash(unittest.TestCase):
+    def setUp(self):
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        self.root = Path(temp.name)
+        for name, value in {
+            "ROOT": self.root,
+            "SNAPSHOTS": self.root / "snapshots",
+            "PROMPT_LOG": self.root / "prompts.jsonl",
+        }.items():
+            patcher = mock.patch.object(hook, name, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        self.git("init", "-q")
+        self.write("old\n")
+        self.git("add", "a.md")
+        self.git("commit", "-qm", "a")
+
+    def git(self, *args):
+        subprocess.run(
+            ["git", "-C", str(self.root), "-c", "user.name=t", "-c", "user.email=t@t",
+             "-c", "commit.gpgsign=false", "-c", "core.hooksPath=/dev/null", *args],
+            check=True, capture_output=True,
+        )
+
+    def write(self, text):
+        (self.root / "a.md").write_text(text, encoding="utf-8")
+
+    def read(self):
+        return (self.root / "a.md").read_text(encoding="utf-8")
+
+    def bash(self, command, *steps):
+        event = {"tool_use_id": "t", "tool_input": {"command": command}}
+        hook.on_bash_before(event)
+        for step in steps:
+            step()
+        hook.on_bash_after(event)
+
+    def test_edit_is_marked(self):
+        self.bash("echo new >> a.md", lambda: self.write("old\nnew line\n"))
+        self.assertEqual(self.read(), "old\n" + ai("new line") + "\n")
+
+    def test_edit_then_commit_is_marked(self):
+        self.bash(
+            "echo new >> a.md && git commit -am new",
+            lambda: self.write("old\nnew line\n"),
+            lambda: self.git("commit", "-qam", "new"),
+        )
+        self.assertEqual(self.read(), "old\n" + ai("new line") + "\n")
+
+    def test_tree_moving_commands(self):
+        for command in ("git checkout main", "git -C site switch x", "git --no-pager stash pop",
+                        "make && git -c a=b merge x"):
+            self.assertTrue(hook.GIT_MOVES_TREE.search(command), command)
+        for command in ("git commit -am x", "git commit -m 'merge and apply'",
+                        "git log --grep reset", "gh pr checkout 1"):
+            self.assertFalse(hook.GIT_MOVES_TREE.search(command), command)
+
+    def test_checkout_of_a_child_commit_is_not_marked(self):
+        self.git("checkout", "-qb", "side")
+        self.write("old\ntheir line\n")
+        self.git("commit", "-qam", "theirs")
+        self.git("checkout", "-q", "-")
+        self.bash("gh pr checkout 1", lambda: self.git("checkout", "-q", "side"))
+        self.assertEqual(self.read(), "old\ntheir line\n")
 
 
 if __name__ == "__main__":

@@ -37,8 +37,12 @@ f󠄁o󠄁u󠄁n󠄁d󠄁;󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁 a󠄁n󠄁 e󠄁n�
   r󠄁e󠄁f󠄁l󠄁o󠄁w󠄁e󠄁d󠄁 l󠄁i󠄁n󠄁e󠄁s󠄁 `ai`.󠄁
 - B󠄁a󠄁s󠄁h󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 m󠄁o󠄁v󠄁e󠄁 t󠄁h󠄁e󠄁 w󠄁o󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 t󠄁r󠄁e󠄁e󠄁 (󠄁`git checkout`,󠄁 `merge`,󠄁 `stash`,󠄁
   a󠄁n󠄁d󠄁 s󠄁o󠄁 o󠄁n󠄁)󠄁 a󠄁r󠄁e󠄁 s󠄁k󠄁i󠄁p󠄁p󠄁e󠄁d󠄁 b󠄁y󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 p󠄁a󠄁t󠄁t󠄁e󠄁r󠄁n󠄁 a󠄁n󠄁d󠄁 b󠄁y󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁a󠄁t󠄁 `HEAD` d󠄁i󠄁d󠄁
-  n󠄁o󠄁t󠄁 m󠄁o󠄁v󠄁e󠄁.󠄁 A󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁 r󠄁e󠄁s󠄁t󠄁o󠄁r󠄁e󠄁s󠄁 f󠄁i󠄁l󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁o󠄁t󠄁h󠄁e󠄁r󠄁 w󠄁a󠄁y󠄁 i󠄁s󠄁 n󠄁o󠄁t󠄁 d󠄁e󠄁t󠄁e󠄁c󠄁t󠄁e󠄁d󠄁
-  a󠄁n󠄁d󠄁 i󠄁t󠄁s󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 `ai`.󠄁
+  n󠄁o󠄁t󠄁 m󠄁o󠄁v󠄁e󠄁,󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁n󠄁 b󠄁y󠄁 a󠄁 s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁.󠄁 A󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁 r󠄁e󠄁s󠄁t󠄁o󠄁r󠄁e󠄁s󠄁 f󠄁i󠄁l󠄁e󠄁
+  c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁o󠄁t󠄁h󠄁e󠄁r󠄁 w󠄁a󠄁y󠄁 i󠄁s󠄁 n󠄁o󠄁t󠄁 d󠄁e󠄁t󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 a󠄁n󠄁d󠄁 i󠄁t󠄁s󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 `ai`.󠄁
+- A󠄁 B󠄁a󠄁s󠄁h󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁n󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁s󠄁 i󠄁t󠄁 i󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 a󠄁f󠄁t󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁
+  c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁;󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 s󠄁t󠄁a󠄁y󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 w󠄁o󠄁r󠄁k󠄁i󠄁n󠄁g󠄁
+  t󠄁r󠄁e󠄁e󠄁 f󠄁o󠄁r󠄁 t󠄁h󠄁e󠄁 n󠄁e󠄁x󠄁t󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁.󠄁 A󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁 m󠄁a󠄁k󠄁e󠄁s󠄁 m󠄁o󠄁r󠄁e󠄁 t󠄁h󠄁a󠄁n󠄁 o󠄁n󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁,󠄁 o󠄁r󠄁
+  a󠄁m󠄁e󠄁n󠄁d󠄁s󠄁 o󠄁n󠄁e󠄁,󠄁 i󠄁s󠄁 n󠄁o󠄁t󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁.󠄁
 - A󠄁 B󠄁a󠄁s󠄁h󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 r󠄁u󠄁n󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 b󠄁a󠄁c󠄁k󠄁g󠄁r󠄁o󠄁u󠄁n󠄁d󠄁 i󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁d󠄁 w󠄁h󠄁e󠄁n󠄁 i󠄁t󠄁 r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁s󠄁,󠄁 n󠄁o󠄁t󠄁
   w󠄁h󠄁e󠄁n󠄁 i󠄁t󠄁 f󠄁i󠄁n󠄁i󠄁s󠄁h󠄁e󠄁s󠄁.󠄁
 - T󠄁h󠄁e󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁 f󠄁o󠄁r󠄁 t󠄁r󠄁e󠄁e󠄁-󠄁m󠄁o󠄁v󠄁i󠄁n󠄁g󠄁 g󠄁i󠄁t󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁s󠄁 r󠄁u󠄁n󠄁s󠄁 o󠄁n󠄁 t󠄁h󠄁e󠄁 w󠄁h󠄁o󠄁l󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁 A󠄁
