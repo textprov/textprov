@@ -437,6 +437,8 @@ draft, not pinned release artifacts.
   them; the fixture does not cover it.
 - Unicode-version differences in grapheme segmentation beyond the fixture.
   Implementations must use extended grapheme clusters, but specification version 0.2
-  does not pin a Unicode version. Clients using `Intl.Segmenter` and servers
-  using this repository's `cluster_end` agreed on every case tested; they may
-  differ where Unicode versions or segmentation coverage differ.
+  does not pin a Unicode version. T󠄁h󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁
+  t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁 v󠄁e󠄁n󠄁d󠄁o󠄁r󠄁e󠄁d󠄁 a󠄁t󠄁 o󠄁n󠄁e󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 p󠄁a󠄁s󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁'󠄁s󠄁
+  `GraphemeBreakTest.txt` (󠄁[A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁7󠄁](docs/adr/0017-vendor-grapheme-segmentation.md))󠄁;󠄁
+  a󠄁n󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁n󠄁 a󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁t󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 m󠄁a󠄁y󠄁 p󠄁l󠄁a󠄁c󠄁e󠄁 a󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁
+  b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁y󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁t󠄁l󠄁y󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁s󠄁.󠄁

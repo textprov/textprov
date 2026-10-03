@@ -155,8 +155,9 @@ ambiguity nor guarantees passage portability.
 The immediate recommendations are to record the variation-sequence collision as
 a regression case, evaluate additive PUA, and correct the specification's block
 name to **Variation Selectors Supplement**. The experiment also needs to expose
-segmentation differences: the Python and Ruby cluster helpers approximate
-extended grapheme clusters, while JavaScript uses `Intl.Segmenter` when available.
+segmentation d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁s󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 o󠄁n󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁t󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁s󠄁;󠄁
+t󠄁h󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 p󠄁o󠄁r󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁m󠄁s󠄁e󠄁l󠄁v󠄁e󠄁s󠄁 n󠄁o󠄁w󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁 o󠄁n󠄁e󠄁 v󠄁e󠄁n󠄁d󠄁o󠄁r󠄁e󠄁d󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁 s󠄁e󠄁t󠄁
+(󠄁[A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁7󠄁](../adr/0017-vendor-grapheme-segmentation.md))󠄁.󠄁
 
 The prototype remains useful for learning. Choosing a permanent encoding,
 changing published compatibility promises, and rewriting the protocol follow
