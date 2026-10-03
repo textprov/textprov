@@ -126,9 +126,11 @@ b󠄁u󠄁i󠄁l󠄁t󠄁 e󠄁i󠄁t󠄁h󠄁e󠄁r󠄁.󠄁
   s󠄁e󠄁q󠄁u󠄁e󠄁n󠄁c󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 H󠄁a󠄁n󠄁 b󠄁a󠄁s󠄁e󠄁.󠄁 T󠄁h󠄁e󠄁 d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁 g󠄁r󠄁i󠄁d󠄁 a󠄁s󠄁s󠄁i󠄁g󠄁n󠄁s󠄁 5󠄁0󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁 i󠄁n󠄁s󠄁t󠄁e󠄁a󠄁d󠄁 o󠄁f󠄁 5󠄁,󠄁
   w󠄁h󠄁i󠄁c󠄁h󠄁 w󠄁i󠄁d󠄁e󠄁n󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 e󠄁x󠄁p󠄁o󠄁s󠄁u󠄁r󠄁e󠄁,󠄁 t󠄁r󠄁a󠄁c󠄁k󠄁e󠄁d󠄁 i󠄁n󠄁
   [i󠄁s󠄁s󠄁u󠄁e󠄁 #󠄁2󠄁0󠄁](https://github.com/delano/nerd-fonts/issues/20).
-  M󠄁a󠄁r󠄁k󠄁s󠄁 a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 1󠄁 o󠄁r󠄁 l󠄁a󠄁t󠄁e󠄁r󠄁 h󠄁a󠄁v󠄁e󠄁 n󠄁o󠄁 P󠄁U󠄁A󠄁 f󠄁o󠄁r󠄁m󠄁,󠄁 s󠄁o󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 C󠄁o󠄁r󠄁e󠄁T󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁e󠄁y󠄁
-  r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁 o󠄁n󠄁l󠄁y󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 t󠄁h󠄁e󠄁 `ccmp` r󠄁o󠄁u󠄁t󠄁e󠄁 i󠄁n󠄁
-  [i󠄁s󠄁s󠄁u󠄁e󠄁 #󠄁2󠄁4󠄁](https://github.com/delano/nerd-fonts/issues/24).󠄁
+- M󠄁a󠄁r󠄁k󠄁s󠄁 a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 1󠄁 o󠄁r󠄁 l󠄁a󠄁t󠄁e󠄁r󠄁 h󠄁a󠄁v󠄁e󠄁 n󠄁o󠄁 P󠄁U󠄁A󠄁 f󠄁o󠄁r󠄁m󠄁.󠄁 H󠄁o󠄁w󠄁 t󠄁h󠄁e󠄁y󠄁 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁
+  C󠄁o󠄁r󠄁e󠄁T󠄁e󠄁x󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁t󠄁 b󠄁e󠄁e󠄁n󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁e󠄁d󠄁.󠄁 T󠄁h󠄁e󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 t󠄁h󠄁i󠄁s󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 s󠄁a󠄁i󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁
+  c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁o󠄁r󠄁 s󠄁l󠄁o󠄁t󠄁s󠄁 w󠄁o󠄁u󠄁l󠄁d󠄁 r󠄁e󠄁a󠄁c󠄁h󠄁 C󠄁o󠄁r󠄁e󠄁T󠄁e󠄁x󠄁t󠄁 o󠄁n󠄁l󠄁y󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 t󠄁h󠄁e󠄁 `ccmp` r󠄁o󠄁u󠄁t󠄁e󠄁 i󠄁n󠄁
+  [i󠄁s󠄁s󠄁u󠄁e󠄁 #󠄁2󠄁4󠄁](https://github.com/delano/nerd-fonts/issues/24);󠄁 t󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁t󠄁
+  b󠄁e󠄁e󠄁n󠄁 v󠄁e󠄁r󠄁i󠄁f󠄁i󠄁e󠄁d󠄁 f󠄁o󠄁r󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁o󠄁w󠄁s󠄁.󠄁
 - Copy and paste carries state and g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 d󠄁r󠄁o󠄁p󠄁s󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁.󠄁 T󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁 b󠄁y󠄁
   design.
 
