@@ -2,6 +2,9 @@
 
 Status: p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁.󠄁 D󠄁a󠄁t󠄁e󠄁:󠄁 2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁2󠄁.󠄁 R󠄁e󠄁v󠄁i󠄁s󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 a󠄁c󠄁c󠄁e󠄁p󠄁t󠄁e󠄁d󠄁 o󠄁n󠄁 2󠄁0󠄁2󠄁6󠄁-󠄁0󠄁9󠄁-󠄁1󠄁1󠄁,󠄁
 w󠄁h󠄁i󠄁c󠄁h󠄁 a󠄁l󠄁l󠄁o󠄁w󠄁e󠄁d󠄁 o󠄁n󠄁l󠄁y󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 i󠄁n󠄁 b󠄁a󠄁n󠄁d󠄁.󠄁 I󠄁t󠄁s󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁 i󠄁s󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁.󠄁
+A󠄁m󠄁e󠄁n󠄁d󠄁e󠄁d󠄁 2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁3󠄁:󠄁 t󠄁h󠄁e󠄁 [f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](../development/generations-formal.md)
+i󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 a󠄁n󠄁d󠄁 i󠄁t󠄁s󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁.󠄁 T󠄁h󠄁i󠄁s󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 t󠄁h󠄁e󠄁
+r󠄁e󠄁a󠄁s󠄁o󠄁n󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁d󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁s󠄁t󠄁a󠄁t󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁.󠄁
 
 ## Context
 
@@ -16,7 +19,8 @@ T󠄁w󠄁o󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁s󠄁k󠄁 w�
 - **I󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁.󠄁** C󠄁o󠄁u󠄁l󠄁d󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁c󠄁o󠄁l󠄁 n󠄁a󠄁m󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁o󠄁r󠄁s󠄁 i󠄁n󠄁s󠄁t󠄁e󠄁a󠄁d󠄁:󠄁 H󠄁1󠄁,󠄁 H󠄁2󠄁,󠄁 A󠄁I󠄁1󠄁,󠄁
   A󠄁I󠄁2󠄁,󠄁 a󠄁n󠄁d󠄁 s󠄁o󠄁 o󠄁n󠄁?󠄁
 - **G󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.󠄁** C󠄁o󠄁u󠄁l󠄁d󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 h󠄁o󠄁w󠄁 m󠄁a󠄁n󠄁y󠄁 t󠄁i󠄁m󠄁e󠄁s󠄁 a󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁 h󠄁a󠄁s󠄁 b󠄁e󠄁e󠄁n󠄁
-  c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁d󠄁 f󠄁r󠄁o󠄁m󠄁 o󠄁n󠄁e󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 i󠄁n󠄁t󠄁o󠄁 t󠄁h󠄁e󠄁 n󠄁e󠄁x󠄁t󠄁?󠄁 T󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁s󠄁 p󠄁a󠄁s󠄁s󠄁e󠄁d󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁
+  r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁,󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁,󠄁 t󠄁a󠄁k󠄁e󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 o󠄁n󠄁e󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁'󠄁s󠄁 t󠄀r󠄀a󠄀n󠄀s󠄀c󠄀r󠄀i󠄀p󠄀t󠄀 i󠄀n󠄀t󠄀o󠄀 t󠄀h󠄀e󠄀
+  i󠄀n󠄀p󠄀u󠄀t󠄀 o󠄀f󠄀 t󠄁h󠄁e󠄁 n󠄁e󠄁x󠄁t󠄁?󠄁 T󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁s󠄁 p󠄁a󠄁s󠄁s󠄁e󠄁d󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁
   s󠄁e󠄁v󠄁e󠄁r󠄁a󠄁l󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁w󠄁i󠄁s󠄁e󠄁 l󠄁o󠄁o󠄁k󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 a󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁s󠄁t󠄁
   o󠄁n󠄁e󠄁.󠄁
 
@@ -35,47 +39,46 @@ a󠄁 m󠄁a󠄁r󠄁k󠄁 i󠄁s󠄁 s󠄁e󠄁l󠄁f󠄁-󠄁d󠄁e󠄁s󠄁c�
 t󠄁h󠄁a󠄁t󠄁 a󠄁t󠄁 t󠄁h󠄁e󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁y󠄁:󠄁 A󠄁I󠄁2󠄁 i󠄁n󠄁 o󠄁n󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 i󠄁s󠄁 n󠄁o󠄁t󠄁 A󠄁I󠄁2󠄁 i󠄁n󠄁 a󠄁n󠄁o󠄁t󠄁h󠄁e󠄁r󠄁.󠄁
 
 G󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 p󠄁a󠄁s󠄁s󠄁e󠄁s󠄁 b󠄁o󠄁t󠄁h󠄁.󠄁 I󠄁t󠄁 i󠄁s󠄁 a󠄁 p󠄁r󠄁o󠄁p󠄁e󠄁r󠄁t󠄁y󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁'󠄁s󠄁 p󠄁a󠄁t󠄁h󠄁,󠄁 n󠄁o󠄁t󠄁 o󠄁f󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁,󠄁
-a󠄁n󠄁d󠄁 i󠄁t󠄁 m󠄁e󠄁a󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 t󠄁h󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁:󠄁 a󠄁 w󠄁o󠄁r󠄁d󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁d󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 t󠄁i󠄁m󠄁e󠄁s󠄁 i󠄁s󠄁
+a󠄁n󠄁d󠄁 i󠄁t󠄁 m󠄁e󠄁a󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 t󠄁h󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁:󠄁 a󠄁 w󠄁o󠄁r󠄁d󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 t󠄁i󠄁m󠄁e󠄁s󠄁 i󠄁s󠄁
 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 3󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁v󠄁e󠄁r󠄁 i󠄁t󠄁 i󠄁s󠄁 p󠄁a󠄁s󠄁t󠄁e󠄁d󠄁.󠄁
 
 ## Decision
 
 1. **A󠄁 m󠄁a󠄁r󠄁k󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 a󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 n󠄁o󠄁t󠄁h󠄁i󠄁n󠄁g󠄁 e󠄁l󠄁s󠄁e󠄁.󠄁** I󠄁t󠄁 m󠄁a󠄁y󠄁 n󠄁o󠄁t󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁
    a󠄁n󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁:󠄁 a󠄁 p󠄁a󠄁r󠄁t󠄁i󠄁c󠄁u󠄁l󠄁a󠄁r󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁,󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁,󠄁 s󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁,󠄁 o󠄁r󠄁 a󠄁c󠄁c󠄁o󠄁u󠄁n󠄁t󠄁.󠄁
-2. **L󠄁a󠄁y󠄁o󠄁u󠄁t󠄁.󠄁** A󠄁 m󠄁a󠄁r󠄁k󠄁 i󠄁s󠄁 `U+E01gs`.󠄁 T󠄁h󠄁e󠄁 s󠄁e󠄁c󠄁o󠄁n󠄁d󠄁-󠄁t󠄁o󠄁-󠄁l󠄁a󠄁s󠄁t󠄁 h󠄁e󠄁x󠄁 d󠄁i󠄁g󠄁i󠄁t󠄁 `g` i󠄀s󠄀 t󠄀h󠄀e󠄀
-   g󠄀e󠄀n󠄀e󠄀r󠄀a󠄀t󠄀i󠄀o󠄀n󠄀 a󠄀n󠄀d󠄀 t󠄀h󠄀e󠄀 l󠄀a󠄀s󠄀t󠄀 d󠄁i󠄁g󠄁i󠄁t󠄁 `s` i󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁,󠄁 s󠄁o󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁
-   r󠄁e󠄁a󠄁d󠄁s󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁l󠄁y󠄁 i󠄁n󠄁 h󠄁e󠄁x󠄁:󠄁 `U+E0100` i󠄁s󠄁 `human` a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁,󠄁 `U+E0131` i󠄁s󠄁
-   `ai` a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 3󠄁.󠄁 T󠄁h󠄁e󠄁 b󠄁l󠄁o󠄁c󠄁k󠄁 i󠄁s󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁l󠄁y󠄁 1󠄁5󠄁 r󠄁o󠄁w󠄁s󠄁 o󠄁f󠄁 1󠄁6󠄁,󠄁 s󠄁o󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 o󠄁f󠄁 1󠄁6󠄁
-   f󠄀i󠄀l󠄀l󠄀s󠄀 i󠄀t󠄀 w󠄀i󠄀t󠄀h󠄀 n󠄀o󠄀 r󠄀e󠄀m󠄀a󠄀i󠄀n󠄀d󠄀e󠄀r󠄀.󠄀
-   - S󠄁t󠄁a󠄁t󠄁e󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁:󠄁 `0` `human`,󠄁 `1` `ai`,󠄁 `2` `mixed`,󠄁 `3` `edited`,󠄁
-     `4` `unknown`.󠄁 C󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 `5`–󠄁`F` a󠄁r󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 f󠄁o󠄁r󠄁 f󠄁u󠄁t󠄁u󠄁r󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁.󠄁
-   - G󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 r󠄁u󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 0󠄁 t󠄁o󠄁 9󠄁.󠄁 G󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 9󠄁 m󠄁e󠄁a󠄁n󠄁s󠄁 n󠄁i󠄁n󠄁e󠄁 o󠄁r󠄁 m󠄁o󠄁r󠄁e󠄁.󠄁
-   - R󠄁o󠄁w󠄁s󠄁 0󠄁–󠄁9󠄁 (󠄁`U+E0100`–󠄁`U+E019F`,󠄁 1󠄁6󠄁0󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁s󠄁)󠄁 a󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁 d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁 g󠄁r󠄁i󠄁d󠄁.󠄁
-     R󠄁o󠄁w󠄁 0󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 0󠄁.󠄁1󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁,󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁,󠄁 s󠄁o󠄁 t󠄁e󠄁x󠄁t󠄁 a󠄁l󠄁r󠄁e󠄁a󠄁d󠄁y󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 i󠄁s󠄁
-     g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁.󠄁
-   - R󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁 (󠄁`U+E01A0`–󠄁`U+E01EF`,󠄁 8󠄁0󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁s󠄁)󠄁 a󠄁r󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 f󠄁o󠄁r󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁
-     l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁s󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 h󠄁a󠄁s󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁,󠄁 d󠄁i󠄁s󠄁j󠄁o󠄁i󠄁n󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁
-     o󠄁t󠄁h󠄁e󠄁r󠄁.󠄁
+2. **L󠄁a󠄁y󠄁o󠄁u󠄁t󠄁.󠄁** T󠄁h󠄁e󠄁 [f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](../development/generations-formal.md)
+   d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁,󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁 o󠄁p󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁f󠄁o󠄁r󠄁m󠄁a󠄁n󠄁c󠄁e󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁.󠄁
+   I󠄁n󠄁 o󠄁u󠄁t󠄁l󠄁i󠄁n󠄁e󠄁:󠄁 a󠄁 d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁 g󠄁r󠄁i󠄁d󠄁 o󠄁f󠄁 1󠄁6󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 b󠄁y󠄁 1󠄁0󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 w󠄁h󠄁o󠄁s󠄁e󠄁
+   g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 0󠄁.󠄁1󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 8󠄁0󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁s󠄁 f󠄁o󠄁r󠄁
+   s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁.󠄁 A󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 i󠄁s󠄁 a󠄁n󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁
+   r󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 W󠄁h󠄁e󠄁r󠄁e󠄁 t󠄁h󠄁i󠄁s󠄁 o󠄁u󠄁t󠄁l󠄁i󠄁n󠄁e󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁,󠄁 t󠄁h󠄁e󠄁 f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁
+   s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 g󠄁o󠄁v󠄁e󠄁r󠄁n󠄁s󠄁.󠄁
 3. **E󠄁v󠄁e󠄁r󠄁y󠄁 m󠄁a󠄁r󠄁k󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁s󠄁 i󠄁t󠄁s󠄁e󠄁l󠄁f󠄁.󠄁** N󠄁o󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 m󠄁a󠄁y󠄁 d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁 o󠄁n󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁x󠄁t󠄁 o󠄁u󠄁t󠄁s󠄁i󠄁d󠄁e󠄁
    t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁,󠄁 b󠄁e󠄁c󠄁a󠄁u󠄁s󠄁e󠄁 a󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁d󠄁 s󠄁u󠄁b󠄁s󠄁t󠄁r󠄁i󠄁n󠄁g󠄁 l󠄁o󠄁s󠄁e󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁x󠄁t󠄁.󠄁 A󠄁n󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁
-   m󠄁a󠄁y󠄁 u󠄀s󠄀e󠄀 a󠄀 s󠄀u󠄀b󠄀s󠄀e󠄀t󠄀 o󠄀f󠄀 t󠄀h󠄀e󠄀 d󠄀e󠄀f󠄀a󠄀u󠄀l󠄀t󠄀 g󠄁r󠄁i󠄁d󠄁:󠄁 f󠄁e󠄁w󠄁e󠄁r󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁,󠄁 o󠄁r󠄁 s󠄁a󠄁t󠄁u󠄁r󠄁a󠄁t󠄁i󠄁n󠄁g󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁
-   t󠄁h󠄁a󠄁n󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 9󠄁.󠄁
-4. **C󠄁a󠄁r󠄁r󠄁y󠄁i󠄁n󠄁g󠄁.󠄁** E󠄁a󠄁c󠄁h󠄁 t󠄁i󠄁m󠄁e󠄁 a󠄁 t󠄁r󠄁a󠄁n󠄁s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁 b󠄁e󠄁c󠄁o󠄁m󠄁e󠄁s󠄁 i󠄁n󠄁p󠄁u󠄁t󠄁 t󠄁o󠄁 a󠄁 n󠄁e󠄁w󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁
-   e󠄁v󠄁e󠄁r󠄁y󠄁 m󠄁a󠄁r󠄁k󠄁 m󠄁o󠄁v󠄁e󠄁s󠄁 d󠄁o󠄁w󠄁n󠄁 o󠄁n󠄁e󠄁 r󠄁o󠄁w󠄁 (󠄁`+0x10`)󠄁 a󠄁n󠄁d󠄁 s󠄁t󠄁o󠄁p󠄁s󠄁 a󠄁t󠄁 r󠄁o󠄁w󠄁 9󠄁.󠄁 T󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 d󠄁o󠄁e󠄁s󠄁
-   n󠄁o󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 C󠄁a󠄁r󠄁r󠄁y󠄁i󠄁n󠄁g󠄁 i󠄀s󠄀 a󠄀 s󠄀e󠄀p󠄀a󠄀r󠄀a󠄀t󠄀e󠄀 o󠄀p󠄀e󠄀r󠄀a󠄀t󠄀i󠄀o󠄀n󠄀 f󠄀r󠄀o󠄀m󠄀 m󠄀a󠄀r󠄀k󠄀i󠄀n󠄀g󠄀.󠄀
-   P󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 r󠄁u󠄁l󠄁e󠄁 3󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 a󠄁n󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁,󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁
-   g󠄁o󠄁v󠄁e󠄁r󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁 C󠄁a󠄁r󠄁r󠄁y󠄁i󠄁n󠄁g󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 t󠄁h󠄁e󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 m󠄁u󠄁s󠄁t󠄁 n󠄁o󠄁t󠄁
-   c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
+   m󠄁a󠄁y󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁 w󠄁i󠄁t󠄁h󠄁 f󠄁e󠄁w󠄁e󠄁r󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁a󠄁n󠄁 t󠄁h󠄁e󠄁 g󠄁r󠄁i󠄁d󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁s󠄁.󠄁 T󠄁h󠄁a󠄁t󠄁 f󠄁r󠄁e󠄁e󠄁d󠄁o󠄁m󠄁 s󠄁t󠄁o󠄁p󠄁s󠄁 a󠄁t󠄁
+   a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁i󠄁n󠄁g󠄁.󠄁 A󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁o󠄁r󠄁 i󠄁n󠄁c󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 e󠄀v󠄀e󠄀r󠄀y󠄀 s󠄀t󠄀a󠄀t󠄀e󠄀,󠄀 i󠄀n󠄀c󠄀l󠄀u󠄀d󠄀i󠄀n󠄀g󠄀 o󠄀n󠄀e󠄀s󠄀 i󠄀t󠄀 d󠄀o󠄀e󠄀s󠄀
+   n󠄀o󠄀t󠄀 k󠄁n󠄁o󠄁w󠄁,󠄁 a󠄁n󠄁d󠄁 s󠄁a󠄁t󠄁u󠄁r󠄁a󠄁t󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 9󠄁 (󠄁P󠄁7󠄁 a󠄁n󠄁d󠄁 C󠄁3󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁
+   s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁)󠄁.󠄁 A󠄁 t󠄁o󠄁o󠄁l󠄁 t󠄁h󠄁a󠄁t󠄁 s󠄁a󠄁t󠄁u󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 a󠄀t󠄀 g󠄀e󠄀n󠄀e󠄀r󠄀a󠄀t󠄀i󠄀o󠄀n󠄀 3󠄀 w󠄀o󠄀u󠄀l󠄀d󠄀 w󠄀r󠄀i󠄀t󠄀e󠄀 3󠄀 f󠄀o󠄀r󠄀
+   t󠄀e󠄀x󠄀t󠄀 r󠄀e󠄀g󠄀u󠄀r󠄀g󠄀i󠄀t󠄀a󠄀t󠄀e󠄀d󠄀 f󠄀i󠄀v󠄀e󠄀 t󠄁i󠄁m󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 a󠄁 r󠄁e󠄁a󠄁d󠄁e󠄁r󠄁 w󠄁o󠄁u󠄁l󠄁d󠄁 t󠄁a󠄁k󠄁e󠄁 3󠄁 a󠄁s󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁
+   (󠄁C󠄁o󠄁r󠄁o󠄁l󠄁l󠄁a󠄁r󠄁y󠄁 4󠄁.󠄁1󠄁)󠄁.󠄁 A󠄁 c󠄁o󠄁a󠄁r󠄁s󠄁e󠄁r󠄁 s󠄁c󠄁a󠄁l󠄁e󠄁 i󠄁s󠄁 a󠄀 s󠄀t󠄀r󠄀i󠄀d󠄀e󠄀 i󠄀n󠄀 t󠄀h󠄀e󠄀 r󠄀e󠄀s󠄀e󠄀r󠄀v󠄀e󠄀d󠄀 r󠄀a󠄀n󠄀g󠄀e󠄀.󠄀
+4. **R󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁i󠄁n󠄁g󠄁 i󠄀s󠄀 a󠄀 s󠄀e󠄀p󠄀a󠄀r󠄀a󠄀t󠄀e󠄀 o󠄀p󠄀e󠄀r󠄀a󠄀t󠄀i󠄀o󠄀n󠄀 f󠄀r󠄀o󠄀m󠄀 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁.󠄁** E󠄁a󠄁c󠄁h󠄁 t󠄁i󠄁m󠄁e󠄁 a󠄁
+   t󠄁r󠄁a󠄁n󠄁s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁 b󠄁e󠄁c󠄁o󠄁m󠄁e󠄁s󠄁 i󠄁n󠄁p󠄁u󠄁t󠄁 t󠄁o󠄁 a󠄁 n󠄁e󠄁w󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 t󠄁h󠄁e󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁
+   m󠄁a󠄁r󠄁k󠄁 g󠄁o󠄁e󠄁s󠄁 u󠄁p󠄁 b󠄁y󠄁 o󠄁n󠄁e󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 P󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 r󠄁u󠄁l󠄁e󠄁 3󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁
+   s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 a󠄁n󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁,󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁 g󠄁o󠄁v󠄁e󠄁r󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁
+   (󠄁C󠄁3󠄁 a󠄁n󠄁d󠄁 C󠄁4󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁)󠄁.󠄁 T󠄁h󠄁e󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 n󠄁a󠄁m󠄁e󠄁,󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁i󠄁n󠄁g󠄁,󠄁 h󠄁i󠄁d󠄁
+   t󠄁h󠄁a󠄁t󠄁 t󠄁h󠄁i󠄁s󠄁 i󠄁s󠄁 a󠄁n󠄁 o󠄁p󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁.󠄁
 5. **P󠄁U󠄁A󠄁 i󠄁s󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 o󠄁n󠄁l󠄁y󠄁.󠄁** P󠄁U󠄁A󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 a󠄁n󠄁 a󠄁d󠄁j󠄁u󠄁n󠄁c󠄁t󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 f󠄁o󠄁r󠄁
    c󠄁o󠄁m󠄁p󠄁a󠄁t󠄁i󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁 w󠄁i󠄁t󠄁h󠄁 f󠄁o󠄁n󠄁t󠄁 w󠄁o󠄁r󠄁k󠄁f󠄁l󠄁o󠄁w󠄁s󠄁.󠄁 A󠄁 m󠄁a󠄁r󠄁k󠄁 a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 1󠄁 o󠄁r󠄁 l󠄁a󠄁t󠄁e󠄁r󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁
-   P󠄁U󠄁A󠄁 f󠄁o󠄁r󠄁m󠄁.󠄁
+   P󠄁U󠄁A󠄁 f󠄁o󠄁r󠄁m󠄁.󠄁 A󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁o󠄁r󠄁 t󠄁h󠄁a󠄁t󠄁 m󠄁e󠄁e󠄁t󠄁s󠄁 a󠄁 P󠄁U󠄁A󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁s󠄁 i󠄁t󠄁 t󠄀o󠄀 b󠄀a󠄀s󠄀e󠄀
+   p󠄀l󠄀u󠄀s󠄀 s󠄀e󠄀l󠄀e󠄀c󠄀t󠄀o󠄀r󠄀,󠄀 a󠄀s󠄀 [A󠄁D󠄁R󠄁 0󠄁0󠄁0󠄁3󠄁](0003-decode-pua-to-base-plus-selector.md)
+   d󠄁o󠄁e󠄁s󠄁 f󠄁o󠄁r󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁n󠄁 i󠄁n󠄁c󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 (󠄁C󠄁7󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁)󠄁.󠄁
 6. **I󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁,󠄁 w󠄁h󠄁e󠄁n󠄁 w󠄁a󠄁n󠄁t󠄁e󠄁d󠄁,󠄁 i󠄁s󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁d󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 b󠄁a󠄁n󠄁d󠄁** by the container: an
    attribute on a wrapping element in HTML, a header line or sidecar in plain
    text, a field in an editor's metadata. The protocol does not define that
    channel.
-7. **P󠄁e󠄁r󠄁-󠄁c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁o󠄁r󠄁 s󠄁l󠄁o󠄁t󠄁s󠄁,󠄁 i󠄁f󠄁 e󠄁v󠄁e󠄁r󠄁 n󠄁e󠄁e󠄁d󠄁e󠄁d󠄁 i󠄁n󠄁 b󠄁a󠄁n󠄁d󠄁,󠄁 a󠄁r󠄁e󠄁 a󠄁n󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁**
-   i󠄁n󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 s󠄁l󠄁o󠄁t󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 n󠄁a󠄁m󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 i󠄁t󠄁 b󠄁e󠄁l󠄁o󠄁n󠄁g󠄁s󠄁 t󠄁o󠄁;󠄁 a󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁
-   t󠄁h󠄁a󠄁t󠄁 r󠄁e󠄁c󠄁o󠄁g󠄁n󠄁i󠄁s󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 s󠄁l󠄁o󠄁t󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁l󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁
+7. **P󠄁e󠄁r󠄁-󠄁c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁o󠄁r󠄁 s󠄁l󠄁o󠄁t󠄁s󠄁,󠄁 i󠄁f󠄁 e󠄁v󠄁e󠄁r󠄁 n󠄁e󠄁e󠄁d󠄁e󠄁d󠄁 i󠄁n󠄁 b󠄁a󠄁n󠄁d󠄁,󠄁 a󠄁r󠄁e󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁** i󠄁n󠄁 t󠄁h󠄁e󠄁
+   r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 s󠄁l󠄁o󠄁t󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 n󠄁a󠄁m󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 i󠄁t󠄁 b󠄁e󠄁l󠄁o󠄁n󠄁g󠄁s󠄁 t󠄁o󠄁;󠄁 a󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁
+   t󠄁h󠄁a󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 s󠄁l󠄁o󠄁t󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁l󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁
    c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁e󠄁r󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁e󠄁s󠄁 w󠄁h󠄁a󠄁t󠄁 a󠄁n󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁l󠄁 m󠄁e󠄁a󠄁n󠄁s󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁 6󠄁.󠄁 N󠄁o󠄁t󠄁h󠄁i󠄁n󠄁g󠄁 i󠄁s󠄁
    s󠄁c󠄁h󠄁e󠄁d󠄁u󠄁l󠄁e󠄁d󠄁.󠄁
 
@@ -83,13 +86,21 @@ g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 3󠄁 w󠄁h󠄁e󠄁r󠄁e�
 
 | A󠄁p󠄁p󠄁r󠄁o󠄁a󠄁c󠄁h󠄁 | S󠄁e󠄁l󠄁f󠄁-󠄁d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁i󠄁n󠄁g󠄁 | C󠄁o󠄁s󠄁t󠄁 |
 | --- | --- | --- |
-| F󠄁i󠄁x󠄁e󠄁d󠄁 g󠄁r󠄁i󠄁d󠄁;󠄁 a󠄁n󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁s󠄁e󠄁s󠄁 a󠄀 s󠄀u󠄀b󠄀s󠄀e󠄀t󠄀 (󠄀f󠄀e󠄀w󠄀e󠄀r󠄀 s󠄀t󠄀a󠄀t󠄀e󠄀s󠄀,󠄀 o󠄀r󠄀 s󠄀a󠄀t󠄀u󠄀r󠄀a󠄀t󠄀i󠄀n󠄀g󠄀 e󠄀a󠄀r󠄀l󠄀i󠄀e󠄀r󠄀)󠄀 | Y󠄁e󠄁s󠄁 | S󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁 b󠄁e󠄁 t󠄁r󠄁a󠄁d󠄁e󠄁d󠄁 f󠄀o󠄀r󠄀 g󠄀e󠄀n󠄀e󠄀r󠄀a󠄀t󠄀i󠄀o󠄀n󠄀s󠄀 b󠄀e󠄀y󠄀o󠄀n󠄀d󠄀 t󠄀h󠄀e󠄀 g󠄀r󠄀i󠄀d󠄀 |
-| D󠄁i󠄁s󠄁j󠄁o󠄁i󠄁n󠄁t󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 p󠄁e󠄁r󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 (󠄁d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁 g󠄁r󠄁i󠄁d󠄁 i󠄁n󠄁 `U+E0100`–󠄁`U+E019F`,󠄁 a󠄁n󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 i󠄁n󠄁 `U+E01A0`–󠄁`U+E01EF`)󠄁 | Y󠄁e󠄁s󠄁 | U󠄁s󠄁e󠄁s󠄁 u󠄁p󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁 |
+| F󠄁i󠄁x󠄁e󠄁d󠄁 g󠄁r󠄁i󠄁d󠄁;󠄁 a󠄁n󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 s󠄁u󠄁b󠄁s󠄁e󠄁t󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 | Y󠄁e󠄁s󠄁 | S󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁 b󠄁e󠄁 t󠄁r󠄁a󠄁d󠄁e󠄁d󠄁 f󠄀o󠄀r󠄀 g󠄀e󠄀n󠄀e󠄀r󠄀a󠄀t󠄀i󠄀o󠄀n󠄀s󠄀 b󠄀e󠄀y󠄀o󠄀n󠄀d󠄀 t󠄀h󠄀e󠄀 g󠄀r󠄀i󠄀d󠄀 |
+| D󠄁i󠄁s󠄁j󠄁o󠄁i󠄁n󠄁t󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 (󠄁t󠄁h󠄁e󠄁 d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁 g󠄁r󠄁i󠄁d󠄁,󠄁 a󠄁n󠄁d󠄁 e󠄁a󠄁c󠄁h󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 i󠄁n󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁)󠄁 | Y󠄁e󠄁s󠄁 | U󠄁s󠄁e󠄁s󠄁 u󠄁p󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁 |
 | I󠄁n󠄁-󠄁b󠄁a󠄁n󠄁d󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 m󠄀a󠄀r󠄀k󠄀e󠄀r󠄀 a󠄀t󠄀 t󠄀h󠄀e󠄀 s󠄀t󠄀a󠄀r󠄀t󠄀 o󠄀f󠄀 a󠄀 r󠄀u󠄀n󠄀 | P󠄁a󠄁r󠄁t󠄁l󠄁y󠄁 | L󠄀o󠄀s󠄀t󠄀 w󠄀h󠄀e󠄀n󠄀 a󠄀 s󠄀u󠄀b󠄀s󠄀t󠄀r󠄀i󠄀n󠄀g󠄀 i󠄀s󠄀 c󠄀o󠄀p󠄀i󠄀e󠄀d󠄀 |
 | O󠄁u󠄁t󠄁-󠄁o󠄁f󠄁-󠄁b󠄁a󠄁n󠄁d󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 | N󠄁o󠄁 | L󠄀o󠄀s󠄀t󠄀 w󠄀h󠄀e󠄀n󠄀 a󠄀 s󠄀u󠄀b󠄀s󠄀t󠄀r󠄀i󠄀n󠄀g󠄀 i󠄀s󠄀 c󠄀o󠄀p󠄀i󠄀e󠄀d󠄀 |
 
-T󠄁h󠄁e󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁m󠄁b󠄁i󠄁n󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁r󠄁s󠄁t󠄁 t󠄁w󠄁o󠄁.󠄁 C󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁t󠄁 9󠄁 i󠄁s󠄁 w󠄁h󠄁a󠄁t󠄁 l󠄁e󠄁a󠄁v󠄁e󠄁s󠄁
-r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁 f󠄁r󠄁e󠄁e󠄁 f󠄁o󠄁r󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁s󠄁e󠄁l󠄁v󠄁e󠄁s󠄁.󠄁
+T󠄁h󠄁e󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁m󠄁b󠄁i󠄁n󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁r󠄁s󠄁t󠄁 t󠄁w󠄁o󠄁.󠄁
+
+T󠄁h󠄁e󠄁 g󠄁r󠄁i󠄁d󠄁 i󠄁s󠄁 1󠄁6󠄁 w󠄁i󠄁d󠄁e󠄁 s󠄁o󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁 r󠄁e󠄁a󠄁d󠄁s󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁l󠄁y󠄁 i󠄁n󠄁 h󠄁e󠄁x󠄁:󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁s󠄁t󠄁 d󠄁i󠄁g󠄁i󠄁t󠄁
+i󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 o󠄁n󠄁e󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 i󠄁t󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.󠄁 T󠄁h󠄁e󠄁 b󠄁l󠄁o󠄁c󠄁k󠄁 h󠄁o󠄁l󠄁d󠄁s󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁l󠄁y󠄁
+1󠄁5󠄁 r󠄁o󠄁w󠄁s󠄁 o󠄁f󠄁 1󠄁6󠄁.󠄁 G󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 0󠄁.󠄁1󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁,󠄁 s󠄁o󠄁 t󠄁e󠄁x󠄁t󠄁 a󠄁l󠄁r󠄁e󠄁a󠄁d󠄁y󠄁
+m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 n󠄁e󠄁e󠄁d󠄁s󠄁 n󠄁o󠄁 m󠄁i󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.󠄁 C󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁t󠄁 9󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 t󠄁h󠄁e󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁
+s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁 d󠄁e󠄁c󠄁i󠄁m󠄁a󠄁l󠄁 d󠄁i󠄁g󠄁i󠄁t󠄁 a󠄁n󠄁d󠄁 l󠄁e󠄁a󠄁v󠄁e󠄁s󠄁 f󠄁i󠄁v󠄁e󠄁 r󠄁o󠄁w󠄁s󠄁 f󠄁r󠄁e󠄁e󠄁 f󠄁o󠄁r󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁
+t󠄁h󠄁e󠄁m󠄁s󠄁e󠄁l󠄁v󠄁e󠄁s󠄁.󠄁 S󠄁a󠄁t󠄁u󠄁r󠄁a󠄁t󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 9󠄁 w󠄁a󠄁s󠄁 c󠄁o󠄁n󠄁s󠄁i󠄁d󠄁e󠄁r󠄁e󠄁d󠄁 a󠄁s󠄁 a󠄁 w󠄁a󠄁y󠄁 t󠄁o󠄁 v󠄁a󠄁r󠄁y󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 a󠄁n󠄁d󠄁
+r󠄁e󠄁j󠄁e󠄁c󠄁t󠄁e󠄁d󠄁,󠄁 b󠄁e󠄁c󠄁a󠄁u󠄁s󠄁e󠄁 a󠄁 r󠄁e󠄁a󠄁d󠄁e󠄁r󠄁 c󠄁o󠄁u󠄁l󠄁d󠄁 n󠄁o󠄁 l󠄁o󠄁n󠄁g󠄁e󠄁r󠄁 t󠄁a󠄁k󠄁e󠄁 a󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 9󠄁 a󠄁s󠄁
+e󠄁x󠄁a󠄁c󠄁t󠄁.󠄁
 
 ## Evidence
 
@@ -110,9 +121,10 @@ b󠄁u󠄁i󠄁l󠄁t󠄁 e󠄁i󠄁t󠄁h󠄁e󠄁r󠄁.󠄁
 - `human`, `ai`, `mixed`, `edited`, and `unknown` remain the complete s󠄁t󠄁a󠄁t󠄁e󠄁
   set. `edited` and `unknown` are proposed: their selectors are allocated in the
   registry but no producer emits them yet and no font renders them.
-- A󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁a󠄁d󠄁s󠄁 b󠄁o󠄁t󠄁h󠄁 v󠄁a󠄁l󠄁u󠄁e󠄁s󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁.󠄁 I󠄁n󠄁 t󠄁h󠄁e󠄁 d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁 g󠄁r󠄁i󠄁d󠄁,󠄁
-  `g = (cp - 0xE0100) >> 4` a󠄁n󠄁d󠄁 `s = cp & 0xF`.󠄁 A󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 k󠄁n󠄁o󠄁w󠄁 a󠄁
-  s󠄁t󠄁a󠄁t󠄁e󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁 i󠄁n󠄁 `5`–󠄁`F` s󠄁t󠄁i󠄁l󠄁l󠄁 r󠄁e󠄁a󠄁d󠄁s󠄁 i󠄁t󠄁s󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.󠄁
+- A󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁a󠄁d󠄁s󠄁 b󠄁o󠄁t󠄁h󠄁 v󠄁a󠄁l󠄁u󠄁e󠄁s󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁 a󠄁l󠄁o󠄁n󠄁e󠄁 (󠄁D󠄁e󠄁f󠄁 2󠄁.󠄁2󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁
+  f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁)󠄁.󠄁 A󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 k󠄁n󠄁o󠄁w󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁 r󠄁e󠄁a󠄁d󠄁s󠄁 i󠄁t󠄁s󠄁
+  g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.󠄁 F󠄁o󠄁r󠄁 a󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁 w󠄁h󠄁o󠄁s󠄁e󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁,󠄁 i󠄁t󠄁
+  r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 a󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 v󠄁a󠄁l󠄁u󠄁e󠄁,󠄁 n󠄁o󠄁t󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
 - T󠄁h󠄁e󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁'󠄁s󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁,󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁,󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁,󠄁 c󠄁o󠄁n󠄁f󠄁o󠄁r󠄁m󠄁a󠄁n󠄁c󠄁e󠄁
   f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 T󠄁h󠄁e󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁 o󠄁p󠄁e󠄁n󠄁 a󠄁r󠄁e󠄁 l󠄁i󠄁s󠄁t󠄁e󠄁d󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁
   s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁
