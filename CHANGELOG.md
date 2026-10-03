@@ -10,6 +10,8 @@ Specification version `0.2`; registry version `0.1`.
 - E󠄁x󠄁c󠄁l󠄁u󠄁d󠄁e󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁s󠄁,󠄁
   d󠄁o󠄁c󠄁s󠄁t󠄁r󠄁i󠄁n󠄁g󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 e󠄁m󠄁b󠄁e󠄁d󠄁d󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁.󠄁 A󠄁l󠄁l󠄁o󠄁w󠄁 o󠄁p󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 o󠄁f󠄁 c󠄁o󠄁d󠄁e󠄁 s󠄁n󠄁i󠄁p󠄁p󠄁e󠄁t󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁
   p󠄁r󠄁o󠄁s󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁u󠄁n󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁;󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 b󠄁e󠄁l󠄁o󠄁n󠄁g󠄁s󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.󠄁
+- L󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁d󠄁 t󠄁h󠄁e󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 t󠄁e󠄁x󠄁t󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 C󠄁C󠄁 B󠄁Y󠄁 4󠄁.󠄁0󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 a󠄁n󠄁d󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁
+  u󠄁n󠄁d󠄁e󠄁r󠄁 A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁 2󠄁.󠄁0󠄁,󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁i󠄁n󠄁g󠄁 M󠄁I󠄁T󠄁.󠄁 E󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁d󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁r󠄁 i󠄁s󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁.󠄁
 
 ## Draft 0.1 — 2026-09-20
 
