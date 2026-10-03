@@ -258,9 +258,21 @@ class TestBash(unittest.TestCase):
         )
         self.assertEqual(self.read(), "old\n" + ai("new line") + "\n")
 
+    def test_two_commits_are_not_marked(self):
+        self.bash(
+            "echo new >> a.md && git commit -am new && git commit --allow-empty -m more",
+            lambda: self.write("old\nnew line\n"),
+            lambda: self.git("commit", "-qam", "new"),
+            lambda: self.git("commit", "-q", "--allow-empty", "-m", "more"),
+        )
+        self.assertEqual(self.read(), "old\nnew line\n")
+
     def test_tree_moving_commands(self):
         for command in ("git checkout main", "git -C site switch x", "git --no-pager stash pop",
-                        "make && git -c a=b merge x"):
+                        "make && git -c a=b merge x", "git --git-dir x reset --hard",
+                        "git --work-tree . restore a.md", "git --work-tree=. restore a.md",
+                        'git -C "my dir" restore a.md', 'git -c user.name="A B" stash pop',
+                        "git --namespace ns checkout x"):
             self.assertTrue(hook.GIT_MOVES_TREE.search(command), command)
         for command in ("git commit -am x", "git commit -m 'merge and apply'",
                         "git log --grep reset", "gh pr checkout 1"):

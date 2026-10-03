@@ -55,10 +55,15 @@ SNAPSHOT_MAX_AGE = 24 * 3600
 
 # A command that moves the working tree to another revision changes files the
 # agent did not write. Only the subcommand position counts, so `git commit -am`
-# or a commit message that says "merge" is not mistaken for one.
+# or a commit message that says "merge" is not mistaken for one. Global options
+# before the subcommand may take a separate, quoted value.
+_SHELL_WORD = r"""(?:"[^"]*"|'[^']*'|[^\s"'])+"""
 GIT_MOVES_TREE = re.compile(
-    r"\bgit(?:\s+(?:-[Cc]\s+\S+|-[-\w]+(?:=\S+)?))*\s+"
-    r"(checkout|switch|merge|pull|rebase|stash|reset|restore"
+    r"\bgit(?:\s+(?:-[Cc]|--(?:git-dir|work-tree|namespace|config-env))\s+"
+    + _SHELL_WORD
+    + r"|\s+-"
+    + _SHELL_WORD
+    + r")*\s+(checkout|switch|merge|pull|rebase|stash|reset|restore"
     r"|cherry-pick|revert|apply|am|worktree|bisect)\b"
 )
 
