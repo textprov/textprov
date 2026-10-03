@@ -149,6 +149,21 @@
    ]
   },
   {
+   "name": "spacing mark (Mc): selector follows the whole cluster",
+   "input": "\u0915\u093f\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\u0915\u093f\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
    "name": "pua input decodes to base plus ai selector",
    "input": "\udbc0\udc48\udbc0\udc69",
    "options": {},
