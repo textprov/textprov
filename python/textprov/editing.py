@@ -134,6 +134,12 @@ RAW_BLOCKS = re.compile(
 INLINE = [
     # code span
     re.compile(r"(?<!`)(`+)(?!`)(?:(?!\n\s*\n).)+?(?<!`)\1(?!`)", re.DOTALL),
+    # Dollar-delimited LaTeX, including multiline display math. Escaped dollars
+    # are content, not delimiters; require matching single or double dollars.
+    re.compile(
+        r"(?<![\\$])(\${1,2})(?!\$)(?:\\.|[^\\$])+?\1(?!\$)",
+        re.DOTALL,
+    ),
     # link or image destination, second label of a reference link, footnote
     re.compile(r"\]\((?:[^()\\\n]|\\.|\([^()\n]*\))*\)"),
     re.compile(r"\]\[[^\]\n]*\]"),

@@ -83,6 +83,45 @@ class TestMarkdown(unittest.TestCase):
     def test_inline_code(self):
         self.unmarked("call `mark(text)` now\n", "`mark(text)`")
 
+    def test_dollar_math_preserves_surrounding_prose_marks(self):
+        for math in (
+            r"$\rho$",
+            r"$\rho + \alpha$",
+            r"$$\rho$$",
+            "$$\n\\rho + \\alpha\n$$",
+        ):
+            with self.subTest(math=math):
+                source = "before " + math + " after\n"
+                self.assertEqual(
+                    remark("", source), ai("before ") + math + ai(" after\n")
+                )
+
+    def test_multiple_math_spans(self):
+        self.assertEqual(
+            remark("", r"$\rho$ and $\alpha$"),
+            r"$\rho$" + ai(" and ") + r"$\alpha$",
+        )
+
+    def test_escaped_dollars_do_not_delimit_math(self):
+        self.assertEqual(
+            remark("", r"cost \$five and \$ten"),
+            ai("cost ") + r"\$" + ai("five and ") + r"\$" + ai("ten"),
+        )
+
+    def test_escaped_dollar_inside_math(self):
+        self.unmarked(r"before $\text{\$} + \rho$ after", r"$\text{\$} + \rho$")
+
+    def test_unmatched_dollar_does_not_protect_prose(self):
+        self.assertEqual(
+            remark("", "$unfinished prose"), ai("$unfinished prose")
+        )
+
+    def test_math_protection_preserves_existing_prose_states(self):
+        human = textprov.mark("human prose", state="human")
+        old = human + " " + ai("agent prose") + "\n"
+        new = "human prose agent prose " + r"$\rho$" + "\n"
+        self.assertEqual(remark(old, new), old[:-1] + " " + r"$\rho$" + "\n")
+
     def test_heading(self):
         self.unmarked("## Producer rules\n\nbody\n", "## Producer rules\n")
 
@@ -208,7 +247,9 @@ class TestHuman(unittest.TestCase):
         self.assertNotIn(HUMAN, marked)
 
     def test_short_overlap_is_ai(self):
-        marked = editing.remark("", "its own dogfood.\n", shingles=self.shingles)
+        marked = editing.remark(
+            "", "its own dogfood.\n", shingles=self.shingles
+        )
         self.assertNotIn(HUMAN, marked)
 
 
@@ -247,6 +288,13 @@ class TestEdit(unittest.TestCase):
         raw = "text\n\n```\nx = 1\n```\n"
         out, _ = self.apply(raw, "x = 1", "x = 2")
         self.assertEqual(out, "text\n\n```\nx = 2\n```\n")
+
+    def test_edit_inside_math_is_unmarked(self):
+        for math in (r"$\rho$", r"$$\rho$$", "$$\n\\rho\n$$"):
+            with self.subTest(math=math):
+                raw = ai("before") + " " + math + " " + ai("after")
+                out, _ = self.apply(raw, r"\rho", r"\alpha")
+                self.assertEqual(out, raw.replace(r"\rho", r"\alpha"))
 
     def test_absent_old_string(self):
         self.assertIsNone(
