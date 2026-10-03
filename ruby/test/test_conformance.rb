@@ -43,50 +43,85 @@ class TestFixtures < Minitest::Test
   end
 end
 
-class TestClusterEnd < Minitest::Test
-  def cluster(text, start = 0)
-    Textprov.cluster_end(text.chars, start, SELECTORS.values.to_set)
-  end
+class TestSegments < Minitest::Test
+  JAMO = "\u1100\u1161\u11A8"
+  CONJUNCT = "\u0915\u094D\u0937"
+  TAG_FLAG = "\u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}"
+  SARA_AM = "\u0E19\u0E33"
 
   def test_ascii
-    assert_equal 1, cluster("abc")
-    assert_equal 2, cluster("abc", 1)
+    assert_equal %w[a b c], Textprov.segments("abc")
   end
 
   def test_combining_marks
-    assert_equal 2, cluster("éx")
-    assert_equal 3, cluster("é̂x")
+    assert_equal %w[é x], Textprov.segments("éx")
+    assert_equal %w[é̂ x], Textprov.segments("é̂x")
   end
 
   def test_zwj_sequence
-    assert_equal 5, cluster("#{FAMILY}x")
-    assert_equal 5, cluster(FAMILY)
+    assert_equal [FAMILY, "x"], Textprov.segments("#{FAMILY}x")
   end
 
   def test_skin_tone
-    assert_equal 2, cluster("#{TONE}x")
+    assert_equal [TONE, "x"], Textprov.segments("#{TONE}x")
   end
 
-  def test_regional_indicators
-    assert_equal 2, cluster("#{FLAG}\u{1F1E8}")
-    assert_equal 1, cluster("\u{1F1E8}x")
+  def test_regional_indicators_pair_up
+    assert_equal [FLAG, "\u{1F1E8}"], Textprov.segments("#{FLAG}\u{1F1E8}")
   end
 
   def test_emoji_variation_selectors
-    assert_equal 2, cluster("❤️x")
-    assert_equal 2, cluster("❤︎x")
+    assert_equal ["❤️", "x"], Textprov.segments("❤️x")
+    assert_equal ["❤︎", "x"], Textprov.segments("❤︎x")
   end
 
-  def test_provenance_selector_ends_the_cluster
-    assert_equal 1, cluster("#{AI}x")
-    assert_equal 1, cluster("a#{AI}b")
-    assert_equal 2, cluster("é#{AI}b")
-    assert_equal 5, cluster("#{FAMILY}#{AI}b")
+  def test_provenance_selector_extends_the_cluster
+    assert_equal [AI, "x"], Textprov.segments("#{AI}x")
+    assert_equal ["a#{AI}", "b"], Textprov.segments("a#{AI}b")
+    assert_equal ["#{FAMILY}#{AI}", "b"], Textprov.segments("#{FAMILY}#{AI}b")
   end
 
-  def test_is_combining
-    assert Textprov.is_combining("́")
-    refute Textprov.is_combining("a")
+  def test_clusters_the_approximation_used_to_split
+    [JAMO, CONJUNCT, TAG_FLAG, SARA_AM].each do |text|
+      assert_equal [text], Textprov.segments(text)
+      assert_equal ["#{text}#{AI}"], Textprov.segments("#{text}#{AI}")
+    end
+  end
+
+  def test_empty
+    assert_equal [], Textprov.segments("")
+  end
+
+  def test_unicode_version_matches_the_test_file
+    first = File.open(GRAPHEME_TEST_PATH, encoding: "UTF-8", &:readline)
+
+    assert_includes first, "GraphemeBreakTest-#{Textprov::UNICODE_VERSION}.txt"
+  end
+
+  # Every line of Unicode's GraphemeBreakTest.txt for the pinned version.
+  # "÷" marks a boundary and "×" its absence; text after "#" is a comment.
+  def test_grapheme_break_test
+    total = 0
+    File.foreach(GRAPHEME_TEST_PATH, encoding: "UTF-8") do |line|
+      body = line.split("#")[0].strip
+      next if body.empty?
+
+      expected = []
+      current = +""
+      body.split[1..].each do |token|
+        if token == "÷"
+          expected << current
+          current = +""
+        elsif token != "×"
+          current << token.to_i(16).chr(Encoding::UTF_8)
+        end
+      end
+
+      assert_equal expected, Textprov.segments(expected.join), body
+      total += 1
+    end
+
+    assert_operator total, :>, 700
   end
 end
 

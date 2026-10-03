@@ -7,3 +7,12 @@ node_modules/
 .agent-worktrees/
 .font-cache/
 .venv-fonts/
+.textprov/
+.DS_Store
+**/.claude/worktrees/
+*.txt
+
+# Unicode Character Database downloads cached by tools/gen_grapheme_tables.py
+tools/.ucd/
+# ... but the conformance file every port's tests read is committed
+!ucd/GraphemeBreakTest.txt

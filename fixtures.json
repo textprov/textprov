@@ -134,6 +134,122 @@
    ]
   },
   {
+   "name": "flag: selector follows the regional-indicator pair",
+   "input": "\ud83c\udde8\ud83c\udde6\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\ud83c\udde8\ud83c\udde6\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "spacing mark (Mc): selector follows the whole cluster",
+   "input": "\u0915\u093f\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\u0915\u093f\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "hangul jamo: selector follows the whole syllable",
+   "input": "\u1100\u1161\u11a8\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\u1100\u1161\u11a8\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "devanagari conjunct: selector follows the whole cluster",
+   "input": "\u0915\u094d\u0937\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\u0915\u094d\u0937\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "tag-sequence flag: selector follows the whole sequence",
+   "input": "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "thai sara am: selector follows the whole cluster",
+   "input": "\u0e19\u0e33\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\u0e19\u0e33\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "a selector after whitespace is inert",
+   "input": " \udb40\udd00a\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": " \udb40\udd00"
+    },
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "crlf is one whitespace cluster and joins equal states",
+   "input": "a\udb40\udd01\r\nb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01\r\nb\udb40\udd01"
+    }
+   ]
+  },
+  {
    "name": "pua input decodes to base plus ai selector",
    "input": "\udbc0\udc48\udbc0\udc69",
    "options": {},
@@ -506,6 +622,46 @@
     "mode": "vs"
    },
    "output": "\u2764\ufe0f\udb40\udd01"
+  },
+  {
+   "name": "a Hangul syllable of conjoining jamo is one cluster",
+   "input": "\u1100\u1161\u11a8 x",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\u1100\u1161\u11a8\udb40\udd01 x\udb40\udd01",
+   "note": "L V T jamo join under GB6-GB8; one selector follows the syllable"
+  },
+  {
+   "name": "a Devanagari conjunct is one cluster",
+   "input": "\u0915\u094d\u0937 x",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\u0915\u094d\u0937\udb40\udd01 x\udb40\udd01",
+   "note": "consonant, virama, consonant join under GB9c; one selector follows the conjunct"
+  },
+  {
+   "name": "a tag-sequence flag is one cluster",
+   "input": "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f x",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f\udb40\udd01 x\udb40\udd01",
+   "note": "tag characters are Grapheme_Extend; one selector follows the whole sequence"
+  },
+  {
+   "name": "Thai sara am stays with its consonant",
+   "input": "\u0e19\u0e33 x",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\u0e19\u0e33\udb40\udd01 x\udb40\udd01",
+   "note": "U+0E33 is SpacingMark; one selector follows the pair"
   },
   {
    "name": "human state",

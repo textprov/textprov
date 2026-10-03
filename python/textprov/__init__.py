@@ -18,14 +18,14 @@ separate job and needs a font toolchain; that producer-side renderer is the
 
 from ._core import (
     SPEC_VERSION,
+    UNICODE_VERSION,
     GENERATED_STATES,
     PROPOSED_STATES,
     Mapping,
-    cluster_end,
     default_mapping,
-    is_combining,
     load_mapping,
     runs,
+    segments,
     strip_marks,
     to_html,
 )
@@ -33,18 +33,18 @@ from ._encode import convert, inspect, mark, mark_added
 
 __all__ = [
     "SPEC_VERSION",
+    "UNICODE_VERSION",
     "GENERATED_STATES",
     "PROPOSED_STATES",
     "Mapping",
-    "cluster_end",
     "convert",
     "default_mapping",
     "inspect",
-    "is_combining",
     "load_mapping",
     "mark",
     "mark_added",
     "runs",
+    "segments",
     "strip_marks",
     "to_html",
 ]

@@ -1,7 +1,8 @@
 // js/check_fixtures.mjs
 
-// Runs textprov.js against ../fixtures.json and checks the tables it embeds
-// (textprov.mapping) against ../mapping.json, which it never loads at runtime.
+// Runs textprov.js against ../fixtures.json and ../ucd/GraphemeBreakTest.txt,
+// and checks the tables it embeds (textprov.mapping) against ../mapping.json,
+// which it never loads at runtime.
 // Usage: node check_fixtures.mjs [path/to/textprov.js]
 // Exits non-zero on any failing case, version mismatch, or table drift.
 import fs from "fs";
@@ -78,7 +79,39 @@ for (const c of fx.cases) {
     console.log("FAIL", c.name, "\n got", JSON.stringify(got), "\n exp", JSON.stringify(c.runs));
   }
 }
-console.log(
-  `${path.relative(process.cwd(), target)}: ${fx.cases.length - fail}/${fx.cases.length} pass`,
-);
+console.log(`${path.relative(process.cwd(), target)}: ${fx.cases.length - fail}/${fx.cases.length} pass`);
+
+// Segmentation: every line of Unicode's GraphemeBreakTest.txt for the pinned
+// version. "÷" marks a boundary, "×" its absence; the text after "#" is a
+// comment.
+const testFile = path.join(root, "ucd", "GraphemeBreakTest.txt");
+const lines = fs.readFileSync(testFile, "utf8").split("\n");
+const declared = /GraphemeBreakTest-(\d+\.\d+\.\d+)\.txt/.exec(lines[0])[1];
+let segmentFail = 0;
+if (declared !== textprov.unicodeVersion) {
+  fail++;
+  segmentFail++;
+  console.log(`FAIL Unicode version: textprov.js ${textprov.unicodeVersion}, test file ${declared}`);
+}
+let segmentTotal = 0;
+for (const line of lines) {
+  const body = line.split("#")[0].trim();
+  if (!body) continue;
+  const expected = [];
+  let current = "";
+  for (const token of body.split(/\s+/).slice(1)) {
+    if (token === "÷") {
+      expected.push(current);
+      current = "";
+    } else if (token !== "×") current += String.fromCodePoint(parseInt(token, 16));
+  }
+  segmentTotal++;
+  const got = textprov.segments(expected.join(""));
+  if (!same(got, expected)) {
+    fail++;
+    segmentFail++;
+    console.log("FAIL segments", body, "\n got", JSON.stringify(got));
+  }
+}
+console.log(`GraphemeBreakTest-${declared}: ${segmentTotal - segmentFail}/${segmentTotal} pass`);
 process.exit(fail ? 1 : 0);

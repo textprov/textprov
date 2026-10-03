@@ -5,6 +5,7 @@ import vm from "node:vm";
 
 const homepage = readFileSync(new URL("./index.html", import.meta.url), "utf8");
 const inlineSample = homepage.match(/<p id="sample-passage"[^>]*>([^<]+)<\/p>/)[1];
+const fixtures = JSON.parse(readFileSync(new URL("../fixtures.json", import.meta.url), "utf8"));
 
 export function demo({ withSample = false, appSource, intl = Intl } = {}) {
   const elements = new Map();
@@ -100,14 +101,29 @@ test("copy and UTF-8 download carry the same marked text", async () => {
   assert.equal(element("copy-status").textContent, "Copied with marks");
 });
 
-test("reader initializes when Intl.Segmenter is unavailable", () => {
-  const legacyIntl = { ...Intl, Segmenter: undefined };
-  const { element } = demo({ intl: legacyIntl });
-  const input = element("check-input");
-  input.value = "A\u{E0101}";
-  input.listeners.input();
-  assert.equal(element("check-output").textContent, input.value);
-  assert.match(element("check-status").textContent, /Labels found: ai/);
+const clusterCases = fixtures.producer_cases.filter((c) =>
+  [
+    "a mark goes after combining marks",
+    "a flag is one cluster",
+    "a ZWJ sequence is one cluster",
+    "a skin-tone modifier stays with its base",
+    "VS16 presentation stays with its base",
+    "a Hangul syllable of conjoining jamo is one cluster",
+    "a Devanagari conjunct is one cluster",
+    "a tag-sequence flag is one cluster",
+    "Thai sara am stays with its consonant",
+  ].includes(c.name),
+);
+
+test("encoder marks each cluster once", () => {
+  assert.equal(clusterCases.length, 9);
+  const { element } = demo();
+  const input = element("demo-input");
+  for (const c of clusterCases) {
+    input.value = c.input;
+    input.listeners.input();
+    assert.equal(element("demo-output").value, c.output, c.name);
+  }
 });
 
 test("reader reports existing labels without changing the input", () => {

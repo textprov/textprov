@@ -68,7 +68,8 @@ bundle exec rake test
 The suite runs every decoder, producer, and convert case in
 [fixtures.json](../fixtures.json), tests the producer properties from
 [SPEC.md](../SPEC.md) directly rather than only through recorded outputs, and
-unit-tests `cluster_end`, `to_html`, `strip_marks`, and the CLI.
+r󠄁u󠄁n󠄁s󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 l󠄁i󠄁n󠄁e󠄁 o󠄁f󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁'󠄁s󠄁 `GraphemeBreakTest.txt` t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 `segments`,󠄁 a󠄁n󠄁d󠄁
+u󠄁n󠄁i󠄁t󠄁-󠄁t󠄁e󠄁s󠄁t󠄁s󠄁 `to_html`, `strip_marks`, and the CLI.
 
 ## License
 

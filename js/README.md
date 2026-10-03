@@ -53,6 +53,8 @@ textprov.render(document.body, { strip: true, prefix: "prov" });
 
 - `textprov.render(root?, options?)` — walks text nodes under `root` (default `document.body`), replaces marked runs with `<span>` elements. Skips `<script>`, `<style>`, `<textarea>`, and anything already inside a `.<prefix>` element. Returns the number of spans created. Browser only.
 - `textprov.runs(text, options?)` — returns `[{ state, text }]`. Environment-agnostic; use this in Node or for custom rendering.
+- `textprov.segments(text)` — splits `text` into e󠄁x󠄁t󠄁e󠄁n󠄁d󠄁e󠄁d󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁s󠄁 (󠄁U󠄁A󠄁X󠄁 #󠄁2󠄁9󠄁)󠄁,󠄁 t󠄁h󠄁e󠄁 u󠄁n󠄁i󠄁t󠄁s󠄁 a󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁,󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁 v󠄁e󠄁n󠄁d󠄁o󠄁r󠄁e󠄁d󠄁 a󠄁t󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 1󠄁7󠄁.󠄁0󠄁.󠄁0󠄁.󠄁 D󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 u󠄁s󠄁e󠄁 `Intl.Segmenter`,󠄁 s󠄁o󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 e󠄁n󠄁v󠄁i󠄁r󠄁o󠄁n󠄁m󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁d󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 p󠄁o󠄁r󠄁t󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 a󠄁l󠄁i󠄁k󠄁e󠄁.󠄁
+- `textprov.unicodeVersion` —󠄁 `"17.0.0"`,󠄁 t󠄁h󠄁e󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 v󠄁e󠄁n󠄁d󠄁o󠄁r󠄁e󠄁d󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁.󠄁
 - `textprov.specVersion` — `"0.2"`
 - `textprov.registryVersion` — `"0.1"`
 - `textprov.mapping` — `{ version, selectors, puaRanges }`, the embedded tables (checked against the canonical `mapping.json` in CI).

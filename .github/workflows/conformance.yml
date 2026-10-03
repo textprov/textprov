@@ -37,6 +37,18 @@ jobs:
       - run: python -m unittest discover -s tests -t .
         working-directory: python
 
+  ruby:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+          working-directory: ruby
+      - run: bundle exec rake test
+        working-directory: ruby
+
   utility-fonts:
     runs-on: ubuntu-latest
     steps:
