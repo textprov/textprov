@@ -7,7 +7,7 @@
     "brotli": "1.2.0"
   },
   "source_manifest_sha256": "46255b2c793d6df49c0a838460a061a52ff1b270671d0067ee9b162dc15cdfdb",
-  "registry_sha256": "64dc473be92a13f9e2c54ec13b06281a928b312140fcad8caea74df806e94a13",
+  "registry_sha256": "eef9aa7bc94e2a0e7fe70e2ffbdd285391ef388414f4b182c8fd7cbf3d1c62cf",
   "fonts": [
     {
       "key": "sans",
@@ -659,8 +659,8 @@
         "textprov-sans-utility-p9e.ttf": "5961304b7b89ee174c38f9c7e7e68c8ec6c13e495fa0ae7a74dc28c49aefd247",
         "textprov-sans-utility-p9e.woff2": "ab49ad0c9ada452393d577e0b5ebe2a8243b5845c04842c6b176da0785ba8887",
         "textprov-sans-utility-p9e-OFL.txt": "56af9b9c6715597e458284a474dc118a50a4150e9d547c70f7b4a33c3e6a9328",
-        "textprov-sans-utility-p9e-README.txt": "48b0ea7726f5ecc586cec3c65e22bd8796273b0386ec733e47d18047cb97092e",
-        "textprov-sans-utility-p9e.zip": "719ae554758e5fbd395e44027b274ede6d418d1d92acc6baaf266ee0c6f18afe"
+        "textprov-sans-utility-p9e-README.txt": "741d893372a4cb6db8aeb25dd385db7c7c6cf0de4762cdffc579cf8018ca7fee",
+        "textprov-sans-utility-p9e.zip": "ad59640648d1c0b76569cf56c84bc631b9c48dc62944968db10980560f15fce3"
       }
     },
     {
@@ -1307,8 +1307,8 @@
         "textprov-serif-utility-p9e.ttf": "40d3a15c706c7c1ac1f389c804b7ad99c48840e3a07d9547549ddc71ce5eb19e",
         "textprov-serif-utility-p9e.woff2": "f87eb2653916e4107336f3a30289f739085010d65cb38d8e5bb247b6254b92aa",
         "textprov-serif-utility-p9e-OFL.txt": "c21d7293d87b6d7ab1d0229a2f55b77f33a7613a6a4e66f6693d68d7d8d09464",
-        "textprov-serif-utility-p9e-README.txt": "6b2478adfeb9de492e16ccf472e13faeea0c0794ed9bbc4dad731042ca2732ae",
-        "textprov-serif-utility-p9e.zip": "a8c8e8267be25ae98efcaf0fdb0e02d0fa237a706475d5e9390a65d2596415cf"
+        "textprov-serif-utility-p9e-README.txt": "40e5796768fc337ba5e1054fe30527637ea31da00c4d3ac783fd1a05a210c4f2",
+        "textprov-serif-utility-p9e.zip": "285ea1b5f73f2e11b0986581655834ce7cba71b8f1c275a88a5cb29cfa60782f"
       }
     },
     {
@@ -1953,8 +1953,8 @@
         "textprov-fixed-utility-p9e.ttf": "305e867818ede3bf9fd121309f765c55657cef7b98a3d1bd4ef0b6b4c9ee9a41",
         "textprov-fixed-utility-p9e.woff2": "fdb3eaba5377111f57e37715eafaef7d8860c0ff9e5ee6de5b5fee79a94220a1",
         "textprov-fixed-utility-p9e-OFL.txt": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
-        "textprov-fixed-utility-p9e-README.txt": "0c691a04932f2ff9b4b3c99a3b253bc83a2a4cddb4736ea63928a0de25f13bfb",
-        "textprov-fixed-utility-p9e.zip": "261b587a1b5fe1437183c185499a02c0dc832e7091b69d96778aaa9596225be0"
+        "textprov-fixed-utility-p9e-README.txt": "95a39f9a92b10db037ff51d001968d162fbba3b9f71bc7a852f689cf6c3be749",
+        "textprov-fixed-utility-p9e.zip": "bea528df6044b2b31599b52c6ae682f7768d4ce7eb461ad47ba4c6c1a66a3670"
       }
     },
     {
@@ -2603,8 +2603,8 @@
         "textprov-mono-utility-p9e.ttf": "d39d7f97ad499430abb9c5ff44a4d9bf3e0bd6ac34658f207e49ff9881136166",
         "textprov-mono-utility-p9e.woff2": "5fb6eea0573fd65ab1176b6659575e1966c69efda1a9d11d9f8febc4fded6794",
         "textprov-mono-utility-p9e-OFL.txt": "7c940e28a5388e9bba866cf0e408edda45fe0899ba98665b8f6ab31dc5e4b8ff",
-        "textprov-mono-utility-p9e-README.txt": "81df215bd5c661b19df7981ec7e7d9915e5c8cecc710ba635b48affa3423e426",
-        "textprov-mono-utility-p9e.zip": "2a7160dea0c87e6a162d3a4b85f5ab092ba1c0566d7df6c87f772c2f710614a6"
+        "textprov-mono-utility-p9e-README.txt": "0802428b71c82f44912ddc69633727f540dae329555cdf1160c776c67fdf310d",
+        "textprov-mono-utility-p9e.zip": "cef06e5c80fc41e8518e70f1d97bf9c9078ccec00f1c6f58b1b2be1c6bb75f2c"
       }
     },
     {
@@ -3239,8 +3239,8 @@
         "textprov-proportional-utility-p9e.ttf": "7a61dbae8d1911715b9349a57738b1876da14da10e5d6541cd8a63b677ea926b",
         "textprov-proportional-utility-p9e.woff2": "0a8ebe4acad3bd223c4a076c2f94281fbd04a95c68fba15478bdf2ab7f14b814",
         "textprov-proportional-utility-p9e-OFL.txt": "f32d22b3908fcad2c86a74000614ec22e6a7f66ea7e867e616026a27aebdc143",
-        "textprov-proportional-utility-p9e-README.txt": "4835a355e67e6fb71719e310c630ecb1a34d67b562b6f9c102a414ecd855a33e",
-        "textprov-proportional-utility-p9e.zip": "4821e551a6cebeef3f85eda4fc713775c00e1f7382d55a8b813d6e7a1cd11e25"
+        "textprov-proportional-utility-p9e-README.txt": "0dc9e2c6d1aff053b87a6cdcf9f1008ab008e879f67440ac5d8a382a579bb1ca",
+        "textprov-proportional-utility-p9e.zip": "682e38ec506f699d2d0285b43d268bbd35c2db53288659163cc16175f99a0630"
       }
     }
   ]
