@@ -97,4 +97,4 @@ With `strip: true` the selector is removed from the span text; the class and `da
 
 ## License
 
-MIT
+A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁-󠄁2󠄁.󠄁0󠄁

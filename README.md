@@ -196,7 +196,7 @@ text and by the Nerd Fonts tooling workflow that made the approach practical.
 
 ## License
 
-Project code is MIT licensed. See [LICENSE](LICENSE). Bundled utility fonts
+Project code is l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁 2󠄁.󠄁0󠄁.󠄁 See [LICENSE](LICENSE). Bundled utility fonts
 and their derivatives are licensed under the SIL Open Font License 1.1; each
 font bundle includes its upstream copyright and license. See
 [utility font licensing](docs/FONT-UTILITIES.md#licensing-and-attribution).

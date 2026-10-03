@@ -138,7 +138,7 @@ the application's actual rendering separately when adopting a utility font.
 
 ## Licensing and attribution
 
-The project code is [MIT licensed](../LICENSE). The utility fonts and their
+The project code is l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 [A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁 2󠄁.󠄁0󠄁](../LICENSE).󠄁 The utility fonts and their
 derivatives are licensed under the **SIL Open Font License 1.1 (OFL)**, rather
 than the repository's code license. All five sources permit modification and
 redistribution under OFL, including embedding and bundling. Each distributed

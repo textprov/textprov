@@ -78,4 +78,4 @@ u󠄁n󠄁i󠄁t󠄁-󠄁t󠄁e󠄁s󠄁t󠄁s󠄁 `to_html`, `strip_marks`, and
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁-󠄁2󠄁.󠄁0󠄁.󠄁 See [LICENSE](LICENSE).
