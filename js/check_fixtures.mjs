@@ -8,6 +8,7 @@ import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
 import { fileURLToPath } from "url";
+import vm from "vm";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(here, "..");
@@ -71,14 +72,32 @@ if (textprov.registryVersion !== fx.registry_version) {
     `FAIL registry version: implementation ${textprov.registryVersion}, fixture ${fx.registry_version}`,
   );
 }
-for (const c of fx.cases) {
-  const got = textprov.runs(c.input, c.options);
-  if (JSON.stringify(got) !== JSON.stringify(c.runs)) {
-    fail++;
-    console.log("FAIL", c.name, "\n got", JSON.stringify(got), "\n exp", JSON.stringify(c.runs));
+// The same cases again without Intl.Segmenter, through the fallback segmenter.
+const legacy = vm.createContext({
+  Intl: { ...Intl, Segmenter: undefined },
+  module: { exports: {} },
+});
+vm.runInContext(fs.readFileSync(target, "utf8"), legacy);
+const implementations = [
+  ["", textprov],
+  [" (no Intl.Segmenter)", legacy.module.exports],
+];
+for (const [label, implementation] of implementations) {
+  for (const c of fx.cases) {
+    const got = implementation.runs(c.input, c.options);
+    if (JSON.stringify(got) !== JSON.stringify(c.runs)) {
+      fail++;
+      console.log(
+        "FAIL",
+        c.name + label,
+        "\n got",
+        JSON.stringify(got),
+        "\n exp",
+        JSON.stringify(c.runs),
+      );
+    }
   }
 }
-console.log(
-  `${path.relative(process.cwd(), target)}: ${fx.cases.length - fail}/${fx.cases.length} pass`,
-);
+const total = fx.cases.length * implementations.length;
+console.log(`${path.relative(process.cwd(), target)}: ${total - fail}/${total} pass`);
 process.exit(fail ? 1 : 0);

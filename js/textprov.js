@@ -59,19 +59,21 @@
       ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
       : null;
 
-  function isClusterExtension(cp) {
-    return (
-      (cp >= 0x0300 && cp <= 0x036f) ||
-      (cp >= 0x1ab0 && cp <= 0x1aff) ||
-      (cp >= 0x1dc0 && cp <= 0x1dff) ||
-      (cp >= 0x20d0 && cp <= 0x20ff) ||
-      (cp >= 0xfe00 && cp <= 0xfe0f) ||
-      (cp >= 0xfe20 && cp <= 0xfe2f) ||
-      (cp >= 0x1f3fb && cp <= 0x1f3ff) ||
-      (cp >= 0xe0100 && cp <= 0xe01ef)
-    );
+  // Marks (Mn, Mc, Me) include the variation selectors and the provenance
+  // selectors themselves.
+  var MARK = /\p{M}/u;
+
+  function isClusterExtension(character, cp) {
+    return MARK.test(character) || (cp >= 0x1f3fb && cp <= 0x1f3ff);
   }
 
+  function isRegional(cp) {
+    return cp >= 0x1f1e6 && cp <= 0x1f1ff;
+  }
+
+  // text -> grapheme clusters. Without Intl.Segmenter, approximate them the
+  // way the Python and Ruby ports do: a base plus its marks, skin-tone
+  // modifiers, and anything joined by ZWJ, with regional indicators in pairs.
   function segments(text) {
     if (seg) {
       return Array.from(seg.segment(text), function (item) {
@@ -86,7 +88,14 @@
       var cp = character.codePointAt(0);
       var previous = clusters[clusters.length - 1];
       var followsJoiner = previous && previous.codePointAt(previous.length - 1) === 0x200d;
-      if (previous && (isClusterExtension(cp) || cp === 0x200d || followsJoiner)) {
+      // A previous cluster of length 2 that starts with a regional indicator
+      // is that one indicator alone, waiting for its pair.
+      var completesFlag =
+        previous && isRegional(cp) && previous.length === 2 && isRegional(previous.codePointAt(0));
+      if (
+        previous &&
+        (isClusterExtension(character, cp) || cp === 0x200d || followsJoiner || completesFlag)
+      ) {
         clusters[clusters.length - 1] += character;
       } else {
         clusters.push(character);
@@ -193,6 +202,7 @@
   var textprov = {
     runs: runs,
     render: render,
+    segments: segments,
     specVersion: "0.2",
     registryVersion: REGISTRY_VERSION,
     mapping: { version: REGISTRY_VERSION, selectors: SELECTORS, puaRanges: PUA_RANGES },
