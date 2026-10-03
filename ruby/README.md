@@ -26,6 +26,11 @@ as an alias per SPEC's cross-language rule), and (for `to_html`)
 `"pua"`). Every function takes `mapping: Textprov::Mapping.load(path)` to use a
 registry other than the copy vendored in this package.
 
+Only `human` and `ai` are provenance states. Producers reject obsolete state
+names (`mixed`, `edited`, `unknown`). Their former selectors, U+E0102–U+E0104,
+are ordinary non-TextProv selectors: decoding, rendering, stripping, and
+conversion preserve them, including with `strip: true`.
+
 The Ruby method is `Textprov.inspect_text`, not `.inspect`, so it does not
 shadow `Kernel#inspect`.
 

@@ -12,9 +12,8 @@
 > have not yet taken effect. See the [maturity lifecycle](docs/MATURITY.md).
 
 TextProv is a protocol for attaching origin labels to passages of p󠄁r󠄁o󠄁s󠄁e󠄁. A label
-states that a passage is human-written, AI-generated, mixed, edited, or of
-unknown origin. Cooperating tools can preserve, interpret, and display these
-labels as text moves between them. For example, a writing integration can
+states that a passage is h󠄁u󠄁m󠄁a󠄁n󠄁-󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁 o󠄁r󠄁 A󠄁I󠄁-󠄁g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁.󠄁 C󠄁o󠄁o󠄁p󠄁e󠄁r󠄁a󠄁t󠄁i󠄁n󠄁g󠄁 t󠄁o󠄁o󠄁l󠄁s󠄁 c󠄁a󠄁n󠄁
+preserve, interpret, and display these labels as text moves between them. For example, a writing integration can
 label a generated passage so an editor can identify it during review or an
 agent integration can distinguish it from the operator's surrounding input.
 
@@ -107,19 +106,16 @@ Applications can expose provenance on demand or use it internally
 | _unmarked_ | — | No state; the consumer decides what that means |
 | `human` | `U+E0100` | Required |
 | `ai` | `U+E0101` | Required |
-| `mixed` | `U+E0102` | Required |
-| `edited` | `U+E0103` | Proposed |
-| `unknown` | `U+E0104` | Proposed |
 
-A specification-version-0.2 decoder recognizes `human`, `ai`, and `mixed`, and
-a conforming producer must support them. `edited` and `unknown` are proposed
-allocations reserved for future stabilization; producers must not emit them and
-decoders may ignore them until they are promoted.
+A specification-version-0.2 decoder recognizes o󠄁n󠄁l󠄁y󠄁 `human` a󠄁n󠄁d󠄁 `ai`,󠄁 a󠄁n󠄁d󠄁 a󠄁
+c󠄁o󠄁n󠄁f󠄁o󠄁r󠄁m󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 m󠄁u󠄁s󠄁t󠄁 s󠄁u󠄁p󠄁p󠄁o󠄁r󠄁t󠄁 b󠄁o󠄁t󠄁h󠄁.󠄁 N󠄁o󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁 o󠄁r󠄁
+p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁.󠄁 S󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 a󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁e󠄁 a󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁
+s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
 
 Selectors are drawn from Unicode's Variation Selectors Supplement block,
-`U+E0100`–`U+E01EF`, giving 240 code points total. Registry 0.1 uses five,
-leaving 235 unallocated. Future selectors reserved by a later registry version
-must fall inside this block; the adjacent Tags block
+`U+E0100`–`U+E01EF`, giving 240 code points total. Registry 0.1 uses t󠄁w󠄁o󠄁,󠄁
+l󠄁e󠄁a󠄁v󠄁i󠄁n󠄁g󠄁 2󠄁3󠄁8󠄁 u󠄁n󠄁a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 (󠄁`U+E0102`–󠄁`U+E01EF`)󠄁.󠄁 Future selectors reserved by a
+l󠄁a󠄁t󠄁e󠄁r󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 must fall inside this block; the adjacent Tags block
 (`U+E0000`–`U+E007F`) is out of scope.
 
 Unmarked text is deliberately distinct from `human`: there is no code point for
@@ -215,10 +211,7 @@ whitespace, or with no preceding cluster, is not a mark.
   "version": "0.1",
   "variation_selectors": {
     "human": "U+E0100",
-    "ai": "U+E0101",
-    "mixed": "U+E0102",
-    "edited": "U+E0103",
-    "unknown": "U+E0104"
+    "ai": "U+E0101"
   },
   "pua": {
     "U+100041": { "base": "U+0041", "provenance": "ai" }
@@ -491,11 +484,6 @@ T󠄁h󠄁e󠄁s󠄁e󠄁 c󠄁a󠄁m󠄁e󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 t󠄁h
    h󠄁u󠄁m󠄁a󠄁n󠄁-󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁s󠄁u󠄁a󠄁l󠄁l󠄁y󠄁 o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁s󠄁s󠄁i󠄁o󠄁n󠄁.󠄁 A󠄁
    p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁 p󠄁a󠄁s󠄁t󠄁e󠄁d󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁,󠄁 a󠄁n󠄁d󠄁 a󠄁 s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁 n󠄁o󠄁
    p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁.󠄁 (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁4󠄁](https://github.com/textprov/textprov/discussions/14))󠄁
-3. **W󠄁h󠄁e󠄁n󠄁 a󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 i󠄁s󠄁 `mixed`.󠄁** W󠄁h󠄁e󠄁n󠄁 a󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 r󠄁e󠄁s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁'󠄁s󠄁 w󠄁o󠄁r󠄁d󠄁s󠄁
-   f󠄁a󠄁i󠄁t󠄁h󠄁f󠄁u󠄁l󠄁l󠄁y󠄁,󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁u󠄁l󠄁t󠄁 `mixed`,󠄁 `ai`,󠄁 o󠄁r󠄁 `edited`?󠄁 N󠄁e󠄁i󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁i󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁
-   n󠄁o󠄁r󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁s󠄁 `mixed` o󠄁r󠄁 `edited`.󠄁 A󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 c󠄁a󠄁n󠄁 d󠄁e󠄁t󠄁e󠄁c󠄁t󠄁 a󠄁
-   v󠄁e󠄁r󠄁b󠄁a󠄁t󠄁i󠄁m󠄁 q󠄁u󠄁o󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 b󠄁u󠄁t󠄁 c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁 j󠄁u󠄁d󠄁g󠄁e󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 a󠄁 p󠄁a󠄁r󠄁a󠄁p󠄁h󠄁r󠄁a󠄁s󠄁e󠄁 i󠄁s󠄁 f󠄁a󠄁i󠄁t󠄁h󠄁f󠄁u󠄁l󠄁.󠄁
-   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁5󠄁](https://github.com/textprov/textprov/discussions/15))󠄁
 
 ### Generational marking (proposed, non-normative)
 
@@ -503,12 +491,13 @@ A󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 e󠄁x󠄁t󠄁e󠄁n󠄁s󠄁i�
 c󠄀h󠄀a󠄀r󠄀a󠄀c󠄀t󠄀e󠄀r󠄀 h󠄀a󠄀s󠄀 b󠄀e󠄀e󠄀n󠄀 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁,󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁,󠄁 t󠄁a󠄁k󠄁e󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 o󠄁n󠄁e󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁'󠄁s󠄁
 t󠄀r󠄀a󠄀n󠄀s󠄀c󠄀r󠄀i󠄀p󠄀t󠄀 i󠄀n󠄀t󠄀o󠄀 t󠄀h󠄀e󠄀 i󠄀n󠄀p󠄀u󠄀t󠄀 o󠄀f󠄀 t󠄀h󠄀e󠄀 n󠄀e󠄀x󠄀t󠄀.󠄀 A󠄁 m󠄁a󠄁r󠄁k󠄁 b󠄁e󠄁c󠄁o󠄁m󠄁e󠄁s󠄁
 `U+E01gs`,󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁 `g` i󠄁s󠄁 t󠄁h󠄁e󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 `s` i󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁 (󠄁`0`
-`human`,󠄁 `1` `ai`,󠄁 `2` `mixed`,󠄁 `3` `edited`,󠄁 `4` `unknown`)󠄁.󠄁 G󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁u󠄁n󠄁s󠄁
+`human`,󠄁 `1` `ai`;󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 `2`–󠄁`F` a󠄁r󠄁e󠄁 u󠄁n󠄁a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁)󠄁.󠄁 G󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁u󠄁n󠄁s󠄁
 f󠄁r󠄁o󠄁m󠄁 0󠄁 t󠄁o󠄁 9󠄁,󠄁 a󠄁n󠄁d󠄁 9󠄁 m󠄁e󠄁a󠄁n󠄁s󠄁 n󠄁i󠄁n󠄁e󠄁 o󠄁r󠄁 m󠄁o󠄁r󠄁e󠄁.󠄁 E󠄀a󠄀c󠄀h󠄀 t󠄀i󠄀m󠄀e󠄀 a󠄀 t󠄀r󠄀a󠄀n󠄀s󠄀c󠄀r󠄀i󠄀p󠄀t󠄀 b󠄀e󠄀c󠄀o󠄀m󠄀e󠄀s󠄀 i󠄀n󠄀p󠄀u󠄀t󠄀 t󠄀o󠄀
 a󠄀 n󠄀e󠄀w󠄀 c󠄀o󠄀n󠄀v󠄀e󠄀r󠄀s󠄀a󠄀t󠄀i󠄀o󠄀n󠄀,󠄀 e󠄀v󠄀e󠄀r󠄀y󠄀 m󠄀a󠄀r󠄀k󠄀 m󠄀o󠄀v󠄀e󠄀s󠄀 d󠄀o󠄀w󠄀n󠄀 o󠄀n󠄀e󠄀 r󠄀o󠄀w󠄀 (󠄁`+0x10`)󠄁;󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 d󠄁o󠄁e󠄁s󠄁
-n󠄁o󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 R󠄁o󠄁w󠄁 0󠄁 i󠄁s󠄁 t󠄁o󠄁d󠄁a󠄁y󠄁'󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁.󠄁 C󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 5󠄁–󠄁F󠄁 a󠄁r󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 f󠄁o󠄁r󠄁 f󠄁u󠄁t󠄁u󠄁r󠄁e󠄁
-s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁 (󠄁`U+E01A0`–󠄁`U+E01EF`)󠄁 f󠄁o󠄁r󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁,󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 a󠄁r󠄁e󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁
-e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 e󠄁a󠄁c󠄁h󠄁 k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 o󠄁w󠄁n󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁
+n󠄁o󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 R󠄁o󠄁w󠄁 0󠄁 i󠄁s󠄁 t󠄁o󠄁d󠄁a󠄁y󠄁'󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁.󠄁 C󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 2󠄁–󠄁F󠄁 a󠄁r󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 f󠄁o󠄁r󠄁 f󠄁u󠄁t󠄁u󠄁r󠄁e󠄁
+s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁,󠄁 w󠄁i󠄁t󠄁h󠄁 n󠄁o󠄁 a󠄁d󠄁d󠄁i󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁
+(󠄁`U+E01A0`–󠄁`U+E01EF`)󠄁 f󠄁o󠄁r󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁,󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 a󠄁r󠄁e󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 e󠄁a󠄁c󠄁h󠄁
+k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 o󠄁w󠄁n󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁
 i󠄁s󠄁 n󠄁o󠄁t󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 0󠄁.󠄁2󠄁,󠄁 a󠄁n󠄁d󠄁 n󠄁o󠄁t󠄁h󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁 t󠄁h󠄁i󠄁s󠄁 s󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 i󠄁s󠄁 a󠄁
 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁.󠄁
 F󠄁o󠄁u󠄁r󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁s󠄁 a󠄁r󠄁e󠄁 s󠄁e󠄁t󠄁t󠄁l󠄁e󠄁d󠄁.󠄁
@@ -525,30 +514,25 @@ F󠄁o󠄁u󠄁r󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁s󠄁 a󠄁r󠄁e󠄁 s󠄁e󠄁t�
   i󠄁n󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁 w󠄁h󠄁o󠄁s󠄁e󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁,󠄁 i󠄁t󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 a󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁
   r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 v󠄁a󠄁l󠄁u󠄁e󠄁.󠄁
 
-T󠄁h󠄁e󠄁 [f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](docs/development/generations-formal.md) i󠄁s󠄁 t󠄁h󠄁e󠄁
+T󠄁h󠄁e󠄁 [f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](docs/development/generations-formal-aka-9g.md) i󠄁s󠄁 t󠄁h󠄁e󠄁
 s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 a󠄁n󠄁d󠄁 i󠄁t󠄁s󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁.󠄁
 [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁0󠄁](docs/adr/0010-contributor-identity-is-out-of-band.md) r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 t󠄁h󠄁e󠄁
 r󠄁e󠄁a󠄁s󠄁o󠄁n󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁h󠄁i󠄁n󠄁d󠄁 i󠄁t󠄁.󠄁
 
-4. **R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁e󠄁d󠄁.󠄁** W󠄁h󠄁e󠄁n󠄁 s󠄁o󠄁m󠄁e󠄁o󠄁n󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁
+3. **R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁e󠄁d󠄁.󠄁** W󠄁h󠄁e󠄁n󠄁 s󠄁o󠄁m󠄁e󠄁o󠄁n󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁
    f󠄁r󠄁o󠄁m󠄁 a󠄁n󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 w󠄁h󠄁a󠄁t󠄁 d󠄁o󠄁 t󠄁h󠄁e󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁,󠄁 a󠄁n󠄁d󠄁
    w󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁p󠄁p󠄁e󠄁n󠄁s󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁t󠄁?󠄁 M󠄁a󠄁r󠄁k󠄁s󠄁 a󠄁r󠄁e󠄁 p󠄁e󠄁r󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁,󠄁 s󠄁o󠄁 n󠄁e󠄁w󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 c󠄁o󠄁u󠄁l󠄁d󠄁
    t󠄁a󠄁k󠄁e󠄁 t󠄁h󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁'󠄁s󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 w󠄁h󠄁i󠄁l󠄁e󠄁 u󠄁n󠄁t󠄁o󠄁u󠄁c󠄁h󠄁e󠄁d󠄁 o󠄁n󠄁e󠄁s󠄁 k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁s󠄁.󠄁
-   T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 f󠄁i󠄁x󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁c󠄁r󠄁o󠄁s󠄁s󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁 a󠄁n󠄁d󠄁 l󠄁e󠄁a󠄁v󠄁e󠄁s󠄁 o󠄁p󠄁e󠄁n󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 a󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁
-   i󠄁s󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁e󠄁d󠄁,󠄁 b󠄁y󠄁 `edited` o󠄁r󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁w󠄁i󠄁s󠄁e󠄁.󠄁
+   T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 f󠄁i󠄁x󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁c󠄁r󠄁o󠄁s󠄁s󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁;󠄁 h󠄁o󠄁w󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 a󠄁f󠄁f󠄁e󠄁c󠄁t󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁s󠄁
+   a󠄁n󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 n󠄁o󠄁t󠄁 a󠄁n󠄁 a󠄁d󠄁d󠄁i󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
    (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁6󠄁](https://github.com/textprov/textprov/discussions/16))󠄁
-5. **A󠄁s󠄁s󠄁i󠄁g󠄁n󠄁i󠄁n󠄁g󠄁 `mixed`.󠄁** W󠄁h󠄁o󠄁 a󠄁s󠄁s󠄁i󠄁g󠄁n󠄁s󠄁 `mixed`,󠄁 a󠄁n󠄁d󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁o󠄁e󠄁s󠄁 a󠄁
-   `mixed` m󠄁a󠄁r󠄁k󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁?󠄁 A󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 c󠄁o󠄁m󠄁b󠄁i󠄁n󠄁i󠄁n󠄁g󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁s󠄁 o󠄁f󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁t󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 o󠄁r󠄁
-   g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 c󠄁o󠄁u󠄁l󠄁d󠄁 t󠄁a󠄁k󠄁e󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 (󠄁n󠄁e󠄁w󠄁 i󠄁n󠄁 t󠄁h󠄁i󠄁s󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁)󠄁,󠄁 t󠄁h󠄁e󠄁 h󠄁i󠄁g󠄁h󠄁e󠄁s󠄁t󠄁
-   g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁m󠄁o󠄁n󠄁g󠄁 i󠄁t󠄁s󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁s󠄁,󠄁 o󠄁r󠄁 t󠄁h󠄁e󠄁 l󠄁o󠄁w󠄁e󠄁s󠄁t󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 a󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁t󠄁 f󠄁a󠄁c󠄁t󠄁.󠄁
-   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁7󠄁](https://github.com/textprov/textprov/discussions/17))󠄁
-6. **R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁** W󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁p󠄁p󠄁e󠄁n󠄁s󠄁 t󠄁o󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁 i󠄁n󠄁t󠄁o󠄁 a󠄁 n󠄁e󠄁w󠄁
+4. **R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁** W󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁p󠄁p󠄁e󠄁n󠄁s󠄁 t󠄁o󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁 i󠄁n󠄁t󠄁o󠄁 a󠄁 n󠄁e󠄁w󠄁
    c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁?󠄁 I󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁 m󠄁a󠄁r󠄁k󠄁 t󠄁o󠄁 m󠄁o󠄁v󠄁e󠄁 d󠄁o󠄁w󠄁n󠄁 a󠄁 r󠄁o󠄁w󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁r󠄁e󠄁 i󠄁s󠄁 n󠄁o󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁
-   f󠄁o󠄁r󠄁 "󠄁u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁,󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 1󠄁"󠄁.󠄁 L󠄁e󠄁a󠄁v󠄁i󠄁n󠄁g󠄁 i󠄁t󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 l󠄁o󠄁s󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁;󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁
-   i󠄁t󠄁,󠄁 f󠄁o󠄁r󠄁 e󠄁x󠄁a󠄁m󠄁p󠄁l󠄁e󠄁 `unknown` a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 1󠄁,󠄁 t󠄁u󠄁r󠄁n󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 m󠄁a󠄁d󠄁e󠄁 n󠄁o󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁
-   i󠄁n󠄁t󠄁o󠄁 a󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁.󠄁
+   f󠄁o󠄁r󠄁 "󠄁u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁,󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 1󠄁"󠄁.󠄁 L󠄁e󠄁a󠄁v󠄁i󠄁n󠄁g󠄁 i󠄁t󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁.󠄁
+   H󠄁o󠄁w󠄁 c󠄁a󠄁n󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 b󠄁a󠄁n󠄁d󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 i󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁
+   o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁?󠄁 A󠄁b󠄁s󠄁e󠄁n󠄁c󠄁e󠄁 o󠄁f󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁 `human` a󠄁n󠄁d󠄁 `ai`.󠄁
    (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁8󠄁](https://github.com/textprov/textprov/discussions/18))󠄁
-7. **S󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁 i󠄁n󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁.󠄁** H󠄁o󠄁w󠄁 d󠄁o󠄁e󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁
+5. **S󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁 i󠄁n󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁.󠄁** H󠄁o󠄁w󠄁 d󠄁o󠄁e󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁
    `U+E01A0`–󠄁`U+E01EF`?󠄁 U󠄁n󠄁d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁d󠄁:󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 u󠄁n󠄁i󠄁t󠄁 i󠄁s󠄁 a󠄁 w󠄁h󠄁o󠄁l󠄁e󠄁 r󠄁o󠄁w󠄁 o󠄁f󠄁 1󠄁6󠄁 o󠄁r󠄁
    a󠄁n󠄁y󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁,󠄁 a󠄁n󠄁d󠄁 h󠄁o󠄁w󠄁 `mapping.json` r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁'󠄁s󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁 a󠄁n󠄁d󠄁 m󠄁e󠄁a󠄁n󠄁i󠄁n󠄁g󠄁.󠄁
    E󠄁a󠄁c󠄁h󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 a󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁
@@ -556,7 +540,7 @@ r󠄁e󠄁a󠄁s󠄁o󠄁n󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁h󠄁i󠄁n󠄁d󠄁 i�
    i󠄁n󠄁 [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁0󠄁](docs/adr/0010-contributor-identity-is-out-of-band.md) a󠄁r󠄁e󠄁 o󠄁n󠄁e󠄁
    c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁.󠄁
    (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁9󠄁](https://github.com/textprov/textprov/discussions/19))󠄁
-8. **R󠄁u󠄁n󠄁s󠄁,󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁.󠄁** H󠄁o󠄁w󠄁 d󠄁o󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 A󠄁P󠄁I󠄁 e󠄁x󠄁p󠄁o󠄁s󠄁e󠄁
+6. **R󠄁u󠄁n󠄁s󠄁,󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁.󠄁** H󠄁o󠄁w󠄁 d󠄁o󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 A󠄁P󠄁I󠄁 e󠄁x󠄁p󠄁o󠄁s󠄁e󠄁
    g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁?󠄁 W󠄁h󠄁a󠄁t󠄁 a󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 f󠄁o󠄁r󠄁 o󠄁n󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁 i󠄁s󠄁 s󠄁e󠄁t󠄁t󠄁l󠄁e󠄁d󠄁 a󠄁b󠄁o󠄁v󠄁e󠄁.󠄁 R󠄁u󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁
    `(state, text)` t󠄁o󠄁d󠄁a󠄁y󠄁.󠄁 U󠄁n󠄁d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁d󠄁:󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 r󠄁u󠄁n󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁
    s󠄁h󠄁a󠄁r󠄁e󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 b󠄁u󠄁t󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁 i󠄁n󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 m󠄁e󠄁r󠄁g󠄁e󠄁,󠄁 h󠄁o󠄁w󠄁 `merge_whitespace`

@@ -2,6 +2,12 @@
 
 Status: accepted. Date: 2026-09-30.
 
+> **S󠄁t󠄁a󠄁t󠄁e󠄁 g󠄁u󠄁i󠄁d󠄁a󠄁n󠄁c󠄁e󠄁 u󠄁p󠄁d󠄁a󠄁t󠄁e󠄁d󠄁 (󠄁2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁3󠄁)󠄁:󠄁** T󠄁h󠄁e󠄁 m󠄁i󠄁s󠄁s󠄁i󠄁n󠄁g󠄁 `mixed`,󠄁 `edited`,󠄁 a󠄁n󠄁d󠄁
+> `unknown` v󠄁a󠄁r󠄁i󠄁a󠄁n󠄁t󠄁s󠄁 l󠄁i󠄁s󠄁t󠄁e󠄁d󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 a󠄁r󠄁e󠄁 h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁i󠄁c󠄁a󠄁l󠄁,󠄁 n󠄁o󠄁t󠄁 g󠄁a󠄁p󠄁s󠄁 t󠄁o󠄁 c󠄁l󠄁o󠄁s󠄁e󠄁:󠄁 t󠄁h󠄁o󠄁s󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁
+> a󠄁r󠄁e󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁d󠄁 a󠄁n󠄁d󠄁 a󠄁r󠄁e󠄁 n󠄁o󠄁t󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁.󠄁 O󠄁n󠄁l󠄁y󠄁 `human` a󠄁n󠄁d󠄁 `ai` a󠄁r󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁.󠄁 T󠄁h󠄁e󠄁 f󠄁o󠄁n󠄁t󠄁
+> i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁 i󠄁s󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁;󠄁 s󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁
+> [c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 c󠄁o󠄁v󠄁e󠄁r󠄁a󠄁g󠄁e󠄁 g󠄁u󠄁i󠄁d󠄁e󠄁](../FONT-UTILITIES.md#rendering-and-coverage).󠄁
+
 ## Context
 
 A P9E font is a font patched to draw a variant glyph for a marked cluster, so

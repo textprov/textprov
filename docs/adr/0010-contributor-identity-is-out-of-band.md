@@ -2,9 +2,23 @@
 
 Status: p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁.󠄁 D󠄁a󠄁t󠄁e󠄁:󠄁 2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁2󠄁.󠄁 R󠄁e󠄁v󠄁i󠄁s󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 a󠄁c󠄁c󠄁e󠄁p󠄁t󠄁e󠄁d󠄁 o󠄁n󠄁 2󠄁0󠄁2󠄁6󠄁-󠄁0󠄁9󠄁-󠄁1󠄁1󠄁,󠄁
 w󠄁h󠄁i󠄁c󠄁h󠄁 a󠄁l󠄁l󠄁o󠄁w󠄁e󠄁d󠄁 o󠄁n󠄁l󠄁y󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 i󠄁n󠄁 b󠄁a󠄁n󠄁d󠄁.󠄁 I󠄁t󠄁s󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁 i󠄁s󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁.󠄁
-A󠄁m󠄁e󠄁n󠄁d󠄁e󠄁d󠄁 2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁3󠄁:󠄁 t󠄁h󠄁e󠄁 [f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](../development/generations-formal.md)
+A󠄁m󠄁e󠄁n󠄁d󠄁e󠄁d󠄁 2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁3󠄁:󠄁 t󠄁h󠄁e󠄁 [f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](../development/generations-formal-aka-9g.md)
 i󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 a󠄁n󠄁d󠄁 i󠄁t󠄁s󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁.󠄁 T󠄁h󠄁i󠄁s󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 t󠄁h󠄁e󠄁
 r󠄁e󠄁a󠄁s󠄁o󠄁n󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁d󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁s󠄁t󠄁a󠄁t󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁.󠄁
+
+> **S󠄁t󠄁a󠄁t󠄁e󠄁-󠄁a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁r󠄁r󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 (󠄁2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁3󠄁)󠄁:󠄁** T󠄁h󠄁e󠄁 f󠄁i󠄁v󠄁e󠄁-󠄁s󠄁t󠄁a󠄁t󠄁e󠄁 v󠄁o󠄁c󠄁a󠄁b󠄁u󠄁l󠄁a󠄁r󠄁y󠄁 i󠄁n󠄁
+> t󠄁h󠄁i󠄁s󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 i󠄁s󠄁 s󠄁u󠄁p󠄁e󠄁r󠄁s󠄁e󠄁d󠄁e󠄁d󠄁.󠄁 `mixed`,󠄁 `edited`,󠄁 a󠄁n󠄁d󠄁 `unknown` p󠄁r󠄁e󠄁d󠄁a󠄁t󠄁e󠄁 t󠄁h󠄁e󠄁
+> g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 a󠄁n󠄁d󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁s󠄁 a󠄁n󠄁d󠄁 a󠄁r󠄁e󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁d󠄁,󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁e󠄁d󠄁 a󠄁s󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁s󠄁
+> o󠄁r󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 n󠄁a󠄁m󠄁e󠄁d󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁.󠄁 C󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 g󠄁u󠄁i󠄁d󠄁a󠄁n󠄁c󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 `human` a󠄁n󠄁d󠄁 `ai`.󠄁
+> I󠄁n󠄁 t󠄁h󠄁e󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁,󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 0󠄁 a󠄁n󠄁d󠄁 1󠄁 n󠄁a󠄁m󠄁e󠄁 t󠄁h󠄁o󠄁s󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁;󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 2󠄁–󠄁F󠄁
+> a󠄁r󠄁e󠄁 u󠄁n󠄁a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 a󠄁s󠄁s󠄁i󠄁g󠄁n󠄁e󠄁d󠄁 m󠄁e󠄁a󠄁n󠄁i󠄁n󠄁g󠄁s󠄁.󠄁 I󠄁t󠄁s󠄁 1󠄁6󠄁0󠄁-󠄁p󠄁o󠄁i󠄁n󠄁t󠄁 g󠄁r󠄁i󠄁d󠄁
+> t󠄁h󠄁e󠄁r󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 h󠄁a󠄁s󠄁 2󠄁0󠄁 n󠄁a󠄁m󠄁e󠄁d󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁/󠄁g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁m󠄁b󠄁i󠄁n󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 n󠄁o󠄁t󠄁 5󠄁0󠄁;󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁
+> h󠄁a󠄁s󠄁 t󠄁w󠄁o󠄁 n󠄁a󠄁m󠄁e󠄁d󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁,󠄁 n󠄁o󠄁t󠄁 f󠄁i󠄁v󠄁e󠄁.󠄁 T󠄁h󠄁e󠄁 o󠄁l󠄁d󠄁 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 c󠄁a󠄁p󠄁a󠄁c󠄁i󠄁t󠄁y󠄁 c󠄁o󠄁u󠄁n󠄁t󠄁s󠄁,󠄁
+> c󠄁o󠄁n󠄁s󠄁e󠄁q󠄁u󠄁e󠄁n󠄁c󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁e󠄁r󠄁-󠄁d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁 e󠄁x󠄁a󠄁m󠄁p󠄁l󠄁e󠄁s󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 a󠄁r󠄁e󠄁 h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁i󠄁c󠄁a󠄁l󠄁,󠄁 n󠄁o󠄁t󠄁
+> c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 g󠄁u󠄁i󠄁d󠄁a󠄁n󠄁c󠄁e󠄁.󠄁 G󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁n󠄁d󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 a󠄁n󠄁d󠄁
+> n󠄁o󠄁n󠄁-󠄁n󠄁o󠄁r󠄁m󠄁a󠄁t󠄁i󠄁v󠄁e󠄁;󠄁 t󠄁h󠄁e󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁 i󠄁s󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁.󠄁 S󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁
+> [s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁](../../SPEC.md#states) a󠄁n󠄁d󠄁
+> [g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁](../development/generations-formal-aka-9g.md).󠄁
 
 ## Context
 
@@ -46,7 +60,7 @@ g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 3󠄁 w󠄁h󠄁e󠄁r󠄁e�
 
 1. **A󠄁 m󠄁a󠄁r󠄁k󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 a󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 n󠄁o󠄁t󠄁h󠄁i󠄁n󠄁g󠄁 e󠄁l󠄁s󠄁e󠄁.󠄁** I󠄁t󠄁 m󠄁a󠄁y󠄁 n󠄁o󠄁t󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁
    a󠄁n󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁:󠄁 a󠄁 p󠄁a󠄁r󠄁t󠄁i󠄁c󠄁u󠄁l󠄁a󠄁r󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁,󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁,󠄁 s󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁,󠄁 o󠄁r󠄁 a󠄁c󠄁c󠄁o󠄁u󠄁n󠄁t󠄁.󠄁
-2. **L󠄁a󠄁y󠄁o󠄁u󠄁t󠄁.󠄁** T󠄁h󠄁e󠄁 [f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](../development/generations-formal.md)
+2. **L󠄁a󠄁y󠄁o󠄁u󠄁t󠄁.󠄁** T󠄁h󠄁e󠄁 [f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](../development/generations-formal-aka-9g.md)
    d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁,󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁 o󠄁p󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁f󠄁o󠄁r󠄁m󠄁a󠄁n󠄁c󠄁e󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁.󠄁
    I󠄁n󠄁 o󠄁u󠄁t󠄁l󠄁i󠄁n󠄁e󠄁:󠄁 a󠄁 d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁 g󠄁r󠄁i󠄁d󠄁 o󠄁f󠄁 1󠄁6󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 b󠄁y󠄁 1󠄁0󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 w󠄁h󠄁o󠄁s󠄁e󠄁
    g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 0󠄁.󠄁1󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 8󠄁0󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁s󠄁 f󠄁o󠄁r󠄁

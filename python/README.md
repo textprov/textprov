@@ -29,6 +29,11 @@ textprov.inspect(marked)               # a 'key: value' report of the states
 `"pua"`). These core functions take `mapping=textprov.Mapping.load(path)` to use a
 registry other than the copy vendored in this package.
 
+Only `human` and `ai` are provenance states. Producers reject obsolete state
+names (`mixed`, `edited`, `unknown`). Their former selectors, U+E0102–U+E0104,
+are ordinary non-TextProv selectors: decoding, rendering, stripping, and
+conversion preserve them, including with `strip=True`.
+
 ## Editing API
 
 The reusable prose-marking APIs live in the Python package. Import editing
