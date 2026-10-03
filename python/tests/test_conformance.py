@@ -297,6 +297,24 @@ class TestToHtml(unittest.TestCase):
 
 
 class TestStripMarks(unittest.TestCase):
+    def test_cleanup_removes_selectors_that_decoder_stripping_keeps(self):
+        for selector in (AI, HUMAN):
+            for text, clean in (
+                (selector + "A", "A"),
+                ("A " + selector + "B", "A B"),
+                ("A" + selector + " " + selector, "A "),
+                ("A" + selector * 2, "A"),
+                ("A" + HUMAN + AI, "A"),
+            ):
+                with self.subTest(text=text):
+                    self.assertEqual(textprov.strip_marks(text), clean)
+                    self.assertNotEqual(
+                        "".join(
+                            out for _, out in textprov.runs(text, strip=True)
+                        ),
+                        clean,
+                    )
+
     def test_selectors_and_pua_are_removed(self):
         pua_cp, (pua_base, _) = next(iter(PUA2BASE.items()))
         self.assertEqual(textprov.strip_marks("a" + AI + "b" + HUMAN), "ab")

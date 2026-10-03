@@ -232,6 +232,21 @@ class TestToHtml < Minitest::Test
 end
 
 class TestStripMarks < Minitest::Test
+  def test_cleanup_removes_selectors_that_decoder_stripping_keeps
+    [AI, HUMAN].each do |selector|
+      [
+        ["#{selector}A", "A"],
+        ["A #{selector}B", "A B"],
+        ["A#{selector} #{selector}", "A "],
+        ["A#{selector}#{selector}", "A"],
+        ["A#{HUMAN}#{AI}", "A"]
+      ].each do |text, clean|
+        assert_equal clean, Textprov.strip_marks(text)
+        refute_equal clean, Textprov.runs(text, strip: true).map(&:last).join
+      end
+    end
+  end
+
   def test_selectors_and_pua_are_removed
     pua_cp, (pua_base,) = PUA2BASE.first
 

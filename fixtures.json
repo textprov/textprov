@@ -324,7 +324,7 @@
    ]
   },
   {
-   "name": "strip: selectors removed, state kept",
+   "name": "strip: mark selectors removed, state kept",
    "input": "f\udb40\udd01o\udb40\udd01r\udb40\udd01k\udb40\udd01",
    "options": {
     "strip": true
@@ -333,6 +333,86 @@
     {
      "state": "ai",
      "text": "fork"
+    }
+   ]
+  },
+  {
+   "name": "strip: lone selector at start is kept",
+   "input": "\udb40\udd01A",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\udb40\udd01A"
+    }
+   ]
+  },
+  {
+   "name": "strip: selector after space is kept",
+   "input": "A \udb40\udd01B",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "A \udb40\udd01B"
+    }
+   ]
+  },
+  {
+   "name": "strip: mark removed but trailing inert selector kept",
+   "input": "A\udb40\udd01 \udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "A"
+    },
+    {
+     "state": null,
+     "text": " \udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "strip: only final selector of doubled selectors is removed",
+   "input": "A\udb40\udd01\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "A\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "mixed selectors: final selector supplies state, both kept",
+   "input": "A\udb40\udd00\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "A\udb40\udd00\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "strip: earlier selector of another state is kept",
+   "input": "A\udb40\udd00\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "A\udb40\udd00"
     }
    ]
   },
