@@ -52,7 +52,9 @@ same operation ID. Workspace marks the resulting files after the command.
 - **E󠄁d󠄁i󠄁t󠄁.󠄁** T󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 h󠄁o󠄁o󠄁k󠄁 f󠄁i󠄁n󠄁d󠄁s󠄁 `old_string` i󠄁n󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 i󠄁g󠄁n󠄁o󠄁r󠄁e󠄁d󠄁,󠄁
   s󠄁u󠄁b󠄁s󠄁t󠄁i󠄁t󠄁u󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁e󠄁 t󠄁o󠄁o󠄁l󠄁 n󠄁e󠄁e󠄁d󠄁s󠄁 f󠄁o󠄁r󠄁 a󠄁n󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁 m󠄁a󠄁t󠄁c󠄁h󠄁,󠄁 a󠄁n󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 w󠄁h󠄁a󠄁t󠄁
   `new_string` a󠄁d󠄁d󠄁s󠄁.󠄁 W󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 t󠄁h󠄁i󠄁s󠄁 a󠄁n󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁 e󠄁d󠄁i󠄁t󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 f󠄁i󠄁l󠄁e󠄁,󠄁 b󠄁e󠄁c󠄁a󠄁u󠄁s󠄁e󠄁
-  i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁.󠄁
+  i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁.󠄁 I󠄁n󠄁 C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 C󠄁o󠄁d󠄁e󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁 i󠄁n󠄁p󠄁u󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁
+  n󠄁o󠄁t󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁l󠄁y󠄁 t󠄁a󠄁k󠄁e󠄁 e󠄁f󠄁f󠄁e󠄁c󠄁t󠄁,󠄁 s󠄁o󠄁 E󠄁d󠄁i󠄁t󠄁 f󠄁a󠄁i󠄁l󠄁s󠄁 o󠄁n󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁;󠄁 s󠄁e󠄁e󠄁
+  [k󠄁n󠄁o󠄁w󠄁n󠄁 l󠄁i󠄁m󠄁i󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁](dogfooding-known-limitations.md#failure-behaviour).󠄁
 - **B󠄁a󠄁s󠄁h󠄁.󠄁** A󠄁 `PreToolUse` h󠄁o󠄁o󠄁k󠄁 s󠄁n󠄁a󠄁p󠄁s󠄁h󠄁o󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 a󠄁
   `PostToolUse` h󠄁o󠄁o󠄁k󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 w󠄁h󠄁a󠄁t󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 a󠄁d󠄁d󠄁e󠄁d󠄁.󠄁 C󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 m󠄁o󠄁v󠄁e󠄁 t󠄁h󠄁e󠄁
   w󠄁o󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 t󠄁r󠄁e󠄁e󠄁 t󠄁o󠄁 a󠄁n󠄁o󠄁t󠄁h󠄁e󠄁r󠄁 r󠄁e󠄁v󠄁i󠄁s󠄁i󠄁o󠄁n󠄁,󠄁 s󠄁u󠄁c󠄁h󠄁 a󠄁s󠄁 `git checkout`,󠄁 a󠄁r󠄁e󠄁 s󠄁k󠄁i󠄁p󠄁p󠄁e󠄁d󠄁,󠄁 a󠄁s󠄁
