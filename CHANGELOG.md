@@ -20,7 +20,7 @@ Specification version `0.2`; registry version `0.1`.
 - L󠄁i󠄁s󠄁t󠄁 o󠄁p󠄁e󠄁n󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 e󠄁a󠄁c󠄁h󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 t󠄁h󠄁r󠄁e󠄁a󠄁d󠄁:󠄁
   c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁,󠄁 w󠄁h󠄁a󠄁t󠄁 `human` a󠄁s󠄁s󠄁e󠄁r󠄁t󠄁s󠄁,󠄁
   a󠄁n󠄁d󠄁 w󠄁h󠄁e󠄁n󠄁 a󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 i󠄁s󠄁 `mixed`.󠄁
-  F󠄁o󠄁u󠄁r󠄁 m󠄁o󠄁r󠄁e󠄁 c󠄁o󠄁v󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁.󠄁
+  F󠄁i󠄁v󠄁e󠄁 m󠄁o󠄁r󠄁e󠄁 c󠄁o󠄁v󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁.󠄁
 
 ## Draft 0.1 — 2026-09-20
 

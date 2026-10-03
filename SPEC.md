@@ -483,6 +483,10 @@ a󠄀 n󠄀e󠄀w󠄀 c󠄀o󠄀n󠄀v󠄀e󠄀r󠄀s󠄀a󠄀t󠄀i󠄀o󠄀n�
 n󠄁o󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁.󠄁 R󠄁o󠄁w󠄁 0󠄁 i󠄁s󠄁 t󠄁o󠄁d󠄁a󠄁y󠄁'󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁.󠄁 C󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 5󠄁–󠄁F󠄁 a󠄁r󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 f󠄁o󠄁r󠄁 f󠄁u󠄁t󠄁u󠄁r󠄁e󠄁
 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁 (󠄁`U+E01A0`–󠄁`U+E01EF`)󠄁 f󠄁o󠄁r󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁
 i󠄁s󠄁 n󠄁o󠄁t󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 0󠄁.󠄁2󠄁.󠄁
+T󠄁w󠄁o󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁s󠄁 a󠄁r󠄁e󠄁 s󠄁e󠄁t󠄁t󠄁l󠄁e󠄁d󠄁:󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁i󠄁n󠄁g󠄁 r󠄁e󠄁w󠄁r󠄁i󠄁t󠄁e󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁,󠄁 s󠄁o󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 r󠄁u󠄁l󠄁e󠄁 3󠄁 w󠄁o󠄁u󠄁l󠄁d󠄁 b󠄁e󠄁
+r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁d󠄁,󠄁 a󠄁n󠄁d󠄁 P󠄁U󠄁A󠄁 s󠄁t󠄁a󠄁n󠄁d󠄁s󠄁 f󠄁o󠄁r󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 o󠄁n󠄁l󠄁y󠄁,󠄁 a󠄁s󠄁 a󠄁n󠄁 a󠄁d󠄁j󠄁u󠄁n󠄁c󠄁t󠄁 f󠄁o󠄁r󠄁m󠄁a󠄁t󠄁 f󠄁o󠄁r󠄁
+c󠄁o󠄁m󠄁p󠄁a󠄁t󠄁i󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁.󠄁 [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁0󠄁](docs/adr/0010-contributor-identity-is-out-of-band.md)
+r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁a󠄁s󠄁o󠄁n󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁h󠄁i󠄁n󠄁d󠄁 i󠄁t󠄁.󠄁
 
 4. **R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁e󠄁d󠄁.󠄁** W󠄁h󠄁e󠄁n󠄁 s󠄁o󠄁m󠄁e󠄁o󠄁n󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁d󠄁 i󠄁n󠄁
    f󠄁r󠄁o󠄁m󠄁 a󠄁n󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 w󠄁h󠄁a󠄁t󠄁 d󠄁o󠄁 t󠄁h󠄁e󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁,󠄁 a󠄁n󠄁d󠄁
@@ -510,3 +514,9 @@ i󠄁s󠄁 n󠄁o󠄁t󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁 s󠄁p󠄁e󠄁c󠄁i
    i󠄁n󠄁 [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁0󠄁](docs/adr/0010-contributor-identity-is-out-of-band.md) a󠄁r󠄁e󠄁 o󠄁n󠄁e󠄁
    c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁.󠄁
    (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁9󠄁](https://github.com/textprov/textprov/discussions/19))󠄁
+8. **D󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁,󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁.󠄁** W󠄁h󠄁a󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 a󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁 f󠄁o󠄁r󠄁
+   g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁?󠄁 R󠄁u󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁 `(state, text)` t󠄁o󠄁d󠄁a󠄁y󠄁.󠄁 U󠄁n󠄁d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁d󠄁:󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 r󠄁u󠄁n󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁
+   s󠄁h󠄁a󠄁r󠄁e󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 b󠄁u󠄁t󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁 i󠄁n󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 m󠄁e󠄁r󠄁g󠄁e󠄁,󠄁 h󠄁o󠄁w󠄁 `merge_whitespace`
+   t󠄁r󠄁e󠄁a󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 w󠄁h󠄁i󠄁t󠄁e󠄁s󠄁p󠄁a󠄁c󠄁e󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 t󠄁h󠄁e󠄁m󠄁,󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁
+   b󠄁e󠄁s󠄁i󠄁d󠄁e󠄁 `data-prov`,󠄁 a󠄁n󠄁d󠄁 h󠄁o󠄁w󠄁 e󠄁x󠄁p󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 r󠄁u󠄁n󠄁s󠄁 i󠄁n󠄁 `fixtures.json` r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 i󠄁t󠄁.󠄁
+   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁2󠄁0󠄁](https://github.com/textprov/textprov/discussions/20))󠄁
