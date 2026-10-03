@@ -251,9 +251,12 @@ def markdown_protected(plain):
             elif not line[0].isspace():
                 in_list = False
         definition = DEFINITION.match(line)
-        if RULE.match(line):
+        rule = RULE.match(line)
+        if rule:
             whole[number] = True
-            if number and not previous_blank:
+            # Only a run of = or - underlines a setext heading; a thematic
+            # break (***, ___, - - -) leaves the line above it prose.
+            if number and not previous_blank and not rule.group(2):
                 whole[number - 1] = True  # setext heading text
         elif HEADING.match(line) or TABLE_RULE.match(line):
             whole[number] = True

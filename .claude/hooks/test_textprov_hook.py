@@ -82,6 +82,13 @@ class TestMarkdown(unittest.TestCase):
 
     def test_setext_heading(self):
         self.unmarked("Title\n=====\n\nbody\n", "Title\n=====\n")
+        self.unmarked("Title\n---\n\nbody\n", "Title\n---\n")
+
+    def test_prose_above_a_thematic_break_is_marked(self):
+        for rule in ("***", "___", "- - -"):
+            marked = remark("", "Agent prose\n" + rule + "\n")
+            self.assertTrue(marked.startswith(ai("Agent prose") + "\n"), rule)
+            self.assertTrue(marked.endswith("\n" + rule + "\n"), rule)
 
     def test_link_destination(self):
         self.unmarked("see [the spec](../SPEC.md#markup) here\n", "](../SPEC.md#markup)")
