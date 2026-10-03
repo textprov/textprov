@@ -442,3 +442,32 @@ draft, not pinned release artifacts.
   `GraphemeBreakTest.txt` (󠄁[A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁7󠄁](docs/adr/0017-vendor-grapheme-segmentation.md))󠄁;󠄁
   a󠄁n󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁n󠄁 a󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁t󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 m󠄁a󠄁y󠄁 p󠄁l󠄁a󠄁c󠄁e󠄁 a󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁
   b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁y󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁t󠄁l󠄁y󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁s󠄁.󠄁
+
+## Open questions
+
+T󠄁h󠄁e󠄁s󠄁e󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁 u󠄁n󠄁r󠄁e󠄁s󠄁o󠄁l󠄁v󠄁e󠄁d󠄁 a󠄁t󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 0󠄁.󠄁2󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 h󠄁a󠄁s󠄁 a󠄁
+d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 t󠄁h󠄁r󠄁e󠄁a󠄁d󠄁.󠄁 A󠄁 r󠄁e󠄁s󠄁o󠄁l󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁p󠄁d󠄁a󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 a󠄁f󠄁f󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 s󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁
+q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁i󠄁s󠄁 l󠄁i󠄁s󠄁t󠄁.󠄁
+
+### Marking and states
+
+T󠄁h󠄁e󠄁s󠄁e󠄁 c󠄁a󠄁m󠄁e󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 t󠄁h󠄁i󠄁s󠄁 r󠄁e󠄁p󠄁o󠄁s󠄁i󠄁t󠄁o󠄁r󠄁y󠄁'󠄁s󠄁 o󠄁w󠄁n󠄁 u󠄁s󠄁e󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁c󠄁o󠄁l󠄁
+(󠄁[d󠄁o󠄁g󠄁f󠄁o󠄁o󠄁d󠄁i󠄁n󠄁g󠄁](docs/development/dogfooding.md))󠄁.󠄁
+
+1. **C󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁** A󠄁r󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁,󠄁 p󠄁u󠄁l󠄁l󠄁 r󠄁e󠄁q󠄁u󠄁e󠄁s󠄁t󠄁
+   d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 i󠄁s󠄁s󠄁u󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁v󠄁i󠄁e󠄁w󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁 t󠄁h󠄁e󠄁
+   [m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁](#marking-scope)?󠄁 T󠄁h󠄁e󠄁y󠄁 a󠄁r󠄁e󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 p󠄁e󠄁o󠄁p󠄁l󠄁e󠄁,󠄁 b󠄁u󠄁t󠄁 t󠄁h󠄁e󠄁
+   t󠄁o󠄁o󠄁l󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 h󠄁o󠄁l󠄁d󠄁 t󠄁h󠄁e󠄁m󠄁 s󠄁e󠄁a󠄁r󠄁c󠄁h󠄁 a󠄁n󠄁d󠄁 p󠄁a󠄁r󠄁s󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁 a󠄁s󠄁 p󠄁l󠄁a󠄁i󠄁n󠄁 t󠄁e󠄁x󠄁t󠄁:󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 b󠄁r󠄁e󠄁a󠄁k󠄁
+   `git log --grep`,󠄁 C󠄁o󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 C󠄁o󠄁m󠄁m󠄁i󠄁t󠄁s󠄁 p󠄁a󠄁r󠄁s󠄁e󠄁r󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 s󠄁e󠄁a󠄁r󠄁c󠄁h󠄁.󠄁 A󠄁 g󠄁i󠄁t󠄁
+   t󠄁r󠄁a󠄁i󠄁l󠄁e󠄁r󠄁 w󠄁o󠄁u󠄁l󠄁d󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 b󠄁a󠄁n󠄁d󠄁,󠄁 f󠄁o󠄁r󠄁 a󠄁 w󠄁h󠄁o󠄁l󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 r󠄁a󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁n󠄁 a󠄁
+   p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁.󠄁 (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁3󠄁](https://github.com/textprov/textprov/discussions/13))󠄁
+2. **W󠄁h󠄁a󠄁t󠄁 `human` a󠄁s󠄁s󠄁e󠄁r󠄁t󠄁s󠄁.󠄁** D󠄁o󠄁e󠄁s󠄁 `human` s󠄁t󠄁a󠄁t󠄁e󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁,󠄁
+   o󠄁r󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁t󠄁e󠄁d󠄁 i󠄁t󠄁?󠄁 T󠄁h󠄁i󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁s󠄁 `human` a󠄁s󠄁
+   h󠄁u󠄁m󠄁a󠄁n󠄁-󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁s󠄁u󠄁a󠄁l󠄁l󠄁y󠄁 o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁s󠄁s󠄁i󠄁o󠄁n󠄁.󠄁 A󠄁
+   p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁 p󠄁a󠄁s󠄁t󠄁e󠄁d󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁,󠄁 a󠄁n󠄁d󠄁 a󠄁 s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁 n󠄁o󠄁
+   p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁.󠄁 (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁4󠄁](https://github.com/textprov/textprov/discussions/14))󠄁
+3. **W󠄁h󠄁e󠄁n󠄁 a󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 i󠄁s󠄁 `mixed`.󠄁** W󠄁h󠄁e󠄁n󠄁 a󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 r󠄁e󠄁s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁'󠄁s󠄁 w󠄁o󠄁r󠄁d󠄁s󠄁
+   f󠄁a󠄁i󠄁t󠄁h󠄁f󠄁u󠄁l󠄁l󠄁y󠄁,󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁u󠄁l󠄁t󠄁 `mixed`,󠄁 `ai`,󠄁 o󠄁r󠄁 `edited`?󠄁 N󠄁e󠄁i󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁i󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁
+   n󠄁o󠄁r󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁s󠄁 `mixed` o󠄁r󠄁 `edited`.󠄁 A󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 c󠄁a󠄁n󠄁 d󠄁e󠄁t󠄁e󠄁c󠄁t󠄁 a󠄁
+   v󠄁e󠄁r󠄁b󠄁a󠄁t󠄁i󠄁m󠄁 q󠄁u󠄁o󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 b󠄁u󠄁t󠄁 c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁 j󠄁u󠄁d󠄁g󠄁e󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 a󠄁 p󠄁a󠄁r󠄁a󠄁p󠄁h󠄁r󠄁a󠄁s󠄁e󠄁 i󠄁s󠄁 f󠄁a󠄁i󠄁t󠄁h󠄁f󠄁u󠄁l󠄁.󠄁
+   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁5󠄁](https://github.com/textprov/textprov/discussions/15))󠄁
