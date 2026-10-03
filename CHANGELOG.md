@@ -21,6 +21,13 @@ Specification version `0.2`; registry version `0.1`.
   c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁,󠄁 w󠄁h󠄁a󠄁t󠄁 `human` a󠄁s󠄁s󠄁e󠄁r󠄁t󠄁s󠄁,󠄁
   a󠄁n󠄁d󠄁 w󠄁h󠄁e󠄁n󠄁 a󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 i󠄁s󠄁 `mixed`.󠄁
   F󠄁i󠄁v󠄁e󠄁 m󠄁o󠄁r󠄁e󠄁 c󠄁o󠄁v󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁.󠄁
+- G󠄁i󠄁v󠄁e󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 a󠄁 s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 t󠄁h󠄁e󠄁
+  [f󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](docs/development/generations-formal.md).󠄁
+  [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁0󠄁](docs/adr/0010-contributor-identity-is-out-of-band.md) k󠄁e󠄁e󠄁p󠄁s󠄁 t󠄁h󠄁e󠄁
+  r󠄁e󠄁a󠄁s󠄁o󠄁n󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁d󠄁 n󠄁o󠄁 l󠄁o󠄁n󠄁g󠄁e󠄁r󠄁 r󠄁e󠄁s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 o󠄁p󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 i󠄁s󠄁 n󠄁a󠄁m󠄁e󠄁d󠄁
+  r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 a󠄁n󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁 i󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁.󠄁
+  S󠄁a󠄁t󠄁u󠄁r󠄁a󠄁t󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 9󠄁 i󠄁s󠄁 n󠄁o󠄁 l󠄁o󠄁n󠄁g󠄁e󠄁r󠄁 a󠄁l󠄁l󠄁o󠄁w󠄁e󠄁d󠄁,󠄁 a󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁o󠄁r󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁s󠄁
+  P󠄁U󠄁A󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 i󠄁t󠄁 i󠄁n󠄁c󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 o󠄁p󠄁e󠄁n󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 7󠄁 a󠄁n󠄁d󠄁 8󠄁 a󠄁r󠄁e󠄁 n󠄁a󠄁r󠄁r󠄁o󠄁w󠄁e󠄁d󠄁.󠄁
 
 ## Draft 0.1 — 2026-09-20
 
