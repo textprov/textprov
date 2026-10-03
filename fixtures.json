@@ -823,6 +823,25 @@
    "note": "CR and LF are whitespace, so they stay bare and line endings survive"
   },
   {
+   "name": "control and format break characters are never marked",
+   "input": "a\u00ad\u200b\ufeff\u2060\u0000b",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "a\udb40\udd01\u00ad\u200b\ufeff\u2060\u0000b\udb40\udd01",
+   "note": "GB4 breaks before an appended selector, so these characters stay unmarked"
+  },
+  {
+   "name": "control and format break characters are never marked in PUA mode",
+   "input": "a\u00ad\u200b\ufeff\u2060\u0000b",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\udbc0\udc61\u00ad\u200b\ufeff\u2060\u0000\udbc0\udc62"
+  },
+  {
    "name": "marking marked text is idempotent",
    "input": "a\udb40\udd01",
    "options": {
@@ -988,13 +1007,13 @@
    "output": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
   },
   {
-   "name": "non-White_Space controls and format characters are marked in vs mode",
+   "name": "non-White_Space control-break characters stay bare in vs mode",
    "input": "\u001c\u001d\u001e\u001f\ufeff\u180e\u200b",
    "options": {
     "state": "ai",
     "mode": "vs"
    },
-   "output": "\u001c\udb40\udd01\u001d\udb40\udd01\u001e\udb40\udd01\u001f\udb40\udd01\ufeff\udb40\udd01\u180e\udb40\udd01\u200b\udb40\udd01"
+   "output": "\u001c\u001d\u001e\u001f\ufeff\u180e\u200b"
   },
   {
    "name": "all Unicode White_Space code points stay bare in pua mode",
@@ -1006,13 +1025,13 @@
    "output": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
   },
   {
-   "name": "non-White_Space controls and format characters are marked in pua mode",
+   "name": "non-White_Space control-break characters stay bare in pua mode",
    "input": "\u001c\u001d\u001e\u001f\ufeff\u180e\u200b",
    "options": {
     "state": "ai",
     "mode": "pua"
    },
-   "output": "\u001c\udb40\udd01\u001d\udb40\udd01\u001e\udb40\udd01\u001f\udb40\udd01\ufeff\udb40\udd01\u180e\udb40\udd01\u200b\udb40\udd01"
+   "output": "\u001c\u001d\u001e\u001f\ufeff\u180e\u200b"
   }
  ],
  "convert_cases": [

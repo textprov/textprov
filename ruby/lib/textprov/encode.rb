@@ -8,7 +8,7 @@ module Textprov
   module_function
 
   # Attach the selector for `state` after every markable cluster. Whitespace,
-  # clusters that already end in a provenance selector, lone selectors, and
+  # control-break clusters, clusters ending in a provenance selector, lone selectors, and
   # PUA provenance characters are left alone, so the operation is idempotent.
   def _mark(text, state, mode, selectors, pua2base, base2pua)
     sel_cps = selectors.values.to_set
@@ -18,7 +18,8 @@ module Textprov
       first = cluster[0].ord
       last = cluster[-1].ord
       single = cluster.length == 1
-      if sel_cps.include?(last) || (single && pua2base.key?(first)) || blank?(cluster)
+      if sel_cps.include?(last) || (single && pua2base.key?(first)) || blank?(cluster) ||
+         Grapheme.control_like?(last)
         out << cluster
       elsif mode == "pua" && state == "ai" && single && base2pua.key?(first)
         out << base2pua[first].chr(Encoding::UTF_8)

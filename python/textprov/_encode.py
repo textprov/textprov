@@ -11,6 +11,7 @@ uses these operations to mark its example text and keeps the font patcher.
 """
 
 from ._core import _blank, default_mapping, segments
+from ._grapheme import _control_like
 
 
 def _mark(text, state, mode, selectors, pua2base, base2pua):
@@ -19,7 +20,7 @@ def _mark(text, state, mode, selectors, pua2base, base2pua):
     A cluster is an extended grapheme cluster, so the selector goes after
     combining marks, emoji variation selectors, skin-tone modifiers, ZWJ
     joins, regional-indicator pairs, conjuncts and Hangul jamo, and a cluster
-    is marked once. Whitespace, clusters that already end in a provenance
+    is marked once. Whitespace, control-break clusters, clusters that already end in a provenance
     selector, lone selectors, and PUA provenance characters are left alone
     (the operation is idempotent). With mode='pua' only single-code-point
     bases present in mapping.json are replaced by their PUA counterpart;
@@ -31,7 +32,12 @@ def _mark(text, state, mode, selectors, pua2base, base2pua):
     for cluster in segments(text):
         first, last = ord(cluster[0]), ord(cluster[-1])
         single = len(cluster) == 1
-        if last in sel_cps or (single and first in pua2base) or _blank(cluster):
+        if (
+            last in sel_cps
+            or (single and first in pua2base)
+            or _blank(cluster)
+            or _control_like(last)
+        ):
             out.append(cluster)  # already marked, a lone selector, or inert
         elif mode == "pua" and state == "ai" and single and first in base2pua:
             out.append(chr(base2pua[first]))
@@ -177,8 +183,8 @@ def mark(text, state="ai", mode="vs", mapping=None):
     """Mark every unmarked cluster in `text` with `state`.
 
     `mode` is "vs" for the selector encoding or "pua" for the PUA encoding.
-    Idempotent: marking marked text returns it unchanged. Whitespace is never
-    marked. See ../SPEC.md, Producer.
+    Idempotent: marking marked text returns it unchanged. Whitespace and
+    control-break clusters are never marked. See ../SPEC.md, Producer.
     """
     mapping = mapping or default_mapping()
     return _mark(

@@ -93,6 +93,27 @@ class TestProducerProperties < Minitest::Test
     end
   end
 
+  def test_control_break_clusters_are_never_marked
+    controls = "\x00\x1c\x7f\u00ad\u200b\ufeff\u2060\u2028\u2029\r\n"
+    %w[vs pua].each do |mode|
+      Textprov::GENERATED_STATES.each do |state|
+        assert_equal controls, Textprov.mark(controls, state: state, mode: mode)
+        source = "a" + controls + "b"
+        marked = Textprov.mark(source, state: state, mode: mode)
+        assert_equal marked, Textprov.mark(marked, state: state, mode: mode)
+        assert_equal source, Textprov.strip_marks(marked)
+        assert_equal [[state, "a"], [nil, controls], [state, "b"]], Textprov.runs(marked, strip: true)
+        assert_equal source, Textprov.mark_added("ab", source, state: state, mode: mode)
+      end
+    end
+  end
+
+  def test_extending_format_characters_remain_markable
+    ["a\u200c", FAMILY, "\u0600a", "\u{1f3f4 e0067 e007f}"].each do |cluster|
+      assert_equal cluster + AI, Textprov.mark(cluster)
+    end
+  end
+
   def test_one_mark_per_cluster
     [FLAG, FAMILY, TONE, HEART, "é"].each do |cluster|
       assert_equal cluster + AI, Textprov.mark(cluster, state: "ai", mode: "vs"),
