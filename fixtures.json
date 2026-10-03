@@ -1146,6 +1146,26 @@
     "to": "pua"
    },
    "output": "\udb40\udd01"
+  },
+  {
+   "name": "vs to pua leaves a multi-code-point cluster alone",
+   "input": "\u06001\udb40\udd01",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "\u06001\udb40\udd01",
+   "note": "U+0600 is Prepend, so it and the digit are one cluster; converting the digit alone would leave a PUA code point inside a two-code-point cluster, which decodes as unmarked"
+  },
+  {
+   "name": "vs to pua leaves a repeated selector alone",
+   "input": "H\udb40\udd01\udb40\udd01",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "H\udb40\udd01\udb40\udd01",
+   "note": "the cluster is three code points, not a base and its selector"
   }
  ]
 }

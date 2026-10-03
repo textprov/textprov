@@ -58,23 +58,20 @@ module Textprov
     return text if from_mode == to_mode
 
     vs_ai = selectors["ai"]
-    chars = text.chars
     out = String.new(encoding: "UTF-8")
     if from_mode == "vs"
-      index = 0
-      while index < chars.length
-        char = chars[index]
-        index += 1
-        if index < chars.length && chars[index].ord == vs_ai && base2pua.key?(char.ord)
-          out << base2pua[char.ord].chr(Encoding::UTF_8)
-          index += 1
+      # Per cluster, not per code point: a base that shares its cluster with
+      # anything but its own selector has no PUA counterpart.
+      segments(text).each do |cluster|
+        if cluster.length == 2 && cluster[1].ord == vs_ai && base2pua.key?(cluster[0].ord)
+          out << base2pua[cluster[0].ord].chr(Encoding::UTF_8)
         else
-          out << char
+          out << cluster
         end
       end
       return out
     end
-    chars.each do |char|
+    text.each_char do |char|
       entry = pua2base[char.ord]
       if entry && entry[1] == "ai"
         out << entry[0].chr(Encoding::UTF_8)

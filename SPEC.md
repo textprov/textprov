@@ -291,8 +291,9 @@ the registry.
 - When the source and target encodings are the same, the output equals the
   input.
 - Converting from selector to PUA encoding replaces a selector-encoded `ai`
-  cluster only when the cluster contains exactly one base code point and the
-  registry contains the corresponding `ai` PUA entry.
+  cluster only when the cluster i󠄁s󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁l󠄁y󠄁 a󠄁 b󠄁a󠄁s󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁 f󠄁o󠄁l󠄁l󠄁o󠄁w󠄁e󠄁d󠄁 b󠄁y󠄁 i󠄁t󠄁s󠄁
+  `ai` s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁r󠄁r󠄁e󠄁s󠄁p󠄁o󠄁n󠄁d󠄁i󠄁n󠄁g󠄁 `ai` P󠄁U󠄁A󠄁 e󠄁n󠄁t󠄁r󠄁y󠄁.󠄁 A󠄁
+  c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁n󠄁y󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 a󠄁 s󠄁e󠄁c󠄁o󠄁n󠄁d󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁,󠄁 i󠄁s󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁.󠄁
 - Converting from PUA to selector encoding replaces each registered PUA code
   point with its registered base followed by the selector for its registered
   state.

@@ -28,6 +28,11 @@ Specification version `0.2`; registry version `0.1`.
   r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 a󠄁n󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁 i󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁.󠄁
   S󠄁a󠄁t󠄁u󠄁r󠄁a󠄁t󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 9󠄁 i󠄁s󠄁 n󠄁o󠄁 l󠄁o󠄁n󠄁g󠄁e󠄁r󠄁 a󠄁l󠄁l󠄁o󠄁w󠄁e󠄁d󠄁,󠄁 a󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁o󠄁r󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁s󠄁
   P󠄁U󠄁A󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 i󠄁t󠄁 i󠄁n󠄁c󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 o󠄁p󠄁e󠄁n󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 7󠄁 a󠄁n󠄁d󠄁 8󠄁 a󠄁r󠄁e󠄁 n󠄁a󠄁r󠄁r󠄁o󠄁w󠄁e󠄁d󠄁.󠄁
+- C󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 t󠄁o󠄁 P󠄁U󠄁A󠄁 w󠄁o󠄁r󠄁k󠄁s󠄁 p󠄁e󠄁r󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁.󠄁 O󠄁n󠄁l󠄁y󠄁 a󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁
+  e󠄁x󠄁a󠄁c󠄁t󠄁l󠄁y󠄁 a󠄁 b󠄁a󠄁s󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁 f󠄁o󠄁l󠄁l󠄁o󠄁w󠄁e󠄁d󠄁 b󠄁y󠄁 i󠄁t󠄁s󠄁 `ai` s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁t󠄁s󠄁;󠄁 t󠄁h󠄁e󠄁
+  r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 p󠄁r󠄁e󠄁v󠄁i󠄁o󠄁u󠄁s󠄁l󠄁y󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁t󠄁e󠄁d󠄁 p󠄁e󠄁r󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁,󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 c󠄁o󠄁u󠄁l󠄁d󠄁
+  l󠄁e󠄁a󠄁v󠄁e󠄁 a󠄁 P󠄁U󠄁A󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁 i󠄁n󠄁s󠄁i󠄁d󠄁e󠄁 a󠄁 l󠄁a󠄁r󠄁g󠄁e󠄁r󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁.󠄁 T󠄁w󠄁o󠄁 n󠄁e󠄁w󠄁 `convert_cases`
+  c󠄁o󠄁v󠄁e󠄁r󠄁 a󠄁 P󠄁r󠄁e󠄁p󠄁e󠄁n󠄁d󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁 a󠄁n󠄁d󠄁 a󠄁 r󠄁e󠄁p󠄁e󠄁a󠄁t󠄁e󠄁d󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁.󠄁
 
 ## Draft 0.1 — 2026-09-20
 

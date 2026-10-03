@@ -118,13 +118,9 @@ class TestObsoleteSelectors(unittest.TestCase):
                             textprov.to_html(text, strip=strip), rendered
                         )
                     for from_mode, to_mode in (("vs", "pua"), ("pua", "vs")):
-                        expected = text
-                        if from_mode == "vs":
-                            expected = text.replace(
-                                "a" + AI, chr(MAPPING.base2pua[ord("a")])
-                            )
+                        # No cluster here is a base and its ai selector alone.
                         self.assertEqual(
-                            textprov.convert(text, from_mode, to_mode), expected
+                            textprov.convert(text, from_mode, to_mode), text
                         )
 
     def test_inspect_does_not_report_obsolete_states(self):

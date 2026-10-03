@@ -79,21 +79,18 @@ def _convert(text, from_mode, to_mode, selectors, pua2base, base2pua):
         return text
     vs_ai = selectors["ai"]
     if from_mode == "vs":
-        chars = list(text)
+        # Per cluster, not per code point: a base that shares its cluster with
+        # anything but its own selector has no PUA counterpart.
         out = []
-        index = 0
-        while index < len(chars):
-            char = chars[index]
-            index += 1
+        for cluster in segments(text):
             if (
-                index < len(chars)
-                and ord(chars[index]) == vs_ai
-                and ord(char) in base2pua
+                len(cluster) == 2
+                and ord(cluster[1]) == vs_ai
+                and ord(cluster[0]) in base2pua
             ):
-                out.append(chr(base2pua[ord(char)]))
-                index += 1
+                out.append(chr(base2pua[ord(cluster[0])]))
             else:
-                out.append(char)
+                out.append(cluster)
         return "".join(out)
     out = []
     for char in text:

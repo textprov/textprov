@@ -41,8 +41,8 @@ class TestObsoleteSelectors < Minitest::Test
           assert_equal rendered, Textprov.to_html(text, strip: strip)
         end
         [["vs", "pua"], ["pua", "vs"]].each do |from_mode, to_mode|
-          expected = from_mode == "vs" ? text.gsub("a#{AI}", MAPPING.base2pua["a".ord].chr(Encoding::UTF_8)) : text
-          assert_equal expected, Textprov.convert(text, from_mode, to_mode)
+          # No cluster here is a base and its ai selector alone.
+          assert_equal text, Textprov.convert(text, from_mode, to_mode)
         end
       end
     end
