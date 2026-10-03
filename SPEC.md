@@ -185,6 +185,22 @@ encoding, not a web or interchange one: do not publish PUA-encoded text
 PUA input to base plus selector
 ([ADR 0003](docs/adr/0003-decode-pua-to-base-plus-selector.md)).
 
+### Whitespace
+
+Throughout this specification, **whitespace** means a code point with the
+Unicode `White_Space` property. The exact set is:
+
+```text
+U+0009–U+000D, U+0020, U+0085, U+00A0, U+1680, U+2000–U+200A,
+U+2028, U+2029, U+202F, U+205F, U+3000
+```
+
+A whitespace-only string or cluster is nonempty and consists entirely of
+these code points. U+001C–U+001F and U+FEFF are not whitespace; U+0085 is.
+Language-native whitespace predicates must not substitute a different set.
+This definition applies to producers, decoder classification, and
+`merge_whitespace`.
+
 Whitespace is never marked by a conforming producer. A selector after
 whitespace, or with no preceding cluster, is not a mark.
 
