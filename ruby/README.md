@@ -72,4 +72,4 @@ unit-tests `cluster_end`, `to_html`, `strip_marks`, and the CLI.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁-󠄁2󠄁.󠄁0󠄁.󠄁 See [LICENSE](LICENSE).

@@ -29,14 +29,16 @@ Each package directory contains its own `LICENSE` because package build tools
 normally include files from the package directory, not its parent:
 
 ```text
-LICENSE          canonical repository license
+LICENSE          Apache License 2.0, the code license
 python/LICENSE   included in Python distributions
 js/LICENSE       included in npm packages
 ruby/LICENSE     included in the Ruby gem
 ```
 
 Keep every copy identical to the root file. The `license-drift` job in
-`.github/workflows/conformance.yml` v󠄁e󠄁r󠄁i󠄁f󠄁i󠄁e󠄁s󠄁 a󠄁l󠄁l󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁s󠄁.󠄁
+`.github/workflows/conformance.yml` v󠄁e󠄁r󠄁i󠄁f󠄁i󠄁e󠄁s󠄁 a󠄁l󠄁l󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁s󠄁.󠄁 R󠄁e󠄁l󠄁e󠄁a󠄁s󠄁e󠄁s󠄁
+p󠄁u󠄁b󠄁l󠄁i󠄁s󠄁h󠄁e󠄁d󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁2󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 M󠄁I󠄁T󠄁 L󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁;󠄁 s󠄁e󠄁e󠄁
+[A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁6󠄁](../adr/0016-license-prose-and-code-separately.md).󠄁
 Use copies rather than symlinks because symlinks can cause problems in Windows
 checkouts and package archives.
 
