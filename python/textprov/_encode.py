@@ -10,48 +10,33 @@ Extracted from bin/scripts/nfprov.py in the nerd-fonts provenance fork, which
 uses these operations to mark its example text and keeps the font patcher.
 """
 
-from ._core import cluster_end, default_mapping
+from ._core import default_mapping, segments
 
 
 def _mark(text, state, mode, selectors, pua2base, base2pua):
-    """Attach the selector for `state` after every non-whitespace base.
+    """Attach the selector for `state` after every markable cluster.
 
-    The selector goes after any combining marks, emoji variation selectors,
-    skin-tone modifiers, ZWJ joins and regional-indicator pairs, so a cluster is
-    marked once. Characters that already carry a provenance selector, selectors
-    themselves, and PUA provenance characters are left alone (the operation is
-    idempotent). With mode='pua' only single-code-point bases present in
-    mapping.json are replaced by their PUA counterpart; every other base keeps
-    the VS_AI encoding instead.
+    A cluster is an extended grapheme cluster, so the selector goes after
+    combining marks, emoji variation selectors, skin-tone modifiers, ZWJ
+    joins, regional-indicator pairs, conjuncts and Hangul jamo, and a cluster
+    is marked once. Whitespace, clusters that already end in a provenance
+    selector, lone selectors, and PUA provenance characters are left alone
+    (the operation is idempotent). With mode='pua' only single-code-point
+    bases present in mapping.json are replaced by their PUA counterpart;
+    every other base keeps the VS_AI encoding instead.
     """
     sel_cps = set(selectors.values())
     selector = chr(selectors[state])
-    chars = list(text)
     out = []
-    index = 0
-    while index < len(chars):
-        char = chars[index]
-        cp = ord(char)
-        if cp in sel_cps or cp in pua2base or char.isspace():
-            out.append(char)
-            index += 1
-            continue
-        start = index
-        index = cluster_end(chars, index, sel_cps)
-        cluster = chars[start:index]
-        if index < len(chars) and ord(chars[index]) in sel_cps:
-            out.extend(cluster)  # already marked
-            continue
-        if (
-            mode == "pua"
-            and state == "ai"
-            and len(cluster) == 1
-            and cp in base2pua
-        ):
-            out.append(chr(base2pua[cp]))
+    for cluster in segments(text):
+        first, last = ord(cluster[0]), ord(cluster[-1])
+        single = len(cluster) == 1
+        if last in sel_cps or (single and first in pua2base) or cluster.isspace():
+            out.append(cluster)  # already marked, a lone selector, or inert
+        elif mode == "pua" and state == "ai" and single and first in base2pua:
+            out.append(chr(base2pua[first]))
         else:
-            out.extend(cluster)
-            out.append(selector)
+            out.append(cluster + selector)
     return "".join(out)
 
 
@@ -133,34 +118,29 @@ def _inspect(text, selectors, pua2base):
     unrecognised_pua = set()
 
     chars = list(text)
-    index = 0
-    while index < len(chars):
-        char = chars[index]
-        cp = ord(char)
-        index += 1
-        if cp in sel2name:
-            # A selector reached here has no base in front of it.
-            unrecognised_selectors.add(cp)
-            continue
-        if 0xE0100 <= cp <= 0xE01EF:
-            unrecognised_selectors.add(cp)
-            continue
-        if cp in pua2base:
-            counts["ai_pua"] += 1
-            continue
-        if 0x100000 <= cp <= 0x10FFFD:
-            unrecognised_pua.add(cp)
-            continue
-        if char.isspace():
+    for cluster in segments(text):
+        cp, last = ord(cluster[0]), ord(cluster[-1])
+        if len(cluster) == 1:
+            if cp in sel2name or 0xE0100 <= cp <= 0xE01EF:
+                # A selector reached here has no base in front of it.
+                unrecognised_selectors.add(cp)
+            elif cp in pua2base:
+                counts["ai_pua"] += 1
+            elif 0x100000 <= cp <= 0x10FFFD:
+                unrecognised_pua.add(cp)
+            elif cluster.isspace():
+                counts["whitespace"] += 1
+            else:
+                counts["unmarked"] += 1
+        elif last in sel2name and cluster[:-1].isspace():
+            # Whitespace cannot carry a mark; the selector is stray.
             counts["whitespace"] += 1
-            continue
-        index = cluster_end(chars, index - 1, sel2name)
-        if index < len(chars) and ord(chars[index]) in sel2name:
-            name = sel2name[ord(chars[index])]
-            index += 1
-            counts[
-                "ai_vs" if name == "ai" else name
-            ] += 1
+            unrecognised_selectors.add(last)
+        elif last in sel2name:
+            name = sel2name[last]
+            counts["ai_vs" if name == "ai" else name] += 1
+        elif cluster.isspace():
+            counts["whitespace"] += 1
         else:
             counts["unmarked"] += 1
 

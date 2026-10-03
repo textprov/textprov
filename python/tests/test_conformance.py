@@ -13,10 +13,11 @@ import unittest
 from pathlib import Path
 
 import textprov
-from textprov._core import _runs, _to_html, cluster_end, is_combining
+from textprov._core import _runs, _to_html
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES_PATH = ROOT / "fixtures.json"
+GRAPHEME_TEST_PATH = ROOT / "ucd" / "GraphemeBreakTest.txt"
 REGISTRY_PATH = ROOT / "mapping.json"
 
 MAPPING = textprov.default_mapping()
@@ -107,45 +108,76 @@ class TestFixtures(unittest.TestCase):
                 self.assertEqual(got, want)
 
 
-class TestClusterEnd(unittest.TestCase):
-    """The shared core's segmentation, tested directly rather than via runs."""
-
-    def cluster(self, text, start=0):
-        return cluster_end(list(text), start, set(SELECTORS.values()))
+class TestSegments(unittest.TestCase):
+    """Extended grapheme clusters from the vendored tables, tested directly."""
 
     def test_ascii(self):
-        self.assertEqual(self.cluster("abc"), 1)
-        self.assertEqual(self.cluster("abc", 1), 2)
+        self.assertEqual(textprov.segments("abc"), ["a", "b", "c"])
 
     def test_combining_marks(self):
-        self.assertEqual(self.cluster("éx"), 2)
-        self.assertEqual(self.cluster("é̂x"), 3)
+        self.assertEqual(textprov.segments("éx"), ["é", "x"])
+        self.assertEqual(textprov.segments("é̂x"), ["é̂", "x"])
 
     def test_zwj_sequence(self):
-        self.assertEqual(self.cluster(FAMILY + "x"), 5)
-        self.assertEqual(self.cluster(FAMILY), 5)
+        self.assertEqual(textprov.segments(FAMILY + "x"), [FAMILY, "x"])
 
     def test_skin_tone(self):
-        self.assertEqual(self.cluster(TONE + "x"), 2)
+        self.assertEqual(textprov.segments(TONE + "x"), [TONE, "x"])
 
-    def test_regional_indicators(self):
-        self.assertEqual(self.cluster(FLAG + "\U0001f1e8"), 2)
-        self.assertEqual(self.cluster("\U0001f1e8x"), 1)
+    def test_regional_indicators_pair_up(self):
+        self.assertEqual(
+            textprov.segments(FLAG + "\U0001f1e8"), [FLAG, "\U0001f1e8"]
+        )
 
     def test_emoji_variation_selectors(self):
-        self.assertEqual(self.cluster("❤️x"), 2)
-        self.assertEqual(self.cluster("❤︎x"), 2)
-        self.assertEqual(self.cluster("️x"), 1)
+        self.assertEqual(textprov.segments("❤️x"), ["❤️", "x"])
+        self.assertEqual(textprov.segments("❤︎x"), ["❤︎", "x"])
+        self.assertEqual(textprov.segments("️x"), ["️", "x"])
 
-    def test_provenance_selector_ends_the_cluster(self):
-        self.assertEqual(self.cluster(AI + "x"), 1)
-        self.assertEqual(self.cluster("a" + AI + "b"), 1)
-        self.assertEqual(self.cluster("é" + AI + "b"), 2)
-        self.assertEqual(self.cluster(FAMILY + AI + "b"), 5)
+    def test_provenance_selector_extends_the_cluster(self):
+        self.assertEqual(textprov.segments(AI + "x"), [AI, "x"])
+        self.assertEqual(textprov.segments("a" + AI + "b"), ["a" + AI, "b"])
+        self.assertEqual(textprov.segments(FAMILY + AI + "b"), [FAMILY + AI, "b"])
 
-    def test_is_combining(self):
-        self.assertTrue(is_combining("́"))
-        self.assertFalse(is_combining("a"))
+    def test_clusters_the_approximation_used_to_split(self):
+        jamo = "\u1100\u1161\u11a8"
+        conjunct = "\u0915\u094d\u0937"
+        tag_flag = "\U0001f3f4\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f"
+        sara_am = "\u0e19\u0e33"
+        for text in (jamo, conjunct, tag_flag, sara_am):
+            self.assertEqual(textprov.segments(text), [text])
+            self.assertEqual(textprov.segments(text + AI), [text + AI])
+
+    def test_empty(self):
+        self.assertEqual(textprov.segments(""), [])
+
+    def test_unicode_version_matches_the_test_file(self):
+        with open(GRAPHEME_TEST_PATH, encoding="utf-8") as handle:
+            first = handle.readline()
+        self.assertIn(f"GraphemeBreakTest-{textprov.UNICODE_VERSION}.txt", first)
+
+    def test_grapheme_break_test(self):
+        """Every line of Unicode's GraphemeBreakTest.txt for the pinned version.
+
+        "÷" marks a boundary and "×" its absence; text after "#" is a comment.
+        """
+        total = 0
+        with open(GRAPHEME_TEST_PATH, encoding="utf-8") as handle:
+            for line in handle:
+                body = line.split("#")[0].strip()
+                if not body:
+                    continue
+                expected, current = [], ""
+                for token in body.split()[1:]:
+                    if token == "÷":
+                        expected.append(current)
+                        current = ""
+                    elif token != "×":
+                        current += chr(int(token, 16))
+                with self.subTest(line=body):
+                    self.assertEqual(textprov.segments("".join(expected)), expected)
+                total += 1
+        self.assertGreater(total, 700)
 
 
 class TestToHtml(unittest.TestCase):

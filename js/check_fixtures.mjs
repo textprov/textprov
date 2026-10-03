@@ -1,14 +1,14 @@
 // js/check_fixtures.mjs
 
-// Runs textprov.js against ../fixtures.json and checks the tables it embeds
-// (textprov.mapping) against ../mapping.json, which it never loads at runtime.
+// Runs textprov.js against ../fixtures.json and ../ucd/GraphemeBreakTest.txt,
+// and checks the tables it embeds (textprov.mapping) against ../mapping.json,
+// which it never loads at runtime.
 // Usage: node check_fixtures.mjs [path/to/textprov.js]
 // Exits non-zero on any failing case, version mismatch, or table drift.
 import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
 import { fileURLToPath } from "url";
-import vm from "vm";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(here, "..");
@@ -72,32 +72,46 @@ if (textprov.registryVersion !== fx.registry_version) {
     `FAIL registry version: implementation ${textprov.registryVersion}, fixture ${fx.registry_version}`,
   );
 }
-// The same cases again without Intl.Segmenter, through the fallback segmenter.
-const legacy = vm.createContext({
-  Intl: { ...Intl, Segmenter: undefined },
-  module: { exports: {} },
-});
-vm.runInContext(fs.readFileSync(target, "utf8"), legacy);
-const implementations = [
-  ["", textprov],
-  [" (no Intl.Segmenter)", legacy.module.exports],
-];
-for (const [label, implementation] of implementations) {
-  for (const c of fx.cases) {
-    const got = implementation.runs(c.input, c.options);
-    if (JSON.stringify(got) !== JSON.stringify(c.runs)) {
-      fail++;
-      console.log(
-        "FAIL",
-        c.name + label,
-        "\n got",
-        JSON.stringify(got),
-        "\n exp",
-        JSON.stringify(c.runs),
-      );
-    }
+for (const c of fx.cases) {
+  const got = textprov.runs(c.input, c.options);
+  if (JSON.stringify(got) !== JSON.stringify(c.runs)) {
+    fail++;
+    console.log("FAIL", c.name, "\n got", JSON.stringify(got), "\n exp", JSON.stringify(c.runs));
   }
 }
-const total = fx.cases.length * implementations.length;
-console.log(`${path.relative(process.cwd(), target)}: ${total - fail}/${total} pass`);
+console.log(`${path.relative(process.cwd(), target)}: ${fx.cases.length - fail}/${fx.cases.length} pass`);
+
+// Segmentation: every line of Unicode's GraphemeBreakTest.txt for the pinned
+// version. "÷" marks a boundary, "×" its absence; the text after "#" is a
+// comment.
+const testFile = path.join(root, "ucd", "GraphemeBreakTest.txt");
+const lines = fs.readFileSync(testFile, "utf8").split("\n");
+const declared = /GraphemeBreakTest-(\d+\.\d+\.\d+)\.txt/.exec(lines[0])[1];
+let segmentFail = 0;
+if (declared !== textprov.unicodeVersion) {
+  fail++;
+  segmentFail++;
+  console.log(`FAIL Unicode version: textprov.js ${textprov.unicodeVersion}, test file ${declared}`);
+}
+let segmentTotal = 0;
+for (const line of lines) {
+  const body = line.split("#")[0].trim();
+  if (!body) continue;
+  const expected = [];
+  let current = "";
+  for (const token of body.split(/\s+/).slice(1)) {
+    if (token === "÷") {
+      expected.push(current);
+      current = "";
+    } else if (token !== "×") current += String.fromCodePoint(parseInt(token, 16));
+  }
+  segmentTotal++;
+  const got = textprov.segments(expected.join(""));
+  if (!same(got, expected)) {
+    fail++;
+    segmentFail++;
+    console.log("FAIL segments", body, "\n got", JSON.stringify(got));
+  }
+}
+console.log(`GraphemeBreakTest-${declared}: ${segmentTotal - segmentFail}/${segmentTotal} pass`);
 process.exit(fail ? 1 : 0);

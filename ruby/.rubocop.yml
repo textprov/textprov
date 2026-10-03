@@ -13,6 +13,8 @@ AllCops:
     - "vendor/**/*"
     - "pkg/**/*"
     - "Gemfile.lock"
+    # Generated tables; see tools/gen_grapheme_tables.py.
+    - "lib/textprov/ucd.rb"
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes

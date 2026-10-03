@@ -36,7 +36,6 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "python"))
 
 import textprov  # noqa: E402
-from textprov import cluster_end  # noqa: E402
 
 MAPPING = textprov.default_mapping()
 SELECTORS = set(MAPPING.selectors.values())
@@ -379,7 +378,6 @@ def finalize(raw, flags, markdown, shingles):
         if added[k] and not protected[k]:
             want[position] = "human" if human[k] else "ai"
 
-    chars = list(raw)
     out, segment, state = [], [], None
 
     def flush():
@@ -388,21 +386,18 @@ def finalize(raw, flags, markdown, shingles):
         del segment[:]
 
     position = 0
-    while position < len(chars):
-        char = chars[position]
-        cp = ord(char)
-        if cp in SELECTORS or cp in PUA or char.isspace():
-            end, cluster_state = position + 1, state
+    for cluster in textprov.segments(raw):
+        cp = ord(cluster[0])
+        base = cluster[:-1] if len(cluster) > 1 and ord(cluster[-1]) in SELECTORS else cluster
+        if (len(cluster) == 1 and (cp in SELECTORS or cp in PUA)) or base.isspace():
+            cluster_state = state  # inert: a lone selector, a PUA mark, whitespace
         else:
-            end = cluster_end(chars, position, SELECTORS)
-            if end < len(chars) and ord(chars[end]) in SELECTORS:
-                end += 1
             cluster_state = want[position]
         if cluster_state != state:
             flush()
             state = cluster_state
-        segment.extend(chars[position:end])
-        position = end
+        segment.extend(cluster)
+        position += len(cluster)
     flush()
     return "".join(out)
 

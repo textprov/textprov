@@ -7,32 +7,23 @@ require_relative "core"
 module Textprov
   module_function
 
+  # Attach the selector for `state` after every markable cluster. Whitespace,
+  # clusters that already end in a provenance selector, lone selectors, and
+  # PUA provenance characters are left alone, so the operation is idempotent.
   def _mark(text, state, mode, selectors, pua2base, base2pua)
     sel_cps = selectors.values.to_set
     selector = selectors[state].chr(Encoding::UTF_8)
-    chars = text.chars
     out = String.new(encoding: "UTF-8")
-    index = 0
-    while index < chars.length
-      char = chars[index]
-      cp = char.ord
-      if sel_cps.include?(cp) || pua2base.key?(cp) || char.match?(/\s/)
-        out << char
-        index += 1
-        next
-      end
-      start = index
-      index = cluster_end(chars, index, sel_cps)
-      cluster = chars[start...index]
-      if index < chars.length && sel_cps.include?(chars[index].ord)
-        cluster.each { |c| out << c }
-        next
-      end
-      if mode == "pua" && state == "ai" && cluster.length == 1 && base2pua.key?(cp)
-        out << base2pua[cp].chr(Encoding::UTF_8)
+    segments(text).each do |cluster|
+      first = cluster[0].ord
+      last = cluster[-1].ord
+      single = cluster.length == 1
+      if sel_cps.include?(last) || (single && pua2base.key?(first)) || blank?(cluster)
+        out << cluster
+      elsif mode == "pua" && state == "ai" && single && base2pua.key?(first)
+        out << base2pua[first].chr(Encoding::UTF_8)
       else
-        cluster.each { |c| out << c }
-        out << selector
+        out << cluster << selector
       end
     end
     out
@@ -98,40 +89,31 @@ module Textprov
                "unknown" => 0, "edited" => 0, "mixed" => 0, "whitespace" => 0 }
     unrecognised_selectors = []
     unrecognised_pua = []
-    sel_cp_set = selectors.values.to_set
 
     chars = text.chars
-    index = 0
-    while index < chars.length
-      char = chars[index]
-      cp = char.ord
-      index += 1
-      if sel2name.key?(cp)
-        unrecognised_selectors << cp
-        next
-      end
-      if cp.between?(0xE0100, 0xE01EF)
-        unrecognised_selectors << cp
-        next
-      end
-      if pua2base.key?(cp)
-        counts["ai_pua"] += 1
-        next
-      end
-      if cp.between?(0x100000, 0x10FFFD)
-        unrecognised_pua << cp
-        next
-      end
-      if char.match?(/\s/)
+    segments(text).each do |cluster|
+      cp = cluster[0].ord
+      last = cluster[-1].ord
+      if cluster.length == 1
+        if sel2name.key?(cp) || cp.between?(0xE0100, 0xE01EF)
+          unrecognised_selectors << cp # a selector with no base in front of it
+        elsif pua2base.key?(cp)
+          counts["ai_pua"] += 1
+        elsif cp.between?(0x100000, 0x10FFFD)
+          unrecognised_pua << cp
+        elsif blank?(cluster)
+          counts["whitespace"] += 1
+        else
+          counts["unmarked"] += 1
+        end
+      elsif sel2name.key?(last) && blank?(cluster[0...-1])
+        counts["whitespace"] += 1 # whitespace cannot carry a mark
+        unrecognised_selectors << last
+      elsif sel2name.key?(last)
+        name = sel2name[last]
+        counts[name == "ai" ? "ai_vs" : name] += 1
+      elsif blank?(cluster)
         counts["whitespace"] += 1
-        next
-      end
-      index = cluster_end(chars, index - 1, sel_cp_set)
-      if index < chars.length && sel_cp_set.include?(chars[index].ord)
-        name = sel2name[chars[index].ord]
-        index += 1
-        key = name == "ai" ? "ai_vs" : name
-        counts[key] += 1
       else
         counts["unmarked"] += 1
       end
