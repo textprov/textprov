@@ -271,10 +271,11 @@ A producer marks text s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 b󠄁y󠄁 a󠄁n
    unchanged. A cluster that already carries a selector keeps the state it has,
    and a PUA character is left alone; a producer does not overwrite a state it
    did not set.
-4. **Be reversible.** Removing TextProv marks from marked output must reproduce
-   the producer's input exactly. Mark removal deletes recognized provenance
-   selectors and replaces every registered PUA code point with its registered
-   base character.
+4. **Be reversible.** A󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁,󠄁 n󠄁e󠄁v󠄁e󠄁r󠄁 t󠄁e󠄁x󠄁t󠄁:󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁i󠄁n󠄁g󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁
+   m󠄁a󠄁r󠄁k󠄁s󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁 y󠄁i󠄁e󠄁l󠄁d󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 r󠄁e󠄁s󠄁u󠄁l󠄁t󠄁 a󠄁s󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁m󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁
+   i󠄁n󠄁p󠄁u󠄁t󠄁.󠄁 F󠄁o󠄁r󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 i󠄁n󠄁p󠄁u󠄁t󠄁,󠄁 t󠄁h󠄁i󠄁s󠄁 r󠄁e󠄁p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 input exactly. Mark removal
+   d󠄁e󠄁l󠄁e󠄁t󠄁e󠄁s󠄁 r󠄁e󠄁c󠄁o󠄁g󠄁n󠄁i󠄁z󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁s󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁e󠄁r󠄁e󠄁d󠄁 P󠄁U󠄁A󠄁
+   c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁 i󠄁t󠄁s󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁e󠄁r󠄁e󠄁d󠄁 base character.
 
 In the PUA encoding, a producer replaces a base character with its PUA
 counterpart only when the cluster is exactly one code point and the registry

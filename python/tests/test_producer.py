@@ -74,6 +74,28 @@ class TestProducerProperties(unittest.TestCase):
                     marked = textprov.mark(SOURCE, state, mode)
                     self.assertEqual(textprov.strip_marks(marked), SOURCE)
 
+    def test_mark_changes_marks_never_text(self):
+        # Rule 4 on input that already carries marks: the input itself cannot
+        # come back, but its text does.
+        pua_a = chr(textprov.default_mapping().base2pua[ord("A")])
+        for text in (
+            "A" + HUMAN + "B",
+            "A" + AI + "B",
+            AI + "A",
+            "A" + AI + AI,
+            "A " + AI + "B",
+            pua_a + "B",
+            "\u06001" + AI + "2",
+        ):
+            for mode in ("vs", "pua"):
+                for state in textprov.GENERATED_STATES:
+                    with self.subTest(text=text, mode=mode, state=state):
+                        marked = textprov.mark(text, state, mode)
+                        self.assertEqual(
+                            textprov.strip_marks(marked),
+                            textprov.strip_marks(text),
+                        )
+
     def test_mark_is_idempotent(self):
         for mode in ("vs", "pua"):
             with self.subTest(mode=mode):

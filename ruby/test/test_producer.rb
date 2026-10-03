@@ -52,6 +52,27 @@ class TestProducerProperties < Minitest::Test
     end
   end
 
+  # Rule 4 on input that already carries marks: the input itself cannot come
+  # back, but its text does.
+  def test_mark_changes_marks_never_text
+    m = Textprov.default_mapping
+    ai = m.selectors["ai"].chr(Encoding::UTF_8)
+    human = m.selectors["human"].chr(Encoding::UTF_8)
+    pua_a = m.base2pua["A".ord].chr(Encoding::UTF_8)
+    [
+      "A#{human}B", "A#{ai}B", "#{ai}A", "A#{ai}#{ai}", "A #{ai}B", "#{pua_a}B", "\u06001#{ai}2"
+    ].each do |text|
+      %w[vs pua].each do |mode|
+        Textprov::GENERATED_STATES.each do |state|
+          marked = Textprov.mark(text, state: state, mode: mode)
+
+          assert_equal Textprov.strip_marks(text), Textprov.strip_marks(marked),
+                       "text=#{text.inspect} state=#{state} mode=#{mode}"
+        end
+      end
+    end
+  end
+
   def test_mark_is_idempotent
     %w[vs pua].each do |mode|
       once = Textprov.mark(SOURCE, state: "ai", mode: mode)
