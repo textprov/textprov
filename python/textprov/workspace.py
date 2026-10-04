@@ -168,12 +168,19 @@ class Workspace:
 
     def prepare_edit(self, path, old_string, new_string, replace_all=False):
         """Return a mark-aware replacement pair; ambiguous edits raise Ambiguous."""
+        snapshot = self._prepare_edit_snapshot(
+            path, old_string, new_string, replace_all
+        )
+        return snapshot[2] if snapshot is not None else None
+
+    def _prepare_edit_snapshot(self, path, old_string, new_string, replace_all):
         if not self.in_scope(path):
             return None
-        raw = read_text(self.resolve(path))
+        target = self.resolve(path)
+        raw = read_text(target)
         if raw is None:
             return None
-        return rewrite_edit(
+        result = rewrite_edit(
             raw,
             old_string,
             new_string,
@@ -181,6 +188,7 @@ class Workspace:
             shingles=self.load_shingles(),
             min_words=self.human_min_words,
         )
+        return (target, raw, result) if result is not None else None
 
     def has_marks(self, path):
         """Report whether an in-scope file carries provenance marks."""

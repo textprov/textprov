@@ -5,8 +5,10 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import textprov
+from textprov import workspace as workspace_module
 from textprov.editing import Ambiguous
 from textprov.workspace import GIT_MOVES_TREE, Workspace
 
@@ -189,6 +191,17 @@ class TestCommands(unittest.TestCase):
             self.workspace.apply_edit("a.md", "Old tail.", "New tail."), 1
         )
         self.assertEqual(self.read(), human + " " + ai("New tail.") + "\n")
+
+    def test_prepare_edit_reads_once_without_writing(self):
+        with mock.patch.object(
+            workspace_module, "read_text", wraps=workspace_module.read_text
+        ) as read:
+            self.assertEqual(
+                self.workspace.prepare_edit("a.md", "old", "new"),
+                ("old", ai("new")),
+            )
+        self.assertEqual(read.call_count, 1)
+        self.assertEqual(self.read(), "old\n")
 
     def test_apply_edit_replace_all_counts_places(self):
         self.write(ai("One. Two. One.") + "\n")
