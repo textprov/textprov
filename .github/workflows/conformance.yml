@@ -1,0 +1,80 @@
+name: conformance
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  license-drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: LICENSE copies match the root
+        run: |
+          diff -q LICENSE python/LICENSE
+          diff -q LICENSE js/LICENSE
+
+  javascript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node check_fixtures.mjs
+        working-directory: js
+
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m unittest discover -s tests -t .
+        working-directory: python
+
+  ruby:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+          working-directory: ruby
+      - run: bundle exec rake test
+        working-directory: ruby
+
+  utility-fonts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: tools/font-build-requirements.txt
+      - name: Install font build and shaping dependencies
+        run: python -m pip install -r tools/font-build-requirements.txt
+      - name: Rebuild utility fonts from pinned sources
+        run: python tools/build-utility-fonts.py --output "$RUNNER_TEMP/textprov-utility-fonts"
+      - name: Validate rebuilt utility fonts
+        run: python tools/check-utility-fonts.py --output "$RUNNER_TEMP/textprov-utility-fonts" --strict
+      - name: Validate shipped utility fonts and notices
+        run: python tools/check-utility-fonts.py --strict
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - name: Install site test dependencies
+        run: npm ci
+        working-directory: site
+      - name: Test website examples and spec rendering
+        run: npm test
+        working-directory: site

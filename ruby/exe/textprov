@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+# ruby/exe/textprov
+#
+# frozen_string_literal: true
+
+require "textprov/cli"
+
+exit Textprov::CLI.main(ARGV)

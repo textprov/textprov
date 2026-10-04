@@ -1,0 +1,1171 @@
+{
+ "spec_version": "0.2",
+ "registry_version": "0.2",
+ "cases": [
+  {
+   "name": "plain text, no marks",
+   "input": "The fork adds",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "The fork adds"
+    }
+   ]
+  },
+  {
+   "name": "one ai word",
+   "input": "f\udb40\udd01o\udb40\udd01r\udb40\udd01k\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "f\udb40\udd01o\udb40\udd01r\udb40\udd01k\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "ai words joined across a space",
+   "input": "T\udb40\udd01h\udb40\udd01e\udb40\udd01 f\udb40\udd01o\udb40\udd01r\udb40\udd01k\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "T\udb40\udd01h\udb40\udd01e\udb40\udd01 f\udb40\udd01o\udb40\udd01r\udb40\udd01k\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "ai then human, space between stays unmarked",
+   "input": "T\udb40\udd01h\udb40\udd01e\udb40\udd01 f\udb40\udd00o\udb40\udd00r\udb40\udd00k\udb40\udd00",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "T\udb40\udd01h\udb40\udd01e\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " "
+    },
+    {
+     "state": "human",
+     "text": "f\udb40\udd00o\udb40\udd00r\udb40\udd00k\udb40\udd00"
+    }
+   ]
+  },
+  {
+   "name": "human-edited first letter inside an ai word",
+   "input": "Th\udb40\udd01e\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "T"
+    },
+    {
+     "state": "ai",
+     "text": "h\udb40\udd01e\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "unmarked text before and after a run",
+   "input": "The f\udb40\udd01o\udb40\udd01r\udb40\udd01k\udb40\udd01 adds",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "The "
+    },
+    {
+     "state": "ai",
+     "text": "f\udb40\udd01o\udb40\udd01r\udb40\udd01k\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " adds"
+    }
+   ]
+  },
+  {
+   "name": "unallocated selectors do not declare a state",
+   "input": "a\udb40\udd02b\udb40\udd03c\udb40\udd04",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "a\udb40\udd02b\udb40\udd03c\udb40\udd04"
+    }
+   ]
+  },
+  {
+   "name": "combining mark: selector follows the whole cluster",
+   "input": "e\u0301\udb40\udd01x\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "e\u0301\udb40\udd01x\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "emoji zwj sequence: selector follows the whole cluster",
+   "input": "\ud83d\udc69\u200d\ud83d\udcbb\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\ud83d\udc69\u200d\ud83d\udcbb\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "flag: selector follows the regional-indicator pair",
+   "input": "\ud83c\udde8\ud83c\udde6\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\ud83c\udde8\ud83c\udde6\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "spacing mark (Mc): selector follows the whole cluster",
+   "input": "\u0915\u093f\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\u0915\u093f\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "hangul jamo: selector follows the whole syllable",
+   "input": "\u1100\u1161\u11a8\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\u1100\u1161\u11a8\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "devanagari conjunct: selector follows the whole cluster",
+   "input": "\u0915\u094d\u0937\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\u0915\u094d\u0937\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "tag-sequence flag: selector follows the whole sequence",
+   "input": "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "thai sara am: selector follows the whole cluster",
+   "input": "\u0e19\u0e33\udb40\udd01 ok",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "\u0e19\u0e33\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " ok"
+    }
+   ]
+  },
+  {
+   "name": "a selector after whitespace is inert",
+   "input": " \udb40\udd00a\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": " \udb40\udd00"
+    },
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "crlf is one whitespace cluster and joins equal states",
+   "input": "a\udb40\udd01\r\nb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01\r\nb\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "pua input decodes to base plus ai selector",
+   "input": "\udbc0\udc48\udbc0\udc69",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "H\udb40\udd01i\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "pua and selector encodings in one string",
+   "input": "\udbc0\udc48\udbc0\udc69 t\udb40\udd01h\udb40\udd01e\udb40\udd01r\udb40\udd01e\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "H\udb40\udd01i\udb40\udd01 t\udb40\udd01h\udb40\udd01e\udb40\udd01r\udb40\udd01e\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "orphan selector with no base passes through unmarked",
+   "input": "\udb40\udd01x",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "\udb40\udd01x"
+    }
+   ]
+  },
+  {
+   "name": "leading and trailing whitespace",
+   "input": "  a\udb40\udd01i\udb40\udd01  ",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "  "
+    },
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01i\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "  "
+    }
+   ]
+  },
+  {
+   "name": "newline is whitespace and joins equal states",
+   "input": "o\udb40\udd01n\udb40\udd01e\udb40\udd01\nt\udb40\udd01w\udb40\udd01o\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "o\udb40\udd01n\udb40\udd01e\udb40\udd01\nt\udb40\udd01w\udb40\udd01o\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "tab between different states",
+   "input": "a\udb40\udd01\tb\udb40\udd00",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\t"
+    },
+    {
+     "state": "human",
+     "text": "b\udb40\udd00"
+    }
+   ]
+  },
+  {
+   "name": "strip: mark selectors removed, state kept",
+   "input": "f\udb40\udd01o\udb40\udd01r\udb40\udd01k\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "fork"
+    }
+   ]
+  },
+  {
+   "name": "strip: lone selector at start is kept",
+   "input": "\udb40\udd01A",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\udb40\udd01A"
+    }
+   ]
+  },
+  {
+   "name": "strip: selector after space is kept",
+   "input": "A \udb40\udd01B",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "A \udb40\udd01B"
+    }
+   ]
+  },
+  {
+   "name": "strip: mark removed but trailing inert selector kept",
+   "input": "A\udb40\udd01 \udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "A"
+    },
+    {
+     "state": null,
+     "text": " \udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "strip: only final selector of doubled selectors is removed",
+   "input": "A\udb40\udd01\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "A\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "mixed selectors: final selector supplies state, both kept",
+   "input": "A\udb40\udd00\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "A\udb40\udd00\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "strip: earlier selector of another state is kept",
+   "input": "A\udb40\udd00\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "A\udb40\udd00"
+    }
+   ]
+  },
+  {
+   "name": "strip: pua decodes to bare base",
+   "input": "\udbc0\udc48\udbc0\udc69",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "Hi"
+    }
+   ]
+  },
+  {
+   "name": "punctuation marked, code span from sample",
+   "input": "`\udb40\udd01f\udb40\udd01o\udb40\udd01n\udb40\udd01t\udb40\udd01-\udb40\udd01p\udb40\udd01a\udb40\udd01t\udb40\udd01c\udb40\udd01h\udb40\udd01e\udb40\udd01r\udb40\udd01 -\udb40\udd01-\udb40\udd01p\udb40\udd01r\udb40\udd01o\udb40\udd01v\udb40\udd01e\udb40\udd01n\udb40\udd01a\udb40\udd01n\udb40\udd01c\udb40\udd01e\udb40\udd01`\udb40\udd01.\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "`\udb40\udd01f\udb40\udd01o\udb40\udd01n\udb40\udd01t\udb40\udd01-\udb40\udd01p\udb40\udd01a\udb40\udd01t\udb40\udd01c\udb40\udd01h\udb40\udd01e\udb40\udd01r\udb40\udd01 -\udb40\udd01-\udb40\udd01p\udb40\udd01r\udb40\udd01o\udb40\udd01v\udb40\udd01e\udb40\udd01n\udb40\udd01a\udb40\udd01n\udb40\udd01c\udb40\udd01e\udb40\udd01`\udb40\udd01.\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "merge_whitespace off: space between equal states stays unmarked",
+   "input": "T\udb40\udd01h\udb40\udd01e\udb40\udd01 f\udb40\udd01o\udb40\udd01r\udb40\udd01k\udb40\udd01",
+   "options": {
+    "merge_whitespace": false
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "T\udb40\udd01h\udb40\udd01e\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": " "
+    },
+    {
+     "state": "ai",
+     "text": "f\udb40\udd01o\udb40\udd01r\udb40\udd01k\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "merge_whitespace off: newline between equal states stays unmarked",
+   "input": "o\udb40\udd01n\udb40\udd01e\udb40\udd01\nt\udb40\udd01w\udb40\udd01o\udb40\udd01",
+   "options": {
+    "merge_whitespace": false
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "o\udb40\udd01n\udb40\udd01e\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\n"
+    },
+    {
+     "state": "ai",
+     "text": "t\udb40\udd01w\udb40\udd01o\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "merge_whitespace off with strip: pua words split at the space",
+   "input": "\udbc0\udc48\udbc0\udc69 \udbc0\udc74\udbc0\udc68\udbc0\udc65\udbc0\udc72\udbc0\udc65",
+   "options": {
+    "strip": true,
+    "merge_whitespace": false
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "Hi"
+    },
+    {
+     "state": null,
+     "text": " "
+    },
+    {
+     "state": "ai",
+     "text": "there"
+    }
+   ]
+  },
+  {
+   "name": "pua code points outside the mapping pass through unmarked",
+   "input": "\udbd3\ude2d\udbc0\udc20\udbc0\udc0a\udbc0\udc78",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "\udbd3\ude2d\udbc0\udc20\udbc0\udc0a"
+    },
+    {
+     "state": "ai",
+     "text": "x\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "pua gap: soft hyphen (Cf) at U+1000AD is not a mark, upper range still is",
+   "input": "\udbc0\udcad\udbc0\udcaeH\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "\udbc0\udcad"
+    },
+    {
+     "state": "ai",
+     "text": "\u00ae\udb40\udd01H\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "whitespace-only input stays one unmarked run",
+   "input": "   \n\t  ",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "   \n\t  "
+    }
+   ]
+  },
+  {
+   "name": "human and ai followed by unallocated selectors",
+   "input": "a\udb40\udd00b\udb40\udd01c\udb40\udd02d\udb40\udd03e\udb40\udd04",
+   "options": {},
+   "runs": [
+    {
+     "state": "human",
+     "text": "a\udb40\udd00"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "c\udb40\udd02d\udb40\udd03e\udb40\udd04"
+    }
+   ]
+  },
+  {
+   "name": "obsolete U+E0102 across whitespace",
+   "input": "a\udb40\udd02 b\udb40\udd02",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "a\udb40\udd02 b\udb40\udd02"
+    }
+   ]
+  },
+  {
+   "name": "obsolete U+E0103 preserved when stripping",
+   "input": "a\udb40\udd03 b\udb40\udd03",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "a\udb40\udd03 b\udb40\udd03"
+    }
+   ]
+  },
+  {
+   "name": "obsolete U+E0104 across whitespace",
+   "input": "a\udb40\udd04 b\udb40\udd04",
+   "options": {},
+   "runs": [
+    {
+     "state": null,
+     "text": "a\udb40\udd04 b\udb40\udd04"
+    }
+   ]
+  },
+  {
+   "name": "human runs across whitespace",
+   "input": "a\udb40\udd00 b\udb40\udd00",
+   "options": {},
+   "runs": [
+    {
+     "state": "human",
+     "text": "a\udb40\udd00 b\udb40\udd00"
+    }
+   ]
+  },
+  {
+   "name": "all Unicode White_Space code points between equal states: default",
+   "input": "a\udb40\udd01\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "all Unicode White_Space code points between equal states: strip",
+   "input": "a\udb40\udd01\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b"
+    }
+   ]
+  },
+  {
+   "name": "all Unicode White_Space code points between equal states: merge_whitespace",
+   "input": "a\udb40\udd01\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000b\udb40\udd01",
+   "options": {
+    "merge_whitespace": false
+   },
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+001C is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u001cb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u001c"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+001D is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u001db\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u001d"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+001E is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u001eb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u001e"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+001F is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u001fb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u001f"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+FEFF is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\ufeffb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\ufeff"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+180E is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u180eb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u180e"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "U+200B is not White_Space and does not join equal states",
+   "input": "a\udb40\udd01\u200bb\udb40\udd01",
+   "options": {},
+   "runs": [
+    {
+     "state": "ai",
+     "text": "a\udb40\udd01"
+    },
+    {
+     "state": null,
+     "text": "\u200b"
+    },
+    {
+     "state": "ai",
+     "text": "b\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+0085 is inert even with strip",
+   "input": "\u0085\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u0085\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+00A0 is inert even with strip",
+   "input": "\u00a0\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u00a0\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+1680 is inert even with strip",
+   "input": "\u1680\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u1680\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+2007 is inert even with strip",
+   "input": "\u2007\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u2007\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+202F is inert even with strip",
+   "input": "\u202f\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u202f\udb40\udd01"
+    }
+   ]
+  },
+  {
+   "name": "a selector after White_Space U+3000 is inert even with strip",
+   "input": "\u3000\udb40\udd01",
+   "options": {
+    "strip": true
+   },
+   "runs": [
+    {
+     "state": null,
+     "text": "\u3000\udb40\udd01"
+    }
+   ]
+  }
+ ],
+ "producer_cases": [
+  {
+   "name": "mark ascii words, selector encoding",
+   "input": "Hi there",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "H\udb40\udd01i\udb40\udd01 t\udb40\udd01h\udb40\udd01e\udb40\udd01r\udb40\udd01e\udb40\udd01",
+   "note": "one selector per cluster; the space is left alone"
+  },
+  {
+   "name": "whitespace is never marked",
+   "input": "a\r\nb",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "a\udb40\udd01\r\nb\udb40\udd01",
+   "note": "CR and LF are whitespace, so they stay bare and line endings survive"
+  },
+  {
+   "name": "control and format break characters are never marked",
+   "input": "a\u00ad\u200b\ufeff\u2060\u0000b",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "a\udb40\udd01\u00ad\u200b\ufeff\u2060\u0000b\udb40\udd01",
+   "note": "GB4 breaks before an appended selector, so these characters stay unmarked"
+  },
+  {
+   "name": "control and format break characters are never marked in PUA mode",
+   "input": "a\u00ad\u200b\ufeff\u2060\u0000b",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\udbc0\udc61\u00ad\u200b\ufeff\u2060\u0000\udbc0\udc62"
+  },
+  {
+   "name": "marking marked text is idempotent",
+   "input": "a\udb40\udd01",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "a\udb40\udd01",
+   "note": "a cluster that already carries a selector is left alone"
+  },
+  {
+   "name": "a mark goes after combining marks",
+   "input": "e\u0301x",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "e\u0301\udb40\udd01x\udb40\udd01",
+   "note": "the cluster is base plus combining mark, marked once"
+  },
+  {
+   "name": "a flag is one cluster",
+   "input": "\ud83c\udde8\ud83c\udde6",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\ud83c\udde8\ud83c\udde6\udb40\udd01",
+   "note": "a regional-indicator pair takes one mark, not two"
+  },
+  {
+   "name": "a ZWJ sequence is one cluster",
+   "input": "\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\udb40\udd01"
+  },
+  {
+   "name": "a skin-tone modifier stays with its base",
+   "input": "\ud83d\udc4d\ud83c\udffd",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\ud83d\udc4d\ud83c\udffd\udb40\udd01"
+  },
+  {
+   "name": "VS16 presentation stays with its base",
+   "input": "\u2764\ufe0f",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\u2764\ufe0f\udb40\udd01"
+  },
+  {
+   "name": "a Hangul syllable of conjoining jamo is one cluster",
+   "input": "\u1100\u1161\u11a8 x",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\u1100\u1161\u11a8\udb40\udd01 x\udb40\udd01",
+   "note": "L V T jamo join under GB6-GB8; one selector follows the syllable"
+  },
+  {
+   "name": "a Devanagari conjunct is one cluster",
+   "input": "\u0915\u094d\u0937 x",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\u0915\u094d\u0937\udb40\udd01 x\udb40\udd01",
+   "note": "consonant, virama, consonant join under GB9c; one selector follows the conjunct"
+  },
+  {
+   "name": "a tag-sequence flag is one cluster",
+   "input": "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f x",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f\udb40\udd01 x\udb40\udd01",
+   "note": "tag characters are Grapheme_Extend; one selector follows the whole sequence"
+  },
+  {
+   "name": "Thai sara am stays with its consonant",
+   "input": "\u0e19\u0e33 x",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\u0e19\u0e33\udb40\udd01 x\udb40\udd01",
+   "note": "U+0E33 is SpacingMark; one selector follows the pair"
+  },
+  {
+   "name": "human state",
+   "input": "Hi",
+   "options": {
+    "state": "human",
+    "mode": "vs"
+   },
+   "output": "H\udb40\udd00i\udb40\udd00"
+  },
+  {
+   "name": "pua encoding for single-code-point bases",
+   "input": "Hi",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\udbc0\udc48\udbc0\udc69",
+   "note": "H and i are both in the registry"
+  },
+  {
+   "name": "pua mode falls back to the selector for a multi-code-point cluster",
+   "input": "\ud83c\udde8\ud83c\udde6",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\ud83c\udde8\ud83c\udde6\udb40\udd01",
+   "note": "only single-code-point bases have a PUA counterpart"
+  },
+  {
+   "name": "pua mode falls back to the selector for an unallocated base",
+   "input": "\u4e2d",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\u4e2d\udb40\udd01",
+   "note": "registry version 0.2 allocates U+0021-U+00FF only"
+  },
+  {
+   "name": "pua mode with a non-ai state uses the selector",
+   "input": "Hi",
+   "options": {
+    "state": "human",
+    "mode": "pua"
+   },
+   "output": "H\udb40\udd00i\udb40\udd00",
+   "note": "registry version 0.2 allocates PUA for the ai state only"
+  },
+  {
+   "name": "pua characters are not re-marked",
+   "input": "\udbc0\udc48",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\udbc0\udc48",
+   "note": "a PUA character is already a mark"
+  },
+  {
+   "name": "all Unicode White_Space code points stay bare in vs mode",
+   "input": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
+  },
+  {
+   "name": "non-White_Space control-break characters stay bare in vs mode",
+   "input": "\u001c\u001d\u001e\u001f\ufeff\u180e\u200b",
+   "options": {
+    "state": "ai",
+    "mode": "vs"
+   },
+   "output": "\u001c\u001d\u001e\u001f\ufeff\u180e\u200b"
+  },
+  {
+   "name": "all Unicode White_Space code points stay bare in pua mode",
+   "input": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\t\n\u000b\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
+  },
+  {
+   "name": "non-White_Space control-break characters stay bare in pua mode",
+   "input": "\u001c\u001d\u001e\u001f\ufeff\u180e\u200b",
+   "options": {
+    "state": "ai",
+    "mode": "pua"
+   },
+   "output": "\u001c\u001d\u001e\u001f\ufeff\u180e\u200b"
+  }
+ ],
+ "convert_cases": [
+  {
+   "name": "vs to pua",
+   "input": "H\udb40\udd01",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "\udbc0\udc48"
+  },
+  {
+   "name": "pua to vs",
+   "input": "\udbc0\udc48",
+   "options": {
+    "from": "pua",
+    "to": "vs"
+   },
+   "output": "H\udb40\udd01"
+  },
+  {
+   "name": "vs to pua leaves other states alone",
+   "input": "H\udb40\udd00",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "H\udb40\udd00",
+   "note": "only the ai state has a PUA allocation in registry version 0.2"
+  },
+  {
+   "name": "vs to pua leaves unallocated bases alone",
+   "input": "\u4e2d\udb40\udd01",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "\u4e2d\udb40\udd01"
+  },
+  {
+   "name": "a lone selector is not a mark",
+   "input": "\udb40\udd01",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "\udb40\udd01"
+  },
+  {
+   "name": "vs to pua leaves a multi-code-point cluster alone",
+   "input": "\u06001\udb40\udd01",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "\u06001\udb40\udd01",
+   "note": "U+0600 is Prepend, so it and the digit are one cluster; converting the digit alone would leave a PUA code point inside a two-code-point cluster, which decodes as unmarked"
+  },
+  {
+   "name": "vs to pua leaves a repeated selector alone",
+   "input": "H\udb40\udd01\udb40\udd01",
+   "options": {
+    "from": "vs",
+    "to": "pua"
+   },
+   "output": "H\udb40\udd01\udb40\udd01",
+   "note": "the cluster is three code points, not a base and its selector"
+  }
+ ]
+}

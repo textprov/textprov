@@ -1,0 +1,143 @@
+# 0006. Decorator packages per ecosystem; protocol in its own repository
+
+Status: accepted. Date: 2026-09-11. Accepted: 2026-09-12.
+
+Amended by [ADR 0011](0011-the-producer-is-text-processing.md): this record's
+producer boundary is superseded. The marker is text processing and belongs in
+this repository; the font patcher is a renderer. Read ADR 0011 alongside the
+"What moved" and "What stayed in the fork" sections below.
+
+Naming supplemented by [ADR 0013](0013-use-p9e-as-provenance-shorthand.md):
+`p9e` / `P9E` is the provenance shorthand, with `P9E` succeeding `P+` as the
+font suffix convention. Protocol and package identities remain as recorded here.
+
+## Context
+
+The decorator has implementations in more than one language. ADR 0004 makes the
+shared fixture the conformance test. At the time, the protocol material and
+reference implementations were held inside a Nerd Fonts fork beside the font
+patcher. The patcher needs FontForge and builds fonts, while a decorator is a
+few hundred lines of dependency-free text processing. ADR 0011 later corrected
+the record's classification of the marker and the font patcher.
+
+## Decision
+
+The protocol lives in its own repository, `textprov/textprov`, which owns the
+specification, the canonical registry, the fixture, and the reference
+implementations. The fork keeps everything that builds or verifies fonts.
+
+### Naming
+
+The naming decision remained open until 2026-09-12. `nfprov` was not suitable
+as the protocol name because the protocol is not font-specific and should not
+imply a Nerd Fonts affiliation. `prov` was
+rejected as the public name because it collides with an existing GitHub
+organisation, an unrelated npm package, and PyPI's `prov`, an active W3C PROV
+data-model library; that collision would make the protocol hard to find and
+easy to confuse with the W3C standard.
+
+| Role | Name |
+| --- | --- |
+| Protocol and specification | TextProv, `SPEC.md` |
+| Provenance shorthand / font suffix convention | `p9e` / `P9E` ([ADR 0013](0013-use-p9e-as-provenance-shorthand.md)) |
+| GitHub organisation and repository | `textprov/textprov` |
+| JavaScript package (npm) | `textprov` (browser decoder + CSS) |
+| Python package and import (PyPI) | `textprov` (producer, decoder, CLI) |
+| Ruby gem (RubyGems; source in `ruby/`) | `textprov` |
+| CSS class prefix and data attribute | `prov`, `data-prov` |
+
+The class prefix stays `prov`. Changing it would break every stylesheet already
+written against the shipped decorator, and the prefix is a local CSS name, not a
+discovery surface: nobody searches a package index for a class. The repository,
+organisation, and package names carry the identity instead. A consumer that
+wants a different prefix passes the option; `data-prov` remains unchanged.
+
+`nfprov` remains the in-fork Python tool name for the encoder and font
+workflow, where it is correctly scoped.
+
+### What moved
+
+- `SPEC.md`, written for this repository. The specification existed only as the
+  fork's `DECORATOR.md`, which described a decorator rather than a protocol;
+  the specification now covers states, both encodings, the registry and its
+  stability rules, vendoring, the decoder, and the markup.
+- One canonical `mapping.json`, replacing two byte-identical copies.
+- `fixtures.json`, the conformance suite of ADR 0004.
+- `js/textprov.js` and `js/textprov.css`, from `css/nfprov.js` and
+  `css/nfprov.css`.
+- `python/textprov`, the shared core and renderer from `bin/scripts/nfprov.py`:
+  `load_mapping`, `is_combining`, `cluster_end`, the run splitter, the HTML
+  renderer, and the decorator form of `strip`.
+- `ruby/`, an official Ruby 3.2+ reference implementation with the same
+  producer/decoder/renderer surface as the Python package and no runtime
+  dependencies. It vendors `mapping.json` and runs the shared fixture like the
+  others.
+- Fixture runners for each implementation.
+- `docs/GOAL.md`, `docs/HTML-RENDERING.md`, and ADRs 0001–0004, 0006, and
+  0008–0010.
+
+### What stayed in the fork
+
+- `font-patcher` and its `--provenance` option.
+- `bin/scripts/test-provenance.py`, which verifies built fonts and needs
+  `fontTools`.
+- The encoder operations in `bin/scripts/nfprov.py`: `do_mark`,
+  `do_mark_added`, and `do_convert`, plus `do_inspect` as diagnostic tooling.
+- ADR 0005 (serving the font as a woff2 subset) and ADR 0007 (reaching variants
+  under CoreText through a `ccmp` ligature). Both are font-build decisions. ADR
+  numbering is shared across the two repositories, so a number appears in one
+  or the other, never both.
+- Fork-specific material: its README, `zed-about.md`, examples, `ROLLOUT.txt`,
+  and prototype screenshots.
+
+### Test ownership
+
+The earlier wording of this record required that test ownership be explicit
+before any file moved. The fork's `selftest` had no direct coverage of
+`cluster_end` or `to_html`; both were reached only through the encoder round
+trips and the fixture loop, which would have left the moved code untested.
+Direct tests were added first, then moved here as
+`python/tests/test_conformance.py`. The fork's `selftest` keeps the mark and
+convert round trips, which test the encoder it still owns.
+
+### Vendoring
+
+Each package vendors the registry and no package depends on another. A browser
+script cannot load JSON synchronously, so `js/textprov.js` embeds the tables the
+registry reduces to — the selector table, the allocated PUA ranges, and the
+registry version — and exposes them as `textprov.mapping`. The Python package
+ships a copy of `mapping.json` inside the package directory. Each test suite
+compares its copy to the canonical file on every run, so drift fails the build.
+The JavaScript runner also asserts the two registry rules that the embedding
+relies on: `PUA_AI(cp) = 0x100000 + cp`, and published entries are never
+reassigned or removed.
+
+## Remaining work
+
+The unscoped `textprov` packages have been published on npm and PyPI. The Ruby
+gem [0.1.0](https://rubygems.org/gems/textprov/versions/0.1.0) was published on
+2026-09-20. The npm
+name is deliberately identical to the PyPI package name, even though the two
+ship different surface areas: taking the unscoped name on both registries
+closes off squatting and keeps the discovery story simple ("install
+textprov"). The npm README states the ship-list difference in its opening line.
+
+1. Wait for one breakage report and add its case to `fixtures.json` before
+   starting another port.
+2. Add a separate kramdown hook for Jekyll and GitHub Pages, tested in a real
+   site. This remains a follow-up and is deliberately not part of the published
+   core gem.
+3. Have the fork consume the published Python package instead of its vendored
+   copy of the shared core, and read the registry from the package rather than
+   `src/glyphs/provenance/mapping.json`. Until then the fork's copies are
+   downstream duplicates of the files here, and this repository is canonical.
+
+The JavaScript and Python decoder/renderer implementations expose `runs` and
+either `to_html` or `render`. Their shared options are `strip`,
+`merge_whitespace`, and a class prefix.
+
+A browser extension based on the client-side decorator is the proposed route
+for pages whose author cannot add a decorator pass. It does not exist.
+
+The project subsequently registered [`textprov.org`](https://textprov.org).
+No trademark clearance has been done for the name.
