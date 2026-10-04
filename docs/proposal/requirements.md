@@ -5,15 +5,15 @@ to satisfy them in all applications.
 
 ## Goals
 
-- Origin claims accompany copied interior passages through plain-text workflows.
+- Source attribution accompanies copied interior passages through plain-text workflows.
 - Underlying Unicode text remains recoverable without losing legitimate content.
-- Cooperating implementations agree on label meanings and attachment.
+- Cooperating implementations agree on reference semantics and attachment.
 - Encoding, display, interpretation, and authenticity remain distinct concerns.
 
 ## Non-goals
 
-- Inferring authorship or detecting AI generation from text.
-- Establishing authenticity or factual accuracy from a label alone.
+- Inferring authorship, detecting speakers, or detecting AI generation from text.
+- Establishing identity, authenticity, or factual accuracy from a reference alone.
 - Assigning Unicode characters without the standardization process.
 - Guaranteeing preservation through software that removes or rewrites markers.
 
@@ -25,8 +25,10 @@ to satisfy them in all applications.
   assumptions. Ambiguity for arbitrary input is explicit.
 - Interior passage copying does not depend on distant document context under
   the profile's supported selection conditions.
+- Copying and merging distinguish reference preservation from preservation of
+  source distinctions and descriptions. The minimum guarantee remains open.
 - Missing, malformed, conflicting, or unknown markers do not silently establish
-  an origin claim.
+  an attribution.
 - Normalization is an explicit policy. Offset units and hash inputs identify
   the representation to which they apply.
 

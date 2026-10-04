@@ -1,17 +1,21 @@
 # Encoding candidates
 
 Status: alternatives for evaluation. Symbols below are placeholders, not
-code-point allocations.
+code-point allocations. Candidate syntax illustrates carriage of a source
+reference; reference scope, repertoire, and payload layout remain open.
 
 | Candidate | Illustrative serialization | Status and principal trade-off |
 | --- | --- | --- |
 | VS suffix | `text + selector` | Implemented baseline; useful default display and attachment, but collisions and a mismatch with sanctioned variation semantics |
-| Additive PUA suffix | `text + TP_ORIGIN` | Private-agreement candidate; retains literal text, while display and attachment need evaluation |
-| Interlinear annotation | `anchor + text + separator + label + terminator` | Established annotation structure with receiver agreement; interior copying can lose enclosing context |
+| Additive PUA suffix | `text + TP_REFERENCE` | Private-agreement candidate; retains literal text, while display and attachment need evaluation |
+| Interlinear annotation | `anchor + text + separator + reference + terminator` | Established annotation structure with receiver agreement; interior copying can lose enclosing context |
 | Newly standardized characters | Proposed marker or annotation structure | Possible Unicode proposal; semantics, properties, acceptance, and allocation unresolved |
 | External metadata | Text plus annotations outside the character stream | Complementary integration; plain-text intermediaries can lose the association |
 
 ## Variation selectors
+
+The implemented VS profile carries human/AI classifications. An extension to
+voice references is a separate candidate design, not implemented behavior.
 
 Unicode defines sanctioned base-selector combinations in standardized variants,
 emoji sequences, and the Ideographic Variation Database. A selector provides no
@@ -33,14 +37,16 @@ use the same values; recognition, escaping, and collision policy need definition
 
 This candidate appends a marker to unchanged text. The baseline's PUA mapping
 instead substitutes a private character for a base character plus state. These
-are different designs. No additive marker values are selected. See
+are different designs. No additive marker values are selected. A small fixed state-marker set does not
+by itself encode an extensible voice-reference repertoire; payload syntax and
+overhead need evaluation. See
 [Unicode section 23.5](https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/).
 
 ## Annotation structure and new characters
 
 `U+FFF9`, `U+FFFA`, and `U+FFFB` delimit base and annotation text. Unicode requires
 prior agreement for correct plain-text interchange. A TextProv use preserves
-those semantics and defines label syntax separately. Partial selection,
+those semantics and defines attribution-reference syntax separately. Partial selection,
 malformed delimiters, and fallback display need evaluation.
 
 Unassigned Specials positions are reserved, not private-use values. A proposal

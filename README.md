@@ -1,8 +1,10 @@
-# TextProv: a proposal for text origin annotations
+# TextProv: a proposal for voice attribution in text
 
-TextProv explores how origin claims can accompany passages copied between
-applications, including through plain-text workflows. The proposal separates
-annotation meaning from the mechanism used to encode it.
+TextProv explores how text can retain attribution to distinct voices when
+passages are copied between applications, including through plain-text workflows.
+A voice identifies a source within an attribution context: a person, software
+system, quoted speaker, or another defined source. The proposal separates
+attribution meaning from the mechanism used to encode it.
 
 **Status: proposal under discussion.** No permanent encoding is selected and no
 new Unicode characters are assigned by this project. The retained
@@ -11,15 +13,23 @@ variation-selector (VS) implementation is an experimental demonstration.
 ## The idea
 
 ```text
-TextUnit + OriginClaim → AnnotatedUnit
+TextUnit + VoiceReference → AttributedUnit
 ```
 
 Here, `+` means association, not necessarily character concatenation. A text unit
-may contain several Unicode characters. An origin claim records supplied
-information; it neither detects AI-generated text nor proves authorship.
+may contain several Unicode characters. Attribution is supplied by a person or
+application; it neither detects a speaker nor proves authorship.
+
+Illustrative voices might be `Voice1` for an author, `Voice2` for a quoted
+participant, and `Voice3` for an assistant. These are example references, not
+reserved labels. Multiple people or assistants can have distinct voices.
+Human/AI classification, source descriptions, and verified identity are optional
+information separate from the attribution reference.
 
 The central design objective is that a copied interior passage retains its
-labels without requiring every intermediate application to understand TextProv.
+attribution without requiring every intermediate application to understand
+TextProv. Reference scope and the portability of source descriptions remain
+open: `Voice1` from two unrelated documents need not identify the same source.
 Whether an encoding meets that objective with acceptable display, editing,
 and interoperability remains a question for evaluation.
 
@@ -43,8 +53,9 @@ do not settle the proposal's open decisions.
 
 The VS demonstration stores labels in text that ordinary renderers generally
 display without a special font. A TextProv decoder interprets or displays the
-origin claims. Copying and editing depend on the application and preservation
-of the marked sequence.
+baseline human/AI classifications. It does not implement the proposed voice
+references. Copying and editing depend on the application and preservation of
+the marked sequence.
 
 The VS profile has a documented collision with legitimate Unicode variation
 sequences. Its display and attachment behavior are useful experimental evidence;

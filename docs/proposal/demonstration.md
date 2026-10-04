@@ -4,10 +4,11 @@ Status: retained experimental baseline and proposed evaluation plan.
 
 ## What runs without extra support
 
-The VS baseline stores labels in supplementary variation selectors. Ordinary
+The VS baseline stores human/AI labels in supplementary variation selectors. Ordinary
 renderers generally display the underlying text without a special font. That
 appearance does not interpret labels. A decoder or integration reads claims;
-utility fonts provide optional inspection modes.
+utility fonts provide optional inspection modes. The baseline does not implement
+voice references, source dictionaries, or optional attribution metadata.
 
 Python, Ruby, JavaScript, and website sources remain at their existing paths.
 Mappings, fixtures, and specification describe baseline behavior. Passing baseline
@@ -31,7 +32,12 @@ Hebrew, and unrelated PUA text.
 Observations cover whole and interior passage copying, paste into an unaware
 plain-text editor followed by copying again, cursor movement, backspace,
 insertion, search, accessibility, and explicit NFC/NFD transformations. Recorded
-code points and decoded claims accompany application and platform versions.
+code points and decoded annotations accompany application and platform versions.
+
+Voice-reference experiments also cover independent documents reusing `Voice1`,
+merging passages, copying without source dictionaries, anonymous sources, and
+multiple sources of the same human/AI category. Results distinguish reference
+survival, preservation of source distinctions, and access to source descriptions.
 
 ## Evidence status
 

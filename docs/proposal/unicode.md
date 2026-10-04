@@ -4,7 +4,7 @@ Status: discussion draft, not a submitted or accepted Unicode proposal.
 
 ## Proposed subject
 
-A possible submission concerns a general text-origin annotation function:
+A possible submission concerns a general text-source attribution function:
 semantics, attachment, and processing behavior. TextProv supplies a motivating
 application and experimental evidence. Code-point values and suggested placement
 in Specials are separate allocation questions.
@@ -20,8 +20,11 @@ a new annotation function also needs confirmation.
 
 Desired invisibility and attachment require explicit property and algorithm
 analysis. Rendering, grapheme and word boundaries, bidi, joining, normalization,
-and older implementations each need treatment. A fixed label repertoire and a
-general annotation structure remain alternatives.
+and older implementations each need treatment. Reference repertoire, scope, and
+context carriage need definition. Fixed human/AI categories describe the baseline;
+they do not define the proposed attribution function. Proposed characters may
+support reference framing or an annotation structure rather than assign one
+character to every voice. The mechanism remains open.
 
 ## Experiments and allocation
 
@@ -36,6 +39,6 @@ is documented explicitly.
 
 ## Unresolved question
 
-Whether provenance belongs in Unicode characters or higher-level annotation
+Whether source attribution belongs in Unicode characters or higher-level annotation
 protocols is part of the substantive case. Available code space alone does not
 answer it.

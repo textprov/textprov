@@ -5,42 +5,74 @@ Status: proposal. Encoding-independent vocabulary; unresolved details appear in
 
 ## Concept
 
-TextProv concerns origin claims attached to text and their preservation when
-passages move between applications. The proposal focuses on prose and passage
-copying. Exact boundaries of eligible content remain open.
+TextProv concerns source attribution attached to text and its preservation when
+passages move between applications. “Voices” is the introductory term for
+sources distinguishable within an attribution context. The proposal focuses on
+prose and passage copying. Exact boundaries of eligible content remain open.
 
 ## Semantics
 
-An origin claim is supplied by a person or producing application. It is not an
-inference from the text and does not establish its own authenticity. An absent
-claim conveys no conclusion about origin.
+Attribution is an association supplied by a person or application, not inferred
+speaker identification. An attribution reference distinguishes a source; it does
+not establish that source's identity, authorship, or authenticity. An absent
+reference conveys no conclusion about who supplied the text.
 
-`human`, `ai`, and `mixed` are vocabulary candidates. The retained baseline
-implements `human` and `ai`; the definition of `mixed`, its relationship to
-multiple contributions, and its inclusion in the repertoire remain unresolved.
-Author identity, model identity, timestamps, and signatures are separate concerns.
+A voice can represent a person, software system, quoted speaker, or another
+defined source. Whether a reference denotes a contributor, quoted speaker, or
+narrative persona is explicit in its context; those roles are not interchangeable.
+The representation of roles remains open.
+
+`Voice1`, `Voice2`, and `Voice3` illustrate references, not standardized values.
+Several people can have distinct references, as can several assistants. Sources
+can be anonymous or unspecified. A single source may also perform different
+roles; reference reuse across roles remains a decision.
+
+Human/AI classification is optional metadata, not the organizing distinction.
+Source descriptions, model information, timestamps, and verified identity are
+also optional information separate from the reference. Their serialization is
+unresolved. The VS baseline implements human/AI classifications, not this voice
+reference model.
+
+“Attribution” follows established terminology for associating content with a
+source; see [W3C PROV attribution](https://www.w3.org/TR/prov-o/#Attribution).
+This proposal does not claim to implement the PROV data model. “Origin claims”
+was descriptive working language, not an adopted term from a text standard.
 
 ## Abstract representation
 
 ```text
-AnnotatedUnit = { text: TextUnit, origin: OriginClaim }
-AnnotatedPassage = ordered sequence of annotated or unannotated units
+AttributedUnit = { text: TextUnit, source: VoiceReference }
+AttributedPassage = ordered sequence of attributed or unattributed units
 ```
 
 This notation expresses information, not a wire format. Association is written
-`TextUnit + OriginClaim → AnnotatedUnit`. It neither implies string concatenation
-nor creates a new Unicode character.
+`TextUnit + VoiceReference → AttributedUnit`. It neither implies string
+concatenation nor creates a new Unicode character. One reference per unit is an
+illustrative form; joint contributions and multiple references remain open.
 
 A Unicode extended grapheme cluster is a candidate text unit. A cluster can
 contain combining marks, meaningful variation selectors, and emoji joiners.
 The choice of unit and Unicode segmentation version remain open.
 
+## Reference scope and copying
+
+| Approach | Benefit | Unresolved limitation |
+| --- | --- | --- |
+| Local `Voice1`, `Voice2` | Compact anonymous distinctions | Different contexts reuse names; descriptions may stay behind |
+| Scoped reference such as `ContextA:Voice1` | Distinguishes sources after merging | Scope syntax, overhead, and context portability |
+| Globally unique source identifier | Stable reference across contexts | Identifier lifecycle, overhead, and privacy |
+
+No approach is selected. Preserving a reference, preserving its distinction from
+other sources, and preserving its description are different outcomes. A copied
+passage may retain a distinction without enough context to explain it. The
+minimum required outcome belongs in the copying guarantee.
+
 ## Separation of layers
 
 | Layer | Defines | Does not settle |
 | --- | --- | --- |
-| Concept | User need | Labels or code points |
-| Semantic model | Meaning and attachment target | Serialization |
+| Concept | User need | Source references or code points |
+| Semantic model | Attribution meaning and target | Serialization |
 | Abstract representation | Information carried | Byte or character layout |
 | Encoding profile | Concrete syntax and decoding rules | Global Unicode assignment |
 | Implementation | Executable behavior | Behavior of other applications |
