@@ -4,6 +4,7 @@ import importlib.util
 import io
 import json
 import os
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -134,14 +135,16 @@ class TestAdapter(unittest.TestCase):
     def test_read_of_a_marked_file_points_to_the_edit_command(self):
         self.workspace.has_marks.return_value = True
         result = self.dispatch(
-            "PostToolUse", "Read", tool_input={"file_path": "/r/a \"b\".md"}
+            "PostToolUse", "Read", tool_input={"file_path": '/r/a "b".md'}
         )
         self.workspace.has_marks.assert_called_once_with('/r/a "b".md')
         assert result is not None
         fields = result["hookSpecificOutput"]
         self.assertEqual(fields["hookEventName"], "PostToolUse")
         note = fields["additionalContext"]
-        self.assertIn(f"python3 {hook.SCRIPT} edit <<'JSON'", note)
+        self.assertIn(
+            f"python3 {shlex.quote(str(hook.SCRIPT))} edit <<'JSON'", note
+        )
         # The example is valid JSON with the path already quoted.
         example = note.split("<<'JSON'\n")[1].split("\nJSON")[0]
         self.assertEqual(json.loads(example)["file_path"], '/r/a "b".md')
@@ -152,14 +155,62 @@ class TestAdapter(unittest.TestCase):
         fields = result["hookSpecificOutput"]
         self.assertEqual(fields["hookEventName"], "SessionStart")
         note = fields["additionalContext"]
-        self.assertIn(f"python3 {hook.SCRIPT} edit <<'JSON'", note)
-        self.assertIn(f"PYTHONPATH={hook.ROOT / 'python'} python3 -m", note)
+        self.assertIn(
+            f"python3 {shlex.quote(str(hook.SCRIPT))} edit <<'JSON'", note
+        )
+        self.assertIn(
+            f"PYTHONPATH={shlex.quote(str(hook.ROOT / 'python'))} python3 -m",
+            note,
+        )
         example = note.split("<<'JSON'\n")[1].split("\nJSON")[0]
         self.assertEqual(
             sorted(json.loads(example)),
             ["file_path", "new_string", "old_string"],
         )
         self.assertEqual(self.workspace.mock_calls, [])
+
+    def test_guidance_quotes_shell_paths(self):
+        for root in (
+            Path("/Users/d/My Projects/textprov"),
+            Path("/Users/d/Project's $HOME; files/textprov"),
+        ):
+            script = root / ".claude" / "hooks" / "textprov_hook.py"
+            with (
+                self.subTest(root=root),
+                mock.patch.object(hook, "ROOT", root),
+                mock.patch.object(hook, "SCRIPT", script),
+            ):
+                self.workspace.has_marks.return_value = True
+                for event, tool in (
+                    ("SessionStart", None),
+                    ("PostToolUse", "Read"),
+                ):
+                    result = self.dispatch(
+                        event,
+                        tool,
+                        tool_input={"file_path": str(root / "a.md")},
+                    )
+                    assert result is not None
+                    note = result["hookSpecificOutput"]["additionalContext"]
+                    edit = note.split("\n")[1].split(" <<")[0]
+                    self.assertEqual(
+                        shlex.split(edit), ["python3", str(script), "edit"]
+                    )
+                    if event == "SessionStart":
+                        strip = note.split(
+                            "To read or search a file without its marks: "
+                        )[1]
+                        self.assertEqual(
+                            shlex.split(strip),
+                            [
+                                f"PYTHONPATH={root / 'python'}",
+                                "python3",
+                                "-m",
+                                "textprov",
+                                "strip",
+                                "FILE",
+                            ],
+                        )
 
     def test_settings_route_every_handled_event_to_the_script(self):
         with open(ROOT / ".claude" / "settings.json", encoding="utf-8") as f:
@@ -179,9 +230,7 @@ class TestAdapter(unittest.TestCase):
             },
         )
         for entries in hooks.values():
-            self.assertIn(
-                "textprov_hook.py", entries[0]["hooks"][0]["command"]
-            )
+            self.assertIn("textprov_hook.py", entries[0]["hooks"][0]["command"])
 
     def test_read_of_an_unmarked_file_has_no_response(self):
         self.workspace.has_marks.return_value = False

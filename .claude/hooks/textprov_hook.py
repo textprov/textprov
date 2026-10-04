@@ -15,6 +15,7 @@ at SessionStart, repeated when a marked file is Read, tells the agent to use it.
 
 import json
 import os
+import shlex
 import sys
 from pathlib import Path
 
@@ -98,14 +99,16 @@ def dispatch(event, workspace):
             respond(
                 "PostToolUse",
                 additionalContext=READ_NOTE.format(
-                    script=SCRIPT, path=json.dumps(str(path))
+                    script=shlex.quote(str(SCRIPT)), path=json.dumps(str(path))
                 ),
             )
     elif name == "SessionStart":
         respond(
             "SessionStart",
             additionalContext=SESSION_NOTE.format(
-                script=SCRIPT, path='"PATH"', python=ROOT / "python"
+                script=shlex.quote(str(SCRIPT)),
+                path='"PATH"',
+                python=shlex.quote(str(ROOT / "python")),
             ),
         )
 
