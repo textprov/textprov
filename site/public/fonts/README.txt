@@ -89,10 +89,10 @@ kick-the-tires. Maryheather and Zilla Slab are prose fonts.
 Rebuild
 -------
 
-From site/, with Python, fonttools and brotli installed:
+From the repository root, with Python, fonttools and brotli installed:
 
-python3 build-demo-fonts.py /path/to/nerd-fonts   # Maryheather + Zilla
-python3 build-agave-fonts.py /path/to/nerd-fonts  # Agave P+ trio
+python3 tools/build-demo-fonts.py /path/to/nerd-fonts   # Maryheather + Zilla
+python3 tools/build-agave-fonts.py /path/to/nerd-fonts  # Agave P+ trio
 
 Both scripts subset their sources, rename the family, keep only U+E0100
 (Human) and U+E0101 (AI) selectors, and package licences with each ZIP.

@@ -22,7 +22,8 @@ from fontTools.pens.recordingPen import RecordingPen
 from fontTools.ttLib import TTFont
 from fontTools.ttLib.tables._g_l_y_f import USE_MY_METRICS
 
-SITE = Path(__file__).resolve().parent
+TOOLS = Path(__file__).resolve().parent
+SITE = TOOLS.parent / "site"
 SELECTORS = (0xE0100, 0xE0101)
 BASES = set(range(0x20, 0x100)) | set(range(0x2010, 0x2028)) | {0x20AC, 0x2122, 0x2212}
 
@@ -268,8 +269,8 @@ def check_font(entry, recorded, args, registry):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--sources", type=Path, default=SITE / "utility-font-sources.json")
-    parser.add_argument("--cache-dir", type=Path, default=SITE / ".font-cache")
+    parser.add_argument("--sources", type=Path, default=TOOLS / "utility-font-sources.json")
+    parser.add_argument("--cache-dir", type=Path, default=TOOLS / ".font-cache")
     parser.add_argument("--output", type=Path, default=SITE / "public/fonts/utility")
     parser.add_argument("--strict", action="store_true", help="all checks are always strict")
     args = parser.parse_args()

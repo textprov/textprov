@@ -97,16 +97,16 @@ environment for the build dependencies:
 
 ```sh
 python3 -m venv .venv-fonts
-.venv-fonts/bin/python -m pip install -r site/font-build-requirements.txt
-.venv-fonts/bin/python site/build-utility-fonts.py
-.venv-fonts/bin/python site/check-utility-fonts.py --strict
+.venv-fonts/bin/python -m pip install -r tools/font-build-requirements.txt
+.venv-fonts/bin/python tools/build-utility-fonts.py
+.venv-fonts/bin/python tools/check-utility-fonts.py --strict
 ```
 
-[The source manifest](../site/utility-font-sources.json) pins the upstream
+[The source m󠄁a󠄁n󠄁i󠄁f󠄁e󠄁s󠄁t󠄁](../tools/utility-font-sources.json) pins the upstream
 revision, font URL, license URL, and SHA256 checksums for each source. The
 builder verifies downloads and cached inputs against those hashes, then writes
 the suite to `site/public/fonts/utility/`. Sources and licenses are cached in
-`site/.font-cache/`; the Python environment and source cache are local build
+`tools/.font-cache/`;󠄁 the Python environment and source cache are local build
 inputs. The checker also requires those cached originals and licenses; it
 never fetches them. In a fresh checkout, run the builder with network access
 before checking the bundled outputs.
@@ -114,8 +114,8 @@ before checking the bundled outputs.
 Once the cache is populated, rebuild without network access:
 
 ```sh
-.venv-fonts/bin/python site/build-utility-fonts.py --offline
-.venv-fonts/bin/python site/check-utility-fonts.py --strict
+.venv-fonts/bin/python tools/build-utility-fonts.py --offline
+.venv-fonts/bin/python tools/check-utility-fonts.py --strict
 ```
 
 Use `--cache-dir PATH` on both scripts to choose another cache, and

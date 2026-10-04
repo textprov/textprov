@@ -26,7 +26,8 @@ from fontTools.ttLib.tables import otTables
 from fontTools.ttLib.tables._c_m_a_p import CmapSubtable
 from fontTools.ttLib.tables._g_l_y_f import Glyph, GlyphComponent, USE_MY_METRICS
 
-SITE = Path(__file__).resolve().parent
+TOOLS = Path(__file__).resolve().parent
+SITE = TOOLS.parent / "site"
 VERSION = "1.000"
 SELECTORS = {"human": 0xE0100, "ai": 0xE0101}
 BASES = set(range(0x20, 0x100)) | set(range(0x2010, 0x2028)) | {0x20AC, 0x2122, 0x2212}
@@ -335,8 +336,8 @@ def build(entry, args, mapping, epoch):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--sources", type=Path, default=SITE / "utility-font-sources.json")
-    parser.add_argument("--cache-dir", type=Path, default=SITE / ".font-cache")
+    parser.add_argument("--sources", type=Path, default=TOOLS / "utility-font-sources.json")
+    parser.add_argument("--cache-dir", type=Path, default=TOOLS / ".font-cache")
     parser.add_argument("--output", type=Path, default=SITE / "public/fonts/utility")
     parser.add_argument("--offline", action="store_true")
     args = parser.parse_args()
