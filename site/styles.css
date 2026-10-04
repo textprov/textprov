@@ -75,7 +75,7 @@ input {
   margin: 0 auto;
   padding: 1.5rem 0 1rem;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
   border-bottom: 1px solid var(--line);
@@ -86,6 +86,30 @@ input {
   font-size: 1.05rem;
   text-decoration: none;
   letter-spacing: -0.01em;
+}
+.site-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.header-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  color: var(--muted);
+  font-size: 1.8rem;
+  line-height: 1;
+  text-decoration: none;
+}
+.header-mark:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+.header-mark img {
+  display: block;
+  width: 160px;
+  height: 34px;
 }
 .site-header nav {
   display: flex;
@@ -461,7 +485,7 @@ footer a:hover {
   text-decoration: none;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 780px) {
   .site-header {
     flex-direction: column;
     align-items: flex-start;
@@ -471,6 +495,9 @@ footer a:hover {
     flex-wrap: wrap;
     gap: 0.9rem;
   }
+}
+
+@media (max-width: 640px) {
   h2 {
     font-size: 1.2rem;
   }

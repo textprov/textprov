@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="34" viewBox="0 0 160 34" role="img" aria-labelledby="title description">
+  <title id="title">A letter, then its origin mark</title>
+  <desc id="description">The same letter M followed by U+E0100, a human mark, or U+E0101, an AI mark. The normally invisible marks are exposed here. Letters and marks travel together in the text.</desc>
+  <style>
+    :root { --ink: #1f2328; --human: #1a7f37; --ai: #bc4c00; }
+    @media (prefers-color-scheme: dark) {
+      :root { --ink: #e6edf3; --human: #3fb950; --ai: #db6d28; }
+    }
+    .letter { fill: var(--ink); font: 700 25px Georgia, 'Times New Roman', serif; }
+    .code { font: 8.5px ui-monospace, 'SFMono-Regular', Consolas, monospace; }
+    .label { font: 9px system-ui, sans-serif; }
+    .human { color: var(--human); }
+    .ai { color: var(--ai); }
+    .mark { fill: currentColor; }
+    .outline { fill: currentColor; fill-opacity: .07; stroke: currentColor; stroke-width: 1; stroke-dasharray: 2 2; }
+    .pair { fill: none; stroke: currentColor; stroke-width: 1; }
+  </style>
+  <text class="letter" x="1" y="25">M</text>
+  <g class="human">
+    <rect class="outline" x="25.5" y="2.5" width="53" height="26" rx="3"/>
+    <text class="mark code" x="52" y="13" text-anchor="middle">U+E0100</text>
+    <text class="mark label" x="52" y="24" text-anchor="middle">human</text>
+    <path class="pair" d="M2 29v3h76v-3"/>
+  </g>
+  <text class="letter" x="81" y="25">M</text>
+  <g class="ai">
+    <rect class="outline" x="105.5" y="2.5" width="53" height="26" rx="3"/>
+    <text class="mark code" x="132" y="13" text-anchor="middle">U+E0101</text>
+    <text class="mark label" x="132" y="24" text-anchor="middle">AI</text>
+    <path class="pair" d="M82 29v3h76v-3"/>
+  </g>
+</svg>
