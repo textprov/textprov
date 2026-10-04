@@ -145,13 +145,23 @@ RAW_BLOCKS = re.compile(
     r"<!--.*?-->|<(script|style|pre|code|textarea)\b.*?</\1\s*>",
     re.DOTALL | re.IGNORECASE,
 )
+# A CRLF is one line ending. Check escaped characters too, so an escaped
+# newline cannot bypass the blank-line limit.
+MATH_CHAR = r"(?!(?:\r\n|\r(?!\n)|\n)[^\S\r\n]*(?:\r\n|\r|\n))."
+MATH_CONTENT = rf"(?:\\{MATH_CHAR}|(?![\\$]){MATH_CHAR})+?"
 INLINE = [
     # code span
     re.compile(r"(?<!`)(`+)(?!`)(?:(?!\n\s*\n).)+?(?<!`)\1(?!`)", re.DOTALL),
-    # Dollar-delimited LaTeX, including multiline display math. Escaped dollars
-    # are content, not delimiters; require matching single or double dollars.
+    # Display math permits delimiter-adjacent whitespace. Neither form crosses
+    # a blank line; escaped dollars are content, not delimiters.
     re.compile(
-        r"(?<![\\$])(\${1,2})(?!\$)(?:\\.|[^\\$])+?\1(?!\$)",
+        r"(?<![\\$])\$\$(?!\$)" + MATH_CONTENT + r"\$\$(?!\$)",
+        re.DOTALL,
+    ),
+    # Pandoc tex_math_dollars: no space after the opening or before the closing
+    # dollar, and no digit after the closing dollar (currency stays prose).
+    re.compile(
+        r"(?<![\\$])\$(?![\s$])" + MATH_CONTENT + r"(?<!\s)\$(?![\d$])",
         re.DOTALL,
     ),
     # link or image destination, second label of a reference link, footnote

@@ -123,6 +123,60 @@ class TestMarkdown(unittest.TestCase):
             remark("", "$unfinished prose"), ai("$unfinished prose")
         )
 
+    def test_currency_and_invalid_math_delimiters_are_prose(self):
+        for source in (
+            "The total is $5 for coffee and $3 for tea.\n",
+            "$5, $3, and $12.50\n",
+            "before $ x$ after",
+            "before $x $ after",
+            "before $x$2 after",
+        ):
+            with self.subTest(source=source):
+                marked = remark("", source)
+                self.assertEqual(marked, ai(source))
+                self.assertEqual(textprov.strip_marks(marked), source)
+                self.assertIn(("ai", source.rstrip()), states(marked))
+
+    def test_math_does_not_cross_blank_lines(self):
+        for gap in ("\n\n", "\n \t\n", "\r\n\t\r\n", "\r\r"):
+            for delimiter in ("$", "$$"):
+                with self.subTest(gap=gap, delimiter=delimiter):
+                    source = (
+                        delimiter
+                        + "first"
+                        + gap
+                        + "middle"
+                        + gap
+                        + "last"
+                        + delimiter
+                    )
+                    marked = remark("", source)
+                    self.assertEqual(marked, ai(source))
+                    self.assertEqual(textprov.strip_marks(marked), source)
+                    self.assertEqual(states(marked), [("ai", source)])
+        for source in (
+            "$5 for coffee\n\nmore prose\n\n$12 for tea",
+            "$first\\\n\nmiddle\n\nlast$",
+            "$$first\\\n\nmiddle\n\nlast$$",
+        ):
+            with self.subTest(source=source):
+                self.assertEqual(remark("", source), ai(source))
+
+    def test_single_newline_and_numeric_math_are_protected(self):
+        for math in (
+            "$x +\ny$",
+            "$x +\r\ny$",
+            "$x +\ry$",
+            "$x\\\ny$",
+            "$5 + 3$",
+            "$$ x $$",
+        ):
+            with self.subTest(math=math):
+                self.assertEqual(
+                    remark("", "before " + math + " after"),
+                    ai("before ") + math + ai(" after"),
+                )
+
     def test_math_protection_preserves_existing_prose_states(self):
         human = textprov.mark("human prose", state="human")
         old = human + " " + ai("agent prose") + "\n"
@@ -545,6 +599,22 @@ class TestEdit(unittest.TestCase):
         self.assertEqual(out, "a\u0301" + AI)
         self.assertEqual(textprov.strip_marks(out), "a\u0301")
         self.assertEqual(states(out), [("ai", "a\u0301")])
+        self.assert_valid_selectors(out)
+
+    def test_edit_inside_currency_is_marked(self):
+        raw = "The total is $5 for coffee and $3 for tea."
+        out, _ = self.apply(raw, "coffee", "water")
+        self.assertEqual(
+            textprov.strip_marks(out), raw.replace("coffee", "water")
+        )
+        self.assertEqual(
+            states(out),
+            [
+                (None, "The total is $5 for "),
+                ("ai", "water"),
+                (None, " and $3 for tea."),
+            ],
+        )
         self.assert_valid_selectors(out)
 
     def test_replace_all_partial_graphemes(self):
