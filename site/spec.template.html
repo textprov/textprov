@@ -22,10 +22,6 @@
         <a href="./spec.html" aria-current="page">Specification</a>
         <a href="./#contribute">Contribute</a>
       </nav>
-      <button type="button" class="prov-toggle" role="switch" aria-checked="true" data-prov-toggle hidden>
-        <span class="prov-toggle-sample" aria-hidden="true">Aa</span>
-        Provenance
-      </button>
     </header>
 
     <div class="spec-layout">
@@ -44,7 +40,12 @@
       <main id="spec-main" class="spec-main">
         <header class="spec-header">
           <p class="eyebrow">Specification</p>
-          <h1>TextProv&nbsp;protocol</h1>
+          <div class="spec-title">
+            <h1>TextProv&nbsp;protocol</h1>
+            <button type="button" class="prov-toggle" role="switch" aria-checked="true" aria-label="Show provenance labels" title="Show provenance labels" data-prov-toggle hidden>
+              <span class="prov-toggle-knob" aria-hidden="true">℗</span>
+            </button>
+          </div>
           <p class="spec-header-meta">
             <strong>Status: Draft</strong>
             <span aria-hidden="true">·</span>
