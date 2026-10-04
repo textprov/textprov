@@ -46,6 +46,14 @@ They include genuine emoji tag sequences, copying a run without its opening tag,
 concatenating runs, missing terminators, and resets to the abstract `Voice0` state.
 No attribution semantics are inferred from the historical language-tagging use.
 
+Run-delimiter experiments include PUA brackets, interlinear annotations, musical
+pairs, deprecated toggles, and bidi scope controls. Samples preserve legitimate
+ruby, music, bidi controls, joiners, and combining marks. Tests cover nesting,
+unclosed scopes, paragraph boundaries, conversion to markup, and an interior
+copy with its opening context omitted. ZWJ and combining-mark comparisons record
+changes in shaping, normalization, segmentation, and underlying text. A transport
+result does not itself establish sanctioned Unicode semantics.
+
 ## Evidence status
 
 This branch adds no new transport measurements or additive PUA implementation.
