@@ -341,6 +341,31 @@ test("homepage presents the reader and links to the separate encoder", () => {
   );
 });
 
+test("homepage offers Unicode-safe clipboard commands and keeps the manual file links", () => {
+  assert.match(homepage, /<h3>Copy the file to your clipboard<\/h3>/);
+  const sampleUrl = "https://textprov.org/samples/marked-text.txt";
+  const commands = Array.from(
+    homepage.matchAll(/<pre><code>([^<]+)<\/code><\/pre>/g),
+    (match) => match[1],
+  );
+  assert.deepEqual(commands, [
+    `curl -fsSL ${sampleUrl} | LANG=en_US.UTF-8 pbcopy`,
+    `[System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -UseBasicParsing '${sampleUrl}').RawContentStream.ToArray()) | Set-Clipboard`,
+    `curl -fsSL ${sampleUrl} | wl-copy`,
+    `curl -fsSL ${sampleUrl} | xclip -selection clipboard`,
+  ]);
+  for (const system of [
+    "macOS (Terminal)",
+    "Windows (PowerShell)",
+    "Linux (Wayland)",
+    "Linux (X11)",
+  ]) {
+    assert.ok(homepage.includes(`<strong>${system}</strong>`));
+  }
+  assert.match(homepage, /href="\.\/samples\/marked-text\.txt" target="_blank"/);
+  assert.match(homepage, /href="\.\/samples\/marked-text\.txt" download/);
+});
+
 test("encoder provides side-by-side source and marked output", () => {
   const html = readFileSync(new URL("./encoder.html", import.meta.url), "utf8");
   assert.match(html, /class="encoder-grid"/);
