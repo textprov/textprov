@@ -42,5 +42,6 @@ sawtooth-for-ai and bar-for-unknown language from the font is reproduced.
 - iOS and mobile are covered on pages the author controls.
 - A DOM or HTML rewrite is required once; CSS alone cannot select code points.
 - Whitespace merging between equal states is a view default, not protocol.
-- Pages the author does not control are not covered. See 0009 and the
+- Pages the author does not control are not covered. See t󠄁h󠄁e󠄁
+  [e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 n󠄁o󠄁t󠄁e󠄁s󠄁](../HTML-RENDERING.md#editor-integrations) and the
   browser-extension note in 0006.

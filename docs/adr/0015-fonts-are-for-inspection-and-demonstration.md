@@ -38,8 +38,8 @@ text with it shows which clusters are marked.
      applications people use support TextProv. In that sense it is a stopgap.
 2. The expected way to read labels is an application's own interface: spans
    ([ADR 0001](0001-render-marks-as-html-spans.md)), editor decorations
-   ([ADR 0009](0009-editor-decoration-apis.md)), or whatever presentation
-   suits the tool. How and when an application shows a state is its decision,
+   (󠄁[r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁 g󠄁u󠄁i󠄁d󠄁e󠄁](../HTML-RENDERING.md#editor-integrations))󠄁,󠄁 or whatever
+   p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 suits the tool. How and when an application shows a state is its decision,
    and most readers will not look at marks continuously.
 3. The font's mark is judged as an inspection aid: visible and unambiguous
    when someone is looking for it. It does not need to be comfortable for
@@ -55,6 +55,6 @@ text with it shows which clusters are marked.
   ranks below the span and editor renderers.
 - The font remains a conforming renderer. Its encoding guidance does not
   change: publish selectors, keep PUA to controlled font workflows
-  ([ADR 0008](0008-do-not-publish-pua-to-the-web.md)).
+  (󠄁[S󠄁P󠄁E󠄁C󠄁.󠄁m󠄁d󠄁](../../SPEC.md#encodings))󠄁.󠄁
 - Documentation and the website present P9E fonts as a way to look at the
   encoding, not as how TextProv is meant to be experienced.

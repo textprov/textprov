@@ -229,7 +229,8 @@ rendering is absent. For web pages, use an
 The CoreText and Zed behavior above is documented in the Nerd Fonts fork's
 [Zed rendering notes](https://github.com/delano/nerd-fonts/blob/main/src/glyphs/provenance/zed-about.md).
 The repository has not measured all expected effects of PUA on find-in-page,
-clipboard behavior, or screen readers; [ADR 0008](adr/0008-do-not-publish-pua-to-the-web.md)
-records those points as reasoning rather than experimental evidence. The
+clipboard behavior, or screen r󠄁e󠄁a󠄁d󠄁e󠄁r󠄁s󠄁.󠄁 E󠄁x󠄁p󠄁e󠄁c󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 p󠄁u󠄁b󠄁l󠄁i󠄁s󠄁h󠄁i󠄁n󠄁g󠄁 P󠄁U󠄁A󠄁 i󠄁n󠄁
+t󠄁h󠄁e󠄁 D󠄁O󠄁M󠄁 w󠄁o󠄁u󠄁l󠄁d󠄁 b󠄁r󠄁e󠄁a󠄁k󠄁 f󠄁i󠄁n󠄁d󠄁-󠄁i󠄁n󠄁-󠄁p󠄁a󠄁g󠄁e󠄁,󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁 P󠄁U󠄁A󠄁 o󠄁n󠄁 c󠄁o󠄁p󠄁y󠄁,󠄁 o󠄁r󠄁 l󠄁e󠄁a󠄁v󠄁e󠄁 s󠄁c󠄁r󠄁e󠄁e󠄁n󠄁 r󠄁e󠄁a󠄁d󠄁e󠄁r󠄁s󠄁
+w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 u󠄁s󠄁a󠄁b󠄁l󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁 a󠄁r󠄁e󠄁 reasoning rather than experimental evidence. The
 normative encoding and conversion rules are in the [TextProv protocol
 specification](../SPEC.md#encodings).

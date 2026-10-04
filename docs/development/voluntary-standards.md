@@ -51,7 +51,7 @@ The same holds when the consumer is a program. A model harness could use `ai`
 marks to separate model output an operator pasted into a prompt from the text
 they wrote, and weight the two differently. The protocol supplies the shared
 structure for that; how the harness uses the labels is its own to work out
-([ADR 0014](../adr/0014-the-protocol-defines-structure-not-use.md)).
+(󠄁[S󠄁P󠄁E󠄁C󠄁.󠄁m󠄁d󠄁](../../SPEC.md#application-use-non-normative))󠄁.󠄁
 
 TextProv marks are closer to in-band annotations than to security credentials.
 Their rendering can resemble styling, but the marks carry machine-readable

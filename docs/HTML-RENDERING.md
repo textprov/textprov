@@ -151,7 +151,14 @@ base glyphs without removing the selectors from the stored text.
   an escaped HTML fragment.
 - [Ruby](../ruby/README.md): another producer, decoder, and HTML renderer.
 
+### Editor integrations
+
 Editor decoration APIs could use the same run detection without rewriting the
-buffer. [ADR 0009](adr/0009-editor-decoration-apis.md) proposes this path for
-editors with suitable extension APIs; it has not been prototyped, and a usable
-Zed decoration API has not been established.
+b󠄁u󠄁f󠄁f󠄁e󠄁r󠄁,󠄁 a󠄁s󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁d󠄁 i󠄁n󠄁 [S󠄁P󠄁E󠄁C󠄁.󠄁m󠄁d󠄁](../SPEC.md#markup).󠄁 A󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 e󠄁x󠄁t󠄁e󠄁n󠄁s󠄁i󠄁o󠄁n󠄁
+w󠄁o󠄁u󠄁l󠄁d󠄁 m󠄁a󠄁p󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁d󠄁 r󠄁u󠄁n󠄁s󠄁 t󠄁o󠄁 p󠄁a󠄁i󠄁n󠄁t󠄁-󠄁t󠄁i󠄁m󠄁e󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁s󠄁,󠄁 f󠄁o󠄁r󠄁 e󠄁x󠄁a󠄁m󠄁p󠄁l󠄁e󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 V󠄁S󠄁 C󠄁o󠄁d󠄁e󠄁
+`TextEditorDecorationType` o󠄁r󠄁 C󠄁o󠄁d󠄁e󠄁M󠄁i󠄁r󠄁r󠄁o󠄁r󠄁 d󠄁e󠄁c󠄁o󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁.󠄁 T󠄁h󠄁i󠄁s󠄁 c󠄁o󠄁u󠄁l󠄁d󠄁 d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁
+i󠄁n󠄁 C󠄁o󠄁r󠄁e󠄁T󠄁e󠄁x󠄁t󠄁 e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 r󠄁e󠄁l󠄁y󠄁i󠄁n󠄁g󠄁 o󠄁n󠄁 f󠄁o󠄁n󠄁t󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 s󠄁u󠄁b󠄁s󠄁t󠄁i󠄁t󠄁u󠄁t󠄁i󠄁o󠄁n󠄁.󠄁
+
+T󠄁h󠄁i󠄁s󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁t󠄁 b󠄁e󠄁e󠄁n󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁t󠄁y󠄁p󠄁e󠄁d󠄁.󠄁 A󠄁 u󠄁s󠄁a󠄁b󠄁l󠄁e󠄁 Z󠄁e󠄁d󠄁 d󠄁e󠄁c󠄁o󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 A󠄁P󠄁I󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁t󠄁
+b󠄁e󠄁e󠄁n󠄁 e󠄁s󠄁t󠄁a󠄁b󠄁l󠄁i󠄁s󠄁h󠄁e󠄁d󠄁.󠄁 C󠄁h󠄁o󠄁o󠄁s󠄁i󠄁n󠄁g󠄁 a󠄁 t󠄁a󠄁r󠄁g󠄁e󠄁t󠄁 e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁,󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁i󠄁n󠄁g󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁,󠄁 a󠄁n󠄁d󠄁
+c󠄁h󠄁e󠄁c󠄁k󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁r󠄁 d󠄁u󠄁r󠄁i󠄁n󠄁g󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 d󠄁e󠄁v󠄁e󠄁l󠄁o󠄁p󠄁m󠄁e󠄁n󠄁t󠄁 w󠄁o󠄁r󠄁k󠄁.󠄁
