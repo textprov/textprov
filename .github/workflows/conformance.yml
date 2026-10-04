@@ -66,6 +66,14 @@ jobs:
         run: python site/check-utility-fonts.py --output "$RUNNER_TEMP/textprov-utility-fonts" --strict
       - name: Validate shipped utility fonts and notices
         run: python site/check-utility-fonts.py --strict
-      - name: Test website examples
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - name: Install site test dependencies
+        run: npm ci
+        working-directory: site
+      - name: Test website examples and spec rendering
         run: npm test
         working-directory: site

@@ -7,10 +7,10 @@
  *# Registry version: 0.1 (see ../mapping.json)
  *#
  *# Pairs with textprov.js. Not part of the decorator specification (SPEC.md
- *# "Not specified: Visual style") but reproduces the P+ font's own marks so a
- *# page looks the same with or without the font installed:
+ *# "Not specified: Visual style"). It provides a CSS presentation inspired by
+ *# the TextProv Utility P9E fonts; applications may choose other styling:
  *#
- *#   ai      sawtooth/wavy underline  -- matches the P+ glyph's AI mark.
+ *#   ai      sawtooth/wavy underline  -- resembles the P9E glyph's AI mark.
 
  *#   human   no underline, faint tint -- the "nothing to flag" state; a tint
  *#                                       keeps it discoverable via data-prov

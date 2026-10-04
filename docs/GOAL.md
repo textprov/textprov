@@ -14,9 +14,12 @@ decoder, and renderer roles.
 A provenance font can display marks only when the reader has that font and a
 compatible text shaper. Use a decorator when you control the page's HTML or
 DOM and want to display labels without that font dependency. Supply CSS to make
-the states visible. The client-side implementation also requires JavaScript
-and `Intl.Segmenter`; server-rendered spans do not require client-side
-JavaScript. See [HTML rendering](HTML-RENDERING.md) for integration boundaries
+the states visible. The client-side implementation also requires J󠄁a󠄁v󠄁a󠄁S󠄁c󠄁r󠄁i󠄁p󠄁t󠄁,󠄁
+b󠄁u󠄁t󠄁 n󠄁o󠄁t󠄁 `Intl.Segmenter`.󠄁 J󠄁a󠄁v󠄁a󠄁S󠄁c󠄁r󠄁i󠄁p󠄁t󠄁,󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁,󠄁 a󠄁n󠄁d󠄁 R󠄁u󠄁b󠄁y󠄁 u󠄁s󠄁e󠄁 v󠄁e󠄁n󠄁d󠄁o󠄁r󠄁e󠄁d󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁
+1󠄁7󠄁.󠄁0󠄁.󠄁0󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 U󠄁A󠄁X󠄁 #󠄁2󠄁9󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁,󠄁 s󠄁o󠄁 a󠄁l󠄁l󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁
+p󠄁o󠄁r󠄁t󠄁s󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁c󠄁a󠄁l󠄁l󠄁y󠄁 r󠄁a󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁n󠄁 d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁i󠄁n󠄁g󠄁 o󠄁n󠄁 r󠄁u󠄁n󠄁t󠄁i󠄁m󠄁e󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁s󠄁.󠄁
+S󠄁e󠄁e󠄁 [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁7󠄁](adr/0017-vendor-grapheme-segmentation.md).󠄁 S󠄁e󠄁r󠄁v󠄁e󠄁r󠄁-󠄁r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁e󠄁d󠄁 s󠄁p󠄁a󠄁n󠄁s󠄁
+d󠄁o󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁 c󠄁l󠄁i󠄁e󠄁n󠄁t󠄁-󠄁s󠄁i󠄁d󠄁e󠄁 JavaScript. See [HTML rendering](HTML-RENDERING.md) for integration boundaries
 and the original prototype measurements.
 
 ## Non-goals

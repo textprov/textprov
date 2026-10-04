@@ -179,7 +179,7 @@ above. Website development instructions are in [`site/`](site/README.md).
 
 ## Status
 
-The protocol is **Draft 0.2**, last updated 2026-10-02. Specification behavior may
+The protocol is **Draft 0.2**, last updated 2026-10-03. Specification behavior may
 change incompatibly; implementers should pin an immutable revision. Published
 registry allocations remain reserved and are never reassigned or removed. The
 JavaScript package is published on [npm](https://www.npmjs.com/package/textprov),

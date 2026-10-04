@@ -5,7 +5,7 @@
 # TextProv protocol specification
 
 > **Status: Draft — experimental.** Specification version: 0.2. Registry version: 0.1.
-> Updated: 2026-10-02.
+> Updated: 2026-10-03.
 > Specification behavior may change incompatibly before Stable. Implementers should
 > pin an immutable revision. Published registry allocations remain reserved and
 > will not be reassigned or removed. Stable specification compatibility guarantees
@@ -120,11 +120,13 @@ l󠄁a󠄁t󠄁e󠄁r󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 v󠄁e󠄁r�
 
 Unmarked text is deliberately distinct from `human`: there is no code point for
 "assumed human." A decoder reports no state on unmarked text and the consumer
-decides what that means ([ADR 0010](docs/adr/0010-contributor-identity-is-out-of-band.md)).
+decides what that means. This rule is defined here independently of the proposed
+generational extension.
 
 The state vocabulary is deliberately small and says nothing about *who*. Author
-identity, model names, and timestamps are out-of-band data; see
-[ADR 0010](docs/adr/0010-contributor-identity-is-out-of-band.md).
+identity, model names, and timestamps are out-of-band data. For design history,
+see [ADR 0010](docs/adr/0010-contributor-identity-is-out-of-band.md), whose
+identity decision is unchanged but whose generational extension is proposed.
 
 ## Application use (non-normative)
 
@@ -178,8 +180,10 @@ PUA_AI(cp) = 0x100000 + cp
 
 A font that lacks the glyph shows a missing-glyph box, and a decoder-less
 consumer cannot read the text at all. PUA is therefore a font-workflow
-encoding, not a web or interchange one: do not publish PUA-encoded text
-([ADR 0008](docs/adr/0008-do-not-publish-pua-to-the-web.md)). A decoder decodes
+encoding, not a web or interchange one: do not publish PUA-encoded text.
+This specification defines that restriction; the related
+[ADR 0008](docs/adr/0008-do-not-publish-pua-to-the-web.md) remains proposed and
+its expected browser-accessibility breakages have not been measured. A decoder decodes
 PUA input to base plus selector
 ([ADR 0003](docs/adr/0003-decode-pua-to-base-plus-selector.md)).
 
@@ -221,10 +225,13 @@ whitespace, or with no preceding cluster, is not a mark.
 
 Registry version 0.1 covers `U+0021`–`U+00FF`, excluding characters in the
 Unicode general categories `Zs` (space separators), `Cc` (control characters),
-and `Cf` (format characters): 188 entries, every one state `ai`. The formula reserves
-the rest of the range; a later version must not give those code points a
-different meaning. This reservation applies during Draft and Candidate as well
-as Stable.
+and `Cf` (format characters): 188 entries, every one state `ai`. The formula
+reserves the entire Supplementary Private Use Area-B (`U+100000`–`U+10FFFD`)
+for `ai` base-character counterparts, not just the gaps within the current
+Latin-1 allocation. A later registry version must not assign those code points
+a different meaning. Reserved but unallocated code points are not TextProv
+marks; consumers decode only entries in the `pua` table. This reservation
+applies during Draft and Candidate as well as Stable.
 
 Although the PUA formula is fixed, a consumer must read the `pua` table rather
 than compute it. A future version may restrict an entry or attach metadata.
@@ -246,7 +253,7 @@ These rules apply from the first publication of an allocation, including
 An implementation may embed the tables the registry reduces to rather than
 reading the file at runtime; a browser script cannot load JSON synchronously.
 An implementation that embeds must check its copy against `mapping.json` in its
-test suite, so drift fails the build rather than shipping. Both reference
+test suite, so drift fails the build rather than shipping. All three reference
 implementations here do that ([ADR 0006](docs/adr/0006-decorator-packages-and-repository.md)).
 
 ## Producer
@@ -324,8 +331,11 @@ the four properties above hold for text of its own choosing — the reference
 suite tests them as properties, not only as recorded cases, because the cases
 cannot cover every input.
 
-Producer conformance is defined at specification version 0.2. It documents what the
-reference producer already did; no behaviour changed when it was written down.
+Producer conformance was first defined at specification version 0.1
+([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)). It documented
+what the reference producer already did; no behaviour changed when it was
+written down. The current specification version 0.2 includes later changes
+recorded in `CHANGELOG.md`.
 
 ## Decoder
 

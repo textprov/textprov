@@ -4,7 +4,7 @@ Client-side decorator for the [TextProv](https://github.com/textprov/textprov) p
 
 The Python package of the same name (`pip install textprov`) is the full SDK — producer, decoder, and CLI. This npm package ships the browser decoder only.
 
-- ~6 KB, no dependencies, browser-first (IIFE + `window.textprov`), also usable from Node (CJS) and via ESM default import.
+- ~37 KB (unminified, including vendored Unicode segmentation tables), no dependencies, browser-first (IIFE + `window.textprov`), also usable from Node (CJS) and via ESM default import.
 - Implements draft specification version 0.2 and registry version 0.1 (see [SPEC.md](https://github.com/textprov/textprov/blob/main/SPEC.md) and [mapping.json](https://github.com/textprov/textprov/blob/main/mapping.json)).
 - Optional companion stylesheet (`textprov.css`) uses a wavy underline for `ai` and a faint tint for `human`.
 
@@ -35,9 +35,10 @@ const textprov = require("textprov");
 
 textprov.runs("Hello\u{E0101} world\u{E0100}");
 // [
-//   { state: "ai",    text: "Hello\u{E0101}" },
-//   { state: null,    text: " " },
-//   { state: "human", text: "world\u{E0100}" }
+//   { state: null,    text: "Hell" },
+//   { state: "ai",    text: "o\u{E0101}" },
+//   { state: null,    text: " worl" },
+//   { state: "human", text: "d\u{E0100}" }
 // ]
 ```
 
@@ -70,8 +71,13 @@ textprov.render(document.body, { strip: true, prefix: "prov" });
 ## Output shape
 
 ```html
-Hello<span class="prov prov-ai" data-prov="ai">\u{E0101}</span>
+Hell<span class="prov prov-ai" data-prov="ai">o&#xE0101;</span>
 ```
+
+For input `Hello\u{E0101}`, only the final `o` is marked. The HTML character
+reference `&#xE0101;` above represents the retained selector; `render()` keeps
+the actual code point in the text node. To mark a whole word, a producer adds a
+selector after each eligible grapheme cluster.
 
 With `strip: true` the selector is removed from the span text; the class and `data-prov` remain.
 
