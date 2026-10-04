@@ -5,8 +5,15 @@ Package releases have their own version numbers.
 
 ## Draft 0.2 — 2026-10-02
 
-Specification version `0.2`; registry version `0.1`.
+Specification version `0.2`; registry version `0.2`.󠄁
 
+- R󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 0󠄁.󠄁2󠄁 m󠄁a󠄁k󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 `mixed` (󠄁`U+E0102`)󠄁,󠄁 `edited` (󠄁`U+E0103`)󠄁,󠄁 a󠄁n󠄁d󠄁
+  `unknown` (󠄁`U+E0104`)󠄁 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 o󠄁b󠄁s󠄁o󠄁l󠄁e󠄁t󠄁e󠄁;󠄁 o󠄁n󠄁l󠄁y󠄁 `human` a󠄁n󠄁d󠄁 `ai` r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁
+  s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁.󠄁 A󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 n󠄁o󠄁 l󠄁o󠄁n󠄁g󠄁e󠄁r󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 `mixed`,󠄁 a󠄁n󠄁d󠄁 a󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 m󠄁u󠄁s󠄁t󠄁 n󠄁o󠄁t󠄁 e󠄁m󠄁i󠄁t󠄁
+  a󠄁n󠄁y󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁.󠄁 T󠄁h󠄁e󠄁i󠄁r󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁 s󠄁t󠄁a󠄁y󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 a󠄁n󠄁d󠄁 a󠄁r󠄁e󠄁 n󠄁e󠄁v󠄁e󠄁r󠄁 r󠄁e󠄁a󠄁s󠄁s󠄁i󠄁g󠄁n󠄁e󠄁d󠄁.󠄁
+  T󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 r󠄁e󠄁l󠄁e󠄁a󠄁s󠄁e󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁m󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁 n󠄁o󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁
+  t󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁.󠄁 I󠄁n󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 g󠄁r󠄁i󠄁d󠄁,󠄁 c󠄁o󠄁l󠄁u󠄁m󠄁n󠄁s󠄁 2󠄁–󠄁4󠄁 a󠄁r󠄁e󠄁 n󠄁e󠄁v󠄁e󠄁r󠄁
+  a󠄁s󠄁s󠄁i󠄁g󠄁n󠄁e󠄁d󠄁.󠄁
 - T󠄁h󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁 i󠄁n󠄁t󠄁o󠄁 e󠄁x󠄁t󠄁e󠄁n󠄁d󠄁e󠄁d󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁s󠄁
   f󠄁r󠄁o󠄁m󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁 v󠄁e󠄁n󠄁d󠄁o󠄁r󠄁e󠄁d󠄁 a󠄁t󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 1󠄁7󠄁.󠄁0󠄁.󠄁0󠄁 a󠄁n󠄁d󠄁 p󠄁a󠄁s󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁'󠄁s󠄁
   `GraphemeBreakTest.txt`;󠄁 p󠄁r󠄁e󠄁v󠄁i󠄁o󠄁u󠄁s󠄁l󠄁y󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 R󠄁u󠄁b󠄁y󠄁 a󠄁p󠄁p󠄁r󠄁o󠄁x󠄁i󠄁m󠄁a󠄁t󠄁e󠄁d󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁
