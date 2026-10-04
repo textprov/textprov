@@ -196,7 +196,24 @@ text and by the Nerd Fonts tooling workflow that made the approach practical.
 
 ## License
 
-Project code is MIT licensed. See [LICENSE](LICENSE). Bundled utility fonts
-and their derivatives are licensed under the SIL Open Font License 1.1; each
-font bundle includes its upstream copyright and license. See
+C󠄁o󠄁p󠄁y󠄁r󠄁i󠄁g󠄁h󠄁t󠄁 2󠄁0󠄁2󠄁6󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁o󠄁r󠄁s󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 p󠄁a󠄁t󠄁h󠄁 i󠄁s󠄁 c󠄁o󠄁v󠄁e󠄁r󠄁e󠄁d󠄁 b󠄁y󠄁 o󠄁n󠄁e󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁
+l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁s󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 (󠄁[A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁6󠄁](docs/adr/0016-license-prose-and-code-separately.md))󠄁:󠄁
+
+| M󠄁a󠄁t󠄁e󠄁r󠄁i󠄁a󠄁l󠄁 | L󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 |
+| --- | --- |
+| S󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁:󠄁 `SPEC.md`,󠄁 `CHANGELOG.md`,󠄁 t󠄁h󠄁i󠄁s󠄁 R󠄁E󠄁A󠄁D󠄁M󠄁E󠄁,󠄁 `genesis.md`,󠄁 `docs/`,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 w󠄁e󠄁b󠄁s󠄁i󠄁t󠄁e󠄁'󠄁s󠄁 p󠄁a󠄁g󠄁e󠄁s󠄁 (󠄁`site/*.html`,󠄁 `site/README.md`,󠄁 `site/public/samples/`)󠄁 | [C󠄁C󠄁 B󠄁Y󠄁 4󠄁.󠄁0󠄁](LICENSE-CC-BY-4.0) |
+| T󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 (󠄁`mapping.json`)󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁f󠄁o󠄁r󠄁m󠄁a󠄁n󠄁c󠄁e󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁 (󠄁`fixtures.json`)󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁'󠄁s󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁s󠄁 i󠄁n󠄁 e󠄁a󠄁c󠄁h󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁 e󠄁m󠄁b󠄁e󠄁d󠄁d󠄁e󠄁d󠄁 i󠄁n󠄁 `js/textprov.js` | P󠄁u󠄁b󠄁l󠄁i󠄁c󠄁 d󠄁o󠄁m󠄁a󠄁i󠄁n󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 [C󠄁C󠄁0󠄁 1󠄁.󠄁0󠄁](LICENSE-CC0-1.0) |
+| U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 d󠄁a󠄁t󠄁a󠄁:󠄁 `ucd/GraphemeBreakTest.txt` a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 C󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁 D󠄁a󠄁t󠄁a󠄁b󠄁a󠄁s󠄁e󠄁 (󠄁`python/textprov/_ucd.py`,󠄁 `ruby/lib/textprov/ucd.rb`,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 b󠄁l󠄁o󠄁c󠄁k󠄁 i󠄁n󠄁 `js/textprov.js`)󠄁 | [U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 L󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 v󠄁3󠄁](LICENSE-Unicode-3.0) |
+| E󠄁v󠄁e󠄁r󠄁y󠄁t󠄁h󠄁i󠄁n󠄁g󠄁 e󠄁l󠄁s󠄁e󠄁:󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 i󠄁n󠄁 `js/`,󠄁 `python/`,󠄁 a󠄁n󠄁d󠄁 `ruby/`,󠄁 t󠄁e󠄁s󠄁t󠄁s󠄁,󠄁 t󠄁o󠄁o󠄁l󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 s󠄁i󠄁t󠄁e󠄁'󠄁s󠄁 s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁s󠄁 a󠄁n󠄁d󠄁 s󠄁t󠄁y󠄁l󠄁e󠄁s󠄁h󠄁e󠄁e󠄁t󠄁s󠄁 | [A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁 2󠄁.󠄁0󠄁](LICENSE) |
+| B󠄁u󠄁n󠄁d󠄁l󠄁e󠄁d󠄁 f󠄁o󠄁n󠄁t󠄁s󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 d󠄁e󠄁r󠄁i󠄁v󠄁a󠄁t󠄁i󠄁v󠄁e󠄁s󠄁 i󠄁n󠄁 `site/public/fonts/` | S󠄁I󠄁L󠄁 O󠄁p󠄁e󠄁n󠄁 F󠄁o󠄁n󠄁t󠄁 L󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 1󠄁.󠄁1󠄁;󠄁 s󠄁e󠄁e󠄁 [`site/public/fonts/README.txt`](site/public/fonts/README.txt) |
+
+C󠄁o󠄁d󠄁e󠄁 s󠄁a󠄁m󠄁p󠄁l󠄁e󠄁s󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 C󠄁C󠄁 B󠄁Y󠄁 4󠄁.󠄁0󠄁 m󠄁a󠄁t󠄁e󠄁r󠄁i󠄁a󠄁l󠄁 a󠄁r󠄁e󠄁 a󠄁l󠄁s󠄁o󠄁 a󠄁v󠄁a󠄁i󠄁l󠄁a󠄁b󠄁l󠄁e󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁 2󠄁.󠄁0󠄁.󠄁
+
+E󠄁a󠄁c󠄁h󠄁 p󠄁u󠄁b󠄁l󠄁i󠄁s󠄁h󠄁e󠄁d󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 (󠄁P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁,󠄁 n󠄁p󠄁m󠄁,󠄁 a󠄁n󠄁d󠄁 R󠄁u󠄁b󠄁y󠄁)󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 c󠄁o󠄁d󠄁e󠄁,󠄁 a󠄁 c󠄁o󠄁p󠄁y󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁
+r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁,󠄁 a󠄁n󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁,󠄁 s󠄁o󠄁 i󠄁t󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁e󠄁s󠄁
+`Apache-2.0 AND CC0-1.0 AND Unicode-3.0` a󠄁n󠄁d󠄁 s󠄁h󠄁i󠄁p󠄁s󠄁 a󠄁l󠄁l󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁s󠄁.󠄁
+A󠄁l󠄁l󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 a󠄁p󠄁p󠄁l󠄁y󠄁.󠄁 P󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 r󠄁e󠄁l󠄁e󠄁a󠄁s󠄁e󠄁s󠄁 p󠄁u󠄁b󠄁l󠄁i󠄁s󠄁h󠄁e󠄁d󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁2󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁
+M󠄁I󠄁T󠄁 L󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁.󠄁
+
+E󠄁a󠄁c󠄁h󠄁 f󠄁o󠄁n󠄁t󠄁 b󠄁u󠄁n󠄁d󠄁l󠄁e󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁e󠄁s󠄁 i󠄁t󠄁s󠄁 u󠄁p󠄁s󠄁t󠄁r󠄁e󠄁a󠄁m󠄁 c󠄁o󠄁p󠄁y󠄁r󠄁i󠄁g󠄁h󠄁t󠄁 a󠄁n󠄁d󠄁 l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁;󠄁 s󠄁e󠄁e󠄁
 [utility font licensing](docs/FONT-UTILITIES.md#licensing-and-attribution).

@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
                      "Encodes and decodes producer-declared origin labels in Unicode text; " \
                      "does not detect or verify origin."
   spec.authors     = ["TextProv contributors"]
-  spec.license     = "MIT"
+  spec.licenses    = ["Apache-2.0", "CC0-1.0", "Unicode-3.0"]
   spec.homepage    = "https://github.com/textprov/textprov"
 
   spec.metadata = {
@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.2"
 
   spec.files = Dir.chdir(__dir__) do
-    Dir["lib/**/*", "exe/*", "LICENSE", "README.md"]
+    Dir["lib/**/*", "exe/*", "LICENSE*", "README.md"]
   end
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |file| File.basename(file) }

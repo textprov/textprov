@@ -25,19 +25,23 @@ may have accepted one artifact even if the command reported a failure.
 
 ## License files
 
-Each package directory contains its own `LICENSE` because package build tools
-normally include files from the package directory, not its parent:
+Each package s󠄁h󠄁i󠄁p󠄁s󠄁 c󠄁o󠄁d󠄁e󠄁,󠄁 a󠄁 c󠄁o󠄁p󠄁y󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 f󠄁r󠄁o󠄁m󠄁
+U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 d󠄁a󠄁t󠄁a󠄁,󠄁 s󠄁o󠄁 i󠄁t󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁e󠄁s󠄁 `Apache-2.0 AND CC0-1.0 AND Unicode-3.0` a󠄁n󠄁d󠄁
+c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 a󠄁l󠄁l󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁s󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁o󠄁r󠄁y󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁s󠄁
+b󠄁e󠄁c󠄁a󠄁u󠄁s󠄁e󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 b󠄁u󠄁i󠄁l󠄁d󠄁 t󠄁o󠄁o󠄁l󠄁s󠄁 n󠄁o󠄁r󠄁m󠄁a󠄁l󠄁l󠄁y󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁o󠄁r󠄁y󠄁,󠄁
+not its parent:
 
 ```text
-LICENSE          canonical repository license
-python/LICENSE   included in Python distributions
-js/LICENSE       included in npm packages
-ruby/LICENSE     included in the Ruby gem
+LICENSE               Apache License 2.0, the code
+LICENSE-CC0-1.0       CC0 1.0, the registry and fixtures
+LICENSE-Unicode-3.0   Unicode License v3, the generated Unicode tables
 ```
 
-Keep every copy identical to the root file. The `license-drift` job in
-`.github/workflows/conformance.yml` currently verifies the Python and
-JavaScript copies. Check the Ruby copy manually until CI covers it as well.
+`python/`,󠄁 `js/`,󠄁 a󠄁n󠄁d󠄁 `ruby/` e󠄁a󠄁c󠄁h󠄁 h󠄁o󠄁l󠄁d󠄁 a󠄁 c󠄁o󠄁p󠄁y󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁s󠄁e󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁.󠄁 K󠄁e󠄁e󠄁p󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁
+c󠄁o󠄁p󠄁y󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁c󠄁a󠄁l󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 r󠄁o󠄁o󠄁t󠄁 f󠄁i󠄁l󠄁e󠄁.󠄁 T󠄁h󠄁e󠄁 `license-drift` j󠄁o󠄁b󠄁 i󠄁n󠄁
+`.github/workflows/conformance.yml` v󠄁e󠄁r󠄁i󠄁f󠄁i󠄁e󠄁s󠄁 a󠄁l󠄁l󠄁 n󠄁i󠄁n󠄁e󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁s󠄁.󠄁 R󠄁e󠄁l󠄁e󠄁a󠄁s󠄁e󠄁s󠄁
+p󠄁u󠄁b󠄁l󠄁i󠄁s󠄁h󠄁e󠄁d󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 2󠄁0󠄁2󠄁6󠄁-󠄁1󠄁0󠄁-󠄁0󠄁2󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 M󠄁I󠄁T󠄁 L󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁;󠄁 s󠄁e󠄁e󠄁
+[A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁6󠄁](../adr/0016-license-prose-and-code-separately.md).󠄁
 Use copies rather than symlinks because symlinks can cause problems in Windows
 checkouts and package archives.
 
@@ -85,8 +89,8 @@ python3 -m zipfile -l dist/*.whl
 tar -tzf dist/*.tar.gz
 ```
 
-Confirm that the archives contain `README.md`, `LICENSE`, the `textprov`
-package, and `textprov/mapping.json`.
+Confirm that the archives contain `README.md`, t󠄁h󠄁e󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁,󠄁 t󠄁h󠄁e󠄁
+`textprov` package, and `textprov/mapping.json`.
 
 ### Test on TestPyPI
 
@@ -170,8 +174,8 @@ npm pack --pack-destination /tmp/textprov-npm
 ```
 
 Inspect the file list printed by `npm publish --dry-run` and `npm pack`. The
-package should contain `README.md`, `LICENSE`, `package.json`, `textprov.js`, and
-`textprov.css`. `prepublishOnly` runs `npm test` again during publication.
+package should contain `README.md`, t󠄁h󠄁e󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁,󠄁 `package.json`,󠄁
+`textprov.js`,󠄁 a󠄁n󠄁d󠄁 `textprov.css`. `prepublishOnly` runs `npm test` again during publication.
 
 Test the tarball in a clean temporary project. Replace `X.Y.Z` with the version
 in `package.json`:
@@ -266,8 +270,8 @@ gem unpack textprov-X.Y.Z.gem --target /tmp/textprov-gem
 find /tmp/textprov-gem/textprov-X.Y.Z -type f | sort
 ```
 
-Confirm that the gem contains `README.md`, `LICENSE`, `exe/textprov`, and the
-files under `lib/`. Install and test the artifact itself:
+Confirm that the gem contains `README.md`, t󠄁h󠄁e󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁,󠄁
+`exe/textprov`,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 files under `lib/`. Install and test the artifact itself:
 
 ```sh
 gem install --local textprov-X.Y.Z.gem
