@@ -9,6 +9,19 @@ const specPath = resolve(repoRoot, "SPEC.md");
 const templatePath = resolve(here, "spec.template.html");
 const outPath = resolve(here, "spec.html");
 
+// The status block at the top of SPEC.md is the only source for the versions
+// and date in the page chrome. Its prose carries provenance marks, so the
+// variation selectors are removed before matching.
+export function specMeta(source) {
+  const plain = source.replace(/[\u{FE00}-\u{FE0F}\u{E0100}-\u{E01EF}]/gu, "");
+  const find = (pattern) => plain.match(pattern)?.[1];
+  return {
+    SPEC_VERSION: find(/Specification version: (\d+(?:\.\d+)+)/),
+    REGISTRY_VERSION: find(/Registry version: (\d+(?:\.\d+)+)/),
+    UPDATED: find(/Updated: (\d{4}-\d{2}-\d{2})/),
+  };
+}
+
 export function renderSpec(source, template) {
   // Strip the leading "# SPEC.md" marker, the following horizontal rule, and the
   // "# TextProv protocol specification" heading — the page chrome supplies the
@@ -94,7 +107,13 @@ export function renderSpec(source, template) {
 
   const tocHtml = renderToc(toc);
 
-  return template.replace("<!-- TOC -->", tocHtml).replace("<!-- SPEC -->", rendered);
+  const meta = specMeta(source);
+  const chrome = template.replace(/<!-- (SPEC_VERSION|REGISTRY_VERSION|UPDATED) -->/g, (_, key) => {
+    if (!meta[key]) throw new Error(`SPEC.md status block has no ${key}`);
+    return meta[key];
+  });
+
+  return chrome.replace("<!-- TOC -->", tocHtml).replace("<!-- SPEC -->", rendered);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { renderSpec } from "./build-spec.js";
+import { renderSpec, specMeta } from "./build-spec.js";
 
 const template = "<nav><!-- TOC --></nav><main><!-- SPEC --></main>";
 const repoDocs = "https://github.com/textprov/textprov/blob/main/docs/";
@@ -108,4 +108,25 @@ test("the spec template decorates only the specification body", () => {
   // Without JavaScript the toggle and legend stay hidden; the marks remain in the text.
   assert.match(shipped, /<button [^>]*data-prov-toggle hidden>/);
   assert.match(shipped, /<div class="prov-legend" id="prov-legend" hidden>/);
+});
+
+test("page chrome takes its versions and date from the marked SPEC.md status block", () => {
+  const ai = (text) => Array.from(text, (c) => (c === " " ? c : c + "\u{E0101}")).join("");
+  const source = [
+    `> **${ai("Status: Draft")}** ${ai("Specification version: 0.3. Registry version: 0.2.")}`,
+    `> ${ai("Updated: 2026-10-03.")}`,
+  ].join("\n");
+  assert.deepEqual(specMeta(source), {
+    SPEC_VERSION: "0.3",
+    REGISTRY_VERSION: "0.2",
+    UPDATED: "2026-10-03",
+  });
+
+  const chrome = "<p><!-- SPEC_VERSION --> <!-- REGISTRY_VERSION --> <!-- UPDATED --></p><!-- SPEC -->";
+  assert.ok(renderSpec(source, chrome).startsWith("<p>0.3 0.2 2026-10-03</p>"));
+  assert.throws(() => renderSpec("## States", chrome), /no SPEC_VERSION/);
+
+  // The shipped template states no version or date of its own.
+  const shipped = readFileSync(new URL("./spec.template.html", import.meta.url), "utf8");
+  assert.doesNotMatch(shipped, /version(?:&nbsp;| )\d|\d{4}-\d{2}-\d{2}/);
 });
