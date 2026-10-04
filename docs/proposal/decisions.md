@@ -8,7 +8,7 @@ records rationale, evidence, and affected documents.
 | D01 | Minimum plain-text copying guarantee | Named workflows; selection assumptions; reference, distinction, and description preservation | Open |
 | D02 | Annotation unit | Grapheme clusters versus other units; Unicode version; whitespace, controls, line breaks | Open |
 | D03 | Source and role semantics | Contributor versus quoted speaker or persona; anonymous sources; joint contributions and multiple references | Open |
-| D04 | Encoding direction | VS baseline compared with additive PUA, annotations, and standardization options | Open |
+| D04 | Encoding direction | VS baseline compared with additive PUA, annotations, tag payloads, historical language-tagging patterns, and standardization options | Open |
 | D05 | Recognition and collisions | Profile context versus automatic recognition; unrelated PUA and genuine variation sequences | Open |
 | D06 | Escaping and versioning | Literal round trips, unknown versions, copying without a document header | Open |
 | D07 | Editing semantics | Insertion, deletion, selection, duplicate and orphan markers, state propagation | Open |
@@ -20,6 +20,7 @@ records rationale, evidence, and affected documents.
 | D13 | Voice-reference scope | Scope of nonzero references; independent documents using `Voice1`; merge and paste behavior | Open |
 | D14 | Source context portability | Dictionaries and descriptions; partial copying; unresolved references; privacy | Open |
 | D15 | Optional metadata | Human/AI classification, source descriptions, identity verification; carriage and relationships to references | Open |
+| D16 | Tag-based attribution | Suffix payload versus stateful runs; grammar, resets, emoji preservation, standards basis, and interior-copy behavior | Open |
 
 ## Established semantic decision
 

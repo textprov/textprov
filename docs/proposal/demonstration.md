@@ -41,6 +41,11 @@ merging passages, copying without source dictionaries, anonymous sources, and
 multiple sources of the same human/AI category. Results distinguish reference
 survival, preservation of source distinctions, and access to source descriptions.
 
+Tag-based experiments compare payload suffixes with stateful attribution runs.
+They include genuine emoji tag sequences, copying a run without its opening tag,
+concatenating runs, missing terminators, and resets to the abstract `Voice0` state.
+No attribution semantics are inferred from the historical language-tagging use.
+
 ## Evidence status
 
 This branch adds no new transport measurements or additive PUA implementation.

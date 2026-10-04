@@ -41,7 +41,7 @@ and interoperability remains a question for evaluation.
 | --- | --- |
 | [Model](docs/proposal/model.md) | Concept, semantics, and abstract representation |
 | [Requirements](docs/proposal/requirements.md) | Desired outcomes and evaluation criteria |
-| [Encoding candidates](docs/proposal/encodings.md) | VS, additive PUA, annotations, and new-character proposals |
+| [Encoding candidates](docs/proposal/encodings.md) | VS, additive PUA, annotations, tags, and new-character proposals |
 | [Open decisions](docs/proposal/decisions.md) | Choices, evidence needed, and decision status |
 | [Unicode proposal direction](docs/proposal/unicode.md) | Possible standardization request, separate from private experiments |
 | [Demonstration and evaluation](docs/proposal/demonstration.md) | Existing implementation, limitations, and measurement plan |
