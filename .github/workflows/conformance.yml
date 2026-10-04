@@ -12,9 +12,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: LICENSE copies match the root
         run: |
-          diff -q LICENSE python/LICENSE
-          diff -q LICENSE js/LICENSE
-          diff -q LICENSE ruby/LICENSE
+          for pkg in python js ruby; do
+            for file in LICENSE LICENSE-CC0-1.0 LICENSE-Unicode-3.0; do
+              diff -q "$file" "$pkg/$file"
+            done
+          done
 
   javascript:
     runs-on: ubuntu-latest

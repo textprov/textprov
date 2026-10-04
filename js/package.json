@@ -9,7 +9,7 @@
     "variation-selector",
     "textprov"
   ],
-  "license": "Apache-2.0",
+  "license": "(Apache-2.0 AND CC0-1.0 AND Unicode-3.0)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/textprov/textprov.git",
@@ -25,6 +25,8 @@
     "./textprov.css": "./textprov.css"
   },
   "files": [
+    "LICENSE-CC0-1.0",
+    "LICENSE-Unicode-3.0",
     "README.md",
     "textprov.js",
     "textprov.css"

@@ -97,4 +97,9 @@ With `strip: true` the selector is removed from the span text; the class and `da
 
 ## License
 
-A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁-󠄁2󠄁.󠄁0󠄁
+T󠄁h󠄁e󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 i󠄁s󠄁 `Apache-2.0 AND CC0-1.0 AND Unicode-3.0`.󠄁 T󠄁h󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁 i󠄁s󠄁
+l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁 2󠄁.󠄁0󠄁 (󠄁[L󠄁I󠄁C󠄁E󠄁N󠄁S󠄁E󠄁](LICENSE))󠄁.󠄁 T󠄁h󠄁e󠄁 b󠄁u󠄁n󠄁d󠄁l󠄁e󠄁d󠄁 c󠄁o󠄁p󠄁y󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁
+T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 i󠄁s󠄁 d󠄁e󠄁d󠄁i󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 p󠄁u󠄁b󠄁l󠄁i󠄁c󠄁 d󠄁o󠄁m󠄁a󠄁i󠄁n󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 C󠄁C󠄁0󠄁 1󠄁.󠄁0󠄁
+(󠄁[L󠄁I󠄁C󠄁E󠄁N󠄁S󠄁E󠄁-󠄁C󠄁C󠄁0󠄁-󠄁1󠄁.󠄁0󠄁](LICENSE-CC0-1.0))󠄁.󠄁 T󠄁h󠄁e󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁
+g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 f󠄁r󠄁o󠄁m󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 d󠄁a󠄁t󠄁a󠄁 a󠄁n󠄁d󠄁 c󠄁o󠄁v󠄁e󠄁r󠄁e󠄁d󠄁 b󠄁y󠄁 t󠄁h󠄁e󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 L󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 v󠄁3󠄁
+(󠄁[L󠄁I󠄁C󠄁E󠄁N󠄁S󠄁E󠄁-󠄁U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁-󠄁3󠄁.󠄁0󠄁](LICENSE-Unicode-3.0))󠄁.󠄁 A󠄁l󠄁l󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 a󠄁p󠄁p󠄁l󠄁y󠄁.󠄁
