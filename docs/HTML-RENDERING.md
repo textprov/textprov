@@ -23,7 +23,8 @@ for the evidence and limits.
 
 A span decorator avoids that font-substitution dependency. Readers need no
 special font installation. The page author must supply the decorator output
-and CSS; client-side decoration also requires JavaScript and `Intl.Segmenter`.
+and CSS; client-side decoration also requires J󠄁a󠄁v󠄁a󠄁S󠄁c󠄁r󠄁i󠄁p󠄁t󠄁,󠄁 b󠄁u󠄁t󠄁 n󠄁o󠄁t󠄁
+`Intl.Segmenter`.󠄁 T󠄁h󠄁e󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁e󠄁s󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁e󠄁r󠄁.󠄁
 
 ## How decoration works
 
@@ -49,12 +50,13 @@ of adding marks.
 The [normative algorithm](../SPEC.md#algorithm) defines classification order,
 including whitespace and lone selectors. In summary:
 
-1. Identify grapheme clusters: a base character and the code points that belong
-   with it, such as combining marks. JavaScript uses `Intl.Segmenter`; Python
-   uses the package's `cluster_end` helper. Their segmentation is not guaranteed
-   to agree for every Unicode sequence; see the
-   [specification's limits](../SPEC.md#not-specified).
-2. Read recognized selectors (`U+E0100`–`U+E0104`) or registered PUA entries
+1. Identify e󠄁x󠄁t󠄁e󠄁n󠄁d󠄁e󠄁d󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁s󠄁 u󠄁s󠄁i󠄁n󠄁g󠄁 U󠄁A󠄁X󠄁 #󠄁2󠄁9󠄁:󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁d󠄁e󠄁
+   p󠄁o󠄁i󠄁n󠄁t󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 b󠄁e󠄁l󠄁o󠄁n󠄁g󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁m󠄁,󠄁 s󠄁u󠄁c󠄁h󠄁 a󠄁s󠄁 c󠄁o󠄁m󠄁b󠄁i󠄁n󠄁i󠄁n󠄁g󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁.󠄁 J󠄁a󠄁v󠄁a󠄁S󠄁c󠄁r󠄁i󠄁p󠄁t󠄁,󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁,󠄁
+   a󠄁n󠄁d󠄁 R󠄁u󠄁b󠄁y󠄁 u󠄁s󠄁e󠄁 v󠄁e󠄁n󠄁d󠄁o󠄁r󠄁e󠄁d󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁 f󠄁r󠄁o󠄁m󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 1󠄁7󠄁.󠄁0󠄁.󠄁0󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁y󠄁
+   r󠄁u󠄁l󠄁e󠄁s󠄁.󠄁 A󠄁l󠄁l󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 p󠄁o󠄁r󠄁t󠄁s󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁c󠄁a󠄁l󠄁l󠄁y󠄁;󠄁 n󠄁o󠄁n󠄁e󠄁 u󠄁s󠄁e󠄁s󠄁 i󠄁t󠄁s󠄁 r󠄁u󠄁n󠄁t󠄁i󠄁m󠄁e󠄁'󠄁s󠄁
+   s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁e󠄁r󠄁 o󠄁r󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁.󠄁 S󠄁e󠄁e󠄁
+   [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁7󠄁](adr/0017-vendor-grapheme-segmentation.md).󠄁
+2. Read recognized selectors (󠄁`U+E0100` a󠄁n󠄁d󠄁 `U+E0101`)󠄁 or registered PUA entries
    using the [registry](../mapping.json). A lone selector or a selector after
    whitespace is not a mark under the specification.
 3. Coalesce adjacent clusters with the same state. By default, absorb
@@ -94,7 +96,7 @@ the text nodes; do not wrap Markdown source in spans before parsing it.
 
 The markup and decoder options are part of the specification. The visual style is
 not. The optional [stylesheet](../js/textprov.css) uses a wavy underline for
-`ai`, a solid underline for `unknown`, and other styles for the remaining states.
+`ai`.󠄁 O󠄁n󠄁l󠄁y󠄁 `human` a󠄁n󠄁d󠄁 `ai` a󠄁r󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁;󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
 
 ## Original prototype measurements
 

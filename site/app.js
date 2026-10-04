@@ -6,22 +6,38 @@ import textprov from "textprov";
   var selectors = {
     human: String.fromCodePoint(0xe0100),
     ai: String.fromCodePoint(0xe0101),
-    mixed: String.fromCodePoint(0xe0102),
   };
   var markedText = "";
+  // Exact Unicode White_Space set from SPEC.md, not JavaScript's \s.
+  var whitespace =
+    /^[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/u;
 
   function mark(text, state) {
+    if (!Object.prototype.hasOwnProperty.call(selectors, state)) {
+      throw new RangeError("Unsupported provenance state: " + state);
+    }
     var selector = selectors[state];
-    text = textprov
-      .runs(text, { strip: true })
-      .map(function (run) {
-        return run.text;
-      })
-      .join("");
     return textprov
       .segments(text)
       .map(function (segment) {
-        return /^\s+$/u.test(segment) ? segment : segment + selector;
+        var points = Array.from(segment);
+        var first = points[0].codePointAt(0);
+        var pua =
+          points.length === 1 &&
+          textprov.mapping.puaRanges.some(function (range) {
+            return first >= range[0] && first <= range[1];
+          });
+        if (
+          segment.endsWith(selectors.human) ||
+          segment.endsWith(selectors.ai) ||
+          pua ||
+          whitespace.test(segment)
+        ) {
+          return segment;
+        }
+        var marked = segment + selector;
+        // GB4 makes a selector after a control-break cluster an orphan, not a mark.
+        return textprov.segments(marked).length === 1 ? marked : segment;
       })
       .join("");
   }
@@ -31,7 +47,14 @@ import textprov from "textprov";
     var state = document.querySelector('input[name="state"]:checked').value;
     var output = document.getElementById("demo-output");
     var preview = document.getElementById("demo-preview") || output;
-    markedText = mark(input.value, state);
+    // The demo explicitly relabels pasted text; the producer itself is idempotent.
+    var text = textprov
+      .runs(input.value, { strip: true })
+      .map(function (run) {
+        return run.text;
+      })
+      .join("");
+    markedText = mark(text, state);
     if ("value" in output) {
       output.value = markedText;
     } else {

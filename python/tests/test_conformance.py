@@ -58,9 +58,7 @@ class TestVendoredRegistry(unittest.TestCase):
         _, selectors, pua2base, base2pua = load_mapping()
         self.assertEqual(selectors["human"], 0xE0100)
         self.assertEqual(selectors["ai"], 0xE0101)
-        self.assertEqual(selectors["mixed"], 0xE0102)
-        self.assertEqual(selectors["edited"], 0xE0103)
-        self.assertEqual(selectors["unknown"], 0xE0104)
+        self.assertEqual(set(selectors), {"human", "ai"})
         self.assertEqual(pua2base[0x100021], (0x0021, "ai"))
         self.assertEqual(base2pua[0x0021], 0x100021)
 
@@ -87,6 +85,54 @@ class TestVendoredRegistry(unittest.TestCase):
         ):
             with self.assertRaises(ValueError, msg=repr(bad)):
                 _codepoint(bad)
+
+
+class TestObsoleteSelectors(unittest.TestCase):
+    def test_only_human_and_ai_states_are_exposed(self):
+        self.assertEqual(textprov.GENERATED_STATES, ("human", "ai"))
+        self.assertFalse(hasattr(textprov, "PROPOSED_STATES"))
+
+    def test_obsolete_selectors_are_preserved_as_ordinary_text(self):
+        for cp in range(0xE0102, 0xE0105):
+            selector = chr(cp)
+            for text in (
+                selector,
+                "a" + selector,
+                " " + selector,
+                "a" + AI + selector,
+                "a" + selector + AI,
+            ):
+                with self.subTest(cp=cp, text=text):
+                    self.assertEqual(
+                        textprov.strip_marks(text), text.replace(AI, "")
+                    )
+                    for strip in (False, True):
+                        state = "ai" if text.endswith(AI) else None
+                        expected = text[:-1] if strip and state else text
+                        self.assertEqual(
+                            textprov.runs(text, strip=strip),
+                            [(state, expected)],
+                        )
+                        rendered = span(state, expected) if state else expected
+                        self.assertEqual(
+                            textprov.to_html(text, strip=strip), rendered
+                        )
+                    for from_mode, to_mode in (("vs", "pua"), ("pua", "vs")):
+                        # No cluster here is a base and its ai selector alone.
+                        self.assertEqual(
+                            textprov.convert(text, from_mode, to_mode), text
+                        )
+
+    def test_inspect_does_not_report_obsolete_states(self):
+        text = "a\U000e0102b\U000e0103c\U000e0104"
+        report = textprov.inspect(text)
+        self.assertIn("unmarked: 3\n", report)
+        for state in ("mixed", "edited", "unknown"):
+            self.assertNotIn(state + ":", report)
+        self.assertIn(
+            "unrecognised_selectors: U+E0102 U+E0103 U+E0104",
+            textprov.inspect("\U000e0102\n\U000e0103\n\U000e0104"),
+        )
 
 
 class TestFixtures(unittest.TestCase):
@@ -247,6 +293,24 @@ class TestToHtml(unittest.TestCase):
 
 
 class TestStripMarks(unittest.TestCase):
+    def test_cleanup_removes_selectors_that_decoder_stripping_keeps(self):
+        for selector in (AI, HUMAN):
+            for text, clean in (
+                (selector + "A", "A"),
+                ("A " + selector + "B", "A B"),
+                ("A" + selector + " " + selector, "A "),
+                ("A" + selector * 2, "A"),
+                ("A" + HUMAN + AI, "A"),
+            ):
+                with self.subTest(text=text):
+                    self.assertEqual(textprov.strip_marks(text), clean)
+                    self.assertNotEqual(
+                        "".join(
+                            out for _, out in textprov.runs(text, strip=True)
+                        ),
+                        clean,
+                    )
+
     def test_selectors_and_pua_are_removed(self):
         pua_cp, (pua_base, _) = next(iter(PUA2BASE.items()))
         self.assertEqual(textprov.strip_marks("a" + AI + "b" + HUMAN), "ab")

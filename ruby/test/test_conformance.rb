@@ -21,6 +21,42 @@ class TestVendoredRegistry < Minitest::Test
   end
 end
 
+class TestObsoleteSelectors < Minitest::Test
+  def test_only_human_and_ai_states_are_exposed
+    assert_equal %w[human ai], Textprov::GENERATED_STATES
+    assert_equal %w[human ai], SELECTORS.keys
+    refute Textprov.const_defined?(:PROPOSED_STATES)
+  end
+
+  def test_obsolete_selectors_are_preserved_as_ordinary_text
+    (0xE0102..0xE0104).each do |cp|
+      selector = cp.chr(Encoding::UTF_8)
+      [selector, "a#{selector}", " #{selector}", "a#{AI}#{selector}", "a#{selector}#{AI}"].each do |text|
+        assert_equal text.delete(AI), Textprov.strip_marks(text)
+        [false, true].each do |strip|
+          state = text.end_with?(AI) ? "ai" : nil
+          expected = strip && state ? text[0...-1] : text
+          assert_equal [[state, expected]], Textprov.runs(text, strip: strip)
+          rendered = state ? span(state, expected) : expected
+          assert_equal rendered, Textprov.to_html(text, strip: strip)
+        end
+        [["vs", "pua"], ["pua", "vs"]].each do |from_mode, to_mode|
+          # No cluster here is a base and its ai selector alone.
+          assert_equal text, Textprov.convert(text, from_mode, to_mode)
+        end
+      end
+    end
+  end
+
+  def test_inspect_does_not_report_obsolete_states
+    report = Textprov.inspect_text("a\u{E0102}b\u{E0103}c\u{E0104}")
+    assert_includes report, "unmarked: 3\n"
+    %w[mixed edited unknown].each { |state| refute_includes report, "#{state}:" }
+    assert_includes Textprov.inspect_text("\u{E0102}\n\u{E0103}\n\u{E0104}"),
+                    "unrecognised_selectors: U+E0102 U+E0103 U+E0104"
+  end
+end
+
 class TestFixtures < Minitest::Test
   FX = JSON.parse(File.read(FIXTURES_PATH, encoding: "UTF-8"))
 
@@ -196,6 +232,21 @@ class TestToHtml < Minitest::Test
 end
 
 class TestStripMarks < Minitest::Test
+  def test_cleanup_removes_selectors_that_decoder_stripping_keeps
+    [AI, HUMAN].each do |selector|
+      [
+        ["#{selector}A", "A"],
+        ["A #{selector}B", "A B"],
+        ["A#{selector} #{selector}", "A "],
+        ["A#{selector}#{selector}", "A"],
+        ["A#{HUMAN}#{AI}", "A"]
+      ].each do |text, clean|
+        assert_equal clean, Textprov.strip_marks(text)
+        refute_equal clean, Textprov.runs(text, strip: true).map(&:last).join
+      end
+    end
+  end
+
   def test_selectors_and_pua_are_removed
     pua_cp, (pua_base,) = PUA2BASE.first
 

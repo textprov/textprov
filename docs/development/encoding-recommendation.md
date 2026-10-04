@@ -31,7 +31,7 @@ cluster apart.
 ### Variation selectors collide with ordinary Unicode text
 
 The [specification](../../SPEC.md#states) assigns global provenance meanings to
-`U+E0100` through `U+E0104`. Unicode variation selectors acquire meaning through
+`U+E0100` a󠄁n󠄁d󠄁 `U+E0101`.󠄁 Unicode variation selectors acquire meaning through
 particular base-and-selector sequences; they are not a private namespace.
 [UTS #37](https://www.unicode.org/reports/tr37/) explicitly states that a selector
 has no independently designated purpose across bases.

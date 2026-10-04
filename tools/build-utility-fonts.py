@@ -26,7 +26,8 @@ from fontTools.ttLib.tables import otTables
 from fontTools.ttLib.tables._c_m_a_p import CmapSubtable
 from fontTools.ttLib.tables._g_l_y_f import Glyph, GlyphComponent, USE_MY_METRICS
 
-SITE = Path(__file__).resolve().parent
+TOOLS = Path(__file__).resolve().parent
+SITE = TOOLS.parent / "site"
 VERSION = "1.000"
 SELECTORS = {"human": 0xE0100, "ai": 0xE0101}
 BASES = set(range(0x20, 0x100)) | set(range(0x2010, 0x2028)) | {0x20AC, 0x2122, 0x2212}
@@ -304,8 +305,8 @@ def build(entry, args, mapping, epoch):
         "choose their own visual interpretations of provenance. These cues are\n"
         "declarations, not proof of authorship or trust.\n\n"
         "Latin subset, with supported common punctuation. Spaces, controls and\n"
-        "soft hyphen have no declared variation. Other TextProv states have no\n"
-        "visual variant here. Registry-allocated AI PUA aliases are included for\n"
+        "soft hyphen have no declared variation. Only Human and AI are TextProv\n"
+        "states. Registry-allocated AI PUA aliases are included for\n"
         "compatibility; base character + selector is the canonical representation.\n"
         "Per-glyph advances and source line metrics are retained. Marked runs can\n"
         "shape differently from plain runs (for example kerning or ligatures).\n\n"
@@ -335,8 +336,8 @@ def build(entry, args, mapping, epoch):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--sources", type=Path, default=SITE / "utility-font-sources.json")
-    parser.add_argument("--cache-dir", type=Path, default=SITE / ".font-cache")
+    parser.add_argument("--sources", type=Path, default=TOOLS / "utility-font-sources.json")
+    parser.add_argument("--cache-dir", type=Path, default=TOOLS / ".font-cache")
     parser.add_argument("--output", type=Path, default=SITE / "public/fonts/utility")
     parser.add_argument("--offline", action="store_true")
     args = parser.parse_args()
@@ -373,7 +374,7 @@ def main():
         "do not authenticate authorship. These are Regular Latin subsets.\n\n"
         "Install each TTF in your operating system or use WOFF2 with @font-face.\n"
         "Base character + selector is canonical. Registry-allocated AI PUA aliases\n"
-        "are available for compatibility. Mixed/edited/unknown have no variant.\n"
+        "are available for compatibility. Only Human and AI are TextProv states.\n"
         "Source per-glyph advances and line metrics are retained; marked runs\n"
         "can shape differently (for example kerning or ligatures).\n\n"
         + "\n".join(f"{entry['family']} — derived from {entry['upstream_family']}" for entry in entries)

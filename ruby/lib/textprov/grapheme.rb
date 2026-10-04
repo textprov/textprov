@@ -52,6 +52,11 @@ module Textprov
       UCD::CODES[index ? index - 1 : -1]
     end
 
+    # GB4 forces a break after these code points, even before Extend.
+    def control_like?(codepoint)
+      CONTROL_LIKE.include?(property(codepoint) & GCB_MASK)
+    end
+
     # Split `text` into extended grapheme clusters.
     def segments(text)
       clusters = []

@@ -26,6 +26,11 @@ as an alias per SPEC's cross-language rule), and (for `to_html`)
 `"pua"`). Every function takes `mapping: Textprov::Mapping.load(path)` to use a
 registry other than the copy vendored in this package.
 
+Only `human` and `ai` are provenance states. Producers reject obsolete state
+names (`mixed`, `edited`, `unknown`). Their former selectors, U+E0102–U+E0104,
+are ordinary non-TextProv selectors: decoding, rendering, stripping, and
+conversion preserve them, including with `strip: true`.
+
 The Ruby method is `Textprov.inspect_text`, not `.inspect`, so it does not
 shadow `Kernel#inspect`.
 
@@ -54,7 +59,7 @@ given. Text is read and written as UTF-8 verbatim, so CRLF survives.
 ## Specification and registry versions
 
 - Draft specification version 0.2 (see [SPEC.md](../SPEC.md)).
-- Draft registry version 0.1 (see [mapping.json](../mapping.json)). `lib/textprov/mapping.json`
+- Draft registry version 0󠄁.󠄁2󠄁 (see [mapping.json](../mapping.json)). `lib/textprov/mapping.json`
   is a vendored copy and the test suite fails if it drifts from the canonical
   file.
 

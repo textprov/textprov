@@ -4,6 +4,7 @@
 // re-render idempotency, ancestor-skip, and script/style/textarea exclusion.
 // Usage: node check_render.mjs [path/to/textprov.js]
 // Exits non-zero on any failing case.
+import assert from "node:assert/strict";
 import path from "path";
 import { createRequire } from "module";
 import { fileURLToPath } from "url";
@@ -47,6 +48,38 @@ t("render wraps marked runs in spans, leaves plain text alone", () => {
     throw new Error(`round-trip text: ${JSON.stringify(body.textContent)}`);
 });
 
+t("only human and ai selectors are TextProv states", () => {
+  assert.deepEqual(textprov.mapping.selectors, { human: 0xe0100, ai: 0xe0101 });
+});
+
+for (const cp of [0xe0102, 0xe0103, 0xe0104]) {
+  const selector = String.fromCodePoint(cp);
+  t(`non-TextProv U+${cp.toString(16)} is preserved by decoding and rendering`, () => {
+    for (const strip of [false, true]) {
+      for (const text of [selector, `A${selector}`, ` ${selector}`, `A${AI}${selector}`]) {
+        assert.deepEqual(textprov.runs(text, { strip }), [{ state: null, text }]);
+        const body = setBody(text);
+        const original = body.firstChild;
+        assert.equal(textprov.render(body, { strip }), 0);
+        assert.equal(body.textContent, text);
+        assert.equal(body.querySelector(".prov"), null);
+        // A node containing only obsolete selectors is not rewritten at all.
+        if (!text.includes(AI)) assert.equal(body.firstChild, original);
+      }
+      const body = setBody(`A${selector} B${AI} C${HUMAN}`);
+      assert.equal(textprov.render(body, { strip }), 2);
+      assert.equal(body.textContent, `A${selector} B${strip ? "" : AI} C${strip ? "" : HUMAN}`);
+      assert.deepEqual(
+        Array.from(body.querySelectorAll(".prov"), (span) => span.dataset.prov),
+        ["ai", "human"],
+      );
+      assert.deepEqual(textprov.runs(`A${selector}${AI}`, { strip }), [
+        { state: "ai", text: `A${selector}${strip ? "" : AI}` },
+      ]);
+    }
+  });
+}
+
 t("custom prefix rewrites class and skip marker", () => {
   const body = setBody(`x${AI}`);
   textprov.render(body, { prefix: "prov" });
@@ -59,8 +92,7 @@ t("custom prefix rewrites class and skip marker", () => {
   const n = textprov.render(body2, { prefix: "mark" });
   if (n !== 1) throw new Error(`custom-prefix span count: got ${n}`);
   const s = body2.querySelector("span");
-  if (s.className !== "mark mark-ai")
-    throw new Error(`custom-prefix class: got "${s.className}"`);
+  if (s.className !== "mark mark-ai") throw new Error(`custom-prefix class: got "${s.className}"`);
 });
 
 t("re-render is idempotent (ancestor-skip via prefix class)", () => {

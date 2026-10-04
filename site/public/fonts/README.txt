@@ -53,10 +53,9 @@ These subsets retain U+0020 through U+00FF where present in the source and
 variation selectors U+E0100 (Human) and U+E0101 (AI). Nerd Fonts icons and
 private-use encodings are excluded. They are not full replacement fonts.
 
-The source fonts map U+E0102 to a legacy unknown glyph. TextProv 0.1 assigns
-that selector to mixed, so this mapping is deliberately removed. These
-subsets do not display mixed, edited, or unknown variants. Use the JavaScript
-reader to display all five states.
+The source fonts contain a legacy non-TextProv U+E0102 mapping, which is
+deliberately removed. Human and AI are the only TextProv provenance states.
+Use the JavaScript reader to display their labels without a font.
 
 Human variants look plain. AI variants have a sawtooth underline. HarfBuzz
 shaping was checked for both subsets; this is not a guarantee for every
@@ -90,10 +89,10 @@ kick-the-tires. Maryheather and Zilla Slab are prose fonts.
 Rebuild
 -------
 
-From site/, with Python, fonttools and brotli installed:
+From the repository root, with Python, fonttools and brotli installed:
 
-python3 build-demo-fonts.py /path/to/nerd-fonts   # Maryheather + Zilla
-python3 build-agave-fonts.py /path/to/nerd-fonts  # Agave P+ trio
+python3 tools/build-demo-fonts.py /path/to/nerd-fonts   # Maryheather + Zilla
+python3 tools/build-agave-fonts.py /path/to/nerd-fonts  # Agave P+ trio
 
 Both scripts subset their sources, rename the family, keep only U+E0100
 (Human) and U+E0101 (AI) selectors, and package licences with each ZIP.

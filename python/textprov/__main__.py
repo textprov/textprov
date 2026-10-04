@@ -2,8 +2,8 @@
 
 """Command line interface: python3 -m textprov
 
-    textprov mark [--human|--ai|--mixed] [--mode vs|pua] FILE
-    textprov mark-added [--human|--ai|--mixed] [--mode vs|pua] OLD NEW
+    textprov mark [--human|--ai] [--mode vs|pua] FILE
+    textprov mark-added [--human|--ai] [--mode vs|pua] OLD NEW
     textprov convert --from vs|pua --to vs|pua FILE
     textprov strip FILE
     textprov render [--strip] [--no-merge-whitespace] [--class-prefix P] FILE

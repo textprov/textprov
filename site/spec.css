@@ -125,6 +125,13 @@
   margin: 0 0 1.25rem;
 }
 
+.spec-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
 .spec-header h1 {
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
@@ -139,6 +146,43 @@
   display: flex;
   gap: 0.75rem;
   color: var(--muted);
+  font:
+    0.72rem/1.5 ui-monospace,
+    "SFMono-Regular",
+    Consolas,
+    monospace;
+}
+
+.prov-legend {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.prov-legend p {
+  margin: 0 0 0.35rem;
+}
+.prov-swatch {
+  margin-left: 0.5rem;
+  padding: 0 0.3em;
+  color: var(--text);
+  text-decoration-skip-ink: none;
+  text-underline-offset: 0.15em;
+}
+.prov-swatch-ai {
+  background: var(--ai-bg);
+  text-decoration: underline wavy color-mix(in srgb, var(--ai) 65%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.prov-swatch-human {
+  background: var(--human-bg);
+}
+:root[data-provenance="hidden"] .prov-swatch {
+  background: none;
+  text-decoration: none;
+  color: var(--muted);
+}
+.prov-legend-meta {
   font:
     0.72rem/1.5 ui-monospace,
     "SFMono-Regular",
@@ -324,6 +368,7 @@
 
 @media print {
   .site-header,
+  .prov-toggle,
   footer,
   .spec-sidebar,
   .skip-link {

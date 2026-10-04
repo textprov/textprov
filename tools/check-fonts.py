@@ -11,7 +11,7 @@ from pathlib import Path
 from fontTools.ttLib import TTFont
 
 SELECTORS = (0xE0100, 0xE0101)
-FONTS_DIR = Path(__file__).parent / "public" / "fonts"
+FONTS_DIR = Path(__file__).resolve().parent.parent / "site" / "public" / "fonts"
 
 
 def uvs_map(font):

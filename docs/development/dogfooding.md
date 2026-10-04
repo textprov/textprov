@@ -6,8 +6,17 @@ a󠄁s󠄁k󠄁e󠄁d󠄁 t󠄁o󠄁 a󠄁p󠄁p󠄁l󠄁y󠄁 a󠄁 m󠄁a󠄁r
 m󠄁i󠄁s󠄁a󠄁p󠄁p󠄁l󠄁i󠄁e󠄁d󠄁 b󠄁y󠄁 i󠄁t󠄁.󠄁
 
 I󠄁n󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁r󠄁m󠄁s󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 [s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](../../SPEC.md#roles),󠄁 t󠄁h󠄁e󠄁 h󠄁o󠄁o󠄁k󠄁 s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁
-`.claude/hooks/textprov_hook.py` i󠄁s󠄁 t󠄁h󠄁e󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 t󠄁h󠄁a󠄁t󠄁 d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁s󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁
-a󠄁p󠄁p󠄁l󠄁i󠄁e󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 c󠄁o󠄁m󠄁e󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 i󠄁n󠄁 `python/textprov`.󠄁
+`.claude/hooks/textprov_hook.py` adapts Claude events, responses, and environment
+configuration to `textprov.workspace.Workspace`. Workspace owns scope, prompt
+persistence, and command snapshots; the pure functions in `textprov.editing`
+transform strings and decide which state applies.
+T󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 c󠄁o󠄁m󠄁e󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁 i󠄁n󠄁 `python/textprov`.󠄁
+
+The [Python integration APIs](../../python/README.md#editing-api) describe the
+extraction boundary. Direct callers supply a workspace root explicitly, and
+relative paths resolve under that root. Editing helpers do not read files or
+environment variables; omitted `shingles` means no prompt matching. Workspace
+loads matching word sequences from its prompt log when preparing changes.
 
 ## What gets marked
 
@@ -29,13 +38,28 @@ b󠄁e󠄁c󠄁a󠄁u󠄁s󠄁e󠄁 i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t�
 
 ## How each tool is covered
 
+The adapter delegates `UserPromptSubmit` to `record_prompt`, Write to
+`prepare_write`, and Edit to `prepare_edit`. The preparation methods return
+marked tool inputs without applying the write or edit; `None` leaves the input
+unchanged. An `Ambiguous` edit becomes a d󠄁e󠄁n󠄁i󠄁a󠄁l󠄁,󠄁 o󠄁r󠄁 a󠄁n󠄁 e󠄁r󠄁r󠄁o󠄁r󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 `edit` c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁
+b󠄁e󠄁l󠄁o󠄁w󠄁,󠄁 rather than a guessed match.
+For Bash, the adapter calls `before_command(command, operation_id)` before
+execution and `after_command(operation_id)` on success or failure, using the
+same operation ID. Workspace marks the resulting files after the command.
+
 - **W󠄁r󠄁i󠄁t󠄁e󠄁.󠄁** A󠄁 `PreToolUse` h󠄁o󠄁o󠄁k󠄁 d󠄁i󠄁f󠄁f󠄁s󠄁 t󠄁h󠄁e󠄁 n󠄁e󠄁w󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁 a󠄁g󠄁a󠄁i󠄁n󠄁s󠄁t󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 o󠄁n󠄁
   d󠄁i󠄁s󠄁k󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁w󠄁r󠄁i󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁 t󠄁o󠄁o󠄁l󠄁 r󠄁u󠄁n󠄁s󠄁.󠄁 U󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 l󠄁i󠄁n󠄁e󠄁s󠄁 k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁
   m󠄁a󠄁r󠄁k󠄁s󠄁 t󠄁h󠄁e󠄁y󠄁 h󠄁a󠄁d󠄁,󠄁 e󠄁v󠄁e󠄁n󠄁 w󠄁h󠄁e󠄁n󠄁 t󠄁h󠄁e󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 r󠄁e󠄁t󠄁y󠄁p󠄁e󠄁d󠄁 t󠄁h󠄁e󠄁m󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁.󠄁
-- **E󠄁d󠄁i󠄁t󠄁.󠄁** T󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 h󠄁o󠄁o󠄁k󠄁 f󠄁i󠄁n󠄁d󠄁s󠄁 `old_string` i󠄁n󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 i󠄁g󠄁n󠄁o󠄁r󠄁e󠄁d󠄁,󠄁
-  s󠄁u󠄁b󠄁s󠄁t󠄁i󠄁t󠄁u󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁e󠄁 t󠄁o󠄁o󠄁l󠄁 n󠄁e󠄁e󠄁d󠄁s󠄁 f󠄁o󠄁r󠄁 a󠄁n󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁 m󠄁a󠄁t󠄁c󠄁h󠄁,󠄁 a󠄁n󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 w󠄁h󠄁a󠄁t󠄁
-  `new_string` a󠄁d󠄁d󠄁s󠄁.󠄁 W󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 t󠄁h󠄁i󠄁s󠄁 a󠄁n󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁 e󠄁d󠄁i󠄁t󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 f󠄁i󠄁l󠄁e󠄁,󠄁 b󠄁e󠄁c󠄁a󠄁u󠄁s󠄁e󠄁
-  i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁.󠄁
+- **E󠄁d󠄁i󠄁t󠄁.󠄁** C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 C󠄁o󠄁d󠄁e󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁s󠄁 `old_string` a󠄁g󠄁a󠄁i󠄁n󠄁s󠄁t󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 i󠄁t󠄁 r󠄁u󠄁n󠄁s󠄁
+  a󠄁n󠄁y󠄁 h󠄁o󠄁o󠄁k󠄁,󠄁 a󠄁n󠄁d󠄁 a󠄁n󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁,󠄁 s󠄁o󠄁 t󠄁h󠄁e󠄁 E󠄁d󠄁i󠄁t󠄁 t󠄁o󠄁o󠄁l󠄁
+  r󠄁e󠄁f󠄁u󠄁s󠄁e󠄁s󠄁 a󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁 t󠄁o󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 a󠄁 h󠄁o󠄁o󠄁k󠄁 c󠄁a󠄁n󠄁 r󠄁e󠄁w󠄁r󠄁i󠄁t󠄁e󠄁 i󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁
+  p󠄁r󠄁o󠄁v󠄁i󠄁d󠄁e󠄁s󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁 r󠄁o󠄁u󠄁t󠄁e󠄁 i󠄁n󠄁s󠄁t󠄁e󠄁a󠄁d󠄁.󠄁 `python3 .claude/hooks/textprov_hook.py edit`
+  r󠄁e󠄁a󠄁d󠄁s󠄁 t󠄁h󠄁e󠄁 E󠄁d󠄁i󠄁t󠄁 t󠄁o󠄁o󠄁l󠄁'󠄁s󠄁 f󠄁i󠄁e󠄁l󠄁d󠄁s󠄁 a󠄁s󠄁 J󠄁S󠄁O󠄁N󠄁 o󠄁n󠄁 s󠄁t󠄁d󠄁i󠄁n󠄁,󠄁 f󠄁i󠄁n󠄁d󠄁s󠄁 `old_string` w󠄁i󠄁t󠄁h󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁
+  i󠄁g󠄁n󠄁o󠄁r󠄁e󠄁d󠄁,󠄁 a󠄁n󠄁d󠄁 w󠄁r󠄁i󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁m󠄁e󠄁n󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁 w󠄁h󠄁a󠄁t󠄁 `new_string` a󠄁d󠄁d󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁.󠄁 A󠄁
+  `SessionStart` h󠄁o󠄁o󠄁k󠄁 t󠄁e󠄁l󠄁l󠄁s󠄁 t󠄁h󠄁e󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 t󠄁o󠄁 u󠄁s󠄁e󠄁 i󠄁t󠄁,󠄁 a󠄁n󠄁d󠄁 a󠄁 `PostToolUse` h󠄁o󠄁o󠄁k󠄁
+  r󠄁e󠄁p󠄁e󠄁a󠄁t󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 w󠄁h󠄁e󠄁n󠄁 t󠄁h󠄁e󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 r󠄁e󠄁a󠄁d󠄁s󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 f󠄁i󠄁l󠄁e󠄁.󠄁 W󠄁h󠄁e󠄁r󠄁e󠄁 `old_string` a󠄁l󠄁r󠄁e󠄁a󠄁d󠄁y󠄁
+  m󠄁a󠄁t󠄁c󠄁h󠄁e󠄁s󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁l󠄁y󠄁,󠄁 a󠄁s󠄁 o󠄁n󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 l󠄁i󠄁n󠄁e󠄁s󠄁,󠄁 t󠄁h󠄁e󠄁 E󠄁d󠄁i󠄁t󠄁 t󠄁o󠄁o󠄁l󠄁 w󠄁o󠄁r󠄁k󠄁s󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁
+  `PreToolUse` h󠄁o󠄁o󠄁k󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 w󠄁h󠄁a󠄁t󠄁 `new_string` a󠄁d󠄁d󠄁s󠄁.󠄁
 - **B󠄁a󠄁s󠄁h󠄁.󠄁** A󠄁 `PreToolUse` h󠄁o󠄁o󠄁k󠄁 s󠄁n󠄁a󠄁p󠄁s󠄁h󠄁o󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 a󠄁
   `PostToolUse` h󠄁o󠄁o󠄁k󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 w󠄁h󠄁a󠄁t󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 a󠄁d󠄁d󠄁e󠄁d󠄁.󠄁 C󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 m󠄁o󠄁v󠄁e󠄁 t󠄁h󠄁e󠄁
   w󠄁o󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 t󠄁r󠄁e󠄁e󠄁 t󠄁o󠄁 a󠄁n󠄁o󠄁t󠄁h󠄁e󠄁r󠄁 r󠄁e󠄁v󠄁i󠄁s󠄁i󠄁o󠄁n󠄁,󠄁 s󠄁u󠄁c󠄁h󠄁 a󠄁s󠄁 `git checkout`,󠄁 a󠄁r󠄁e󠄁 s󠄁k󠄁i󠄁p󠄁p󠄁e󠄁d󠄁,󠄁 a󠄁s󠄁
@@ -57,6 +81,21 @@ d󠄁e󠄁s󠄁t󠄁i󠄁n󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 r󠄁e󠄁f�
 m󠄁a󠄁r󠄁k󠄁e󠄁r󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 o󠄁f󠄁 i󠄁n󠄁l󠄁i󠄁n󠄁e󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁 a󠄁r󠄁e󠄁 l󠄁e󠄁f󠄁t󠄁 a󠄁l󠄁o󠄁n󠄁e󠄁,󠄁 s󠄁o󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 f󠄁i󠄁l󠄁e󠄁
 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 a󠄁s󠄁 a󠄁n󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 o󠄁n󠄁e󠄁 a󠄁n󠄁d󠄁 i󠄁t󠄁s󠄁 c󠄁o󠄁d󠄁e󠄁 s󠄁a󠄁m󠄁p󠄁l󠄁e󠄁s󠄁 c󠄁a󠄁n󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁 b󠄁e󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁d󠄁.󠄁
 
+## Workspace state and guards
+
+The default state directory remains `.textprov` under the explicit workspace
+root. Prompt matching uses the latest 300 entries in `prompts.jsonl`; command
+snapshots older than 24 hours are cleaned up. `state_dir` and `human_min_words`
+are explicit constructor options for direct callers, with a five-word matching
+minimum by default. The adapter translates `TEXTPROV_HUMAN_MIN_WORDS` into that
+option; `TEXTPROV_HOOK=off` disables the adapter, not direct package calls.
+
+Workspace retains the existing Markdown scope and exclusions, working-tree
+move checks, and commit guards. A single new commit on the snapshotted head is
+allowed; an amend or multiple commits are not. Changes made and committed in
+one command receive marks afterward in the working tree, not in that commit.
+Moved or copied files are not treated as new writing.
+
 ## Limits and open questions
 
 S󠄁e󠄁e󠄁 [k󠄁n󠄁o󠄁w󠄁n󠄁 l󠄁i󠄁m󠄁i󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁](dogfooding-known-limitations.md) a󠄁n󠄁d󠄁
@@ -65,7 +104,18 @@ S󠄁e󠄁e󠄁 [k󠄁n󠄁o󠄁w󠄁n󠄁 l󠄁i󠄁m󠄁i󠄁t󠄁a󠄁t󠄁i�
 ## Operating it
 
 ```sh
+# From the repository root, with textprov installed:
 python3 -m textprov inspect docs/development/dogfooding.md   # count states
-TEXTPROV_HOOK=off claude                                      # disable for a session
-python3 -m unittest discover -s .claude/hooks                # hook tests
+TEXTPROV_HOOK=off claude                                    # disable the adapter
+python3 .claude/hooks/textprov_hook.py edit <<'JSON'        # edit marked prose
+{"file_path": "docs/draft.md", "old_string": "old phrase", "new_string": "new phrase"}
+JSON
+
+# From python/:
+python3 -m unittest discover -s tests -t .                  # Python suite
 ```
+
+The extraction moves editing, workspace, and adapter tests from `.claude/hooks/`
+to `python/tests/`. They use the same discovery command as the Python
+[conformance CI job](../../.github/workflows/conformance.yml), rather than a
+separate hook-test invocation.

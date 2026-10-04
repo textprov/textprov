@@ -43,7 +43,7 @@ easy to confuse with the W3C standard.
 | GitHub organisation and repository | `textprov/textprov` |
 | JavaScript package (npm) | `textprov` (browser decoder + CSS) |
 | Python package and import (PyPI) | `textprov` (producer, decoder, CLI) |
-| Ruby gem (`ruby/`, unpublished) | `textprov` |
+| Ruby gem (RubyGems; source in `ruby/`) | `textprov` |
 | CSS class prefix and data attribute | `prov`, `data-prov` |
 
 The class prefix stays `prov`. Changing it would break every stylesheet already
@@ -114,7 +114,9 @@ reassigned or removed.
 
 ## Remaining work
 
-The unscoped `textprov` packages have been published on npm and PyPI. The npm
+The unscoped `textprov` packages have been published on npm and PyPI. The Ruby
+gem [0.1.0](https://rubygems.org/gems/textprov/versions/0.1.0) was published on
+2026-09-20. The npm
 name is deliberately identical to the PyPI package name, even though the two
 ship different surface areas: taking the unscoped name on both registries
 closes off squatting and keeps the discovery story simple ("install
@@ -122,9 +124,9 @@ textprov"). The npm README states the ship-list difference in its opening line.
 
 1. Wait for one breakage report and add its case to `fixtures.json` before
    starting another port.
-2. Publish the Ruby gem to rubygems.org. A separate kramdown hook for Jekyll
-   and GitHub Pages, tested in a real site, remains a follow-up and is
-   deliberately not part of the core gem.
+2. Add a separate kramdown hook for Jekyll and GitHub Pages, tested in a real
+   site. This remains a follow-up and is deliberately not part of the published
+   core gem.
 3. Have the fork consume the published Python package instead of its vendored
    copy of the shared core, and read the registry from the package rather than
    `src/glyphs/provenance/mapping.json`. Until then the fork's copies are

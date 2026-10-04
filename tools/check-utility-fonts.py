@@ -22,7 +22,8 @@ from fontTools.pens.recordingPen import RecordingPen
 from fontTools.ttLib import TTFont
 from fontTools.ttLib.tables._g_l_y_f import USE_MY_METRICS
 
-SITE = Path(__file__).resolve().parent
+TOOLS = Path(__file__).resolve().parent
+SITE = TOOLS.parent / "site"
 SELECTORS = (0xE0100, 0xE0101)
 BASES = set(range(0x20, 0x100)) | set(range(0x2010, 0x2028)) | {0x20AC, 0x2122, 0x2212}
 
@@ -249,11 +250,11 @@ def check_font(entry, recorded, args, registry):
                 result = shape(hb_path, face, chr(base) + chr(selector))
                 require(len(result) == 1 and result[0][0] == variants[selector][base], f"{label_path} failed U+{base:04X}+U+{selector:05X}")
                 require(result[0][1:] == plain[0][1:], f"{label_path} changes shaped per-glyph advance/position")
-        for state in ("mixed", "edited", "unknown"):
-            text = chr(base) + chr(cp(registry["variation_selectors"][state]))
+        for selector in (0xE0102, 0xE0103, 0xE0104):
+            text = chr(base) + chr(selector)
             expected = shape(hb_source, source, text)
             for label_path, hb_path, face in paths:
-                require(shape(hb_path, face, text) == expected, f"{label_path} gives unsupported {state} a visual variant")
+                require(shape(hb_path, face, text) == expected, f"{label_path} gives non-TextProv U+{selector:05X} a visual variant")
     for text in ["AVATAR", "office ffi", "caf\u00e9 na\u00efve", "\u00c5ngstr\u00f6m", "12345.67 \u20ac", "\u201cHello\u201d\u2014debug"]:
         if all(ord(character) in bases for character in text):
             require(shape(hb_font, font, text) == shape(hb_source, source, text), f"plain shaping changed: {text}")
@@ -268,8 +269,8 @@ def check_font(entry, recorded, args, registry):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--sources", type=Path, default=SITE / "utility-font-sources.json")
-    parser.add_argument("--cache-dir", type=Path, default=SITE / ".font-cache")
+    parser.add_argument("--sources", type=Path, default=TOOLS / "utility-font-sources.json")
+    parser.add_argument("--cache-dir", type=Path, default=TOOLS / ".font-cache")
     parser.add_argument("--output", type=Path, default=SITE / "public/fonts/utility")
     parser.add_argument("--strict", action="store_true", help="all checks are always strict")
     args = parser.parse_args()

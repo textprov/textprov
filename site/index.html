@@ -47,10 +47,21 @@
         </div>
         <p class="note">The marks are already in this text. Revealing them changes only the display; the colours and underlines are this demo’s choices.</p>
 
+        <h3>Copy the file to your clipboard</h3>
+        <p class="note">Run the command for your system to copy the same UTF-8 passage, then paste it into another app or the reader below. These commands replace your current clipboard contents.</p>
+        <p class="note"><strong>macOS (Terminal)</strong></p>
+        <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | LANG=en_US.UTF-8 pbcopy</code></pre>
+        <p class="note"><strong>Windows (PowerShell)</strong> — decode UTF-8 explicitly to preserve the marks.</p>
+        <pre><code>[System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -UseBasicParsing 'https://textprov.org/samples/marked-text.txt').RawContentStream.ToArray()) | Set-Clipboard</code></pre>
+        <p class="note"><strong>Linux (Wayland)</strong> — requires <code>curl</code> and <code>wl-copy</code> from <code>wl-clipboard</code>.</p>
+        <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | wl-copy</code></pre>
+        <p class="note"><strong>Linux (X11)</strong> — requires <code>curl</code> and <code>xclip</code>.</p>
+        <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | xclip -selection clipboard</code></pre>
+
         <div class="text-file">
           <div>
             <a class="text-file-link" href="./samples/marked-text.txt" target="_blank" rel="noopener">Open the marked .txt file ↗</a>
-            <p class="note">The same passage, in plain UTF-8. Copy it into another app, then paste it below.</p>
+            <p class="note">Prefer to copy it manually? Open or download the plain UTF-8 file, then copy and paste it below.</p>
           </div>
           <a href="./samples/marked-text.txt" download>Download .txt</a>
         </div>
@@ -91,13 +102,13 @@
 
       <section id="proposal" aria-labelledby="proposal-title">
         <h2 id="proposal-title">A small vocabulary to build on</h2>
-        <p>The person–AI example starts with two labels. The current draft requires producers to support three:</p>
+        <p>TextProv has two provenance labels:</p>
         <table class="state-table">
           <thead><tr><th scope="col">Label</th><th scope="col">Code point</th><th scope="col">Declared origin</th></tr></thead>
           <tbody>
             <tr><th scope="row"><code>human</code></th><td><code>U+E0100</code></td><td>Human-written</td></tr>
             <tr><th scope="row"><code>ai</code></th><td><code>U+E0101</code></td><td>AI-generated</td></tr>
-            <tr><th scope="row"><code>mixed</code></th><td><code>U+E0102</code></td><td>Combined origin</td></tr>
+
           </tbody>
         </table>
         <p><strong>Shared labels; application choices.</strong> A label has a common meaning across tools. How it looks, whether to show it, and how it affects an application’s behaviour are up to that application.</p>
@@ -106,7 +117,7 @@
         <details>
           <summary>What is settled, and what is open?</summary>
           <p>Published code-point allocations remain reserved and will not be reassigned. Specification behaviour is experimental and may change before Stable.</p>
-          <p><code>edited</code> (<code>U+E0103</code>) and <code>unknown</code> (<code>U+E0104</code>) are reserved proposals. Current conforming producers must not emit them. Further vocabulary and editing rules are open for discussion; presentation and application policies remain integration choices.</p>
+          <p>Only <code>human</code> and <code>ai</code> are provenance states. Other variation selectors are ordinary non-TextProv text, not additional labels. Presentation and application policies remain integration choices.</p>
           <p>See the <a href="./spec.html#states">draft’s state definitions</a> and <a href="https://github.com/textprov/textprov/blob/main/docs/MATURITY.md">maturity policy</a>.</p>
         </details>
       </section>

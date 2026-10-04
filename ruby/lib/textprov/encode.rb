@@ -8,9 +8,11 @@ module Textprov
   module_function
 
   # Attach the selector for `state` after every markable cluster. Whitespace,
-  # clusters that already end in a provenance selector, lone selectors, and
+  # control-break clusters, clusters ending in a provenance selector, lone selectors, and
   # PUA provenance characters are left alone, so the operation is idempotent.
   def _mark(text, state, mode, selectors, pua2base, base2pua)
+    raise ArgumentError, "invalid provenance state: #{state.inspect}" unless GENERATED_STATES.include?(state)
+
     sel_cps = selectors.values.to_set
     selector = selectors[state].chr(Encoding::UTF_8)
     out = String.new(encoding: "UTF-8")
@@ -18,7 +20,8 @@ module Textprov
       first = cluster[0].ord
       last = cluster[-1].ord
       single = cluster.length == 1
-      if sel_cps.include?(last) || (single && pua2base.key?(first)) || blank?(cluster)
+      if sel_cps.include?(last) || (single && pua2base.key?(first)) || blank?(cluster) ||
+         Grapheme.control_like?(last)
         out << cluster
       elsif mode == "pua" && state == "ai" && single && base2pua.key?(first)
         out << base2pua[first].chr(Encoding::UTF_8)
@@ -55,23 +58,20 @@ module Textprov
     return text if from_mode == to_mode
 
     vs_ai = selectors["ai"]
-    chars = text.chars
     out = String.new(encoding: "UTF-8")
     if from_mode == "vs"
-      index = 0
-      while index < chars.length
-        char = chars[index]
-        index += 1
-        if index < chars.length && chars[index].ord == vs_ai && base2pua.key?(char.ord)
-          out << base2pua[char.ord].chr(Encoding::UTF_8)
-          index += 1
+      # Per cluster, not per code point: a base that shares its cluster with
+      # anything but its own selector has no PUA counterpart.
+      segments(text).each do |cluster|
+        if cluster.length == 2 && cluster[1].ord == vs_ai && base2pua.key?(cluster[0].ord)
+          out << base2pua[cluster[0].ord].chr(Encoding::UTF_8)
         else
-          out << char
+          out << cluster
         end
       end
       return out
     end
-    chars.each do |char|
+    text.each_char do |char|
       entry = pua2base[char.ord]
       if entry && entry[1] == "ai"
         out << entry[0].chr(Encoding::UTF_8)
@@ -86,7 +86,7 @@ module Textprov
   def _inspect(text, selectors, pua2base)
     sel2name = selectors.each_with_object({}) { |(name, cp), h| h[cp] = name }
     counts = { "unmarked" => 0, "human" => 0, "ai_vs" => 0, "ai_pua" => 0,
-               "unknown" => 0, "edited" => 0, "mixed" => 0, "whitespace" => 0 }
+               "whitespace" => 0 }
     unrecognised_selectors = []
     unrecognised_pua = []
 
@@ -120,7 +120,7 @@ module Textprov
     end
 
     lines = ["characters: #{chars.length}"]
-    %w[unmarked human ai_vs ai_pua unknown edited mixed whitespace].each do |key|
+    %w[unmarked human ai_vs ai_pua whitespace].each do |key|
       lines << "#{key}: #{counts[key]}"
     end
     sels = unrecognised_selectors.uniq.sort.map { |cp| format("U+%04X", cp) }.join(" ")

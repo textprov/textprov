@@ -1,7 +1,7 @@
 # TextProv
 
 TextProv is a protocol that lets p󠄁r󠄁o󠄁s󠄁e󠄁 carry labels about its origin:
-human-written, AI-generated, mixed, edited, or unknown. The labels are part of
+h󠄁u󠄁m󠄁a󠄁n󠄁-󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁 o󠄁r󠄁 A󠄁I󠄁-󠄁g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁.󠄁 The labels are part of
 the text, rather than metadata kept in a separate file or tied to one application.
 
 Use TextProv in an editor or content pipeline when you know how text was
@@ -56,8 +56,8 @@ application or person adding a mark decides which label applies.
 - **Unmarked does not mean human-written.** It means no label is present.
 
 The labels do not identify an author, model, or timestamp. Store that information
-separately if your workflow needs it. An explicit `unknown` label is also
-different from unmarked text: one records a claim; the other has no label.
+separately if your workflow needs it. O󠄁n󠄁l󠄁y󠄁 `human` a󠄁n󠄁d󠄁 `ai` a󠄁r󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁;󠄁
+u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁.󠄁
 
 The protocol gives applications a shared way to represent these labels, while
 leaving decision policies and presentation to each integration.
@@ -179,7 +179,7 @@ above. Website development instructions are in [`site/`](site/README.md).
 
 ## Status
 
-The protocol is **Draft 0.2**, last updated 2026-10-02. Specification behavior may
+The protocol is **Draft 0.2**, last updated 2026-10-03. Specification behavior may
 change incompatibly; implementers should pin an immutable revision. Published
 registry allocations remain reserved and are never reassigned or removed. The
 JavaScript package is published on [npm](https://www.npmjs.com/package/textprov),

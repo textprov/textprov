@@ -49,12 +49,52 @@ class TestProducerFixtures(unittest.TestCase):
 class TestProducerProperties(unittest.TestCase):
     """The properties a conforming producer must hold, per SPEC.md."""
 
+    def test_obsolete_states_are_rejected(self):
+        for state in ("mixed", "edited", "unknown"):
+            for mode in ("vs", "pua"):
+                for text in ("", "abc"):
+                    with self.subTest(state=state, mode=mode, text=text):
+                        with self.assertRaisesRegex(
+                            ValueError, "invalid provenance state"
+                        ):
+                            textprov.mark(text, state, mode)
+                        with self.assertRaisesRegex(
+                            ValueError, "invalid provenance state"
+                        ):
+                            textprov.mark_added(text, text, state, mode)
+                        with self.assertRaisesRegex(
+                            ValueError, "invalid provenance state"
+                        ):
+                            textprov.mark_added("", text, state, mode)
+
     def test_strip_undoes_mark(self):
         for mode in ("vs", "pua"):
             for state in textprov.GENERATED_STATES:
                 with self.subTest(mode=mode, state=state):
                     marked = textprov.mark(SOURCE, state, mode)
                     self.assertEqual(textprov.strip_marks(marked), SOURCE)
+
+    def test_mark_changes_marks_never_text(self):
+        # Rule 4 on input that already carries marks: the input itself cannot
+        # come back, but its text does.
+        pua_a = chr(textprov.default_mapping().base2pua[ord("A")])
+        for text in (
+            "A" + HUMAN + "B",
+            "A" + AI + "B",
+            AI + "A",
+            "A" + AI + AI,
+            "A " + AI + "B",
+            pua_a + "B",
+            "\u06001" + AI + "2",
+        ):
+            for mode in ("vs", "pua"):
+                for state in textprov.GENERATED_STATES:
+                    with self.subTest(text=text, mode=mode, state=state):
+                        marked = textprov.mark(text, state, mode)
+                        self.assertEqual(
+                            textprov.strip_marks(marked),
+                            textprov.strip_marks(text),
+                        )
 
     def test_mark_is_idempotent(self):
         for mode in ("vs", "pua"):
@@ -98,6 +138,36 @@ class TestProducerProperties(unittest.TestCase):
                     after and ord(after) in selectors,
                     f"whitespace at {index} was marked",
                 )
+
+    def test_control_break_clusters_are_never_marked(self):
+        controls = "\x00\x1c\x7f\u00ad\u200b\ufeff\u2060\u2028\u2029\r\n"
+        for mode in ("vs", "pua"):
+            for state in textprov.GENERATED_STATES:
+                with self.subTest(mode=mode, state=state):
+                    self.assertEqual(
+                        textprov.mark(controls, state, mode), controls
+                    )
+                    source = "a" + controls + "b"
+                    marked = textprov.mark(source, state, mode)
+                    self.assertEqual(textprov.mark(marked, state, mode), marked)
+                    self.assertEqual(textprov.strip_marks(marked), source)
+                    self.assertEqual(
+                        textprov.runs(marked, strip=True),
+                        [(state, "a"), (None, controls), (state, "b")],
+                    )
+                    self.assertEqual(
+                        textprov.mark_added("ab", source, state, mode), source
+                    )
+
+    def test_extending_format_characters_remain_markable(self):
+        for cluster in (
+            "a\u200c",
+            FAMILY,
+            "\u0600a",
+            "\U0001f3f4\U000e0067\U000e007f",
+        ):
+            with self.subTest(cluster=cluster):
+                self.assertEqual(textprov.mark(cluster), cluster + AI)
 
     def test_one_mark_per_cluster(self):
         for cluster in (FLAG, FAMILY, TONE, HEART, "é"):

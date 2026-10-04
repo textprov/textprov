@@ -1,6 +1,17 @@
-"""Build Latin-text demo subsets from the provenance Nerd Fonts fork.
+"""Build TextProv demo subsets of Agave P+ (Mono, fixed-width, Propo).
 
-Requires fonttools and brotli. Run: python3 build-demo-fonts.py /path/to/nerd-fonts
+The Agave P+ variants are shipped as raw TTFs (no upstream WOFF2, no ZIP), so
+this script operates on the on-disk TTFs directly. It renames the family,
+strips the legacy non-TextProv U+E0102 mapping, keeps U+E0100/U+E0101,
+and emits TTF + WOFF2 +
+ZIP bundles alongside the Maryheather and Zilla assets.
+
+Requires fonttools and brotli. Run:
+
+  python3 tools/build-agave-fonts.py /path/to/nerd-fonts
+
+Expects /path/to/nerd-fonts/temp/agave-pplus/AgaveNerdFont{Mono,,Propo}P+-Regular.ttf
+and /path/to/nerd-fonts/patched-fonts/Agave/LICENSE.
 """
 
 import hashlib
@@ -13,35 +24,23 @@ from fontTools import subset
 from fontTools.ttLib import TTFont
 
 source = Path(sys.argv[1])
-target = Path(__file__).parent / "public" / "fonts"
+target = Path(__file__).resolve().parent.parent / "site" / "public" / "fonts"
 target.mkdir(parents=True, exist_ok=True)
+agave_dir = source / "temp" / "agave-pplus"
 fonts = [
-    (
-        "maryheather",
-        "Maryheather",
-        "MaryheatherNerdFontPropoP+-Regular",
-        "merriweather.zip",
-        "Merriweather-1.582/OFL.txt",
-    ),
-    (
-        "zilla",
-        "Zilla Slab",
-        "ZillaSlabNerdFontPropoP+-Regular",
-        "zilla.zip",
-        "zilla-slab/LICENSE",
-    ),
+    ("agave-mono", "Agave Mono", "AgaveNerdFontMonoP+-Regular.ttf"),
+    ("agave-fixed", "Agave", "AgaveNerdFontP+-Regular.ttf"),
+    ("agave-propo", "Agave Propo", "AgaveNerdFontPropoP+-Regular.ttf"),
 ]
 manifest = []
-for folder, display, filename, archive, license_path in fonts:
-    root = source / "patched-fonts" / folder
-    original = root / "webfonts" / (filename + ".woff2")
+for stem_prefix, display, filename in fonts:
+    original = agave_dir / filename
     font = TTFont(original)
     options = subset.Options()
     options.name_IDs = ["*"]
     options.name_legacy = True
     options.name_languages = ["*"]
     worker = subset.Subsetter(options=options)
-    # The source's E0102 is a legacy unknown glyph, not TextProv 0.1 mixed.
     worker.populate(unicodes=list(range(0x20, 0x100)) + [0xE0100, 0xE0101])
     worker.subset(font)
     family = display + " TextProv Demo P9E"
@@ -78,13 +77,12 @@ for folder, display, filename, archive, license_path in fonts:
             cp == ord("A") and glyph
             for cp, glyph in tables[0].uvsDict[selector]
         )
-    stem = folder + "-textprov-demo"
+    stem = stem_prefix + "-textprov-demo"
     for flavor, extension in [(None, ".ttf"), ("woff2", ".woff2")]:
         font.flavor = flavor
         font.save(target / (stem + extension))
-    with zipfile.ZipFile(root / archive) as upstream:
-        license_text = upstream.read(license_path)
-    (target / (folder + "-OFL.txt")).write_bytes(license_text)
+    license_text = (source / "patched-fonts" / "Agave" / "LICENSE").read_bytes()
+    (target / "agave-OFL.txt").write_bytes(license_text)
     nerd_license = (source / "LICENSE").read_bytes()
     (target / "NERD-FONTS-LICENSE.txt").write_bytes(nerd_license)
     with zipfile.ZipFile(
@@ -93,7 +91,7 @@ for folder, display, filename, archive, license_path in fonts:
         for name in [
             stem + ".ttf",
             stem + ".woff2",
-            folder + "-OFL.txt",
+            "agave-OFL.txt",
             "NERD-FONTS-LICENSE.txt",
         ]:
             bundle.write(target / name, name)
@@ -105,4 +103,9 @@ for folder, display, filename, archive, license_path in fonts:
             "selectors": ["U+E0100", "U+E0101"],
         }
     )
-(target / "sources.json").write_text(json.dumps(manifest, indent=2) + "\n")
+
+sources_path = target / "sources.json"
+existing = json.loads(sources_path.read_text()) if sources_path.exists() else []
+existing = [e for e in existing if not e["family"].startswith("Agave ")]
+existing.extend(manifest)
+sources_path.write_text(json.dumps(existing, indent=2) + "\n")

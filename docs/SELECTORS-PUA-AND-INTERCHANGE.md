@@ -39,7 +39,7 @@ The sequence means “the grapheme `A`, with AI provenance.” `U+E0101` is a
 standardized variation-selector code point, but TextProv's use of it is a
 private convention rather than a Unicode-registered variation sequence.
 
-In PUA encoding, registry version 0.1 can replace that sequence with one
+In PUA encoding, registry version 0󠄁.󠄁2󠄁 can replace that sequence with one
 Supplementary Private Use Area-B code point:
 
 ```text
@@ -207,7 +207,7 @@ output path you can overwrite; `-o` replaces an existing file. If the Python
 package is installed in your environment, omit `PYTHONPATH=python` and run from
 the directory containing your document.
 
-Registry version 0.1 has PUA assignments only for the AI state and supported base
+Registry version 0󠄁.󠄁2󠄁 has PUA assignments only for the AI state and supported base
 characters in `U+0021`–`U+00FF`, excluding whitespace, control, and format
 characters. Unsupported grapheme clusters remain selector-encoded, so a
 converted file may contain both forms.

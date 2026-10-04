@@ -9,89 +9,116 @@ const specPath = resolve(repoRoot, "SPEC.md");
 const templatePath = resolve(here, "spec.template.html");
 const outPath = resolve(here, "spec.html");
 
-const source = readFileSync(specPath, "utf8");
-
-// Strip the leading "# SPEC.md" marker, the following horizontal rule, and the
-// "# TextProv protocol specification" heading — the page chrome supplies the
-// title, and the rule would double up with the H2 top border below.
-const body = source.replace(/^# SPEC\.md\s*\n+(?:---\s*\n+)?# [^\n]*\n+/, "");
-
-const renderer = new marked.Renderer();
-
-// Build the ToC while rendering the headings.
-const toc = [];
-const slugCounts = new Map();
-function slug(text) {
-  const base = text
-    .toLowerCase()
-    .replace(/[^\w\s.-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-");
-  const count = slugCounts.get(base) ?? 0;
-  slugCounts.set(base, count + 1);
-  return count === 0 ? base : `${base}-${count}`;
+// The status block at the top of SPEC.md is the only source for the versions
+// and date in the page chrome. Its prose carries provenance marks, so the
+// variation selectors are removed before matching.
+export function specMeta(source) {
+  const plain = source.replace(/[\u{FE00}-\u{FE0F}\u{E0100}-\u{E01EF}]/gu, "");
+  const find = (pattern) => plain.match(pattern)?.[1];
+  return {
+    SPEC_VERSION: find(/Specification version: (\d+(?:\.\d+)+)/),
+    REGISTRY_VERSION: find(/Registry version: (\d+(?:\.\d+)+)/),
+    UPDATED: find(/Updated: (\d{4}-\d{2}-\d{2})/),
+  };
 }
 
-const counters = [0, 0, 0, 0, 0, 0];
-function sectionNumber(level) {
-  const idx = level - 2; // h2 -> 0, h3 -> 1, ...
-  if (idx < 0) return "";
-  counters[idx] += 1;
-  for (let i = idx + 1; i < counters.length; i += 1) counters[i] = 0;
-  return counters.slice(0, idx + 1).join(".");
-}
+export function renderSpec(source, template) {
+  // Strip the leading "# SPEC.md" marker, the following horizontal rule, and the
+  // "# TextProv protocol specification" heading — the page chrome supplies the
+  // title, and the rule would double up with the H2 top border below.
+  const body = source.replace(/^# SPEC\.md\s*\n+(?:---\s*\n+)?# [^\n]*\n+/, "");
 
-renderer.heading = ({ tokens, depth }) => {
-  const text = tokens.map((t) => t.raw ?? t.text ?? "").join("");
-  const id = slug(text);
-  const inner = marked.parser(tokens);
-  if (depth === 1) {
-    return `<h1 id="${id}">${inner}</h1>\n`;
+  const renderer = new marked.Renderer();
+
+  // Documentation lives in the repository, not in the published site's paths.
+  renderer.link = function (token) {
+    const href = token.href.replace(
+      /^(?:\.\/)?docs\//,
+      "https://github.com/textprov/textprov/blob/main/docs/",
+    );
+    return marked.Renderer.prototype.link.call(this, { ...token, href });
+  };
+
+  // Build the ToC while rendering the headings.
+  const toc = [];
+  const slugCounts = new Map();
+  function slug(text) {
+    const base = text
+      .toLowerCase()
+      .replace(/[^\w\s.-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-");
+    const count = slugCounts.get(base) ?? 0;
+    slugCounts.set(base, count + 1);
+    return count === 0 ? base : `${base}-${count}`;
   }
-  const number = sectionNumber(depth);
-  toc.push({ id, text, depth, number });
-  const numberSpan = number
-    ? `<span class="spec-section-number" aria-hidden="true">${number}</span> `
-    : "";
-  const anchor = `<a class="spec-anchor" href="#${id}" aria-label="Permalink to this section">#</a>`;
-  return `<h${depth} id="${id}">${numberSpan}${inner} ${anchor}</h${depth}>\n`;
-};
 
-marked.setOptions({ renderer, mangle: false, headerIds: false });
+  const counters = [0, 0, 0, 0, 0, 0];
+  function sectionNumber(level) {
+    const idx = level - 2; // h2 -> 0, h3 -> 1, ...
+    if (idx < 0) return "";
+    counters[idx] += 1;
+    for (let i = idx + 1; i < counters.length; i += 1) counters[i] = 0;
+    return counters.slice(0, idx + 1).join(".");
+  }
 
-const rendered = marked.parse(body);
-
-function renderToc(items) {
-  if (items.length === 0) return "";
-  const root = { depth: 1, children: [] };
-  const stack = [root];
-  for (const item of items) {
-    while (stack.length > 1 && stack[stack.length - 1].depth >= item.depth) {
-      stack.pop();
+  renderer.heading = ({ tokens, depth }) => {
+    const text = tokens.map((t) => t.raw ?? t.text ?? "").join("");
+    const id = slug(text);
+    const inner = renderer.parser.parseInline(tokens);
+    if (depth === 1) {
+      return `<h1 id="${id}">${inner}</h1>\n`;
     }
-    const node = { ...item, children: [] };
-    stack[stack.length - 1].children.push(node);
-    stack.push(node);
+    const number = sectionNumber(depth);
+    toc.push({ id, text, depth, number });
+    const numberSpan = number
+      ? `<span class="spec-section-number" aria-hidden="true">${number}</span> `
+      : "";
+    const anchor = `<a class="spec-anchor" href="#${id}" aria-label="Permalink to this section">#</a>`;
+    return `<h${depth} id="${id}">${numberSpan}${inner} ${anchor}</h${depth}>\n`;
+  };
+
+  const rendered = marked.parse(body, { renderer, mangle: false, headerIds: false });
+
+  function renderToc(items) {
+    if (items.length === 0) return "";
+    const root = { depth: 1, children: [] };
+    const stack = [root];
+    for (const item of items) {
+      while (stack.length > 1 && stack[stack.length - 1].depth >= item.depth) {
+        stack.pop();
+      }
+      const node = { ...item, children: [] };
+      stack[stack.length - 1].children.push(node);
+      stack.push(node);
+    }
+    function walk(node) {
+      if (node.children.length === 0) return "";
+      const items = node.children
+        .map(
+          (child) =>
+            `<li><a href="#${child.id}"><span class="spec-toc-num">${child.number}</span> <span class="spec-toc-text">${child.text}</span></a>${walk(child)}</li>`,
+        )
+        .join("");
+      return `<ol class="spec-toc-list spec-toc-depth-${node.depth}">${items}</ol>`;
+    }
+    return walk(root);
   }
-  function walk(node) {
-    if (node.children.length === 0) return "";
-    const items = node.children
-      .map(
-        (child) =>
-          `<li><a href="#${child.id}"><span class="spec-toc-num">${child.number}</span> <span class="spec-toc-text">${child.text}</span></a>${walk(child)}</li>`,
-      )
-      .join("");
-    return `<ol class="spec-toc-list spec-toc-depth-${node.depth}">${items}</ol>`;
-  }
-  return walk(root);
+
+  const tocHtml = renderToc(toc);
+
+  const meta = specMeta(source);
+  const chrome = template.replace(/<!-- (SPEC_VERSION|REGISTRY_VERSION|UPDATED) -->/g, (_, key) => {
+    if (!meta[key]) throw new Error(`SPEC.md status block has no ${key}`);
+    return meta[key];
+  });
+
+  return chrome.replace("<!-- TOC -->", tocHtml).replace("<!-- SPEC -->", rendered);
 }
 
-const tocHtml = renderToc(toc);
-
-const template = readFileSync(templatePath, "utf8");
-const html = template
-  .replace("<!-- TOC -->", tocHtml)
-  .replace("<!-- SPEC -->", rendered);
-
-writeFileSync(outPath, html);
-console.log(`Wrote ${outPath}`);
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const source = readFileSync(specPath, "utf8");
+  const template = readFileSync(templatePath, "utf8");
+  writeFileSync(outPath, renderSpec(source, template));
+  console.log(`Wrote ${outPath}`);
+}

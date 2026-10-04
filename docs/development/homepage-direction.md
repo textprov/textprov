@@ -39,9 +39,9 @@ T󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 n󠄁e󠄁e󠄁d󠄁 s󠄁h󠄁a󠄁r�
 p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 w󠄁h󠄁a󠄁t󠄁 t󠄁o󠄁 d󠄁o󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁d󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁.󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 p󠄁r󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁
 a󠄁 c󠄁o󠄁l󠄁o󠄁u󠄁r󠄁,󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁,󠄁 t󠄁r󠄁u󠄁s󠄁t󠄁 l󠄁e󠄁v󠄁e󠄁l󠄁,󠄁 o󠄁r󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁 r󠄁e󠄁s󠄁p󠄁o󠄁n󠄁s󠄁e󠄁.󠄁
 
-T󠄁h󠄁e󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 d󠄁r󠄁a󠄁f󠄁t󠄁 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁s󠄁 `human` (󠄁`U+E0100`)󠄁,󠄁 `ai` (󠄁`U+E0101`)󠄁,󠄁 a󠄁n󠄁d󠄁 `mixed`
-(󠄁`U+E0102`)󠄁.󠄁 T󠄁h󠄁e󠄁 `edited` (󠄁`U+E0103`)󠄁 a󠄁n󠄁d󠄁 `unknown` (󠄁`U+E0104`)󠄁 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁
-r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁s󠄁;󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 c󠄁o󠄁n󠄁f󠄁o󠄁r󠄁m󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁r󠄁s󠄁 m󠄁u󠄁s󠄁t󠄁 n󠄁o󠄁t󠄁 e󠄁m󠄁i󠄁t󠄁 t󠄁h󠄁e󠄁m󠄁.󠄁 P󠄁u󠄁b󠄁l󠄁i󠄁s󠄁h󠄁e󠄁d󠄁
+T󠄁h󠄁e󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 d󠄁r󠄁a󠄁f󠄁t󠄁 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 `human` (󠄁`U+E0100`)󠄁 a󠄁n󠄁d󠄁 `ai` (󠄁`U+E0101`)󠄁.󠄁
+N󠄁o󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁 o󠄁r󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁.󠄁 G󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁n󠄁d󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁
+n󠄁o󠄁n󠄁-󠄁n󠄁o󠄁r󠄁m󠄁a󠄁t󠄁i󠄁v󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁s󠄁,󠄁 n󠄁o󠄁t󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁c󠄁o󠄁l󠄁 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁.󠄁 P󠄁u󠄁b󠄁l󠄁i󠄁s󠄁h󠄁e󠄁d󠄁
 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁d󠄁,󠄁 w󠄁h󠄁i󠄁l󠄁e󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁u󠄁r󠄁 m󠄁a󠄁y󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁
 S󠄁t󠄁a󠄁b󠄁l󠄁e󠄁.󠄁 U󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 n󠄁o󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁 a󠄁n󠄁d󠄁 m󠄁u󠄁s󠄁t󠄁 n󠄁o󠄁t󠄁 b󠄁e󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁e󠄁d󠄁 a󠄁s󠄁 i󠄁m󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁l󠄁y󠄁
 h󠄁u󠄁m󠄁a󠄁n󠄁-󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁.󠄁
@@ -66,8 +66,9 @@ i󠄁t󠄁s󠄁 d󠄁o󠄁w󠄁n󠄁l󠄁o󠄁a󠄁d󠄁a󠄁b󠄁l󠄁e󠄁 p�
 ## M󠄁a󠄁k󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁n󠄁c󠄁r󠄁e󠄁t󠄁e󠄁
 
 I󠄁n󠄁v󠄁i󠄁t󠄁e󠄁 r󠄁e󠄁a󠄁d󠄁e󠄁r󠄁s󠄁 t󠄁o󠄁 t󠄁r󠄁y󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 s󠄁u󠄁r󠄁v󠄁i󠄁v󠄁e󠄁 o󠄁r󠄁 d󠄁i󠄁s󠄁a󠄁p󠄁p󠄁e󠄁a󠄁r󠄁,󠄁
-d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁 e󠄁d󠄁i󠄁t󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁d󠄁 m󠄁i󠄁x󠄁e󠄁d󠄁-󠄁o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁a󠄁s󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁 o󠄁n󠄁 t󠄁h󠄁e󠄁 d󠄁r󠄁a󠄁f󠄁t󠄁.󠄁 K󠄁e󠄁e󠄁p󠄁 l󠄁i󠄁n󠄁k󠄁s󠄁 t󠄁o󠄁
-t󠄁h󠄁e󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁,󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 e󠄁a󠄁s󠄁y󠄁 t󠄁o󠄁 f󠄁i󠄁n󠄁d󠄁.󠄁
+d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁 e󠄁d󠄁i󠄁t󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁d󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁 c󠄁o󠄁m󠄁b󠄁i󠄁n󠄁i󠄁n󠄁g󠄁 h󠄁u󠄁m󠄁a󠄁n󠄁 a󠄁n󠄁d󠄁 A󠄁I󠄁 t󠄁e󠄁x󠄁t󠄁,󠄁 a󠄁n󠄁d󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁 o󠄁n󠄁 t󠄁h󠄁e󠄁
+d󠄁r󠄁a󠄁f󠄁t󠄁.󠄁 K󠄁e󠄁e󠄁p󠄁 l󠄁i󠄁n󠄁k󠄁s󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁,󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁
+d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 e󠄁a󠄁s󠄁y󠄁 t󠄁o󠄁 f󠄁i󠄁n󠄁d󠄁.󠄁
 
 K󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁 e󠄁s󠄁s󠄁e󠄁n󠄁t󠄁i󠄁a󠄁l󠄁 q󠄁u󠄁a󠄁l󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 n󠄁e󠄁a󠄁r󠄁 t󠄁h󠄁e󠄁 d󠄁e󠄁m󠄁o󠄁n󠄁s󠄁t󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁:󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 s󠄁u󠄁p󠄁p󠄁l󠄁i󠄁e󠄁d󠄁
 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁;󠄁 t󠄁h󠄁e󠄁y󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 d󠄁e󠄁t󠄁e󠄁c󠄁t󠄁 A󠄁I󠄁 w󠄁r󠄁i󠄁t󠄁i󠄁n󠄁g󠄁 o󠄁r󠄁 v󠄁e󠄁r󠄁i󠄁f󠄁y󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁s󠄁h󠄁i󠄁p󠄁.󠄁 T󠄁h󠄁e󠄁y󠄁 s󠄁u󠄁r󠄁v󠄁i󠄁v󠄁e󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁

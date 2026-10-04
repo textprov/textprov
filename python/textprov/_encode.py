@@ -10,7 +10,8 @@ Extracted from bin/scripts/nfprov.py in the nerd-fonts provenance fork, which
 uses these operations to mark its example text and keeps the font patcher.
 """
 
-from ._core import default_mapping, segments
+from ._core import GENERATED_STATES, _blank, default_mapping, segments
+from ._grapheme import _control_like
 
 
 def _mark(text, state, mode, selectors, pua2base, base2pua):
@@ -19,19 +20,26 @@ def _mark(text, state, mode, selectors, pua2base, base2pua):
     A cluster is an extended grapheme cluster, so the selector goes after
     combining marks, emoji variation selectors, skin-tone modifiers, ZWJ
     joins, regional-indicator pairs, conjuncts and Hangul jamo, and a cluster
-    is marked once. Whitespace, clusters that already end in a provenance
+    is marked once. Whitespace, control-break clusters, clusters that already end in a provenance
     selector, lone selectors, and PUA provenance characters are left alone
     (the operation is idempotent). With mode='pua' only single-code-point
     bases present in mapping.json are replaced by their PUA counterpart;
     every other base keeps the VS_AI encoding instead.
     """
+    if state not in GENERATED_STATES:
+        raise ValueError(f"invalid provenance state: {state!r}")
     sel_cps = set(selectors.values())
     selector = chr(selectors[state])
     out = []
     for cluster in segments(text):
         first, last = ord(cluster[0]), ord(cluster[-1])
         single = len(cluster) == 1
-        if last in sel_cps or (single and first in pua2base) or cluster.isspace():
+        if (
+            last in sel_cps
+            or (single and first in pua2base)
+            or _blank(cluster)
+            or _control_like(last)
+        ):
             out.append(cluster)  # already marked, a lone selector, or inert
         elif mode == "pua" and state == "ai" and single and first in base2pua:
             out.append(chr(base2pua[first]))
@@ -71,21 +79,18 @@ def _convert(text, from_mode, to_mode, selectors, pua2base, base2pua):
         return text
     vs_ai = selectors["ai"]
     if from_mode == "vs":
-        chars = list(text)
+        # Per cluster, not per code point: a base that shares its cluster with
+        # anything but its own selector has no PUA counterpart.
         out = []
-        index = 0
-        while index < len(chars):
-            char = chars[index]
-            index += 1
+        for cluster in segments(text):
             if (
-                index < len(chars)
-                and ord(chars[index]) == vs_ai
-                and ord(char) in base2pua
+                len(cluster) == 2
+                and ord(cluster[1]) == vs_ai
+                and ord(cluster[0]) in base2pua
             ):
-                out.append(chr(base2pua[ord(char)]))
-                index += 1
+                out.append(chr(base2pua[ord(cluster[0])]))
             else:
-                out.append(char)
+                out.append(cluster)
         return "".join(out)
     out = []
     for char in text:
@@ -107,9 +112,6 @@ def _inspect(text, selectors, pua2base):
             "human",
             "ai_vs",
             "ai_pua",
-            "unknown",
-            "edited",
-            "mixed",
             "whitespace",
         ),
         0,
@@ -128,18 +130,18 @@ def _inspect(text, selectors, pua2base):
                 counts["ai_pua"] += 1
             elif 0x100000 <= cp <= 0x10FFFD:
                 unrecognised_pua.add(cp)
-            elif cluster.isspace():
+            elif _blank(cluster):
                 counts["whitespace"] += 1
             else:
                 counts["unmarked"] += 1
-        elif last in sel2name and cluster[:-1].isspace():
+        elif last in sel2name and _blank(cluster[:-1]):
             # Whitespace cannot carry a mark; the selector is stray.
             counts["whitespace"] += 1
             unrecognised_selectors.add(last)
         elif last in sel2name:
             name = sel2name[last]
             counts["ai_vs" if name == "ai" else name] += 1
-        elif cluster.isspace():
+        elif _blank(cluster):
             counts["whitespace"] += 1
         else:
             counts["unmarked"] += 1
@@ -150,9 +152,6 @@ def _inspect(text, selectors, pua2base):
         "human",
         "ai_vs",
         "ai_pua",
-        "unknown",
-        "edited",
-        "mixed",
         "whitespace",
     ):
         lines.append(f"{key}: {counts[key]}")
@@ -177,8 +176,8 @@ def mark(text, state="ai", mode="vs", mapping=None):
     """Mark every unmarked cluster in `text` with `state`.
 
     `mode` is "vs" for the selector encoding or "pua" for the PUA encoding.
-    Idempotent: marking marked text returns it unchanged. Whitespace is never
-    marked. See ../SPEC.md, Producer.
+    Idempotent: marking marked text returns it unchanged. Whitespace and
+    control-break clusters are never marked. See ../SPEC.md, Producer.
     """
     mapping = mapping or default_mapping()
     return _mark(
@@ -204,7 +203,7 @@ def convert(text, from_mode, to_mode, mapping=None):
     """Convert the ai state between the "vs" and "pua" encodings.
 
     Every other state and every unmarked character passes through: only ai has
-    a PUA allocation in registry version 0.1.
+    a PUA allocation in registry version 0.2.
     """
     mapping = mapping or default_mapping()
     return _convert(
