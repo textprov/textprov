@@ -7,6 +7,7 @@ Markdown protection is a conservative heuristic, not a complete parser.
 from __future__ import annotations
 
 import re
+from bisect import bisect_left, bisect_right
 from difflib import SequenceMatcher
 
 from . import default_mapping, mark, runs, segments
@@ -76,15 +77,17 @@ def merge(old_raw, new_raw, carry):
     """Align `new_raw` to `old_raw` and flag what is new.
 
     Lines are diffed on their unmarked text. Within a changed hunk the common
-    prefix and suffix count as unchanged and only the middle is flagged: a
-    character diff would call the letters a rewritten sentence happens to share
-    unchanged. Returns (text, flags), one flag per code point of text.
+    prefix and suffix count as unchanged only for whole source clusters; the
+    middle and copied cluster fragments are flagged. A character diff would
+    call the letters a rewritten sentence happens to share unchanged.
+    Returns (text, flags), one flag per code point of text.
 
     With `carry`, unchanged text is taken from `old_raw`, so marks the agent
     failed to retype survive. Without it `new_raw` is kept as found on disk.
     """
     old_plain, old_index = plain_map(old_raw)
     new_plain, new_index = plain_map(new_raw)
+    old_boundaries = line_offsets(segments(old_plain))
     old_lines = old_plain.splitlines(True)
     new_lines = new_plain.splitlines(True)
     old_at = line_offsets(old_lines)
@@ -96,10 +99,21 @@ def merge(old_raw, new_raw, carry):
         flags.extend([flag] * len(text))
 
     def kept(old_range, new_range):
+        start, end = old_range
+        left = min(end, old_boundaries[bisect_left(old_boundaries, start)])
+        right = max(left, old_boundaries[bisect_right(old_boundaries, end) - 1])
+        # A kept fragment is not an unchanged cluster. In particular, deletion
+        # can leave only whitespace with its old selector and no added text.
+        emit(old_plain[start:left], True)
         if carry:
-            emit(raw_span(old_raw, old_index, *old_range), False)
+            emit(raw_span(old_raw, old_index, left, right), False)
         else:
-            emit(raw_span(new_raw, new_index, *new_range), False)
+            offset = new_range[0] - start
+            emit(
+                raw_span(new_raw, new_index, left + offset, right + offset),
+                False,
+            )
+        emit(old_plain[right:end], True)
 
     matcher = SequenceMatcher(None, old_lines, new_lines, autojunk=False)
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():
@@ -321,40 +335,35 @@ def finalize(raw, flags, markdown, shingles, min_words):
     added = [flags[position] for position in index]
     protected = markdown_protected(plain) if markdown else [False] * len(plain)
     human = human_mask(plain, added, shingles, min_words)
-    want: list[str | None] = [None] * len(raw)
-    for k, position in enumerate(index):
-        if added[k] and not protected[k]:
-            want[position] = "human" if human[k] else "ai"
-
-    out, segment, state = [], [], None
-
-    def flush():
-        text = "".join(segment)
-        out.append(mark(text, state=state) if state else text)
-        del segment[:]
-
-    position = 0
-    for cluster in segments(raw):
-        cp = ord(cluster[0])
-        base = (
-            cluster[:-1]
-            if len(cluster) > 1 and ord(cluster[-1]) in SELECTORS
-            else cluster
-        )
-        if (
-            len(cluster) == 1 and (cp in SELECTORS or cp in PUA)
-        ) or base.isspace():
-            cluster_state = (
-                state  # inert: a lone selector, a PUA mark, whitespace
+    out = []
+    start = 0
+    # Marks can interrupt a join (Hangul, RI pairs) or sit before a newly added
+    # combining mark. Segment the plain result, not the stale marked spelling.
+    for cluster in segments(plain):
+        end = start + len(cluster)
+        text = raw_span(raw, index, start, end)
+        if any(added[start:end]):
+            last = index[end] if end < len(index) else len(raw)
+            supplied_mark = (
+                all(added[start:end])
+                and flags[last - 1]
+                and (
+                    (len(text) == 1 and ord(text) in PUA)
+                    or (ord(text[-1]) in SELECTORS and text[:-1] == cluster)
+                )
+                and mark(cluster) != cluster
             )
-        else:
-            cluster_state = want[position]
-        if cluster_state != state:
-            flush()
-            state = cluster_state
-        segment.extend(cluster)
-        position += len(cluster)
-    flush()
+            if not supplied_mark:
+                # A changed cluster cannot inherit an old claim on any part of
+                # it. The producer enforces whitespace/control eligibility.
+                state = "human" if all(human[start:end]) else "ai"
+                text = (
+                    cluster
+                    if any(protected[start:end])
+                    else mark(cluster, state=state)
+                )
+        out.append(text)
+        start = end
     return "".join(out)
 
 
@@ -383,6 +392,23 @@ class Ambiguous(Exception):
     pass
 
 
+def edit_bounds(plain, start, end, replacement, boundaries):
+    """Expand an edit to boundaries shared by the source and final clusters."""
+    after = plain[:start] + replacement + plain[end:]
+    final_boundaries = line_offsets(segments(after))
+    delta = len(replacement) - (end - start)
+    first, last = start, end
+    while True:
+        a = boundaries[bisect_right(boundaries, first) - 1]
+        b = boundaries[bisect_left(boundaries, last)]
+        first = final_boundaries[bisect_right(final_boundaries, a) - 1]
+        last = (
+            final_boundaries[bisect_left(final_boundaries, b + delta)] - delta
+        )
+        if (first, last) == (a, b):
+            return first, last
+
+
 def rewrite_edit(
     raw,
     old_string,
@@ -394,7 +420,8 @@ def rewrite_edit(
     """Translate a replacement so it applies to a marked file and marks what it adds.
 
     Returns (old_string, new_string) to apply to the raw text, or None when
-    `old_string` is absent and the tool should report that itself.
+    `old_string` is absent and the tool should report that itself. The pair may
+    include neighbouring context so source and final graphemes stay whole.
     """
     if min_words < 1:
         raise ValueError("min_words must be positive")
@@ -417,12 +444,46 @@ def rewrite_edit(
             "provenance marks are ignored. Add surrounding context to make "
             "it unique, or use replace_all."
         )
+    boundaries = line_offsets(segments(plain))
+    replacement, _ = plain_map(new_string)
     results = set()
+    previous_last = -1
     for start in found:
         end = start + len(needle)
-        first = index[start] if start else 0
-        last = index[end] if end < len(index) else len(raw)
-        text, flags = merge(raw[first:last], new_string, carry=True)
+        a, b = edit_bounds(plain, start, end, replacement, boundaries)
+        first = index[a] if a else 0
+        last = index[b] if b < len(index) else len(raw)
+        if first < previous_last:
+            raise Ambiguous(
+                "replace_all would touch overlapping grapheme clusters. "
+                "Edit them one at a time."
+            )
+        previous_last = last
+        # Unchanged context is restored by merge; changed context must not
+        # bring the source cluster's selector into the replacement.
+        expanded = plain[a:start] + new_string + plain[end:b]
+        if a < start or b > end:
+            expanded_plain, expanded_index = plain_map(expanded)
+            new_start = start - a
+            new_end = new_start + len(replacement)
+            parts, position = [], 0
+            for cluster in segments(expanded_plain):
+                stop = position + len(cluster)
+                # A supplied mark on only part of a joined cluster cannot
+                # assert the state of the source context it joined.
+                joins_context = (
+                    position < new_end
+                    and stop > new_start
+                    and (position < new_start or stop > new_end)
+                )
+                parts.append(
+                    cluster
+                    if joins_context
+                    else raw_span(expanded, expanded_index, position, stop)
+                )
+                position = stop
+            expanded = "".join(parts)
+        text, flags = merge(raw[first:last], expanded, carry=True)
         tail = len(raw) - last
         whole = finalize(
             raw[:first] + text + raw[last:],
@@ -435,7 +496,7 @@ def rewrite_edit(
     if len(results) > 1:
         raise Ambiguous(
             "replace_all would touch occurrences that carry different "
-            "provenance marks or sit in different markdown contexts. Edit "
-            "them one at a time."
+            "provenance marks or sit in different grapheme or markdown "
+            "contexts. Edit them one at a time."
         )
     return results.pop()

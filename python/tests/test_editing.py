@@ -62,6 +62,13 @@ class TestRemark(unittest.TestCase):
         once = remark("", "plain prose here\n")
         self.assertEqual(remark(once, once), once)
 
+    def test_deleted_prepend_rechecks_the_surviving_cluster(self):
+        raw = textprov.mark("\u0600 👍", "human")
+        out = remark(raw, " 👍")
+        self.assertEqual(out, " " + textprov.mark("👍", "human"))
+        self.assertEqual(textprov.strip_marks(out), " 👍")
+        self.assertEqual(states(out), [(None, " "), ("human", "👍")])
+
     def test_without_carry_disk_content_wins(self):
         old = ai("was marked") + "\n"
         self.assertEqual(
@@ -295,6 +302,272 @@ class TestEdit(unittest.TestCase):
                 raw = ai("before") + " " + math + " " + ai("after")
                 out, _ = self.apply(raw, r"\rho", r"\alpha")
                 self.assertEqual(out, raw.replace(r"\rho", r"\alpha"))
+
+    def assert_valid_selectors(self, marked):
+        for cluster in textprov.segments(marked):
+            selectors = [c for c in cluster if c in (AI, HUMAN)]
+            if selectors:
+                self.assertEqual(selectors, [cluster[-1]])
+                self.assertGreater(len(cluster), 1)
+                base = cluster[:-1]
+                self.assertEqual(ai(base), base + AI)
+        self.assertEqual(
+            [textprov.strip_marks(c) for c in textprov.segments(marked)],
+            textprov.segments(textprov.strip_marks(marked)),
+        )
+
+    def test_partial_grapheme_edits_relabel_the_changed_clusters(self):
+        for source, old, new in (
+            ("e\u0301", "e", "X"),
+            ("e\u0301", "\u0301", "\u0300"),
+            ("e\u0301", "\u0301", ""),
+            ("👩\u200d💻", "💻", "🔬"),
+            ("👩\u200d💻", "\u200d", ""),
+            ("👍🏽", "🏽", "🏻"),
+            ("👍🏽", "🏽", ""),
+            ("का", "ा", "ि"),
+            ("क्ष", "ष", "त"),
+            ("\u1100\u1161\u11a8", "\u1161", "\u1162"),
+            ("\u1100\u1161\u11a8", "\u1161", ""),
+            ("🇨🇦", "🇦", "🇧"),
+            ("❤\ufe0f", "\ufe0f", "\ufe0e"),
+        ):
+            for state in (None, "human", "ai"):
+                with self.subTest(source=source, old=old, state=state):
+                    marked = textprov.mark(source, state) if state else source
+                    raw = (
+                        textprov.mark("L ", "human")
+                        + marked
+                        + textprov.mark(" R", "human")
+                    )
+                    changed = source.replace(old, new)
+                    out, _ = self.apply(raw, old, new)
+                    self.assertEqual(
+                        textprov.strip_marks(out), "L " + changed + " R"
+                    )
+                    self.assertEqual(
+                        states(out),
+                        [
+                            ("human", "L"),
+                            (None, " "),
+                            ("ai", changed),
+                            (None, " "),
+                            ("human", "R"),
+                        ],
+                    )
+                    self.assert_valid_selectors(out)
+
+    def test_edits_that_join_neighbouring_clusters_relabel_the_whole_cluster(
+        self,
+    ):
+        for source, old, new, changed in (
+            ("aX", "X", "\u0301", "a\u0301"),
+            ("👩X", "X", "\u200d💻", "👩\u200d💻"),
+            ("\u1100X", "X", "\u1161", "\u1100\u1161"),
+            ("Xa", "X", "\u0600", "\u0600a"),
+            ("e \u0301", " ", "", "e\u0301"),
+            ("👩 💻", " ", "\u200d", "👩\u200d💻"),
+            ("\u1100 \u1161", " ", "", "\u1100\u1161"),
+            ("🇦🇧🇨🇩", "🇦", "", "🇧🇨🇩"),
+        ):
+            with self.subTest(source=source):
+                raw = textprov.mark(source, "human")
+                out, _ = self.apply(raw, old, new)
+                self.assertEqual(textprov.strip_marks(out), changed)
+                self.assertEqual(states(out), [("ai", changed)])
+                self.assert_valid_selectors(out)
+
+    def test_unchanged_graphemes_keep_their_marks(self):
+        kept = textprov.mark("e\u0301 👩\u200d💻 👍🏽 का \u1100\u1161", "human")
+        raw = kept + " old " + kept
+        out, _ = self.apply(raw, "old", "new")
+        self.assertEqual(out, kept + " " + ai("new") + " " + kept)
+        self.assertEqual(
+            textprov.strip_marks(out),
+            textprov.strip_marks(raw).replace("old", "new"),
+        )
+        self.assertIn(("human", textprov.strip_marks(kept)), states(out))
+        self.assert_valid_selectors(out)
+
+    def test_partial_grapheme_no_op_preserves_marks(self):
+        for source, old in (
+            ("e\u0301", "e"),
+            ("👩\u200d💻", "💻"),
+            ("का", "ा"),
+            ("\u0600 👍", "\u0600"),
+        ):
+            with self.subTest(source=source):
+                raw = textprov.mark(source, "human")
+                out, _ = self.apply(raw, old, old)
+                self.assertEqual(out, raw)
+                self.assertEqual(states(out), [("human", source)])
+                self.assert_valid_selectors(out)
+
+    def test_replacements_leave_whitespace_and_control_breaks_unmarked(self):
+        for new in (
+            " ",
+            "\u0085",
+            "\x00",
+            "\x1c",
+            "\u00ad",
+            "\u200b",
+            "\u2060",
+            "\ufeff",
+            "\r\n",
+        ):
+            with self.subTest(new=new):
+                raw = textprov.mark("aXb", "human")
+                out, _ = self.apply(raw, "X", new)
+                self.assertEqual(
+                    out,
+                    textprov.mark("a", "human")
+                    + new
+                    + textprov.mark("b", "human"),
+                )
+                self.assertEqual(textprov.strip_marks(out), "a" + new + "b")
+                self.assertEqual(
+                    textprov.runs(out, strip=True, merge_whitespace=False),
+                    [("human", "a"), (None, new), ("human", "b")],
+                )
+                self.assert_valid_selectors(out)
+
+    def test_deleted_prepend_leaves_whitespace_unmarked_and_emoji_human(self):
+        for whitespace in (" ", "\u00a0", "\u2009", "\u202f", "\u3000"):
+            with self.subTest(whitespace=whitespace):
+                raw = textprov.mark("\u0600" + whitespace + "👍", "human")
+                out, _ = self.apply(raw, "\u0600", "")
+                self.assertEqual(out, whitespace + textprov.mark("👍", "human"))
+                self.assertEqual(textprov.strip_marks(out), whitespace + "👍")
+                self.assertEqual(
+                    states(out), [(None, whitespace), ("human", "👍")]
+                )
+                self.assert_valid_selectors(out)
+
+    def test_deleted_prepend_preserves_untouched_inert_selectors(self):
+        inert = "\x00" + HUMAN + " " + AI + "\n"
+        raw = inert + textprov.mark("\u0600 👍", "human")
+        for include_context in (False, True):
+            with self.subTest(include_context=include_context):
+                context = textprov.strip_marks(inert) if include_context else ""
+                out, _ = self.apply(raw, context + "\u0600", context)
+                self.assertEqual(
+                    out, inert + " " + textprov.mark("👍", "human")
+                )
+                self.assertEqual(
+                    textprov.strip_marks(out),
+                    textprov.strip_marks(raw).replace("\u0600", ""),
+                )
+                self.assertEqual(
+                    states(out), [(None, inert + " "), ("human", "👍")]
+                )
+                self.assert_valid_selectors(out[len(inert) :])
+
+    def test_prepend_edits_at_control_boundaries_leave_no_orphan_selectors(
+        self,
+    ):
+        for control in (
+            "\x00",
+            "\x1c",
+            "\u00ad",
+            "\u200b",
+            "\u2060",
+            "\ufeff",
+            "\r\n",
+        ):
+            for source, replacement, changed in (
+                ("\u0600 " + control + "👍", "", " " + control + "👍"),
+                ("\u0600 👍", control, control + " 👍"),
+            ):
+                with self.subTest(control=control, replacement=replacement):
+                    raw = textprov.mark(source, "human")
+                    out, _ = self.apply(raw, "\u0600", replacement)
+                    self.assertEqual(
+                        out, changed[:-1] + textprov.mark("👍", "human")
+                    )
+                    self.assertEqual(textprov.strip_marks(out), changed)
+                    self.assertEqual(
+                        states(out), [(None, changed[:-1]), ("human", "👍")]
+                    )
+                    self.assert_valid_selectors(out)
+
+    def test_replace_all_deleted_prepend_preserves_human_emoji(self):
+        raw = textprov.mark("\u0600 👍\n\u0600 👍", "human")
+        out, _ = self.apply(raw, "\u0600", "", replace_all=True)
+        self.assertEqual(out, textprov.mark(" 👍\n 👍", "human"))
+        self.assertEqual(textprov.strip_marks(out), " 👍\n 👍")
+        self.assertEqual(states(out), [(None, " "), ("human", "👍\n 👍")])
+        self.assert_valid_selectors(out)
+
+    def test_supplied_inert_selectors_do_not_mark_whitespace_or_controls(self):
+        for new in (" ", "\u0085", "\x00", "\u00ad", "\u200b", "\r\n"):
+            with self.subTest(new=new):
+                out, _ = self.apply("old", "old", new + HUMAN)
+                self.assertEqual(out, new)
+                self.assertEqual(textprov.strip_marks(out), new)
+                self.assertEqual(states(out), [(None, new)])
+                self.assert_valid_selectors(out)
+
+    def test_joined_cluster_inside_code_stays_unmarked(self):
+        raw = ai("prose ") + "`ab`" + ai(" prose")
+        out, _ = self.apply(raw, "b", "\u0301")
+        self.assertEqual(out, ai("prose ") + "`a\u0301`" + ai(" prose"))
+        self.assertEqual(textprov.strip_marks(out), "prose `a\u0301` prose")
+        self.assert_valid_selectors(out)
+
+    def test_supplied_marks_on_wholly_new_clusters_are_preserved(self):
+        supplied = textprov.mark("e\u0301", "human")
+        out, _ = self.apply("old", "old", supplied)
+        self.assertEqual(out, supplied)
+        self.assertEqual(states(out), [("human", "e\u0301")])
+        self.assert_valid_selectors(out)
+
+    def test_supplied_partial_cluster_marks_do_not_claim_source_context(self):
+        for source, old, new, changed in (
+            ("aX", "X", "\u0301", "a\u0301"),
+            ("Xa", "X", "\u0600", "\u0600a"),
+        ):
+            with self.subTest(source=source):
+                raw = ai(source)
+                out, _ = self.apply(raw, old, textprov.mark(new, "human"))
+                self.assertEqual(textprov.strip_marks(out), changed)
+                self.assertEqual(states(out), [("ai", changed)])
+                self.assert_valid_selectors(out)
+        out, _ = self.apply(ai("aX"), "X", textprov.mark("\u0301 Z", "human"))
+        self.assertEqual(textprov.strip_marks(out), "a\u0301 Z")
+        self.assertEqual(
+            states(out), [("ai", "a\u0301"), (None, " "), ("human", "Z")]
+        )
+        self.assert_valid_selectors(out)
+
+    def test_pua_neighbour_join_uses_a_single_final_selector(self):
+        raw = textprov.mark("aX", "ai", "pua")
+        out, _ = self.apply(raw, "X", "\u0301")
+        self.assertEqual(out, "a\u0301" + AI)
+        self.assertEqual(textprov.strip_marks(out), "a\u0301")
+        self.assertEqual(states(out), [("ai", "a\u0301")])
+        self.assert_valid_selectors(out)
+
+    def test_replace_all_partial_graphemes(self):
+        for source, old, new in (("e\u0301", "e", "X"), ("aX", "X", "\u0301")):
+            with self.subTest(source=source):
+                raw = textprov.mark(source + " " + source, "human")
+                out, _ = self.apply(raw, old, new, replace_all=True)
+                changed = source.replace(old, new)
+                self.assertEqual(
+                    textprov.strip_marks(out), changed + " " + changed
+                )
+                self.assertEqual(states(out), [("ai", changed + " " + changed)])
+                self.assert_valid_selectors(out)
+
+    def test_replace_all_different_grapheme_contexts_is_refused(self):
+        raw = textprov.mark("e\u0301 e", "human")
+        with self.assertRaises(editing.Ambiguous):
+            editing.rewrite_edit(raw, "e", "X", replace_all=True)
+
+    def test_replace_all_overlapping_expanded_clusters_is_refused(self):
+        raw = textprov.mark("e\u0301\u0301", "human")
+        with self.assertRaises(editing.Ambiguous):
+            editing.rewrite_edit(raw, "\u0301", "", replace_all=True)
 
     def test_absent_old_string(self):
         self.assertIsNone(
