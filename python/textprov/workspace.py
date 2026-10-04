@@ -13,11 +13,14 @@ import subprocess
 import time
 from pathlib import Path
 
-from . import mark
+from . import mark, segments
 from .editing import (
     HUMAN_MIN_WORDS,
+    finalize,
     human_shingles,
+    merge,
     plain_map,
+    raw_span,
     remark,
     rewrite_edit,
 )
@@ -192,6 +195,26 @@ def _executable(words):
                         return None
                     if option in {"-u", "--unset"}:
                         index += 1
+        elif Path(word).name == "nice":
+            index += 1
+            while index < len(words) and words[index].startswith("-"):
+                option = words[index]
+                index += 1
+                if option == "--":
+                    break
+                if option in {"--help", "--version"}:
+                    return []
+                if option in {"-n", "--adjustment"}:
+                    if index == len(words) or not re.fullmatch(
+                        r"[+-]?[0-9]+", words[index]
+                    ):
+                        return None
+                    index += 1
+                elif not re.fullmatch(
+                    r"-n[+-]?[0-9]+|-[+-]?[0-9]+|--adjustment=[+-]?[0-9]+",
+                    option,
+                ):
+                    return None
         else:
             break
     return words[index:]
@@ -297,6 +320,39 @@ def read_text(path):
 def write_text(path, text):
     with open(path, "w", encoding="utf-8", newline="") as handle:
         handle.write(text)
+
+
+def _remark_candidates(baselines, text, shingles, min_words):
+    """Mark only additions shared by every possible pre-command baseline."""
+    original = text
+    plain, original_index = plain_map(original)
+    added = [True] * len(plain)
+    for baseline in baselines:
+        # Retain merge's removal of inherited marks on truncated clusters.
+        text, flags = merge(baseline, text, carry=False)
+        _, positions = plain_map(text)
+        added = [
+            previous and flags[position]
+            for previous, position in zip(added, positions)
+        ]
+    _, index = plain_map(text)
+    flags = [False] * len(text)
+    for offset, start in enumerate(index):
+        end = index[offset + 1] if offset + 1 < len(index) else len(text)
+        flags[start:end] = [added[offset]] * (end - start)
+    marked = finalize(text, flags, True, shingles, min_words)
+    _, marked_index = plain_map(marked)
+    out, start = [], 0
+    for cluster in segments(plain):
+        end = start + len(cluster)
+        # Without shared additions, keep the cluster's supplied provenance.
+        out.append(
+            raw_span(marked, marked_index, start, end)
+            if any(added[start:end])
+            else raw_span(original, original_index, start, end)
+        )
+        start = end
+    return "".join(out)
 
 
 class Workspace:
@@ -475,9 +531,9 @@ class Workspace:
     def _command_sources(self, command, files):
         """Match only explicit literal file transfers, never similar new prose.
 
-        Conflicting or possibly unexecuted sources are left unmarked rather
-        than choosing a history. Only literal, unconditional transfers from
-        scoped pre-command sources can supply a baseline.
+        Conflicting sources are left unresolved rather than choosing a history.
+        Conditional transfers retain both the destination and source baselines;
+        text is new only if every possible history agrees.
         """
         commands = _executed_commands(command)
         if commands is None or any(words[0] == "cd" for words, _ in commands):
@@ -516,11 +572,23 @@ class Workspace:
             if destination.is_dir():
                 destination /= source_path.name
             target = self.relative(destination)
-            source = None if uncertain else sources.get(source, source)
-            if not self.suffix_in_scope(target) or (
-                source is not None and source not in files
-            ):
+            source = sources.get(source, source)
+            candidates = source if isinstance(source, list) else [source]
+            if not self.suffix_in_scope(target):
                 continue
+            if source is not None and any(
+                candidate and candidate not in files for candidate in candidates
+            ):
+                if not uncertain:
+                    continue
+                source = None
+            if source is not None and (uncertain or "" in candidates):
+                # An empty source may not exist, so a later copy may fail too.
+                source = list(
+                    dict.fromkeys(
+                        [target if target in files else "", *candidates]
+                    )
+                )
             if target in sources and sources[target] != source:
                 sources[target] = None
             else:
@@ -557,7 +625,8 @@ class Workspace:
 
         A revision change is ignored unless it was exactly one new commit.
         Literal copies/moves use their source snapshot even after modification.
-        Ambiguous sources are skipped; unchanged copies are not new writing.
+        Conflicting sources are skipped; conditional transfers mark only shared
+        additions across possible baselines. Unchanged copies are not new writing.
         """
         path = self.snapshot_path(operation_id)
         if not path.exists():
@@ -586,12 +655,20 @@ class Workspace:
                     continue
             if shingles is None:
                 shingles = self.load_shingles()
-            marked = remark(
-                before.get(source, ""),
-                text,
-                carry=False,
-                shingles=shingles,
-                min_words=self.human_min_words,
-            )
+            if isinstance(source, list):
+                marked = _remark_candidates(
+                    (before.get(candidate, "") for candidate in source),
+                    text,
+                    shingles,
+                    self.human_min_words,
+                )
+            else:
+                marked = remark(
+                    before.get(source, ""),
+                    text,
+                    carry=False,
+                    shingles=shingles,
+                    min_words=self.human_min_words,
+                )
             if marked != text and self.in_scope(rel):
                 write_text(self.root / rel, marked)

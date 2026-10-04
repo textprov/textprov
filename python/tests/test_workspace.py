@@ -400,7 +400,7 @@ class TestCommands(unittest.TestCase):
             textprov.mark("Source prose.", "human") + "\nAdded prose.\n",
         )
 
-    def test_unexecuted_transfers_leave_destination_bytes_unchanged(self):
+    def test_unexecuted_transfers_mark_additions_to_existing_destination(self):
         destination = "Different untouched destination paragraph.\n"
         for transfer in (
             "false && cp a.md b.md",
@@ -415,12 +415,12 @@ class TestCommands(unittest.TestCase):
                 (self.root / "b.md").write_text(destination, encoding="utf-8")
                 self.shell(transfer + "\nprintf 'Added prose.\\n' >> b.md")
                 self.assertEqual(
-                    (self.root / "b.md").read_bytes(),
-                    (destination + "Added prose.\n").encode("utf-8"),
+                    (self.root / "b.md").read_text(encoding="utf-8"),
+                    destination + ai("Added prose.") + "\n",
                 )
                 self.assertEqual(self.read(), "old\n")
 
-    def test_uncertain_transfer_only_skips_its_target(self):
+    def test_uncertain_transfer_does_not_suppress_independent_additions(self):
         destination = "Different untouched destination paragraph.\n"
         (self.root / "b.md").write_text(destination, encoding="utf-8")
         self.shell(
@@ -429,10 +429,85 @@ class TestCommands(unittest.TestCase):
             "printf 'Independent prose.\\n' >> a.md"
         )
         self.assertEqual(
-            (self.root / "b.md").read_bytes(),
-            (destination + "Added prose.\n").encode("utf-8"),
+            (self.root / "b.md").read_text(encoding="utf-8"),
+            destination + ai("Added prose.") + "\n",
         )
         self.assertEqual(self.read(), "old\n" + ai("Independent prose.") + "\n")
+
+    def test_executed_conditional_transfers_preserve_source_provenance(self):
+        original = (
+            "Untouched source paragraph.\n"
+            + textprov.mark("Existing human prose.", "human")
+            + "\n"
+        )
+        self.write(original)
+        for transfer in (
+            "true && cp a.md b.md",
+            "false || cp a.md b.md",
+            "if true; then cp a.md b.md; fi",
+        ):
+            with self.subTest(transfer=transfer):
+                (self.root / "b.md").write_text(
+                    "Different destination paragraph.\n", encoding="utf-8"
+                )
+                self.shell(transfer + "\nprintf 'Added prose.\\n' >> b.md")
+                self.assertEqual(
+                    (self.root / "b.md").read_text(encoding="utf-8"),
+                    original + ai("Added prose.") + "\n",
+                )
+
+    def test_conditional_copy_does_not_label_possible_source_text(self):
+        original = "Existing destination paragraph.\n"
+        copied = original + "Possible copied paragraph.\n"
+        self.write(copied)
+        for gate in ("true", "false"):
+            with self.subTest(gate=gate):
+                (self.root / "b.md").write_text(original, encoding="utf-8")
+                self.shell(
+                    gate + " && cp a.md b.md\n"
+                    "printf 'Possible copied paragraph.\\n' >> b.md"
+                )
+                self.assertEqual(
+                    (self.root / "b.md").read_text(encoding="utf-8"),
+                    copied
+                    if gate == "false"
+                    else copied + ai("Possible copied paragraph.") + "\n",
+                )
+
+    def test_missing_conditional_source_preserves_downstream_destination(self):
+        destination = "Existing destination prose.\n"
+        (self.root / "c.md").write_text(destination, encoding="utf-8")
+        self.shell(
+            "false && cp a.md b.md\n"
+            "cp b.md c.md; printf 'Added prose.\\n' >> c.md"
+        )
+        self.assertFalse((self.root / "b.md").exists())
+        self.assertEqual(
+            (self.root / "c.md").read_text(encoding="utf-8"),
+            destination + ai("Added prose.") + "\n",
+        )
+
+    def test_conditional_transfer_does_not_keep_truncated_cluster_marks(self):
+        original = textprov.mark("\u0600 ", "human")
+        self.write(original)
+        (self.root / "b.md").write_text(original, encoding="utf-8")
+        changed = original.replace(" ", "")
+        self.command(
+            "false && cp b.md a.md; strip_space a.md",
+            lambda: self.write(changed),
+        )
+        self.assertEqual(self.read(), ai("\u0600"))
+
+    def test_conditional_copy_preserves_valid_source_cluster_marks(self):
+        source = textprov.mark("\u0600", "human")
+        self.write(source)
+        (self.root / "b.md").write_text(
+            textprov.mark("\u0600 ", "human"), encoding="utf-8"
+        )
+        self.shell("true && cp a.md b.md")
+        self.assertEqual(
+            (self.root / "b.md").read_text(encoding="utf-8"), source
+        )
 
     def test_heredoc_transfer_text_does_not_select_a_source(self):
         destination = "Different untouched destination paragraph.\n"
@@ -521,11 +596,28 @@ class TestCommands(unittest.TestCase):
             "bash -c 'git restore a.md'",
             "sh -c 'git -C . restore a.md'",
             "eval 'git restore a.md'",
+            "nice git restore a.md",
+            "nice -n 5 git restore a.md",
+            "nice -5 git restore a.md",
+            "/usr/bin/nice git -C . restore a.md",
+            "env MODE=test nice sh -c 'git restore a.md'",
+            "nice -n 5 bash -c 'git restore a.md'",
         ):
             with self.subTest(command=command):
                 self.write("Local rewritten prose.\n")
                 self.shell(command)
                 self.assertEqual(self.read(), "old\n")
+
+    def test_nice_information_options_do_not_suppress_later_additions(self):
+        for option in ("--help", "--version"):
+            with self.subTest(option=option):
+                self.write("old\n")
+                self.shell(
+                    "nice " + option + "; printf 'Added prose.\\n' >> a.md"
+                )
+                self.assertEqual(
+                    self.read(), "old\n" + ai("Added prose.") + "\n"
+                )
 
     def test_git_restores_in_substitutions_leave_restored_bytes_unmarked(self):
         for command in (
@@ -608,6 +700,9 @@ class TestCommands(unittest.TestCase):
             "/usr/bin/env -C . git restore a.md",
             "/usr/bin/env --split-string='git restore a.md'",
             "/usr/bin/env --chdir=. cp a.md b.md",
+            "nice -n '$adjustment' git restore a.md",
+            "nice --adjustment='$adjustment' git restore a.md",
+            "nice --unknown-option git restore a.md",
         ):
             with self.subTest(command=command):
                 self.assertTrue(git_moves_tree(command))
@@ -695,6 +790,16 @@ class TestCommands(unittest.TestCase):
             "git --config-env core.editor=EDITOR reset --hard",
             "git --config-env=core.editor=EDITOR reset --hard",
             "sh -c \"eval 'git reset --hard'\"",
+            "nice git restore a.md",
+            "nice -n 5 git restore a.md",
+            "nice -n5 git restore a.md",
+            "nice -5 git restore a.md",
+            "nice --adjustment=5 git restore a.md",
+            "nice --adjustment 5 git restore a.md",
+            "nice -- git restore a.md",
+            "nice -n 5 -- git restore a.md",
+            "command env MODE=test /usr/bin/nice git restore a.md",
+            "nice sh -c 'git restore a.md'",
         ):
             with self.subTest(command=command):
                 self.assertTrue(git_moves_tree(command), command)
@@ -722,6 +827,9 @@ class TestCommands(unittest.TestCase):
             "bash -c \"echo 'git checkout main'\"",
             "sh -c \"git commit -m 'git reset explained'\"",
             "eval \"echo 'git checkout main'\"",
+            "nice echo 'git restore a.md'",
+            "nice -n 5 git commit -m 'git restore explained'",
+            "echo nice git restore a.md",
         ):
             with self.subTest(command=command):
                 self.assertFalse(git_moves_tree(command), command)
