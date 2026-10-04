@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { renderSpec } from "./build-spec.js";
 
@@ -84,4 +85,27 @@ test("spec keeps section and ToC anchors local without rewriting code or images"
   assert.ok(html.includes('src="docs/diagram.png"'));
   assert.ok(!html.includes("<h1"));
   assert.equal(renderSpec(source, template), html);
+});
+
+test("spec keeps provenance marks in prose and out of anchors and links", () => {
+  const ai = (text) => Array.from(text, (c) => c + "\u{E0101}").join("");
+  const source = [
+    "## States",
+    `${ai("Labels")} are **${ai("claims")}**, see [${ai("Discussion")} #13](https://example.com/13).`,
+  ].join("\n\n");
+  const html = renderSpec(source, template);
+
+  assert.ok(html.includes('id="states"'));
+  assert.ok(html.includes(`${ai("Labels")} are <strong>${ai("claims")}</strong>`));
+  assert.ok(html.includes(`<a href="https://example.com/13">${ai("Discussion")} #13</a>`));
+});
+
+test("the spec template decorates only the specification body", () => {
+  const shipped = readFileSync(new URL("./spec.template.html", import.meta.url), "utf8");
+  assert.equal(shipped.match(/data-prov-document/g).length, 1);
+  assert.match(shipped, /<article class="spec-body" data-prov-document>\s*<!-- SPEC -->/);
+  assert.match(shipped, /<script type="module" src="spec\.js"><\/script>/);
+  // Without JavaScript the toggle and legend stay hidden; the marks remain in the text.
+  assert.match(shipped, /<button [^>]*data-prov-toggle hidden>/);
+  assert.match(shipped, /<div class="prov-legend" id="prov-legend" hidden>/);
 });

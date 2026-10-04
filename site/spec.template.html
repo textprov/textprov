@@ -9,6 +9,7 @@
     <title>Specification — TextProv</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="spec.css">
+    <script type="module" src="spec.js"></script>
   </head>
   <body class="spec-page">
     <a class="skip-link" href="#spec-main">Skip to specification</a>
@@ -21,6 +22,10 @@
         <a href="./spec.html" aria-current="page">Specification</a>
         <a href="./#contribute">Contribute</a>
       </nav>
+      <button type="button" class="prov-toggle" role="switch" aria-checked="true" data-prov-toggle hidden>
+        <span class="prov-toggle-sample" aria-hidden="true">Aa</span>
+        Provenance
+      </button>
     </header>
 
     <div class="spec-layout">
@@ -49,8 +54,17 @@
             <span aria-hidden="true">·</span>
             <span>Updated 2026-10-02</span>
           </p>
+          <div class="prov-legend" id="prov-legend" hidden>
+            <p>
+              This specification shows its own TextProv labels:
+              <span class="prov-swatch prov-swatch-ai">AI</span>
+              <span class="prov-swatch prov-swatch-human">human</span>
+              <span class="prov-swatch">unmarked</span>
+            </p>
+            <p class="prov-legend-meta"><span id="prov-summary"></span> of characters. Labels are claims, not verified origins; unmarked text makes no claim. Copied text keeps its marks.</p>
+          </div>
         </header>
-        <article class="spec-body">
+        <article class="spec-body" data-prov-document>
           <!-- SPEC -->
         </article>
       </main>
