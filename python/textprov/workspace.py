@@ -202,15 +202,18 @@ class Workspace:
 
         For callers that cannot have their own edit rewritten by prepare_edit.
         Returns 0 when the file is out of scope or old_string is absent;
-        ambiguous edits raise Ambiguous and leave the file alone.
+        ambiguous edits raise Ambiguous and leave the file alone. Preparation
+        and replacement share one raw snapshot; this is not a locked write.
         """
-        result = self.prepare_edit(path, old_string, new_string, replace_all)
-        if result is None:
+        snapshot = self._prepare_edit_snapshot(
+            path, old_string, new_string, replace_all
+        )
+        if snapshot is None:
             return 0
-        old, new = result
-        target = self.resolve(path)
-        raw = read_text(target)
-        count = raw.count(old) if replace_all else 1
+        target, raw, (old, new) = snapshot
+        count = raw.count(old)
+        if not replace_all:
+            count = min(count, 1)
         if old != new:
             write_text(target, raw.replace(old, new, count))
         return count

@@ -192,6 +192,39 @@ class TestCommands(unittest.TestCase):
         )
         self.assertEqual(self.read(), human + " " + ai("New tail.") + "\n")
 
+    def test_apply_edit_uses_one_snapshot_despite_concurrent_changes(self):
+        original = "Intro. " + ai("Old tail.") + "\n"
+        for mutation in ("duplicate", "remove", "delete"):
+            with self.subTest(mutation=mutation):
+                self.write(original)
+                original_read = workspace_module.read_text
+
+                def read_then_mutate(
+                    path, original_read=original_read, mutation=mutation
+                ):
+                    raw = original_read(path)
+                    if mutation == "duplicate":
+                        self.write(ai("Old tail.") + "\n" + original)
+                    elif mutation == "remove":
+                        self.write("Concurrent replacement.\n")
+                    else:
+                        (self.root / "a.md").unlink()
+                    return raw
+
+                with mock.patch.object(
+                    workspace_module, "read_text", side_effect=read_then_mutate
+                ) as read:
+                    self.assertEqual(
+                        self.workspace.apply_edit(
+                            "a.md", "Old tail.", "New tail."
+                        ),
+                        1,
+                    )
+                self.assertEqual(read.call_count, 1)
+                self.assertEqual(
+                    self.read(), "Intro. " + ai("New tail.") + "\n"
+                )
+
     def test_prepare_edit_reads_once_without_writing(self):
         with mock.patch.object(
             workspace_module, "read_text", wraps=workspace_module.read_text
