@@ -43,7 +43,7 @@ Copyright 2013-2026 The agave Project Authors
 See agave-OFL.txt for the complete SIL Open Font License 1.1.
 
 Nerd Fonts patching attribution and licence: NERD-FONTS-LICENSE.txt.
-The font software is not covered by the website code's MIT licence.
+The font software is not covered by the website code's Apache 2.0 licence.
 Redistribute the font licence notices with the fonts. Each ZIP includes them.
 
 Scope and compatibility
