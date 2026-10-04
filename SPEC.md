@@ -343,7 +343,7 @@ Producer conformance was first defined at specification version 0.1
 ([ADR 0011](docs/adr/0011-the-producer-is-text-processing.md)). It documented
 what the reference producer already did; no behaviour changed when it was
 written down. The current specification version 0.2 includes later changes
-recorded in `CHANGELOG.md`.
+recorded in the [changelog](CHANGELOG.md#draft-02--2026-10-02).
 
 ## Decoder
 
