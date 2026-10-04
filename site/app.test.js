@@ -366,6 +366,23 @@ test("homepage offers Unicode-safe clipboard commands and keeps the manual file 
   assert.match(homepage, /href="\.\/samples\/marked-text\.txt" download/);
 });
 
+test("clipboard commands show one system at a time behind tabs", () => {
+  const { element } = demo();
+  const shown = () =>
+    ["macos", "windows", "wayland", "x11"].filter((p) => !element(`clip-panel-${p}`).hidden);
+  assert.equal(element("clip-tabs").hidden, false);
+  assert.deepEqual(shown(), ["macos"]);
+  element("clip-tab-windows").listeners.click();
+  assert.deepEqual(shown(), ["windows"]);
+  assert.equal(element("clip-tab-windows").attributes["aria-selected"], "true");
+  assert.equal(element("clip-tab-macos").attributes["aria-selected"], "false");
+  for (const platform of ["macos", "windows", "wayland", "x11"]) {
+    assert.match(homepage, new RegExp(`id="clip-tab-${platform}"[^>]*aria-controls="clip-panel-${platform}"`));
+    assert.match(homepage, new RegExp(`<div id="clip-panel-${platform}"`));
+  }
+  assert.match(homepage, /<p id="clip-mobile" class="note" hidden>/);
+});
+
 test("encoder provides side-by-side source and marked output", () => {
   const html = readFileSync(new URL("./encoder.html", import.meta.url), "utf8");
   assert.match(html, /class="encoder-grid"/);

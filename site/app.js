@@ -162,6 +162,55 @@ import textprov from "textprov";
     checkInput.addEventListener("input", checkText);
   }
 
+  var clipTabs = document.getElementById("clip-tabs");
+  if (clipTabs) {
+    var platforms = ["macos", "windows", "wayland", "x11"];
+    var agent = navigator.userAgent || "";
+    // iPadOS reports itself as a Mac; touch points tell them apart.
+    var mobile =
+      /Android|iPhone|iPad|iPod/.test(agent) ||
+      (/Macintosh/.test(agent) && navigator.maxTouchPoints > 1);
+
+    var selectPlatform = function (selected) {
+      platforms.forEach(function (platform) {
+        var tab = document.getElementById("clip-tab-" + platform);
+        var active = platform === selected;
+        tab.setAttribute("aria-selected", String(active));
+        tab.setAttribute("tabindex", active ? "0" : "-1");
+        document.getElementById("clip-panel-" + platform).hidden = !active;
+      });
+    };
+
+    if (mobile) {
+      // No terminal to run a command in: point at the file instead.
+      document.getElementById("clip-desktop").hidden = true;
+      document.getElementById("clip-mobile").hidden = false;
+    } else {
+      platforms.forEach(function (platform, index) {
+        var tab = document.getElementById("clip-tab-" + platform);
+        var panel = document.getElementById("clip-panel-" + platform);
+        panel.setAttribute("role", "tabpanel");
+        panel.setAttribute("aria-labelledby", "clip-tab-" + platform);
+        tab.addEventListener("click", function () {
+          selectPlatform(platform);
+        });
+        tab.addEventListener("keydown", function (event) {
+          var step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+          if (!step) return;
+          event.preventDefault();
+          var next = platforms[(index + step + platforms.length) % platforms.length];
+          selectPlatform(next);
+          document.getElementById("clip-tab-" + next).focus();
+        });
+      });
+      clipTabs.hidden = false;
+      // The browser cannot see the display server; Wayland is the Linux default.
+      selectPlatform(
+        /Windows/.test(agent) ? "windows" : /Linux|X11|CrOS/.test(agent) ? "wayland" : "macos",
+      );
+    }
+  }
+
   var passage = document.getElementById("sample-passage");
   if (passage) {
     // Keep the original character sequence: revealing and copying never add marks.

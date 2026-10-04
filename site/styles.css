@@ -535,6 +535,29 @@ footer a:hover {
 }
 .legend-human { border-bottom: 2px solid var(--human); }
 .legend-ai { border-bottom: 2px dashed var(--ai); }
+.clip-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.1rem;
+  margin: 0 0 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+.clip-tabs button {
+  margin-bottom: -1px;
+  padding: 0.35rem 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.86rem;
+}
+.clip-tabs button:hover { color: var(--text); }
+.clip-tabs button[aria-selected="true"] {
+  border-bottom-color: var(--accent);
+  color: var(--text);
+  font-weight: 700;
+}
 .text-file {
   display: flex;
   align-items: baseline;

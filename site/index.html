@@ -48,15 +48,32 @@
         <p class="note">The marks are already in this text. Revealing them changes only the display; the colours and underlines are this demo’s choices.</p>
 
         <h3>Copy the file to your clipboard</h3>
-        <p class="note">Run the command for your system to copy the same UTF-8 passage, then paste it into another app or the reader below. These commands replace your current clipboard contents.</p>
-        <p class="note"><strong>macOS (Terminal)</strong></p>
-        <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | LANG=en_US.UTF-8 pbcopy</code></pre>
-        <p class="note"><strong>Windows (PowerShell)</strong> — decode UTF-8 explicitly to preserve the marks.</p>
-        <pre><code>[System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -UseBasicParsing 'https://textprov.org/samples/marked-text.txt').RawContentStream.ToArray()) | Set-Clipboard</code></pre>
-        <p class="note"><strong>Linux (Wayland)</strong> — requires <code>curl</code> and <code>wl-copy</code> from <code>wl-clipboard</code>.</p>
-        <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | wl-copy</code></pre>
-        <p class="note"><strong>Linux (X11)</strong> — requires <code>curl</code> and <code>xclip</code>.</p>
-        <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | xclip -selection clipboard</code></pre>
+        <div id="clip-desktop">
+          <p class="note">Run the command for your system to copy the same UTF-8 passage, then paste it into another app or the reader below. These commands replace your current clipboard contents.</p>
+          <div id="clip-tabs" class="clip-tabs" role="tablist" aria-label="Operating system" hidden>
+            <button id="clip-tab-macos" type="button" role="tab" aria-controls="clip-panel-macos">macOS</button>
+            <button id="clip-tab-windows" type="button" role="tab" aria-controls="clip-panel-windows">Windows</button>
+            <button id="clip-tab-wayland" type="button" role="tab" aria-controls="clip-panel-wayland">Linux (Wayland)</button>
+            <button id="clip-tab-x11" type="button" role="tab" aria-controls="clip-panel-x11">Linux (X11)</button>
+          </div>
+          <div id="clip-panel-macos" class="clip-panel">
+            <p class="note"><strong>macOS (Terminal)</strong></p>
+            <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | LANG=en_US.UTF-8 pbcopy</code></pre>
+          </div>
+          <div id="clip-panel-windows" class="clip-panel">
+            <p class="note"><strong>Windows (PowerShell)</strong> — decode UTF-8 explicitly to preserve the marks.</p>
+            <pre><code>[System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -UseBasicParsing 'https://textprov.org/samples/marked-text.txt').RawContentStream.ToArray()) | Set-Clipboard</code></pre>
+          </div>
+          <div id="clip-panel-wayland" class="clip-panel">
+            <p class="note"><strong>Linux (Wayland)</strong> — requires <code>curl</code> and <code>wl-copy</code> from <code>wl-clipboard</code>.</p>
+            <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | wl-copy</code></pre>
+          </div>
+          <div id="clip-panel-x11" class="clip-panel">
+            <p class="note"><strong>Linux (X11)</strong> — requires <code>curl</code> and <code>xclip</code>.</p>
+            <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | xclip -selection clipboard</code></pre>
+          </div>
+        </div>
+        <p id="clip-mobile" class="note" hidden>On a phone or tablet, open the marked .txt file below, select all of its text and copy it, then paste it into the reader.</p>
 
         <div class="text-file">
           <div>
