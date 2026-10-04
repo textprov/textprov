@@ -631,8 +631,10 @@ C󠄁o󠄁p󠄁y󠄁r󠄁i󠄁g󠄁h󠄁t󠄁 2󠄁0󠄁2󠄁6󠄁 T󠄁e󠄁x�
 [C󠄁C󠄁 B󠄁Y󠄁 4󠄁.󠄁0󠄁](https://creativecommons.org/licenses/by/4.0/);󠄁 i󠄁t󠄁s󠄁 c󠄁o󠄁d󠄁e󠄁 s󠄁a󠄁m󠄁p󠄁l󠄁e󠄁s󠄁
 a󠄁r󠄁e󠄁 a󠄁l󠄁s󠄁o󠄁 a󠄁v󠄁a󠄁i󠄁l󠄁a󠄁b󠄁l󠄁e󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁
 [A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁 2󠄁.󠄁0󠄁](https://www.apache.org/licenses/LICENSE-2.0).󠄁 T󠄁h󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁
-(󠄁`mapping.json`)󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁f󠄁o󠄁r󠄁m󠄁a󠄁n󠄁c󠄁e󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁 (󠄁`fixtures.json`)󠄁 a󠄁r󠄁e󠄁 l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁d󠄁
-u󠄁n󠄁d󠄁e󠄁r󠄁 A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁 2󠄁.󠄁0󠄁.󠄁
+(󠄁`mapping.json`)󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁f󠄁o󠄁r󠄁m󠄁a󠄁n󠄁c󠄁e󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁 (󠄁`fixtures.json`)󠄁 a󠄁r󠄁e󠄁 d󠄁e󠄁d󠄁i󠄁c󠄁a󠄁t󠄁e󠄁d󠄁
+t󠄁o󠄁 t󠄁h󠄁e󠄁 p󠄁u󠄁b󠄁l󠄁i󠄁c󠄁 d󠄁o󠄁m󠄁a󠄁i󠄁n󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁
+[C󠄁C󠄁0󠄁 1󠄁.󠄁0󠄁](https://creativecommons.org/publicdomain/zero/1.0/),󠄁 s󠄁o󠄁 a󠄁n󠄁
+i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 a󠄁n󠄁y󠄁 l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 c󠄁a󠄁n󠄁 c󠄁o󠄁p󠄁y󠄁 t󠄁h󠄁e󠄁m󠄁.󠄁
 
 T󠄁h󠄁e󠄁 c󠄁a󠄁n󠄁o󠄁n󠄁i󠄁c󠄁a󠄁l󠄁 t󠄁e󠄁x󠄁t󠄁 i󠄁s󠄁
 [`SPEC.md` i󠄁n󠄁 t󠄁h󠄁e󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 r󠄁e󠄁p󠄁o󠄁s󠄁i󠄁t󠄁o󠄁r󠄁y󠄁](https://github.com/textprov/textprov/blob/main/SPEC.md).󠄁
