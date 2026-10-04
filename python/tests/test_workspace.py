@@ -288,6 +288,177 @@ class TestCommands(unittest.TestCase):
             (self.root / "copy.md").read_text(encoding="utf-8"), "old\n"
         )
 
+    def test_git_rename_and_append_preserves_source_provenance(self):
+        original = (
+            "Untouched unmarked paragraph.\n\n"
+            + textprov.mark("Existing human paragraph.", "human")
+            + "\n"
+            + ai("Existing AI paragraph.")
+            + "\n"
+        )
+        self.write(original)
+        self.shell("git mv a.md b.md && printf 'Added paragraph.\\n' >> b.md")
+        self.assertFalse((self.root / "a.md").exists())
+        self.assertEqual(
+            (self.root / "b.md").read_text(encoding="utf-8"),
+            original + ai("Added paragraph.") + "\n",
+        )
+
+    def test_git_rename_with_C_uses_source_under_that_directory(self):
+        (self.root / "sub dir").mkdir()
+        self.git("mv", "a.md", "sub dir/a.md")
+        original = "Untouched prose.\n"
+        (self.root / "sub dir/a.md").write_text(original, encoding="utf-8")
+        self.shell(
+            "git -C 'sub dir' mv a.md b.md && "
+            "printf 'Added prose.\\n' >> 'sub dir/b.md'"
+        )
+        self.assertEqual(
+            (self.root / "sub dir/b.md").read_text(encoding="utf-8"),
+            original + ai("Added prose.") + "\n",
+        )
+
+    def test_copy_and_modify_preserves_source_provenance(self):
+        kept = (
+            "Untouched unmarked paragraph.\n\n"
+            + textprov.mark("Existing human paragraph.", "human")
+            + "\n\n"
+        )
+        template = kept + "Placeholder goes here.\n"
+        (self.root / "tmpl.md").write_text(template, encoding="utf-8")
+        self.shell(
+            "cp tmpl.md new.md && "
+            "sed 's/Placeholder/Replacement/' new.md > filled.tmp && "
+            "cat filled.tmp > new.md"
+        )
+        self.assertEqual(
+            (self.root / "new.md").read_text(encoding="utf-8"),
+            kept + ai("Replacement") + " goes here.\n",
+        )
+        self.assertEqual(
+            (self.root / "tmpl.md").read_text(encoding="utf-8"), template
+        )
+
+    def test_move_over_existing_path_uses_source_not_old_destination(self):
+        original = (
+            "Source prose.\n" + textprov.mark("Human prose.", "human") + "\n"
+        )
+        (self.root / "b.md").write_text(original, encoding="utf-8")
+        self.shell("mv b.md a.md && printf 'Added prose.\\n' >> a.md")
+        self.assertEqual(self.read(), original + ai("Added prose.") + "\n")
+
+    def test_copy_to_directory_and_quoted_paths(self):
+        (self.root / "new dir").mkdir()
+        original = "Untouched source.\n"
+        (self.root / "source file.md").write_text(original, encoding="utf-8")
+        self.shell(
+            "cp -- 'source file.md' 'new dir/' && "
+            "printf 'Added prose.\\n' >> 'new dir/source file.md'"
+        )
+        self.assertEqual(
+            (self.root / "new dir/source file.md").read_text(encoding="utf-8"),
+            original + ai("Added prose.") + "\n",
+        )
+
+    def test_unrelated_similar_new_file_is_not_matched_to_source(self):
+        self.write("Common introductory paragraph.\n\nExisting conclusion.\n")
+        self.shell(
+            "printf 'Common introductory paragraph.\\n\\nDifferent conclusion.\\n' "
+            "> new.md"
+        )
+        self.assertEqual(
+            (self.root / "new.md").read_text(encoding="utf-8"),
+            ai("Common introductory paragraph.")
+            + "\n\n"
+            + ai("Different conclusion.")
+            + "\n",
+        )
+
+    def test_source_matching_does_not_restore_missing_marks(self):
+        self.write(textprov.mark("Previously human prose.", "human") + "\n")
+        self.command(
+            "cp a.md b.md && strip b.md && append b.md",
+            lambda: (self.root / "b.md").write_text(
+                "Previously human prose.\nAdded prose.\n", encoding="utf-8"
+            ),
+        )
+        self.assertEqual(
+            (self.root / "b.md").read_text(encoding="utf-8"),
+            "Previously human prose.\n" + ai("Added prose.") + "\n",
+        )
+
+    def test_multiple_possible_sources_fail_safe(self):
+        (self.root / "b.md").write_text(
+            textprov.mark("Source prose.", "human") + "\n", encoding="utf-8"
+        )
+        self.shell(
+            "cp a.md new.md && cp b.md new.md && "
+            "printf 'Added prose.\\n' >> new.md"
+        )
+        self.assertEqual(
+            (self.root / "new.md").read_text(encoding="utf-8"),
+            textprov.mark("Source prose.", "human") + "\nAdded prose.\n",
+        )
+
+    def test_unexecuted_transfers_leave_destination_bytes_unchanged(self):
+        destination = "Different untouched destination paragraph.\n"
+        for transfer in (
+            "false && cp a.md b.md",
+            "true || cp a.md b.md",
+            "if false; then cp a.md b.md; fi",
+            "if true; then :; else cp a.md b.md; fi",
+            "false && (cp a.md b.md)",
+            "false && { :; cp a.md b.md; }",
+            "false && sh -c 'cp a.md b.md'",
+        ):
+            with self.subTest(transfer=transfer):
+                (self.root / "b.md").write_text(destination, encoding="utf-8")
+                self.shell(transfer + "\nprintf 'Added prose.\\n' >> b.md")
+                self.assertEqual(
+                    (self.root / "b.md").read_bytes(),
+                    (destination + "Added prose.\n").encode("utf-8"),
+                )
+                self.assertEqual(self.read(), "old\n")
+
+    def test_uncertain_transfer_only_skips_its_target(self):
+        destination = "Different untouched destination paragraph.\n"
+        (self.root / "b.md").write_text(destination, encoding="utf-8")
+        self.shell(
+            "false && cp a.md b.md\n"
+            "printf 'Added prose.\\n' >> b.md\n"
+            "printf 'Independent prose.\\n' >> a.md"
+        )
+        self.assertEqual(
+            (self.root / "b.md").read_bytes(),
+            (destination + "Added prose.\n").encode("utf-8"),
+        )
+        self.assertEqual(self.read(), "old\n" + ai("Independent prose.") + "\n")
+
+    def test_heredoc_transfer_text_does_not_select_a_source(self):
+        destination = "Different untouched destination paragraph.\n"
+        for delimiter in ("EOF", "'EOF'"):
+            with self.subTest(delimiter=delimiter):
+                (self.root / "b.md").write_text(destination, encoding="utf-8")
+                self.shell(
+                    "cat <<" + delimiter + " > /dev/null\n"
+                    "cp a.md b.md\nEOF\n"
+                    "printf 'Added prose.\\n' >> b.md"
+                )
+                self.assertEqual(
+                    (self.root / "b.md").read_bytes(),
+                    (destination + "Added prose.\n").encode("utf-8"),
+                )
+                self.assertEqual(self.read(), "old\n")
+
+    def test_certain_copy_overwrite_preserves_source_prose(self):
+        destination = "Different destination paragraph.\n"
+        (self.root / "b.md").write_text(destination, encoding="utf-8")
+        self.shell("cp a.md b.md && printf 'Added prose.\\n' >> b.md")
+        self.assertEqual(
+            (self.root / "b.md").read_text(encoding="utf-8"),
+            "old\n" + ai("Added prose.") + "\n",
+        )
+
     def test_new_file_is_marked(self):
         self.workspace.before_command("write prose", "op")
         (self.root / "new.md").write_text("new prose\n", encoding="utf-8")

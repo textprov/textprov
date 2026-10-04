@@ -472,6 +472,61 @@ class Workspace:
         ).hexdigest()
         return self.snapshots / f"{name}.json"
 
+    def _command_sources(self, command, files):
+        """Match only explicit literal file transfers, never similar new prose.
+
+        Conflicting or possibly unexecuted sources are left unmarked rather
+        than choosing a history. Only literal, unconditional transfers from
+        scoped pre-command sources can supply a baseline.
+        """
+        commands = _executed_commands(command)
+        if commands is None or any(words[0] == "cd" for words, _ in commands):
+            return {}
+        sources = {}
+        for words, uncertain in commands:
+            name = Path(words[0]).name
+            cwd = self.root
+            args = words[1:]
+            if name == "git":
+                args, directories = _git_command(words)
+                if not args or args[0] != "mv":
+                    continue
+                for directory in directories:
+                    cwd = cwd / directory
+                args = args[1:]
+            elif name not in {"cp", "mv"}:
+                continue
+            while args and args[0] in {
+                "-f",
+                "--force",
+                "-p",
+                "-v",
+                "--verbose",
+            }:
+                args = args[1:]
+            if args and args[0] == "--":
+                args = args[1:]
+            if len(args) != 2 or any(
+                arg.startswith(("-", "~")) or any(c in arg for c in "$`*?[")
+                for arg in args
+            ):
+                continue
+            source_path, destination = (cwd / arg for arg in args)
+            source = self.relative(source_path)
+            if destination.is_dir():
+                destination /= source_path.name
+            target = self.relative(destination)
+            source = None if uncertain else sources.get(source, source)
+            if not self.suffix_in_scope(target) or (
+                source is not None and source not in files
+            ):
+                continue
+            if target in sources and sources[target] != source:
+                sources[target] = None
+            else:
+                sources[target] = source
+        return sources
+
     def before_command(self, command, operation_id):
         """Snapshot eligible files unless Git moves or shell execution is unresolved."""
         if git_moves_tree(command):
@@ -487,14 +542,22 @@ class Workspace:
             if text is not None:
                 files[rel] = text
         self.snapshot_path(operation_id).write_text(
-            json.dumps({"head": self.head(), "files": files}), encoding="utf-8"
+            json.dumps(
+                {
+                    "head": self.head(),
+                    "files": files,
+                    "sources": self._command_sources(command, files),
+                }
+            ),
+            encoding="utf-8",
         )
 
     def after_command(self, operation_id):
         """Mark changed files against the matching snapshot, then consume it.
 
         A revision change is ignored unless it was exactly one new commit.
-        New paths containing an unchanged copy of old text are not new writing.
+        Literal copies/moves use their source snapshot even after modification.
+        Ambiguous sources are skipped; unchanged copies are not new writing.
         """
         path = self.snapshot_path(operation_id)
         if not path.exists():
@@ -506,13 +569,17 @@ class Workspace:
         ):
             return
         before = snapshot["files"]
+        sources = snapshot.get("sources", {})
         known = None
         shingles = None
         for rel in self.scoped_files():
             text = read_text(self.root / rel)
             if text is None or text == before.get(rel):
                 continue
-            if rel not in before:
+            source = sources.get(rel, rel)
+            if source is None:
+                continue
+            if rel not in before and rel not in sources:
                 if known is None:
                     known = {plain_map(old)[0] for old in before.values()}
                 if plain_map(text)[0] in known:
@@ -520,7 +587,7 @@ class Workspace:
             if shingles is None:
                 shingles = self.load_shingles()
             marked = remark(
-                before.get(rel, ""),
+                before.get(source, ""),
                 text,
                 carry=False,
                 shingles=shingles,
