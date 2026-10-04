@@ -507,26 +507,47 @@ draft, not pinned release artifacts.
 ## Open questions
 
 T󠄁h󠄁e󠄁s󠄁e󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁 u󠄁n󠄁r󠄁e󠄁s󠄁o󠄁l󠄁v󠄁e󠄁d󠄁 a󠄁t󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 0󠄁.󠄁2󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 h󠄁a󠄁s󠄁 a󠄁
-d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 t󠄁h󠄁r󠄁e󠄁a󠄁d󠄁.󠄁 A󠄁 r󠄁e󠄁s󠄁o󠄁l󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁p󠄁d󠄁a󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 a󠄁f󠄁f󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 s󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁
-q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁i󠄁s󠄁 l󠄁i󠄁s󠄁t󠄁.󠄁
+d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 t󠄁h󠄁r󠄁e󠄁a󠄁d󠄁.󠄁
+
+U󠄁s󠄁e󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁b󠄁l󠄁e󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁 I󠄁D󠄁s󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 i󠄁n󠄁 d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 e󠄁x󠄁t󠄁e󠄁r󠄁n󠄁a󠄁l󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁s󠄁,󠄁 s󠄁u󠄁c󠄁h󠄁 a󠄁s󠄁
+`OQ-001` o󠄁r󠄁 `SPEC.md#oq-001`.󠄁 I󠄁D󠄁s󠄁 a󠄁r󠄁e󠄁 n󠄁e󠄁v󠄁e󠄁r󠄁 r󠄁e󠄁n󠄁u󠄁m󠄁b󠄁e󠄁r󠄁e󠄁d󠄁 o󠄁r󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁d󠄁.󠄁 A󠄁s󠄁s󠄁i󠄁g󠄁n󠄁
+n󠄁e󠄁w󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 n󠄁e󠄁x󠄁t󠄁 u󠄁n󠄁u󠄁s󠄁e󠄁d󠄁 n󠄁u󠄁m󠄁b󠄁e󠄁r󠄁,󠄁 r󠄁e󠄁g󠄁a󠄁r󠄁d󠄁l󠄁e󠄁s󠄁s󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 p󠄁o󠄁s󠄁i󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁r󠄁 t󠄁o󠄁p󠄁i󠄁c󠄁.󠄁
+
+A󠄁 r󠄁e󠄁s󠄁o󠄁l󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁p󠄁d󠄁a󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 a󠄁f󠄁f󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 s󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 a󠄁 l󠄁i󠄁n󠄁k󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁o󠄁l󠄁u󠄁t󠄁i󠄁o󠄁n󠄁
+i󠄁n󠄁 t󠄁h󠄁e󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁 e󠄁n󠄁t󠄁r󠄁y󠄁.󠄁 K󠄁e󠄁e󠄁p󠄁 i󠄁t󠄁s󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁 r󠄁o󠄁w󠄁 a󠄁n󠄁d󠄁 I󠄁D󠄁 h󠄁e󠄁a󠄁d󠄁i󠄁n󠄁g󠄁 s󠄁o󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁s󠄁
+r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 v󠄁a󠄁l󠄁i󠄁d󠄁.󠄁
+
+| I󠄁D󠄁 | Q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁 | D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 |
+| --- | --- | --- |
+| [`OQ-001`](#oq-001) | C󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁 | [#󠄁1󠄁3󠄁](https://github.com/textprov/textprov/discussions/13) |
+| [`OQ-002`](#oq-002) | W󠄁h󠄁a󠄁t󠄁 `human` a󠄁s󠄁s󠄁e󠄁r󠄁t󠄁s󠄁 | [#󠄁1󠄁4󠄁](https://github.com/textprov/textprov/discussions/14) |
+| [`OQ-003`](#oq-003) | R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁e󠄁d󠄁 | [#󠄁1󠄁6󠄁](https://github.com/textprov/textprov/discussions/16) |
+| [`OQ-004`](#oq-004) | R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 | [#󠄁1󠄁8󠄁](https://github.com/textprov/textprov/discussions/18) |
+| [`OQ-005`](#oq-005) | S󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁 i󠄁n󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁 | [#󠄁1󠄁9󠄁](https://github.com/textprov/textprov/discussions/19) |
+| [`OQ-006`](#oq-006) | R󠄁u󠄁n󠄁s󠄁,󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁 | [#󠄁2󠄁0󠄁](https://github.com/textprov/textprov/discussions/20) |
 
 ### Marking and states
 
 T󠄁h󠄁e󠄁s󠄁e󠄁 c󠄁a󠄁m󠄁e󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 t󠄁h󠄁i󠄁s󠄁 r󠄁e󠄁p󠄁o󠄁s󠄁i󠄁t󠄁o󠄁r󠄁y󠄁'󠄁s󠄁 o󠄁w󠄁n󠄁 u󠄁s󠄁e󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁c󠄁o󠄁l󠄁
 (󠄁[d󠄁o󠄁g󠄁f󠄁o󠄁o󠄁d󠄁i󠄁n󠄁g󠄁](docs/development/dogfooding.md))󠄁.󠄁
 
-1. **C󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁** A󠄁r󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁,󠄁 p󠄁u󠄁l󠄁l󠄁 r󠄁e󠄁q󠄁u󠄁e󠄁s󠄁t󠄁
-   d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 i󠄁s󠄁s󠄁u󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁v󠄁i󠄁e󠄁w󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁 t󠄁h󠄁e󠄁
-   [m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁](#marking-scope)?󠄁 T󠄁h󠄁e󠄁y󠄁 a󠄁r󠄁e󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 p󠄁e󠄁o󠄁p󠄁l󠄁e󠄁,󠄁 b󠄁u󠄁t󠄁 t󠄁h󠄁e󠄁
-   t󠄁o󠄁o󠄁l󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 h󠄁o󠄁l󠄁d󠄁 t󠄁h󠄁e󠄁m󠄁 s󠄁e󠄁a󠄁r󠄁c󠄁h󠄁 a󠄁n󠄁d󠄁 p󠄁a󠄁r󠄁s󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁 a󠄁s󠄁 p󠄁l󠄁a󠄁i󠄁n󠄁 t󠄁e󠄁x󠄁t󠄁:󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 b󠄁r󠄁e󠄁a󠄁k󠄁
-   `git log --grep`,󠄁 C󠄁o󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 C󠄁o󠄁m󠄁m󠄁i󠄁t󠄁s󠄁 p󠄁a󠄁r󠄁s󠄁e󠄁r󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 s󠄁e󠄁a󠄁r󠄁c󠄁h󠄁.󠄁 A󠄁 g󠄁i󠄁t󠄁
-   t󠄁r󠄁a󠄁i󠄁l󠄁e󠄁r󠄁 w󠄁o󠄁u󠄁l󠄁d󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 b󠄁a󠄁n󠄁d󠄁,󠄁 f󠄁o󠄁r󠄁 a󠄁 w󠄁h󠄁o󠄁l󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 r󠄁a󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁n󠄁 a󠄁
-   p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁.󠄁 (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁3󠄁](https://github.com/textprov/textprov/discussions/13))󠄁
-2. **W󠄁h󠄁a󠄁t󠄁 `human` a󠄁s󠄁s󠄁e󠄁r󠄁t󠄁s󠄁.󠄁** D󠄁o󠄁e󠄁s󠄁 `human` s󠄁t󠄁a󠄁t󠄁e󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁,󠄁
-   o󠄁r󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁t󠄁e󠄁d󠄁 i󠄁t󠄁?󠄁 T󠄁h󠄁i󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁s󠄁 `human` a󠄁s󠄁
-   h󠄁u󠄁m󠄁a󠄁n󠄁-󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁s󠄁u󠄁a󠄁l󠄁l󠄁y󠄁 o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁s󠄁s󠄁i󠄁o󠄁n󠄁.󠄁 A󠄁
-   p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁 p󠄁a󠄁s󠄁t󠄁e󠄁d󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁,󠄁 a󠄁n󠄁d󠄁 a󠄁 s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁 n󠄁o󠄁
-   p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁.󠄁 (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁4󠄁](https://github.com/textprov/textprov/discussions/14))󠄁
+#### OQ-001
+
+**C󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁** A󠄁r󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁,󠄁 p󠄁u󠄁l󠄁l󠄁 r󠄁e󠄁q󠄁u󠄁e󠄁s󠄁t󠄁
+d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁i󠄁o󠄁n󠄁s󠄁,󠄁 i󠄁s󠄁s󠄁u󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁v󠄁i󠄁e󠄁w󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁 t󠄁h󠄁e󠄁
+[m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁](#marking-scope)?󠄁 T󠄁h󠄁e󠄁y󠄁 a󠄁r󠄁e󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 p󠄁e󠄁o󠄁p󠄁l󠄁e󠄁,󠄁 b󠄁u󠄁t󠄁 t󠄁h󠄁e󠄁
+t󠄁o󠄁o󠄁l󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 h󠄁o󠄁l󠄁d󠄁 t󠄁h󠄁e󠄁m󠄁 s󠄁e󠄁a󠄁r󠄁c󠄁h󠄁 a󠄁n󠄁d󠄁 p󠄁a󠄁r󠄁s󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁 a󠄁s󠄁 p󠄁l󠄁a󠄁i󠄁n󠄁 t󠄁e󠄁x󠄁t󠄁:󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 b󠄁r󠄁e󠄁a󠄁k󠄁
+`git log --grep`,󠄁 C󠄁o󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 C󠄁o󠄁m󠄁m󠄁i󠄁t󠄁s󠄁 p󠄁a󠄁r󠄁s󠄁e󠄁r󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁r󠄁g󠄁e󠄁 s󠄁e󠄁a󠄁r󠄁c󠄁h󠄁.󠄁 A󠄁 g󠄁i󠄁t󠄁
+t󠄁r󠄁a󠄁i󠄁l󠄁e󠄁r󠄁 w󠄁o󠄁u󠄁l󠄁d󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 b󠄁a󠄁n󠄁d󠄁,󠄁 f󠄁o󠄁r󠄁 a󠄁 w󠄁h󠄁o󠄁l󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁i󠄁t󠄁 r󠄁a󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁n󠄁 a󠄁
+p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁.󠄁 (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁3󠄁](https://github.com/textprov/textprov/discussions/13))󠄁
+
+#### OQ-002
+
+**W󠄁h󠄁a󠄁t󠄁 `human` a󠄁s󠄁s󠄁e󠄁r󠄁t󠄁s󠄁.󠄁** D󠄁o󠄁e󠄁s󠄁 `human` s󠄁t󠄁a󠄁t󠄁e󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁,󠄁
+o󠄁r󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁t󠄁e󠄁d󠄁 i󠄁t󠄁?󠄁 T󠄁h󠄁i󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁s󠄁 `human` a󠄁s󠄁
+h󠄁u󠄁m󠄁a󠄁n󠄁-󠄁w󠄁r󠄁i󠄁t󠄁t󠄁e󠄁n󠄁,󠄁 b󠄁u󠄁t󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁s󠄁u󠄁a󠄁l󠄁l󠄁y󠄁 o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁e󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁s󠄁s󠄁i󠄁o󠄁n󠄁.󠄁 A󠄁
+p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁 p󠄁a󠄁s󠄁t󠄁e󠄁d󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁,󠄁 a󠄁n󠄁d󠄁 a󠄁 s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁b󠄁m󠄁i󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁 n󠄁o󠄁
+p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁.󠄁 (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁4󠄁](https://github.com/textprov/textprov/discussions/14))󠄁
 
 ### Generational marking (proposed, non-normative)
 
@@ -564,31 +585,42 @@ s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n�
 [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁0󠄁](docs/adr/0010-contributor-identity-is-out-of-band.md) r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 t󠄁h󠄁e󠄁
 r󠄁e󠄁a󠄁s󠄁o󠄁n󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁h󠄁i󠄁n󠄁d󠄁 i󠄁t󠄁.󠄁
 
-3. **R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁e󠄁d󠄁.󠄁** W󠄁h󠄁e󠄁n󠄁 s󠄁o󠄁m󠄁e󠄁o󠄁n󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁
-   f󠄁r󠄁o󠄁m󠄁 a󠄁n󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 w󠄁h󠄁a󠄁t󠄁 d󠄁o󠄁 t󠄁h󠄁e󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁,󠄁 a󠄁n󠄁d󠄁
-   w󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁p󠄁p󠄁e󠄁n󠄁s󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁t󠄁?󠄁 M󠄁a󠄁r󠄁k󠄁s󠄁 a󠄁r󠄁e󠄁 p󠄁e󠄁r󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁,󠄁 s󠄁o󠄁 n󠄁e󠄁w󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 c󠄁o󠄁u󠄁l󠄁d󠄁
-   t󠄁a󠄁k󠄁e󠄁 t󠄁h󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁'󠄁s󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 w󠄁h󠄁i󠄁l󠄁e󠄁 u󠄁n󠄁t󠄁o󠄁u󠄁c󠄁h󠄁e󠄁d󠄁 o󠄁n󠄁e󠄁s󠄁 k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁s󠄁.󠄁
-   T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 f󠄁i󠄁x󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁c󠄁r󠄁o󠄁s󠄁s󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁;󠄁 h󠄁o󠄁w󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 a󠄁f󠄁f󠄁e󠄁c󠄁t󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁s󠄁
-   a󠄁n󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 n󠄁o󠄁t󠄁 a󠄁n󠄁 a󠄁d󠄁d󠄁i󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
-   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁6󠄁](https://github.com/textprov/textprov/discussions/16))󠄁
-4. **R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁** W󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁p󠄁p󠄁e󠄁n󠄁s󠄁 t󠄁o󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁 i󠄁n󠄁t󠄁o󠄁 a󠄁 n󠄁e󠄁w󠄁
-   c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁?󠄁 I󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁 m󠄁a󠄁r󠄁k󠄁 t󠄁o󠄁 m󠄁o󠄁v󠄁e󠄁 d󠄁o󠄁w󠄁n󠄁 a󠄁 r󠄁o󠄁w󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁r󠄁e󠄁 i󠄁s󠄁 n󠄁o󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁
-   f󠄁o󠄁r󠄁 "󠄁u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁,󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 1󠄁"󠄁.󠄁 L󠄁e󠄁a󠄁v󠄁i󠄁n󠄁g󠄁 i󠄁t󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁.󠄁
-   H󠄁o󠄁w󠄁 c󠄁a󠄁n󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 b󠄁a󠄁n󠄁d󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 i󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁
-   o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁?󠄁 A󠄁b󠄁s󠄁e󠄁n󠄁c󠄁e󠄁 o󠄁f󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁 `human` a󠄁n󠄁d󠄁 `ai`.󠄁
-   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁8󠄁](https://github.com/textprov/textprov/discussions/18))󠄁
-5. **S󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁 i󠄁n󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁.󠄁** H󠄁o󠄁w󠄁 d󠄁o󠄁e󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁
-   `U+E01A0`–󠄁`U+E01EF`?󠄁 U󠄁n󠄁d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁d󠄁:󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 u󠄁n󠄁i󠄁t󠄁 i󠄁s󠄁 a󠄁 w󠄁h󠄁o󠄁l󠄁e󠄁 r󠄁o󠄁w󠄁 o󠄁f󠄁 1󠄁6󠄁 o󠄁r󠄁
-   a󠄁n󠄁y󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁,󠄁 a󠄁n󠄁d󠄁 h󠄁o󠄁w󠄁 `mapping.json` r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁'󠄁s󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁 a󠄁n󠄁d󠄁 m󠄁e󠄁a󠄁n󠄁i󠄁n󠄁g󠄁.󠄁
-   E󠄁a󠄁c󠄁h󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 a󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁
-   r󠄁a󠄁n󠄁g󠄁e󠄁 s󠄁o󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁 s󠄁t󠄁a󠄁y󠄁s󠄁 r󠄁e󠄁a󠄁d󠄁a󠄁b󠄁l󠄁e󠄁 o󠄁u󠄁t󠄁s󠄁i󠄁d󠄁e󠄁 i󠄁t󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁o󠄁r󠄁 s󠄁l󠄁o󠄁t󠄁s󠄁
-   i󠄁n󠄁 [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁0󠄁](docs/adr/0010-contributor-identity-is-out-of-band.md) a󠄁r󠄁e󠄁 o󠄁n󠄁e󠄁
-   c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁.󠄁
-   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁9󠄁](https://github.com/textprov/textprov/discussions/19))󠄁
-6. **R󠄁u󠄁n󠄁s󠄁,󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁.󠄁** H󠄁o󠄁w󠄁 d󠄁o󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 A󠄁P󠄁I󠄁 e󠄁x󠄁p󠄁o󠄁s󠄁e󠄁
-   g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁?󠄁 W󠄁h󠄁a󠄁t󠄁 a󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 f󠄁o󠄁r󠄁 o󠄁n󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁 i󠄁s󠄁 s󠄁e󠄁t󠄁t󠄁l󠄁e󠄁d󠄁 a󠄁b󠄁o󠄁v󠄁e󠄁.󠄁 R󠄁u󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁
-   `(state, text)` t󠄁o󠄁d󠄁a󠄁y󠄁.󠄁 U󠄁n󠄁d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁d󠄁:󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 r󠄁u󠄁n󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁
-   s󠄁h󠄁a󠄁r󠄁e󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 b󠄁u󠄁t󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁 i󠄁n󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 m󠄁e󠄁r󠄁g󠄁e󠄁,󠄁 h󠄁o󠄁w󠄁 `merge_whitespace`
-   t󠄁r󠄁e󠄁a󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 w󠄁h󠄁i󠄁t󠄁e󠄁s󠄁p󠄁a󠄁c󠄁e󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 t󠄁h󠄁e󠄁m󠄁,󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁
-   b󠄁e󠄁s󠄁i󠄁d󠄁e󠄁 `data-prov`,󠄁 a󠄁n󠄁d󠄁 h󠄁o󠄁w󠄁 e󠄁x󠄁p󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 r󠄁u󠄁n󠄁s󠄁 i󠄁n󠄁 `fixtures.json` r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 i󠄁t󠄁.󠄁
-   (󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁2󠄁0󠄁](https://github.com/textprov/textprov/discussions/20))󠄁
+#### OQ-003
+
+**R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁n󠄁 e󠄁d󠄁i󠄁t󠄁e󠄁d󠄁.󠄁** W󠄁h󠄁e󠄁n󠄁 s󠄁o󠄁m󠄁e󠄁o󠄁n󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁
+f󠄁r󠄁o󠄁m󠄁 a󠄁n󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 w󠄁h󠄁a󠄁t󠄁 d󠄁o󠄁 t󠄁h󠄁e󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 c󠄁a󠄁r󠄁r󠄁y󠄁,󠄁 a󠄁n󠄁d󠄁
+w󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁p󠄁p󠄁e󠄁n󠄁s󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁t󠄁?󠄁 M󠄀a󠄀r󠄀k󠄀s󠄀 a󠄀r󠄀e󠄀 p󠄀e󠄀r󠄀 c󠄀l󠄀u󠄀s󠄀t󠄀e󠄀r󠄀,󠄀 s󠄀o󠄀 n󠄀e󠄀w󠄀 c󠄀h󠄀a󠄀r󠄀a󠄀c󠄀t󠄀e󠄀r󠄀s󠄀 c󠄁o󠄁u󠄁l󠄁d󠄁
+t󠄁a󠄁k󠄁e󠄁 t󠄁h󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁'󠄁s󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁t󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 0󠄁 w󠄁h󠄁i󠄁l󠄁e󠄁 u󠄁n󠄁t󠄁o󠄁u󠄁c󠄁h󠄁e󠄁d󠄁 o󠄁n󠄁e󠄁s󠄁 k󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁s󠄁.󠄁
+T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 f󠄁i󠄁x󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁c󠄁r󠄁o󠄁s󠄁s󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁;󠄁 h󠄁o󠄁w󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 a󠄁f󠄁f󠄁e󠄁c󠄁t󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁s󠄁
+a󠄁n󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 n󠄁o󠄁t󠄁 a󠄁n󠄁 a󠄁d󠄁d󠄁i󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁.󠄁
+(󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁6󠄁](https://github.com/textprov/textprov/discussions/16))󠄁
+
+#### OQ-004
+
+**R󠄁e󠄁u󠄁s󠄁e󠄁d󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁** W󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁p󠄁p󠄁e󠄁n󠄁s󠄁 t󠄁o󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁g󠄁u󠄁r󠄁g󠄁i󠄁t󠄁a󠄁t󠄁e󠄁d󠄁 i󠄁n󠄁t󠄁o󠄁 a󠄁 n󠄁e󠄁w󠄁
+c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁a󠄁t󠄁i󠄁o󠄁n󠄁?󠄁 I󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁 m󠄁a󠄁r󠄁k󠄁 t󠄁o󠄁 m󠄁o󠄁v󠄁e󠄁 d󠄁o󠄁w󠄁n󠄁 a󠄁 r󠄁o󠄁w󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁r󠄁e󠄁 i󠄁s󠄁 n󠄁o󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁
+f󠄁o󠄁r󠄁 "󠄁u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁,󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 1󠄁"󠄁.󠄁 L󠄁e󠄁a󠄁v󠄁i󠄁n󠄁g󠄁 i󠄁t󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁.󠄁
+H󠄁o󠄁w󠄁 c󠄁a󠄁n󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁 r󠄁e󠄁u󠄁s󠄁e󠄁 o󠄁u󠄁t󠄁 o󠄁f󠄁 b󠄁a󠄁n󠄁d󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 i󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁
+o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁?󠄁 A󠄁b󠄁s󠄁e󠄁n󠄁c󠄁e󠄁 o󠄁f󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁 `human` a󠄁n󠄁d󠄁 `ai`.󠄁
+(󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁8󠄁](https://github.com/textprov/textprov/discussions/18))󠄁
+
+#### OQ-005
+
+**S󠄁t󠄁r󠄁i󠄁d󠄁e󠄁s󠄁 i󠄁n󠄁 r󠄁o󠄁w󠄁s󠄁 A󠄁–󠄁E󠄁.󠄁** H󠄁o󠄁w󠄁 d󠄁o󠄁e󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁 p󠄁a󠄁r󠄁t󠄁 o󠄁f󠄁
+`U+E01A0`–󠄁`U+E01EF`?󠄁 U󠄁n󠄁d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁d󠄁:󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 u󠄁n󠄁i󠄁t󠄁 i󠄁s󠄁 a󠄁 w󠄁h󠄁o󠄁l󠄁e󠄁 r󠄁o󠄁w󠄁 o󠄁f󠄁 1󠄁6󠄁 o󠄁r󠄁
+a󠄁n󠄁y󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁,󠄁 a󠄁n󠄁d󠄁 h󠄁o󠄁w󠄁 `mapping.json` r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 a󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁'󠄁s󠄁 r󠄁a󠄁n󠄁g󠄁e󠄁 a󠄁n󠄁d󠄁 m󠄁e󠄁a󠄁n󠄁i󠄁n󠄁g󠄁.󠄁
+E󠄁a󠄁c󠄁h󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 a󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁
+r󠄁a󠄁n󠄁g󠄁e󠄁 s󠄁o󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁 s󠄁t󠄁a󠄁y󠄁s󠄁 r󠄁e󠄁a󠄁d󠄁a󠄁b󠄁l󠄁e󠄁 o󠄁u󠄁t󠄁s󠄁i󠄁d󠄁e󠄁 i󠄁t󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁o󠄁r󠄁 s󠄁l󠄁o󠄁t󠄁s󠄁
+i󠄁n󠄁 [A󠄁D󠄁R󠄁 0󠄁0󠄁1󠄁0󠄁](docs/adr/0010-contributor-identity-is-out-of-band.md) a󠄁r󠄁e󠄁 o󠄁n󠄁e󠄁
+c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁 s󠄁t󠄁r󠄁i󠄁d󠄁e󠄁.󠄁
+(󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁1󠄁9󠄁](https://github.com/textprov/textprov/discussions/19))󠄁
+
+#### OQ-006
+
+**R󠄁u󠄁n󠄁s󠄁,󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁,󠄁 a󠄁n󠄁d󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁.󠄁** H󠄁o󠄁w󠄁 d󠄁o󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 A󠄁P󠄁I󠄁 e󠄁x󠄁p󠄁o󠄁s󠄁e󠄁
+g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁?󠄁 W󠄁h󠄁a󠄁t󠄁 a󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 f󠄁o󠄁r󠄁 o󠄁n󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁 i󠄁s󠄁 s󠄁e󠄁t󠄁t󠄁l󠄁e󠄁d󠄁 a󠄁b󠄁o󠄁v󠄁e󠄁.󠄁 R󠄁u󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁
+`(state, text)` t󠄁o󠄁d󠄁a󠄁y󠄁.󠄁 U󠄁n󠄁d󠄁e󠄁c󠄁i󠄁d󠄁e󠄁d󠄁:󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 r󠄁u󠄁n󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁
+s󠄁h󠄁a󠄁r󠄁e󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 b󠄁u󠄁t󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁 i󠄁n󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 m󠄁e󠄁r󠄁g󠄁e󠄁,󠄁 h󠄁o󠄁w󠄁 `merge_whitespace`
+t󠄁r󠄁e󠄁a󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 w󠄁h󠄁i󠄁t󠄁e󠄁s󠄁p󠄁a󠄁c󠄁e󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 t󠄁h󠄁e󠄁m󠄁,󠄁 w󠄁h󠄁e󠄁t󠄁h󠄁e󠄁r󠄁 m󠄁a󠄁r󠄁k󠄁u󠄁p󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁
+b󠄁e󠄁s󠄁i󠄁d󠄁e󠄁 `data-prov`,󠄁 a󠄁n󠄁d󠄁 h󠄁o󠄁w󠄁 e󠄁x󠄁p󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 r󠄁u󠄁n󠄁s󠄁 i󠄁n󠄁 `fixtures.json` r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 i󠄁t󠄁.󠄁
+(󠄁[D󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 #󠄁2󠄁0󠄁](https://github.com/textprov/textprov/discussions/20))󠄁
