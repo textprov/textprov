@@ -2,7 +2,10 @@
 
 Status: alternatives for evaluation. Symbols below are placeholders, not
 code-point allocations. Candidate syntax illustrates carriage of a source
-reference; reference scope, repertoire, and payload layout remain open.
+reference; nonzero reference scope, repertoire, and payload layout remain open.
+`Voice0` denotes ordinary unattributed text at the model layer and needs no added
+marker. Explicit serialization of that absence, if any, is profile-specific;
+no zero marker is allocated here.
 
 | Candidate | Illustrative serialization | Status and principal trade-off |
 | --- | --- | --- |

@@ -22,7 +22,9 @@ application; it neither detects a speaker nor proves authorship.
 
 Illustrative voices might be `Voice1` for an author, `Voice2` for a quoted
 participant, and `Voice3` for an assistant. These are example references, not
-reserved labels. Multiple people or assistants can have distinct voices.
+reserved labels. `Voice0` represents unattributed text, including ordinary
+Unicode text without added markers. It implies no human/AI classification and
+no common source identity. Multiple people or assistants can have distinct voices.
 Human/AI classification, source descriptions, and verified identity are optional
 information separate from the attribution reference.
 

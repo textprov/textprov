@@ -19,6 +19,10 @@ to satisfy them in all applications.
 
 ## Functional criteria
 
+- Ordinary Unicode text with no recognized attribution is represented as
+  `Voice0` without inserting markers or assuming human origin.
+- `Voice0` represents absent attribution, not a common source. Anonymous sources
+  with distinct references remain distinguishable from unattributed text.
 - Extraction preserves original code points by default, including legitimate
   variation sequences, joiners, and unrelated private-use text.
 - Recognition distinguishes protocol syntax from literal content under stated

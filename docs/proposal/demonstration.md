@@ -34,7 +34,9 @@ plain-text editor followed by copying again, cursor movement, backspace,
 insertion, search, accessibility, and explicit NFC/NFD transformations. Recorded
 code points and decoded annotations accompany application and platform versions.
 
-Voice-reference experiments also cover independent documents reusing `Voice1`,
+Voice-reference experiments include plain Unicode text represented as `Voice0`
+without mutation or assumed human origin, and anonymous nonzero sources kept
+separate from unattributed text. They also cover documents reusing `Voice1`,
 merging passages, copying without source dictionaries, anonymous sources, and
 multiple sources of the same human/AI category. Results distinguish reference
 survival, preservation of source distinctions, and access to source descriptions.

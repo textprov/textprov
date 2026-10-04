@@ -17,9 +17,21 @@ records rationale, evidence, and affected documents.
 | D10 | Standardization request | General function, stable properties, independent adoption, need for Unicode encoding | Open |
 | D11 | Compatibility and migration | Existing VS content and published mappings; false-detection risk | Open |
 | D12 | Content scope | Prose, snippets, source files, eligibility responsibility | Open |
-| D13 | Voice-reference scope | Local, scoped, or global identifiers; independent documents using `Voice1`; merge and paste behavior | Open |
+| D13 | Voice-reference scope | Scope of nonzero references; independent documents using `Voice1`; merge and paste behavior | Open |
 | D14 | Source context portability | Dictionaries and descriptions; partial copying; unresolved references; privacy | Open |
 | D15 | Optional metadata | Human/AI classification, source descriptions, identity verification; carriage and relationships to references | Open |
+
+## Established semantic decision
+
+`Voice0` represents unattributed text. Plain Unicode text with no recognized
+attribution has this abstract reference without added markers or assumed human
+origin. It has no source identity and requires no source dictionary. The decision
+makes absence referable while preserving uncertainty about origin; it does not
+choose an encoding or collapse unresolved references into ordinary text.
+
+Affected documents: [model](model.md), [requirements](requirements.md),
+[encoding candidates](encodings.md), [evaluation](demonstration.md), and the
+[project introduction](../../README.md).
 
 ## Framing established on this branch
 
