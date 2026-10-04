@@ -5,7 +5,7 @@
  * TextProv protocol: https://github.com/textprov/textprov
  *
  * Specification version 0.2 (see ../SPEC.md).
- * Registry version 0.1 (see ../mapping.json; the registry is embedded below as
+ * Registry version 0.2 (see ../mapping.json; the registry is embedded below as
  * SELECTORS and PUA_RANGES and is never loaded at runtime).
  *
  * Renders in-band provenance marks (selector or PUA encoding) as HTML spans
@@ -31,7 +31,7 @@
 
   // Tables from mapping.json. The registry is not loaded at runtime; these
   // constants are checked against it by check_fixtures.mjs.
-  var REGISTRY_VERSION = "0.1";
+  var REGISTRY_VERSION = "0.2";
   var SELECTORS = {
     human: 0xe0100,
     ai: 0xe0101,
