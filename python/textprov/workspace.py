@@ -8,6 +8,7 @@ prompt text, so callers should account for its local persistence.
 import hashlib
 import json
 import re
+import shlex
 import subprocess
 import time
 from pathlib import Path
@@ -27,16 +28,262 @@ EXCLUDED = ("docs/examples/", "site/public/", "site/dist/", "node_modules/")
 PROMPT_LOG_TAIL = 300
 SNAPSHOT_MAX_AGE = 24 * 3600
 
-# Only the git subcommand position counts; options can have quoted values.
-_SHELL_WORD = r"""(?:"[^"]*"|'[^']*'|[^\s"'])+"""
-GIT_MOVES_TREE = re.compile(
-    r"\bgit(?:\s+(?:-[Cc]|--(?:git-dir|work-tree|namespace|config-env))\s+"
-    + _SHELL_WORD
-    + r"|\s+-"
-    + _SHELL_WORD
-    + r")*\s+(checkout|switch|merge|pull|rebase|stash|reset|restore"
-    r"|cherry-pick|revert|apply|am|worktree|bisect)\b"
+GIT_MOVES_TREE = frozenset(
+    {
+        "checkout",
+        "switch",
+        "merge",
+        "pull",
+        "rebase",
+        "stash",
+        "reset",
+        "restore",
+        "cherry-pick",
+        "revert",
+        "apply",
+        "am",
+        "worktree",
+        "bisect",
+    }
 )
+_GIT_VALUE_OPTIONS = {
+    "-C",
+    "-c",
+    "--git-dir",
+    "--work-tree",
+    "--namespace",
+    "--config-env",
+}
+# Keep operators distinct from quoted arguments before shlex removes quotes.
+_SHELL_TOKEN = re.compile(
+    r"(?P<space>[ \t\r]+)|(?P<continuation>\\\n)|(?P<comment>\#[^\n]*)"
+    r"|(?P<redirect>\d*(?:&>>?|[<>][<>]?&?|<>))"
+    r"""|(?P<word>(?:\\[\s\S]|"(?:\\[\s\S]|[^"\\])*"|'[^']*'|[^\s"'\\;&|()<>])+)"""
+    r"|(?P<separator>[;&|()\n]+)"
+)
+_ASSIGNMENT = re.compile(r"[A-Za-z_][A-Za-z_0-9]*=", re.ASCII)
+_SHELL_CONTROL = {
+    "if",
+    "then",
+    "else",
+    "elif",
+    "fi",
+    "while",
+    "until",
+    "for",
+    "do",
+    "done",
+    "case",
+    "esac",
+    "function",
+    "{",
+    "}",
+}
+
+
+def _active_substitution(word):
+    """Recognize substitutions without treating single-quoted text as executed."""
+    quote = None
+    index = 0
+    while index < len(word):
+        char = word[index]
+        if quote == "'":
+            if char == "'":
+                quote = None
+        elif char == "\\":
+            index += 2
+            continue
+        elif char == "'" and quote is None:
+            quote = "'"
+        elif char == '"':
+            quote = None if quote == '"' else '"'
+        elif char == "`" or word.startswith("$(", index):
+            return True
+        index += 1
+    return False
+
+
+def _shell_commands(command):
+    """Read command positions and transfer uncertainty, not shell execution.
+
+    Gates and control structures do not establish that a transfer ran. Keep
+    that uncertainty instead of flattening every command into a certain source.
+    Heredocs and active substitutions are deliberately unresolved.
+    """
+    commands, words = [], []
+    offset = 0
+    redirected = False
+    conditional = controlled = False
+    while offset < len(command):
+        token = _SHELL_TOKEN.match(command, offset)
+        if token is None:
+            return None
+        offset = token.end()
+        kind = token.lastgroup
+        if kind == "separator":
+            separator = token.group()
+            if "(" in separator and conditional:
+                controlled = True
+            gated = "&" in separator or "|" in separator
+            if words:
+                commands.append((words, conditional or controlled))
+                conditional = gated
+            elif gated:
+                conditional = True
+            words = []
+            redirected = False
+        elif kind == "redirect":
+            if token.group().lstrip("0123456789").startswith("<<"):
+                return None
+            redirected = True
+        elif kind == "word":
+            raw = token.group()
+            # Unquoted $( starts across the word/operator boundary.
+            inspected = raw + (
+                "(" if command[offset : offset + 1] == "(" else ""
+            )
+            if _active_substitution(inspected):
+                return None
+            if not words and raw in _SHELL_CONTROL:
+                controlled = True
+            try:
+                word = shlex.split(raw, comments=False)[0]
+            except (ValueError, IndexError):
+                return None
+            if redirected:
+                redirected = False
+            else:
+                words.append(word)
+    if words:
+        commands.append((words, conditional or controlled))
+    return commands
+
+
+def _executable(words):
+    index = 0
+    while index < len(words):
+        word = words[index]
+        if _ASSIGNMENT.match(word) or word in {
+            "!",
+            "{",
+            "if",
+            "then",
+            "else",
+            "elif",
+            "while",
+            "until",
+            "do",
+        }:
+            index += 1
+        elif word in {"command", "exec"} or Path(word).name == "env":
+            wrapper = Path(word).name
+            index += 1
+            while index < len(words) and words[index].startswith("-"):
+                option = words[index]
+                index += 1
+                if wrapper == "command" and option in {"-v", "-V"}:
+                    return []
+                if wrapper == "exec" and option == "-a":
+                    index += 1
+                if wrapper == "env":
+                    if option.startswith(("-S", "-C")) or option.split("=", 1)[
+                        0
+                    ] in {"--split-string", "--chdir"}:
+                        return None
+                    if option in {"-u", "--unset"}:
+                        index += 1
+        else:
+            break
+    return words[index:]
+
+
+def _executed_commands(command, depth=0):
+    """Also inspect literal sh/bash -c and eval payloads, but not ordinary args."""
+    if depth > 8:
+        return None
+    commands = _shell_commands(command)
+    if commands is None:
+        return None
+    result = []
+    for words, uncertain in commands:
+        words = _executable(words)
+        if words is None:
+            return None
+        if not words:
+            continue
+        # A variable executable or Git subcommand may resolve to a tree move.
+        if "$" in words[0]:
+            return None
+        name = Path(words[0]).name
+        if name == "git":
+            args, _ = _git_command(words)
+            # Global-option expansion can supply or shift the subcommand too.
+            prefix = words[1 : len(words) - len(args) + 1]
+            if any("$" in word for word in prefix):
+                return None
+        payload = None
+        if name in {"sh", "bash"}:
+            index = 1
+            while index < len(words) and words[index].startswith("-"):
+                option = words[index]
+                index += 1
+                if not option.startswith("--") and "c" in option:
+                    if index < len(words):
+                        payload = words[index]
+                    break
+                if option in {"-o", "-O"}:
+                    index += 1
+        elif name == "eval":
+            args = words[2:] if words[1:2] == ["--"] else words[1:]
+            payload = " ".join(args)
+        if payload is None:
+            result.append((words, uncertain))
+        else:
+            # Interpolation anywhere in executable code can introduce commands,
+            # even when the unexpanded payload starts with a literal executable.
+            if "$" in payload:
+                return None
+            nested = _executed_commands(payload, depth + 1)
+            if nested is None:
+                return None
+            result.extend(
+                (inner, uncertain or inner_uncertain)
+                for inner, inner_uncertain in nested
+            )
+    return result
+
+
+def _git_command(words):
+    """Return the subcommand/args and literal -C directories after global options."""
+    index, directories = 1, []
+    while index < len(words) and words[index].startswith("-"):
+        option = words[index]
+        index += 1
+        if option == "--":
+            break
+        if option in _GIT_VALUE_OPTIONS:
+            if index == len(words):
+                return [], directories
+            if option == "-C":
+                directories.append(words[index])
+            index += 1
+        elif option.startswith("-C"):
+            directories.append(option[2:])
+    return words[index:], directories
+
+
+def git_moves_tree(command):
+    """Detect tree moves, including shell execution too uncertain to exclude."""
+    commands = _executed_commands(command)
+    # An unparseable command cannot safely establish agent-authored additions.
+    if commands is None:
+        return True
+    for words, _ in commands:
+        if Path(words[0]).name == "git":
+            args, _ = _git_command(words)
+            if args and args[0] in GIT_MOVES_TREE:
+                return True
+    return False
 
 
 def read_text(path):
@@ -226,8 +473,8 @@ class Workspace:
         return self.snapshots / f"{name}.json"
 
     def before_command(self, command, operation_id):
-        """Snapshot eligible files before a command; skip known Git tree moves."""
-        if GIT_MOVES_TREE.search(command):
+        """Snapshot eligible files unless Git moves or shell execution is unresolved."""
+        if git_moves_tree(command):
             return
         self.snapshots.mkdir(parents=True, exist_ok=True)
         now = time.time()

@@ -10,7 +10,7 @@ from unittest import mock
 import textprov
 from textprov import workspace as workspace_module
 from textprov.editing import Ambiguous
-from textprov.workspace import GIT_MOVES_TREE, Workspace
+from textprov.workspace import Workspace, git_moves_tree
 
 
 def ai(text):
@@ -59,6 +59,19 @@ class TestCommands(unittest.TestCase):
         for step in steps:
             step()
         self.workspace.after_command("t")
+
+    def shell(self, command):
+        self.command(
+            command,
+            lambda: subprocess.run(
+                command,
+                shell=True,
+                cwd=self.root,
+                check=True,
+                capture_output=True,
+                timeout=10,
+            ),
+        )
 
     def test_operation_ids_have_distinct_snapshot_paths(self):
         ids = ("provider:1", "provider/1", "Provider:1", "../outside")
@@ -320,6 +333,167 @@ class TestCommands(unittest.TestCase):
         )
         self.assertEqual(self.read(), "old\nnew line\n")
 
+    def test_quoted_git_text_does_not_skip_marking(self):
+        self.shell("echo 'git checkout main' >> a.md")
+        self.assertEqual(self.read(), "old\n" + ai("git checkout main") + "\n")
+
+    def test_edit_then_commit_with_git_text_in_message_is_marked(self):
+        self.command(
+            "echo new >> a.md && git commit -am 'explain git reset'",
+            lambda: self.write("old\nnew line\n"),
+            lambda: self.git("commit", "-qam", "explain git reset"),
+        )
+        self.assertEqual(self.read(), "old\n" + ai("new line") + "\n")
+
+    def test_wrapped_git_restores_are_not_marked_as_new_writing(self):
+        for command in (
+            "bash -c 'git restore a.md'",
+            "sh -c 'git -C . restore a.md'",
+            "eval 'git restore a.md'",
+        ):
+            with self.subTest(command=command):
+                self.write("Local rewritten prose.\n")
+                self.shell(command)
+                self.assertEqual(self.read(), "old\n")
+
+    def test_git_restores_in_substitutions_leave_restored_bytes_unmarked(self):
+        for command in (
+            'echo "$(git restore a.md)"',
+            "echo $(git restore a.md)",
+            "echo `git restore a.md`",
+            'echo "`git restore a.md`"',
+            'result="$(git -C . restore a.md)"',
+            "sh -c 'echo \"$(git restore a.md)\"'",
+        ):
+            with self.subTest(command=command):
+                self.write("Local rewritten prose.\n")
+                self.shell(command)
+                self.assertEqual((self.root / "a.md").read_bytes(), b"old\n")
+
+    def test_unresolved_executable_and_payloads_leave_restored_bytes_unmarked(
+        self,
+    ):
+        for command in (
+            'payload="git restore a.md"; eval "$payload"',
+            'payload="git restore a.md"; sh -c "$payload"',
+            'executable=git; "$executable" restore a.md',
+            'operation=restore; git "$operation" a.md',
+        ):
+            with self.subTest(command=command):
+                self.write("Local rewritten prose.\n")
+                self.shell(command)
+                self.assertEqual((self.root / "a.md").read_bytes(), b"old\n")
+
+    def test_interpolation_inside_code_payloads_keeps_restored_bytes_unmarked(
+        self,
+    ):
+        for invocation in (
+            'eval "echo $payload"',
+            'sh -c "echo $payload"',
+            'bash -c "echo $payload"',
+            'eval -- "  echo prefix ${payload}"',
+            'sh -c "  : ${payload}"',
+            'env -u UNUSED sh -c "echo $payload"',
+        ):
+            with self.subTest(invocation=invocation):
+                self.write("Local rewritten prose.\n")
+                self.shell("payload='; git restore a.md'; " + invocation)
+                self.assertEqual((self.root / "a.md").read_bytes(), b"old\n")
+
+    def test_env_code_payloads_keep_restored_bytes_unmarked(self):
+        for command in (
+            "env payload='; git restore a.md' sh -c 'eval \"echo $payload\"'",
+            "env -S 'git restore a.md'",
+            "/usr/bin/env git restore a.md",
+            "/usr/bin/env -S 'git restore a.md'",
+            "/usr/bin/env -u UNUSED git restore a.md",
+            "/usr/bin/env payload='; git restore a.md' sh -c 'eval \"echo $payload\"'",
+            "command /usr/bin/env -- git restore a.md",
+        ):
+            with self.subTest(command=command):
+                self.write("Local rewritten prose.\n")
+                self.shell(command)
+                self.assertEqual((self.root / "a.md").read_bytes(), b"old\n")
+
+    def test_git_global_option_expansions_keep_restored_bytes_unmarked(self):
+        for command in (
+            "options='-c user.name=t'; git $options restore a.md",
+            "configuration='user.name=t restore a.md'; git -c $configuration",
+            'directory=.; git -C "$directory" restore a.md',
+            "EDITOR=: git --config-env=core.editor=EDITOR restore a.md",
+        ):
+            with self.subTest(command=command):
+                self.write("Local rewritten prose.\n")
+                self.shell(command)
+                self.assertEqual((self.root / "a.md").read_bytes(), b"old\n")
+
+    def test_unresolved_code_and_env_context_skip_snapshots(self):
+        for command in (
+            "eval 'echo literal $5'",
+            r"sh -c 'echo literal \$payload'",
+            "env --split-string='git restore a.md'",
+            "env -C . git restore a.md",
+            "env --chdir=. cp a.md b.md",
+            "/usr/bin/env -C . git restore a.md",
+            "/usr/bin/env --split-string='git restore a.md'",
+            "/usr/bin/env --chdir=. cp a.md b.md",
+        ):
+            with self.subTest(command=command):
+                self.assertTrue(git_moves_tree(command))
+                self.workspace.before_command(command, "unresolved")
+                self.assertFalse(
+                    self.workspace.snapshot_path("unresolved").exists()
+                )
+
+    def test_dollars_in_ordinary_arguments_do_not_skip_marking(self):
+        self.shell("echo 'Ordinary $payload prose.' >> a.md")
+        self.assertEqual(
+            self.read(), "old\n" + ai("Ordinary $payload prose.") + "\n"
+        )
+        self.command(
+            "echo more >> a.md && git commit -am 'explain $payload and git reset'",
+            lambda: self.write(self.read() + "More prose.\n"),
+            lambda: self.git(
+                "commit", "-qam", "explain $payload and git reset"
+            ),
+        )
+        self.assertEqual(
+            self.read(),
+            "old\n"
+            + ai("Ordinary $payload prose.")
+            + "\n"
+            + ai("More prose.")
+            + "\n",
+        )
+
+    def test_git_restore_in_else_leaves_restored_bytes_unmarked(self):
+        command = "if false; then :; else git restore a.md; fi"
+        self.write("Local rewritten prose.\n")
+        self.shell(command)
+        self.assertEqual((self.root / "a.md").read_bytes(), b"old\n")
+
+    def test_literal_substitution_strings_are_marked_without_execution(self):
+        for argument, literal in (
+            ("'Literal $(git restore a.md).'", "Literal $(git restore a.md)."),
+            ("'Literal `git restore a.md`.'", "Literal `git restore a.md`."),
+            (
+                r'"Literal \$(git restore a.md)."',
+                "Literal $(git restore a.md).",
+            ),
+        ):
+            with self.subTest(argument=argument):
+                original = "Local untouched paragraph.\n"
+                self.write(original)
+                command = "printf '%s\\n' " + argument + " >> a.md"
+                self.assertFalse(git_moves_tree(command))
+                self.shell(command)
+                raw = self.read()
+                self.assertTrue(raw.startswith(original))
+                self.assertIn(ai("Literal"), raw)
+                self.assertEqual(
+                    textprov.strip_marks(raw), original + literal + "\n"
+                )
+
     def test_tree_moving_commands(self):
         for command in (
             "git checkout main",
@@ -332,15 +506,57 @@ class TestCommands(unittest.TestCase):
             'git -C "my dir" restore a.md',
             'git -c user.name="A B" stash pop',
             "git --namespace ns checkout x",
+            "echo ok;git reset --hard",
+            "echo ok\ngit restore a.md",
+            "git \\\ncheckout main",
+            "(git switch main)",
+            "git status | git apply patch",
+            "MODE=test git -C site switch main",
+            "env MODE=test git checkout main",
+            "command git checkout main",
+            "bash -c 'git checkout main'",
+            "sh -c 'echo ok && git -C site reset --hard'",
+            "bash -lc 'git restore a.md'",
+            "eval 'git checkout main'",
+            "eval git checkout main",
+            "eval -- 'git checkout main'",
+            "/usr/bin/git -Csite restore a.md",
+            "git --config-env core.editor=EDITOR reset --hard",
+            "git --config-env=core.editor=EDITOR reset --hard",
+            "sh -c \"eval 'git reset --hard'\"",
         ):
-            self.assertTrue(GIT_MOVES_TREE.search(command), command)
+            with self.subTest(command=command):
+                self.assertTrue(git_moves_tree(command), command)
+                self.workspace.before_command(command, "tree")
+                self.assertFalse(self.workspace.snapshot_path("tree").exists())
         for command in (
             "git commit -am x",
             "git commit -m 'merge and apply'",
             "git log --grep reset",
             "gh pr checkout 1",
+            "echo 'git checkout main' >> notes.md",
+            "sed 's/git checkout/git switch/' a.md",
+            "grep 'git merge' a.md",
+            "git commit -m 'explain git reset'",
+            "git -c alias.demo='git checkout main' commit -m text",
+            "echo git checkout main",
+            "command -v git checkout",
+            "echo 'echo ok; git checkout main'",
+            'echo "git checkout main"',
+            "printf '%s' git reset",
+            "echo '&&' git checkout main",
+            "echo git; echo checkout main",
+            "echo text > git checkout main",
+            "# git checkout main\necho safe",
+            "bash -c \"echo 'git checkout main'\"",
+            "sh -c \"git commit -m 'git reset explained'\"",
+            "eval \"echo 'git checkout main'\"",
         ):
-            self.assertFalse(GIT_MOVES_TREE.search(command), command)
+            with self.subTest(command=command):
+                self.assertFalse(git_moves_tree(command), command)
+                self.workspace.before_command(command, "prose")
+                self.assertTrue(self.workspace.snapshot_path("prose").exists())
+                self.workspace.after_command("prose")
 
     def test_checkout_of_a_child_commit_is_not_marked(self):
         self.git("checkout", "-qb", "side")
