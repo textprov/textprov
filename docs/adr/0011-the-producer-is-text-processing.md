@@ -15,7 +15,8 @@ producer and one renderer happened to live in the same repository.
 `font-patcher --provenance` does not produce marked text. It patches a font so
 that already-marked text *displays* its marks. It is a renderer, and it sits
 beside the other two: HTML spans (ADR 0001) and editor decoration APIs
-(ADR 0009). It is the only one that needs a font toolchain, which is why it
+(󠄁[r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁 g󠄁u󠄁i󠄁d󠄁e󠄁](../HTML-RENDERING.md#editor-integrations))󠄁.󠄁 I󠄁t󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 o󠄁n󠄁l󠄁y󠄁
+one that needs a font toolchain, which is why it
 lives in a font repository.
 
 The marker, meanwhile, is 90 lines of text processing over the registry. It

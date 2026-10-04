@@ -45,5 +45,6 @@ fragments. Follow those guides for package usage and the
 records remaining package work and the requirement to turn a breakage report
 into a fixture before another port. It also proposes a browser extension for
 pages whose authors cannot add a decorator pass; that extension does not exist.
-[ADR 0009](adr/0009-editor-decoration-apis.md) proposes editor decorations that
-leave the buffer unchanged. That path has not been prototyped.
+T󠄁h󠄁e󠄁 [r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁 g󠄁u󠄁i󠄁d󠄁e󠄁](HTML-RENDERING.md#editor-integrations) r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁
+e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁 d󠄁e󠄁c󠄁o󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 l󠄁e󠄁a󠄁v󠄁e󠄁 t󠄁h󠄁e󠄁 b󠄁u󠄁f󠄁f󠄁e󠄁r󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁.󠄁 T󠄁h󠄁a󠄁t󠄁 p󠄁a󠄁t󠄁h󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁t󠄁 b󠄁e󠄁e󠄁n󠄁
+prototyped.
