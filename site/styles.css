@@ -392,6 +392,53 @@ footer a:hover {
   text-decoration-color: var(--ai);
 }
 
+/* Provenance display preference: provenance.js sets data-provenance on <html>
+   and decorates [data-prov-document] regions. Demos keep their own controls. */
+.site-header nav {
+  margin-left: auto;
+}
+.prov-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+.prov-toggle:hover {
+  border-color: var(--muted);
+  color: var(--text);
+}
+.prov-toggle[aria-checked="true"] {
+  border-color: var(--ai);
+  color: var(--text);
+}
+.prov-toggle-sample {
+  padding: 0 0.15em;
+  text-decoration: underline wavy transparent;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 0.15em;
+}
+.prov-toggle[aria-checked="true"] .prov-toggle-sample {
+  background: var(--ai-bg);
+  text-decoration-color: var(--ai);
+}
+[data-prov-document] .prov-ai {
+  /* Long-form reading: a thinner, softer line than the decorator default. */
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--ai) 65%, transparent);
+  text-underline-offset: 0.2em;
+}
+:root[data-provenance="hidden"] [data-prov-document] .prov {
+  background: none;
+  text-decoration: none;
+}
+
 @media (max-width: 640px) {
   .site-header {
     flex-direction: column;
@@ -401,6 +448,7 @@ footer a:hover {
   .site-header nav {
     flex-wrap: wrap;
     gap: 0.9rem;
+    margin-left: 0;
   }
   h2 {
     font-size: 1.2rem;
