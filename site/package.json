@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test app.test.js build-proposal.test.js provenance.test.js mark-markdown.test.js",
+    "test": "node --test app.test.js build-proposal.test.js provenance.test.js mark-markdown.test.js theme.test.js",
     "proposal": "node build-proposal.js",
     "predev": "node build-proposal.js",
     "prebuild": "node build-proposal.js",
