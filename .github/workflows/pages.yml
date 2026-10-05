@@ -5,7 +5,8 @@ on:
     branches: [main]
     paths:
       - "site/**"
-      - "SPEC.md"
+      - "docs/**"
+      - "README.md"
       - "js/textprov.js"
       - "js/textprov.css"
       - ".github/workflows/pages.yml"

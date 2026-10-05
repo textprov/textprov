@@ -1,4 +1,0 @@
-# Reproducible utility fonts and independent shaping checks.
-fonttools[woff]==4.61.1
-brotli==1.2.0
-uharfbuzz==0.53.3
