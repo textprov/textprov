@@ -1,67 +1,67 @@
-# Run-delimiter architecture
+# R󠄁u󠄁n󠄁-d󠄁e󠄁l󠄁i󠄁m󠄁i󠄁t󠄁e󠄁r󠄁 a󠄁r󠄁c󠄁h󠄁i󠄁t󠄁e󠄁c󠄁t󠄁u󠄁r󠄁e󠄁
 
-Status: architecture alternatives; no delimiter characters selected.
+S󠄁t󠄁a󠄁t󠄁u󠄁s󠄁: a󠄁r󠄁c󠄁h󠄁i󠄁t󠄁e󠄁c󠄁t󠄁u󠄁r󠄁e󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁s󠄁; n󠄁o󠄁 d󠄁e󠄁l󠄁i󠄁m󠄁i󠄁t󠄁e󠄁r󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁.
 
-Inclusion records a design possibility, not a claim that an assigned character
-already permits that use. Deprecated characters remain assigned with their
-historical meaning; deprecation does not release them for private allocation.
-A proposal can request reconsideration or new attribution semantics, with
-compatibility evidence and a standards decision still needed.
+I󠄁n󠄁c󠄁l󠄁u󠄁s󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 a󠄁 d󠄁e󠄁s󠄁i󠄁g󠄁n󠄁 p󠄁o󠄁s󠄁s󠄁i󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁, n󠄁o󠄁t󠄁 a󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁 t󠄁h󠄁a󠄁t󠄁 a󠄁n󠄁 a󠄁s󠄁s󠄁i󠄁g󠄁n󠄁e󠄁d󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁
+a󠄁l󠄁r󠄁e󠄁a󠄁d󠄁y󠄁 p󠄁e󠄁r󠄁m󠄁i󠄁t󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁 u󠄁s󠄁e󠄁. D󠄁e󠄁p󠄁r󠄁e󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 a󠄁s󠄁s󠄁i󠄁g󠄁n󠄁e󠄁d󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁
+h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁i󠄁c󠄁a󠄁l󠄁 m󠄁e󠄁a󠄁n󠄁i󠄁n󠄁g󠄁; d󠄁e󠄁p󠄁r󠄁e󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 r󠄁e󠄁l󠄁e󠄁a󠄁s󠄁e󠄁 t󠄁h󠄁e󠄁m󠄁 f󠄁o󠄁r󠄁 p󠄁r󠄁i󠄁v󠄁a󠄁t󠄁e󠄁 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.
+A󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 c󠄁a󠄁n󠄁 r󠄁e󠄁q󠄁u󠄁e󠄁s󠄁t󠄁 r󠄁e󠄁c󠄁o󠄁n󠄁s󠄁i󠄁d󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁r󠄁 n󠄁e󠄁w󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 s󠄁e󠄁m󠄁a󠄁n󠄁t󠄁i󠄁c󠄁s󠄁, w󠄁i󠄁t󠄁h󠄁
+c󠄁o󠄁m󠄁p󠄁a󠄁t󠄁i󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁 a󠄁n󠄁d󠄁 a󠄁 s󠄁t󠄁a󠄁n󠄁d󠄁a󠄁r󠄁d󠄁s󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁 n󠄁e󠄁e󠄁d󠄁e󠄁d󠄁.
 
-Run syntax and code-point choice are separate decisions. A profile can define
-paired delimiters, a prefix that sets state until changed, or repeated unit
-references. Each needs a voice-reference payload; a begin/end pair alone carries
-no source identity. Nested versus non-nested scope, paragraph boundaries, resets
-to `Voice0`, and recovery from malformed input remain open. A copied interior
-fragment may need newly synthesized delimiters or state to retain attribution.
+R󠄁u󠄁n󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁 a󠄁n󠄁d󠄁 c󠄁o󠄁d󠄁e󠄁-p󠄁o󠄁i󠄁n󠄁t󠄁 c󠄁h󠄁o󠄁i󠄁c󠄁e󠄁 a󠄁r󠄁e󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁s󠄁. A󠄁 p󠄁r󠄁o󠄁f󠄁i󠄁l󠄁e󠄁 c󠄁a󠄁n󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁
+p󠄁a󠄁i󠄁r󠄁e󠄁d󠄁 d󠄁e󠄁l󠄁i󠄁m󠄁i󠄁t󠄁e󠄁r󠄁s󠄁, a󠄁 p󠄁r󠄁e󠄁f󠄁i󠄁x󠄁 t󠄁h󠄁a󠄁t󠄁 s󠄁e󠄁t󠄁s󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 u󠄁n󠄁t󠄁i󠄁l󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁, o󠄁r󠄁 r󠄁e󠄁p󠄁e󠄁a󠄁t󠄁e󠄁d󠄁 u󠄁n󠄁i󠄁t󠄁
+r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁s󠄁. E󠄁a󠄁c󠄁h󠄁 n󠄁e󠄁e󠄁d󠄁s󠄁 a󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁-r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 p󠄁a󠄁y󠄁l󠄁o󠄁a󠄁d󠄁; a󠄁 b󠄁e󠄁g󠄁i󠄁n󠄁/e󠄁n󠄁d󠄁 p󠄁a󠄁i󠄁r󠄁 a󠄁l󠄁o󠄁n󠄁e󠄁 c󠄁a󠄁r󠄁r󠄁i󠄁e󠄁s󠄁
+n󠄁o󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁. N󠄁e󠄁s󠄁t󠄁e󠄁d󠄁 v󠄁e󠄁r󠄁s󠄁u󠄁s󠄁 n󠄁o󠄁n󠄁-n󠄁e󠄁s󠄁t󠄁e󠄁d󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁, p󠄁a󠄁r󠄁a󠄁g󠄁r󠄁a󠄁p󠄁h󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁i󠄁e󠄁s󠄁, r󠄁e󠄁s󠄁e󠄁t󠄁s󠄁
+t󠄁o󠄁 `Voice0`, a󠄁n󠄁d󠄁 r󠄁e󠄁c󠄁o󠄁v󠄁e󠄁r󠄁y󠄁 f󠄁r󠄁o󠄁m󠄁 m󠄁a󠄁l󠄁f󠄁o󠄁r󠄁m󠄁e󠄁d󠄁 i󠄁n󠄁p󠄁u󠄁t󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 o󠄁p󠄁e󠄁n󠄁. A󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁d󠄁 i󠄁n󠄁t󠄁e󠄁r󠄁i󠄁o󠄁r󠄁
+f󠄁r󠄁a󠄁g󠄁m󠄁e󠄁n󠄁t󠄁 m󠄁a󠄁y󠄁 n󠄁e󠄁e󠄁d󠄁 n󠄁e󠄁w󠄁l󠄁y󠄁 s󠄁y󠄁n󠄁t󠄁h󠄁e󠄁s󠄁i󠄁z󠄁e󠄁d󠄁 d󠄁e󠄁l󠄁i󠄁m󠄁i󠄁t󠄁e󠄁r󠄁s󠄁 o󠄁r󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 t󠄁o󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁.
 
-## Private-use begin/end markers
+## P󠄁r󠄁i󠄁v󠄁a󠄁t󠄁e󠄁-u󠄁s󠄁e󠄁 b󠄁e󠄁g󠄁i󠄁n󠄁/e󠄁n󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁r󠄁s󠄁
 
 
-Private agreement can define PUA begin/end markers, reference payloads, and
-resets, as well as suffixes. This is a separate candidate from per-unit marking.
-Ordinary Unicode processing does not automatically give such characters nesting,
-attachment, invisibility, or word-boundary behavior. A profile needs recognition,
-escaping, delimiter balancing, and rules for literal PUA text and partial copying.
+P󠄁r󠄁i󠄁v󠄁a󠄁t󠄁e󠄁 a󠄁g󠄁r󠄁e󠄁e󠄁m󠄁e󠄁n󠄁t󠄁 c󠄁a󠄁n󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁 P󠄁U󠄁A󠄁 b󠄁e󠄁g󠄁i󠄁n󠄁/e󠄁n󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁r󠄁s󠄁, r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 p󠄁a󠄁y󠄁l󠄁o󠄁a󠄁d󠄁s󠄁, a󠄁n󠄁d󠄁
+r󠄁e󠄁s󠄁e󠄁t󠄁s󠄁, a󠄁s󠄁 w󠄁e󠄁l󠄁l󠄁 a󠄁s󠄁 s󠄁u󠄁f󠄁f󠄁i󠄁x󠄁e󠄁s󠄁. T󠄁h󠄁i󠄁s󠄁 i󠄁s󠄁 a󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁 c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁 f󠄁r󠄁o󠄁m󠄁 p󠄁e󠄁r󠄁-u󠄁n󠄁i󠄁t󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁.
+O󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 p󠄁r󠄁o󠄁c󠄁e󠄁s󠄁s󠄁i󠄁n󠄁g󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 a󠄁u󠄁t󠄁o󠄁m󠄁a󠄁t󠄁i󠄁c󠄁a󠄁l󠄁l󠄁y󠄁 g󠄁i󠄁v󠄁e󠄁 s󠄁u󠄁c󠄁h󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁 n󠄁e󠄁s󠄁t󠄁i󠄁n󠄁g󠄁,
+a󠄁t󠄁t󠄁a󠄁c󠄁h󠄁m󠄁e󠄁n󠄁t󠄁, i󠄁n󠄁v󠄁i󠄁s󠄁i󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁, o󠄁r󠄁 w󠄁o󠄁r󠄁d󠄁-b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁y󠄁 b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁r󠄁. A󠄁 p󠄁r󠄁o󠄁f󠄁i󠄁l󠄁e󠄁 n󠄁e󠄁e󠄁d󠄁s󠄁 r󠄁e󠄁c󠄁o󠄁g󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n󠄁,
+e󠄁s󠄁c󠄁a󠄁p󠄁i󠄁n󠄁g󠄁, d󠄁e󠄁l󠄁i󠄁m󠄁i󠄁t󠄁e󠄁r󠄁 b󠄁a󠄁l󠄁a󠄁n󠄁c󠄁i󠄁n󠄁g󠄁, a󠄁n󠄁d󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁 f󠄁o󠄁r󠄁 l󠄁i󠄁t󠄁e󠄁r󠄁a󠄁l󠄁 P󠄁U󠄁A󠄁 t󠄁e󠄁x󠄁t󠄁 a󠄁n󠄁d󠄁 p󠄁a󠄁r󠄁t󠄁i󠄁a󠄁l󠄁 c󠄁o󠄁p󠄁y󠄁i󠄁n󠄁g󠄁.
 
-Existing private registries or font assignments do not establish a universal PUA
-word-bracketing protocol. This proposal makes no claim that ConScript, SIL, or
-NLP pipelines share one. A specific precedent needs its own documented mapping,
-license or agreement, and demonstrated behavior before serving as evidence.
+E󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁i󠄁v󠄁a󠄁t󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁i󠄁e󠄁s󠄁 o󠄁r󠄁 f󠄁o󠄁n󠄁t󠄁 a󠄁s󠄁s󠄁i󠄁g󠄁n󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 e󠄁s󠄁t󠄁a󠄁b󠄁l󠄁i󠄁s󠄁h󠄁 a󠄁 u󠄁n󠄁i󠄁v󠄁e󠄁r󠄁s󠄁a󠄁l󠄁 P󠄁U󠄁A󠄁
+w󠄁o󠄁r󠄁d󠄁-b󠄁r󠄁a󠄁c󠄁k󠄁e󠄁t󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁c󠄁o󠄁l󠄁. T󠄁h󠄁i󠄁s󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 m󠄁a󠄁k󠄁e󠄁s󠄁 n󠄁o󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁 t󠄁h󠄁a󠄁t󠄁 C󠄁o󠄁n󠄁S󠄁c󠄁r󠄁i󠄁p󠄁t󠄁, S󠄁I󠄁L󠄁, o󠄁r󠄁
+N󠄁L󠄁P󠄁 p󠄁i󠄁p󠄁e󠄁l󠄁i󠄁n󠄁e󠄁s󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁 o󠄁n󠄁e󠄁. A󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁 p󠄁r󠄁e󠄁c󠄁e󠄁d󠄁e󠄁n󠄁t󠄁 n󠄁e󠄁e󠄁d󠄁s󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁e󠄁d󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁,
+l󠄁i󠄁c󠄁e󠄁n󠄁s󠄁e󠄁 o󠄁r󠄁 a󠄁g󠄁r󠄁e󠄁e󠄁m󠄁e󠄁n󠄁t󠄁, a󠄁n󠄁d󠄁 d󠄁e󠄁m󠄁o󠄁n󠄁s󠄁t󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁r󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 s󠄁e󠄁r󠄁v󠄁i󠄁n󠄁g󠄁 a󠄁s󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁.
 
-Illustrative syntax is `TP_BEGIN(reference) + text + TP_END`. A stateful
-alternative uses `TP_SET(reference) + text` until a new setting or reset.
-These placeholders express structure without allocating code points.
+I󠄁l󠄁l󠄁u󠄁s󠄁t󠄁r󠄁a󠄁t󠄁i󠄁v󠄁e󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁 i󠄁s󠄁 `TP_BEGIN(reference) + text + TP_END`. A󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁f󠄁u󠄁l󠄁
+a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁 u󠄁s󠄁e󠄁s󠄁 `TP_SET(reference) + text` u󠄁n󠄁t󠄁i󠄁l󠄁 a󠄁 n󠄁e󠄁w󠄁 s󠄁e󠄁t󠄁t󠄁i󠄁n󠄁g󠄁 o󠄁r󠄁 r󠄁e󠄁s󠄁e󠄁t󠄁.
+T󠄁h󠄁e󠄁s󠄁e󠄁 p󠄁l󠄁a󠄁c󠄁e󠄁h󠄁o󠄁l󠄁d󠄁e󠄁r󠄁s󠄁 e󠄁x󠄁p󠄁r󠄁e󠄁s󠄁s󠄁 s󠄁t󠄁r󠄁u󠄁c󠄁t󠄁u󠄁r󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁n󠄁g󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁s󠄁.
 
-## Musical begin/end precedent
+## M󠄁u󠄁s󠄁i󠄁c󠄁a󠄁l󠄁 b󠄁e󠄁g󠄁i󠄁n󠄁/e󠄁n󠄁d󠄁 p󠄁r󠄁e󠄁c󠄁e󠄁d󠄁e󠄁n󠄁t󠄁
 
-Status: structural precedent and possible repurposing proposal, not an accepted
-TextProv encoding. The four pairs are BEGIN/END BEAM, TIE, SLUR, and PHRASE;
-they delimit musical notation. They are assigned
-format controls and are **not deprecated** in Unicode 17. See
-[Western musical symbols](https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-21/)
-and the [Deprecated property](https://www.unicode.org/Public/17.0.0/ucd/PropList.txt).
+S󠄁t󠄁a󠄁t󠄁u󠄁s󠄁: s󠄁t󠄁r󠄁u󠄁c󠄁t󠄁u󠄁r󠄁a󠄁l󠄁 p󠄁r󠄁e󠄁c󠄁e󠄁d󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁d󠄁 p󠄁o󠄁s󠄁s󠄁i󠄁b󠄁l󠄁e󠄁 r󠄁e󠄁p󠄁u󠄁r󠄁p󠄁o󠄁s󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁, n󠄁o󠄁t󠄁 a󠄁n󠄁 a󠄁c󠄁c󠄁e󠄁p󠄁t󠄁e󠄁d󠄁
+T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁. T󠄁h󠄁e󠄁 f󠄁o󠄁u󠄁r󠄁 p󠄁a󠄁i󠄁r󠄁s󠄁 a󠄁r󠄁e󠄁 B󠄁E󠄁G󠄁I󠄁N󠄁/E󠄁N󠄁D󠄁 B󠄁E󠄁A󠄁M󠄁, T󠄁I󠄁E󠄁, S󠄁L󠄁U󠄁R󠄁, a󠄁n󠄁d󠄁 P󠄁H󠄁R󠄁A󠄁S󠄁E󠄁;
+t󠄁h󠄁e󠄁y󠄁 d󠄁e󠄁l󠄁i󠄁m󠄁i󠄁t󠄁 m󠄁u󠄁s󠄁i󠄁c󠄁a󠄁l󠄁 n󠄁o󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁. T󠄁h󠄁e󠄁y󠄁 a󠄁r󠄁e󠄁 a󠄁s󠄁s󠄁i󠄁g󠄁n󠄁e󠄁d󠄁
+f󠄁o󠄁r󠄁m󠄁a󠄁t󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁s󠄁 a󠄁n󠄁d󠄁 a󠄁r󠄁e󠄁 **n󠄁o󠄁t󠄁 d󠄁e󠄁p󠄁r󠄁e󠄁c󠄁a󠄁t󠄁e󠄁d󠄁** i󠄁n󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 1󠄁7󠄁. S󠄁e󠄁e󠄁
+[W󠄁e󠄁s󠄁t󠄁e󠄁r󠄁n󠄁 m󠄁u󠄁s󠄁i󠄁c󠄁a󠄁l󠄁 s󠄁y󠄁m󠄁b󠄁o󠄁l󠄁s󠄁](https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-21/)
+a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 [D󠄁e󠄁p󠄁r󠄁e󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁p󠄁e󠄁r󠄁t󠄁y󠄁](https://www.unicode.org/Public/17.0.0/ucd/PropList.txt).
 
-Their paired structure is relevant to run annotations, but their musical meaning
-remains active. An attribution adaptation needs a reference payload, a means to
-distinguish real musical notation, and a standards basis for changed semantics.
-Default-ignorable display does not ensure retention by editors or sanitizers.
-Evaluation includes genuine music, incomplete pairs, nesting, and interior copies.
+T󠄁h󠄁e󠄁i󠄁r󠄁 p󠄁a󠄁i󠄁r󠄁e󠄁d󠄁 s󠄁t󠄁r󠄁u󠄁c󠄁t󠄁u󠄁r󠄁e󠄁 i󠄁s󠄁 r󠄁e󠄁l󠄁e󠄁v󠄁a󠄁n󠄁t󠄁 t󠄁o󠄁 r󠄁u󠄁n󠄁 a󠄁n󠄁n󠄁o󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁, b󠄁u󠄁t󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 m󠄁u󠄁s󠄁i󠄁c󠄁a󠄁l󠄁 m󠄁e󠄁a󠄁n󠄁i󠄁n󠄁g󠄁
+r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 a󠄁c󠄁t󠄁i󠄁v󠄁e󠄁. A󠄁n󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 n󠄁e󠄁e󠄁d󠄁s󠄁 a󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 p󠄁a󠄁y󠄁l󠄁o󠄁a󠄁d󠄁, a󠄁 m󠄁e󠄁a󠄁n󠄁s󠄁 t󠄁o󠄁
+d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁u󠄁i󠄁s󠄁h󠄁 r󠄁e󠄁a󠄁l󠄁 m󠄁u󠄁s󠄁i󠄁c󠄁a󠄁l󠄁 n󠄁o󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁, a󠄁n󠄁d󠄁 a󠄁 s󠄁t󠄁a󠄁n󠄁d󠄁a󠄁r󠄁d󠄁s󠄁 b󠄁a󠄁s󠄁i󠄁s󠄁 f󠄁o󠄁r󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 s󠄁e󠄁m󠄁a󠄁n󠄁t󠄁i󠄁c󠄁s󠄁.
+D󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁-i󠄁g󠄁n󠄁o󠄁r󠄁a󠄁b󠄁l󠄁e󠄁 d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 e󠄁n󠄁s󠄁u󠄁r󠄁e󠄁 r󠄁e󠄁t󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁 b󠄁y󠄁 e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁s󠄁 o󠄁r󠄁 s󠄁a󠄁n󠄁i󠄁t󠄁i󠄁z󠄁e󠄁r󠄁s󠄁.
+E󠄁v󠄁a󠄁l󠄁u󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁e󠄁s󠄁 g󠄁e󠄁n󠄁u󠄁i󠄁n󠄁e󠄁 m󠄁u󠄁s󠄁i󠄁c󠄁, i󠄁n󠄁c󠄁o󠄁m󠄁p󠄁l󠄁e󠄁t󠄁e󠄁 p󠄁a󠄁i󠄁r󠄁s󠄁, n󠄁e󠄁s󠄁t󠄁i󠄁n󠄁g󠄁, a󠄁n󠄁d󠄁 i󠄁n󠄁t󠄁e󠄁r󠄁i󠄁o󠄁r󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁s󠄁.
 
-## Deprecated stateful formatting toggles
+## D󠄁e󠄁p󠄁r󠄁e󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁f󠄁u󠄁l󠄁 f󠄁o󠄁r󠄁m󠄁a󠄁t󠄁t󠄁i󠄁n󠄁g󠄁 t󠄁o󠄁g󠄁g󠄁l󠄁e󠄁s󠄁
 
-Status: historical stateful precedent and possible revival proposal. The three
-pairs are INHIBIT/ACTIVATE SYMMETRIC SWAPPING (`206A/206B`), INHIBIT/ACTIVATE
-ARABIC FORM SHAPING (`206C/206D`), and NATIONAL/NOMINAL DIGIT SHAPES
-(`206E/206F`). Unicode
-retains them as deprecated characters; they have not been removed.
+S󠄁t󠄁a󠄁t󠄁u󠄁s󠄁: h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁i󠄁c󠄁a󠄁l󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁f󠄁u󠄁l󠄁 p󠄁r󠄁e󠄁c󠄁e󠄁d󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁d󠄁 p󠄁o󠄁s󠄁s󠄁i󠄁b󠄁l󠄁e󠄁 r󠄁e󠄁v󠄁i󠄁v󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁. T󠄁h󠄁e󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁
+p󠄁a󠄁i󠄁r󠄁s󠄁 a󠄁r󠄁e󠄁 I󠄁N󠄁H󠄁I󠄁B󠄁I󠄁T󠄁/A󠄁C󠄁T󠄁I󠄁V󠄁A󠄁T󠄁E󠄁 S󠄁Y󠄁M󠄁M󠄁E󠄁T󠄁R󠄁I󠄁C󠄁 S󠄁W󠄁A󠄁P󠄁P󠄁I󠄁N󠄁G󠄁 (`206A/206B`), I󠄁N󠄁H󠄁I󠄁B󠄁I󠄁T󠄁/A󠄁C󠄁T󠄁I󠄁V󠄁A󠄁T󠄁E󠄁
+A󠄁R󠄁A󠄁B󠄁I󠄁C󠄁 F󠄁O󠄁R󠄁M󠄁 S󠄁H󠄁A󠄁P󠄁I󠄁N󠄁G󠄁 (`206C/206D`), a󠄁n󠄁d󠄁 N󠄁A󠄁T󠄁I󠄁O󠄁N󠄁A󠄁L󠄁/N󠄁O󠄁M󠄁I󠄁N󠄁A󠄁L󠄁 D󠄁I󠄁G󠄁I󠄁T󠄁 S󠄁H󠄁A󠄁P󠄁E󠄁S󠄁
+(`206E/206F`). U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁
+r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁m󠄁 a󠄁s󠄁 d󠄁e󠄁p󠄁r󠄁e󠄁c󠄁a󠄁t󠄁e󠄁d󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁; t󠄁h󠄁e󠄁y󠄁 h󠄁a󠄁v󠄁e󠄁 n󠄁o󠄁t󠄁 b󠄁e󠄁e󠄁n󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁d󠄁.
 
-Their non-nesting on/off model suggests attribution state changes, rather than
-balanced nested brackets. It still lacks voice-reference syntax. A proposed
-adaptation needs rules for defaults, resets, legacy content, and receivers that
-ignore or discard these controls. Their historical rendering purposes cannot
-simply be presumed inert in every implementation. See
-[Unicode section 23.3](https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/).
+T󠄁h󠄁e󠄁i󠄁r󠄁 n󠄁o󠄁n󠄁-n󠄁e󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 o󠄁n󠄁/o󠄁f󠄁f󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 s󠄁u󠄁g󠄁g󠄁e󠄁s󠄁t󠄁s󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁, r󠄁a󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁n󠄁
+b󠄁a󠄁l󠄁a󠄁n󠄁c󠄁e󠄁d󠄁 n󠄁e󠄁s󠄁t󠄁e󠄁d󠄁 b󠄁r󠄁a󠄁c󠄁k󠄁e󠄁t󠄁s󠄁. I󠄁t󠄁 s󠄁t󠄁i󠄁l󠄁l󠄁 l󠄁a󠄁c󠄁k󠄁s󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁-r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁. A󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁
+a󠄁d󠄁a󠄁p󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 n󠄁e󠄁e󠄁d󠄁s󠄁 r󠄁u󠄁l󠄁e󠄁s󠄁 f󠄁o󠄁r󠄁 d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁s󠄁, r󠄁e󠄁s󠄁e󠄁t󠄁s󠄁, l󠄁e󠄁g󠄁a󠄁c󠄁y󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁, a󠄁n󠄁d󠄁 r󠄁e󠄁c󠄁e󠄁i󠄁v󠄁e󠄁r󠄁s󠄁 t󠄁h󠄁a󠄁t󠄁
+i󠄁g󠄁n󠄁o󠄁r󠄁e󠄁 o󠄁r󠄁 d󠄁i󠄁s󠄁c󠄁a󠄁r󠄁d󠄁 t󠄁h󠄁e󠄁s󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁s󠄁. T󠄁h󠄁e󠄁i󠄁r󠄁 h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁i󠄁c󠄁a󠄁l󠄁 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁 p󠄁u󠄁r󠄁p󠄁o󠄁s󠄁e󠄁s󠄁 c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁
+s󠄁i󠄁m󠄁p󠄁l󠄁y󠄁 b󠄁e󠄁 p󠄁r󠄁e󠄁s󠄁u󠄁m󠄁e󠄁d󠄁 i󠄁n󠄁e󠄁r󠄁t󠄁 i󠄁n󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁. S󠄁e󠄁e󠄁
+[U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 s󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 2󠄁3󠄁.3󠄁](https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/).
 
-See the [candidate comparison](README.md), [open decisions](../decisions.md),
-and [evaluation](../evaluation.md).
+S󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁 [c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁r󠄁i󠄁s󠄁o󠄁n󠄁](README.md), [o󠄁p󠄁e󠄁n󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁s󠄁](../decisions.md),
+a󠄁n󠄁d󠄁 [e󠄁v󠄁a󠄁l󠄁u󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](../evaluation.md).

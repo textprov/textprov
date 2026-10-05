@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
                      "Encodes and decodes producer-declared origin labels in Unicode text; " \
                      "does not detect or verify origin."
   spec.authors     = ["TextProv contributors"]
-  spec.license     = "MIT"
+  spec.license     = "Apache-2.0"
   spec.homepage    = "https://github.com/textprov/textprov"
 
   spec.metadata = {

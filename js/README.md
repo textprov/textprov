@@ -73,4 +73,4 @@ run shared fixtures and Unicode segmentation tests, and verify DOM decoration
 preserves underlying text and avoids duplicate spans. Test dependencies are for
 DOM checks; the runtime itself has none. See [UCD sources](../ucd/README.md).
 
-MIT; see [LICENSE](LICENSE).
+Apache-2.0; see [LICENSE](LICENSE).

@@ -82,4 +82,4 @@ Checks cover shared [fixtures](../experiments/baseline/fixtures.json), vendored
 mapping agreement, producer behavior, editing/workspace helpers, CLI output, and
 Unicode 17.0.0 grapheme segmentation. See [UCD sources](../ucd/README.md).
 
-MIT; see [LICENSE](LICENSE).
+Apache-2.0; see [LICENSE](LICENSE).

@@ -3,54 +3,80 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="TextProv is a proposal for voice attribution that travels with text. Explore the model, encoding candidates, and an experimental demonstration.">
+  <meta name="description" content="A proposal for keeping track of what you wrote and what AI generated, using invisible labels embedded directly in text.">
   <title>TextProv — a proposal for voice attribution</title>
-  <link rel="stylesheet" href="styles.css">
+  <script src="/theme.js"></script><link rel="stylesheet" href="styles.css">
   <script type="module" src="app.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header"><a class="wordmark" href="./">TextProv</a><nav aria-label="Primary navigation"><a href="https://github.com/textprov/textprov">GitHub</a></nav></header>
-  <main id="main">
+  <header class="site-header"><a class="wordmark" href="./">TextProv</a><div class="header-controls"><button type="button" class="theme-toggle" data-theme-toggle hidden aria-label="Switch color theme">🌙</button><nav aria-label="Primary navigation"><a href="https://github.com/textprov/textprov">GitHub</a></nav></div></header>
+  <main id="main" data-prov-document>
     <section class="intro" aria-labelledby="intro-title">
-      <p class="eyebrow">Proposal · decisions remain open</p>
-      <div class="title-row"><h1 id="intro-title">Voice attribution that travels with text</h1>
-        <button type="button" class="prov-toggle" role="switch" aria-checked="true" aria-label="Show provenance labels in the experimental example" aria-controls="sample-passage" title="Show provenance labels in the experimental example" data-prov-toggle hidden><span class="prov-toggle-knob" aria-hidden="true">℗</span></button>
+      <p class="eyebrow">D󠄁r󠄁a󠄁f󠄁t󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁</p>
+      <div class="title-row"><h1 id="intro-title">I󠄁n󠄁v󠄁i󠄁s󠄁i󠄁b󠄁l󠄁e󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁, d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁l󠄁y󠄁 i󠄁n󠄁 t󠄁e󠄁x󠄁t󠄁</h1>
+        <span class="provenance-controls"><button type="button" class="prov-toggle" role="switch" aria-checked="true" aria-label="Show embedded provenance labels" aria-controls="main homepage-footer" data-prov-toggle hidden><span class="prov-toggle-knob" aria-hidden="true">℗</span></button><span class="info-tip"><button type="button" class="info-button" aria-label="About the provenance toggle" aria-describedby="prov-tip">ⓘ</button><span class="tooltip" id="prov-tip" role="tooltip">R󠄁e󠄁v󠄁e󠄁a󠄁l󠄁 t󠄁h󠄁e󠄁 e󠄁m󠄁b󠄁e󠄁d󠄁d󠄁e󠄁d󠄁 V󠄁S󠄁 d󠄁e󠄁m󠄁o󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁. T󠄁u󠄁r󠄁n󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁 d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 o󠄁f󠄁f󠄁 l󠄁e󠄁a󠄁v󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁. C󠄁o󠄁p󠄁y󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁m󠄁 w󠄁h󠄁e󠄁r󠄁e󠄁 s󠄁u󠄁p󠄁p󠄁o󠄁r󠄁t󠄁e󠄁d󠄁. T󠄁h󠄁e󠄁s󠄁e󠄁 d󠄁e󠄁m󠄁o󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 v󠄁e󠄁r󠄁i󠄁f󠄁y󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁s󠄁h󠄁i󠄁p󠄁.</span></span></span>
       </div>
-      <p class="lead">TextProv explores how text can retain references to its contributing voices as passages are copied, edited, and combined.</p>
-      <p>A voice may represent a person, a model, or another source. Attribution records a supplied reference; it does not detect authorship or verify identity.</p>
-      <p><a href="./proposal.html">Read the proposal and its open decisions →</a></p>
+      <div class="intro-example" aria-label="Experimental VS demonstration">
+        <p class="note">T󠄁r󠄁y󠄁 t󠄁h󠄁e󠄁 ℗ s󠄁w󠄁i󠄁t󠄁c󠄁h󠄁: t󠄁h󠄁i󠄁s󠄁 e󠄁x󠄁a󠄁m󠄁p󠄁l󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 i󠄁n󠄁v󠄁i󠄁s󠄁i󠄁b󠄁l󠄁e󠄁 h󠄁u󠄁m󠄁a󠄁n󠄁 a󠄁n󠄁d󠄁 A󠄁I󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁.</p>
+      <blockquote><p id="sample-passage">I󠄀 d󠄀o󠄀n󠄀'󠄀t󠄀 w󠄀a󠄀n󠄀t󠄀 m󠄀y󠄀 w󠄀o󠄀r󠄀d󠄀s󠄀 q󠄀u󠄀i󠄀e󠄀t󠄀l󠄀y󠄀 r󠄀e󠄀w󠄀r󠄀i󠄀t󠄀t󠄀e󠄀n󠄀.󠄀 A󠄁n󠄁 a󠄁s󠄁s󠄁i󠄁s󠄁t󠄁a󠄁n󠄁t󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁g󠄁g󠄁e󠄁s󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 e󠄁r󠄁a󠄁s󠄁i󠄁n󠄁g󠄁 w󠄁h󠄁o󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁d󠄁 t󠄁h󠄁e󠄁m󠄁.󠄁</p></blockquote>
+      <p id="prov-legend" class="note" hidden><span class="prov-human">H󠄁u󠄁m󠄁a󠄁n󠄁-l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁</span> · <span class="prov-ai">A󠄁I󠄁-l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁</span></p>
+
+      <button id="sample-copy-button" type="button" hidden>Copy marked example</button> <span id="sample-copy-status" role="status" class="note"></span>
+      </div>
+      <p class="lead">A󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 f󠄁o󠄁r󠄁 k󠄁e󠄁e󠄁p󠄁i󠄁n󠄁g󠄁 t󠄁r󠄁a󠄁c󠄁k󠄁 o󠄁f󠄁 w󠄁h󠄁a󠄁t󠄁 y󠄁o󠄁u󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 w󠄁h󠄁a󠄁t󠄁 A󠄁I󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁, u󠄁s󠄁i󠄁n󠄁g󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁’s󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 c󠄁a󠄁p󠄁a󠄁b󠄁i󠄁l󠄁i󠄁t󠄁i󠄁e󠄁s󠄁 t󠄁o󠄁 e󠄁m󠄁b󠄁e󠄁d󠄁 i󠄁n󠄁v󠄁i󠄁s󠄁i󠄁b󠄁l󠄁e󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁l󠄁y󠄁 i󠄁n󠄁 t󠄁e󠄁x󠄁t󠄁. O󠄁p󠄁e󠄁n󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁h󠄁o󠄁i󠄁c󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 w󠄁o󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 d󠄁e󠄁m󠄁o󠄁n󠄁s󠄁t󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁.</p>
+      <p>A󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁 m󠄁a󠄁y󠄁 r󠄁e󠄁p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁 a󠄁 p󠄁e󠄁r󠄁s󠄁o󠄁n󠄁, a󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁, o󠄁r󠄁 a󠄁n󠄁o󠄁t󠄁h󠄁e󠄁r󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁. A󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 a󠄁 s󠄁u󠄁p󠄁p󠄁l󠄁i󠄁e󠄁d󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁; i󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 d󠄁e󠄁t󠄁e󠄁c󠄁t󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁s󠄁h󠄁i󠄁p󠄁 o󠄁r󠄁 v󠄁e󠄁r󠄁i󠄁f󠄁y󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁.</p>
+      <p><a href="./proposal.html">R󠄁e󠄁a󠄁d󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 →</a></p>
     </section>
+    <nav class="proposal-toc homepage-toc" aria-labelledby="contents-title">
+      <h2 id="contents-title">P󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁s󠄁</h2>
+      <ol>
+        <li><a href="./model.html">M󠄁o󠄁d󠄁e󠄁l󠄁</a> — s󠄁e󠄁m󠄁a󠄁n󠄁t󠄁i󠄁c󠄁s󠄁 a󠄁n󠄁d󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁s󠄁</li>
+        <li><a href="./requirements.html">R󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁</a> — b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁r󠄁 a󠄁n󠄁d󠄁 e󠄁v󠄁a󠄁l󠄁u󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁r󠄁i󠄁t󠄁e󠄁r󠄁i󠄁a󠄁</li>
+        <li><a href="./encodings.html">E󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁s󠄁</a> — m󠄁e󠄁c󠄁h󠄁a󠄁n󠄁i󠄁s󠄁m󠄁s󠄁 a󠄁n󠄁d󠄁 t󠄁r󠄁a󠄁d󠄁e󠄁-o󠄁f󠄁f󠄁s󠄁</li>
+        <li><a href="./decisions.html">O󠄁p󠄁e󠄁n󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁s󠄁</a> — q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 t󠄁o󠄁 r󠄁e󠄁s󠄁o󠄁l󠄁v󠄁e󠄁</li>
+        <li><a href="./unicode.html">U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁</a> — a󠄁 p󠄁o󠄁s󠄁s󠄁i󠄁b󠄁l󠄁e󠄁 s󠄁t󠄁a󠄁n󠄁d󠄁a󠄁r󠄁d󠄁i󠄁z󠄁e󠄁d󠄁 m󠄁e󠄁c󠄁h󠄁a󠄁n󠄁i󠄁s󠄁m󠄁</li>
+        <li><a href="./evaluation.html">E󠄁v󠄁a󠄁l󠄁u󠄁a󠄁t󠄁i󠄁o󠄁n󠄁</a> — o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁n󠄁d󠄁 p󠄁l󠄁a󠄁n󠄁n󠄁e󠄁d󠄁 m󠄁e󠄁a󠄁s󠄁u󠄁r󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁</li>
+      </ol>
+    </nav>
     <section aria-labelledby="model-title">
-      <h2 id="model-title">Text and a voice reference</h2>
-      <pre><code>TextUnit + VoiceReference → AttributedUnit</code></pre>
-      <p><code>Voice1</code>, <code>Voice2</code>, and further references distinguish sources. Their descriptions and optional classifications are separate from the reference itself.</p>
-      <p><code>Voice0</code> represents unattributed characters: ordinary Unicode text, without an extra marker or an assumption about who wrote it.</p>
-      <p>The text unit, reference scope, copying behavior, and encoding are decisions to make. <a href="./proposal.html#model">Explore the model</a>.</p>
+      <h2 id="model-title">T󠄁e󠄁x󠄁t󠄁 a󠄁n󠄁d󠄁 a󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁</h2>
+      <figure class="model-figure">
+        <svg class="model-diagram" viewBox="0 0 720 300" role="img" aria-labelledby="diagram-title diagram-desc" xmlns="http://www.w3.org/2000/svg">
+          <title id="diagram-title">Associate text with a voice reference</title>
+          <desc id="diagram-desc">The text “Hello” and the reference Voice1 are associated to form attributed text. The text stays “Hello”; Voice1 identifies its source. This illustrates the abstract model, with the encoding still open.</desc>
+          <defs><marker id="diagram-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
+          <g class="diagram-box"><rect x="16" y="20" width="224" height="94" rx="8"/><rect x="16" y="160" width="224" height="94" rx="8"/><rect x="396" y="56" width="308" height="198" rx="8"/></g>
+          <g text-anchor="middle"><text class="diagram-label" x="128" y="49">Text</text><text class="diagram-value" x="128" y="87">Hello</text><text class="diagram-label" x="128" y="189">Voice reference</text><text class="diagram-value" x="128" y="227">Voice1</text><text class="diagram-label" x="550" y="88">Attributed text</text><text class="diagram-value" x="550" y="146">Hello</text></g>
+          <path class="diagram-connector" d="M 240 67 H 282 V 137 M 240 207 H 282 V 137 H 380" marker-end="url(#diagram-arrow)"/>
+          <rect class="diagram-reference" x="489" y="168" width="122" height="42" rx="21"/><text x="550" y="195" text-anchor="middle" class="diagram-reference-text">Voice1</text>
+          <text x="360" y="286" text-anchor="middle" class="diagram-label">Association is the model; encoding is an open choice.</text>
+        </svg>
+        <figcaption>T󠄁h󠄁e󠄁 v󠄁i󠄁s󠄁i󠄁b󠄁l󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁 s󠄁t󠄁a󠄁y󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁. A󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁f󠄁i󠄁e󠄁s󠄁 i󠄁t󠄁s󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁.</figcaption>
+      </figure>
+      <p><code>Voice1</code>, <code>Voice2</code>, a󠄁n󠄁d󠄁 f󠄁u󠄁r󠄁t󠄁h󠄁e󠄁r󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁s󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁u󠄁i󠄁s󠄁h󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁s󠄁. T󠄁h󠄁e󠄁i󠄁r󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁n󠄁d󠄁 o󠄁p󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 c󠄁l󠄁a󠄁s󠄁s󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁r󠄁e󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁t󠄁s󠄁e󠄁l󠄁f󠄁.</p>
+      <p><code>Voice0</code> r󠄁e󠄁p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁s󠄁 u󠄁n󠄁a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁d󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁: o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁, w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 a󠄁n󠄁 e󠄁x󠄁t󠄁r󠄁a󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁r󠄁 o󠄁r󠄁 a󠄁n󠄁 a󠄁s󠄁s󠄁u󠄁m󠄁p󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁b󠄁o󠄁u󠄁t󠄁 w󠄁h󠄁o󠄁 w󠄁r󠄁o󠄁t󠄁e󠄁 i󠄁t󠄁.</p>
+      <p>T󠄁h󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁 u󠄁n󠄁i󠄁t󠄁, r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁, c󠄁o󠄁p󠄁y󠄁i󠄁n󠄁g󠄁 b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁r󠄁, a󠄁n󠄁d󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 a󠄁r󠄁e󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁s󠄁 t󠄁o󠄁 m󠄁a󠄁k󠄁e󠄁. <a href="./model.html">E󠄁x󠄁p󠄁l󠄁o󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁</a>.</p>
     </section>
     <section aria-labelledby="encoding-title">
-      <h2 id="encoding-title">Several mechanisms to evaluate</h2>
-      <p>Variation selectors provide a useful demonstration of attachment and normally invisible rendering, but collide with legitimate Unicode variation sequences. Private-use markers permit a private convention, with harder display and cursor trade-offs.</p>
-      <p>Other candidates include interlinear annotations, tag characters, explicit run delimiters, and a proposed standardized mechanism. Existing controls also provide structural precedents; using them for attribution would need its own justification.</p>
-      <p><a href="./proposal.html#encodings">Compare the encoding candidates</a> and <a href="./proposal.html#requirements">evaluation criteria</a>.</p>
+      <h2 id="encoding-title">S󠄁e󠄁v󠄁e󠄁r󠄁a󠄁l󠄁 m󠄁e󠄁c󠄁h󠄁a󠄁n󠄁i󠄁s󠄁m󠄁s󠄁 t󠄁o󠄁 e󠄁v󠄁a󠄁l󠄁u󠄁a󠄁t󠄁e󠄁</h2>
+      <p>V󠄁a󠄁r󠄁i󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁 p󠄁r󠄁o󠄁v󠄁i󠄁d󠄁e󠄁 a󠄁 u󠄁s󠄁e󠄁f󠄁u󠄁l󠄁 d󠄁e󠄁m󠄁o󠄁n󠄁s󠄁t󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 a󠄁t󠄁t󠄁a󠄁c󠄁h󠄁m󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁d󠄁 n󠄁o󠄁r󠄁m󠄁a󠄁l󠄁l󠄁y󠄁 i󠄁n󠄁v󠄁i󠄁s󠄁i󠄁b󠄁l󠄁e󠄁 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁, b󠄁u󠄁t󠄁 c󠄁o󠄁l󠄁l󠄁i󠄁d󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 l󠄁e󠄁g󠄁i󠄁t󠄁i󠄁m󠄁a󠄁t󠄁e󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁a󠄁r󠄁i󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 s󠄁e󠄁q󠄁u󠄁e󠄁n󠄁c󠄁e󠄁s󠄁. P󠄁r󠄁i󠄁v󠄁a󠄁t󠄁e󠄁-u󠄁s󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁r󠄁s󠄁 p󠄁e󠄁r󠄁m󠄁i󠄁t󠄁 a󠄁 p󠄁r󠄁i󠄁v󠄁a󠄁t󠄁e󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁, w󠄁i󠄁t󠄁h󠄁 h󠄁a󠄁r󠄁d󠄁e󠄁r󠄁 d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 a󠄁n󠄁d󠄁 c󠄁u󠄁r󠄁s󠄁o󠄁r󠄁 t󠄁r󠄁a󠄁d󠄁e󠄁-o󠄁f󠄁f󠄁s󠄁.</p>
+      <p>O󠄁t󠄁h󠄁e󠄁r󠄁 c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁s󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁e󠄁 i󠄁n󠄁t󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁a󠄁r󠄁 a󠄁n󠄁n󠄁o󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁, t󠄁a󠄁g󠄁 c󠄁h󠄁a󠄁r󠄁a󠄁c󠄁t󠄁e󠄁r󠄁s󠄁, e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 r󠄁u󠄁n󠄁 d󠄁e󠄁l󠄁i󠄁m󠄁i󠄁t󠄁e󠄁r󠄁s󠄁, a󠄁n󠄁d󠄁 a󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 s󠄁t󠄁a󠄁n󠄁d󠄁a󠄁r󠄁d󠄁i󠄁z󠄁e󠄁d󠄁 m󠄁e󠄁c󠄁h󠄁a󠄁n󠄁i󠄁s󠄁m󠄁. E󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁s󠄁 a󠄁l󠄁s󠄁o󠄁 p󠄁r󠄁o󠄁v󠄁i󠄁d󠄁e󠄁 s󠄁t󠄁r󠄁u󠄁c󠄁t󠄁u󠄁r󠄁a󠄁l󠄁 p󠄁r󠄁e󠄁c󠄁e󠄁d󠄁e󠄁n󠄁t󠄁s󠄁; u󠄁s󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁m󠄁 f󠄁o󠄁r󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 w󠄁o󠄁u󠄁l󠄁d󠄁 n󠄁e󠄁e󠄁d󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁 j󠄁u󠄁s󠄁t󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.</p>
+      <p><a href="./encodings.html">C󠄁o󠄁m󠄁p󠄁a󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁s󠄁</a> a󠄁n󠄁d󠄁 <a href="./requirements.html">e󠄁v󠄁a󠄁l󠄁u󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁r󠄁i󠄁t󠄁e󠄁r󠄁i󠄁a󠄁</a>.</p>
     </section>
     <section id="experiment" aria-labelledby="experiment-title">
-      <h2 id="experiment-title">An experimental VS example</h2>
-      <p>This retained demonstration uses the earlier human/AI labels. It shows text containing embedded marks rendering without special fonts. It does not implement the proposed voice-reference model.</p>
-      <blockquote><p id="sample-passage" data-prov-document>M󠄀a󠄀k󠄀e󠄀 i󠄀t󠄀 s󠄀i󠄀m󠄀p󠄀l󠄀e󠄀,󠄀 t󠄁h󠄁e󠄁n󠄁 m󠄁a󠄁k󠄁e󠄁 i󠄁t󠄁 u󠄁s󠄁e󠄁f󠄁u󠄁l󠄁.󠄁</p></blockquote>
-      <p id="prov-legend" class="note" hidden><span class="prov-human">Human label: “Make it simple,”</span> · <span class="prov-ai">AI label: “then make it useful.”</span><br><span id="prov-summary"></span> of non-whitespace grapheme clusters.</p>
-      <p class="note">The ℗ switch beside the heading changes the example’s appearance. Its embedded code points remain unchanged.</p>
-      <button id="sample-copy-button" type="button" hidden>Copy marked example</button> <span id="sample-copy-status" role="status" class="note"></span>
-      <p><a href="./samples/marked-text.txt" download>Download the UTF-8 example</a>. To inspect the retained implementations, see the experimental <a href="https://github.com/textprov/textprov/tree/main/js">JavaScript</a>, <a href="https://github.com/textprov/textprov/tree/main/python">Python</a>, and <a href="https://github.com/textprov/textprov/tree/main/ruby">Ruby</a> SDKs.</p>
-      <p class="note">The selectors <code>U+E0100</code> and <code>U+E0101</code> are an experimental convention, not Unicode allocations for attribution. The decoder can misread a legitimate Japanese variation sequence, and stripping marks can remove a real glyph distinction. Marks travel only where software preserves them. <a href="./proposal.html#vs">Read the VS assessment</a>.</p>
-      <noscript><p>The embedded marks are present without JavaScript. Displaying their labels and the copy button require JavaScript; the download remains available.</p></noscript>
+      <h2 id="experiment-title">A󠄁n󠄁 e󠄁x󠄁p󠄁e󠄁r󠄁i󠄁m󠄁e󠄁n󠄁t󠄁a󠄁l󠄁 V󠄁S󠄁 e󠄁x󠄁a󠄁m󠄁p󠄁l󠄁e󠄁</h2>
+      <p>T󠄁h󠄁i󠄁s󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁e󠄁d󠄁 d󠄁e󠄁m󠄁o󠄁n󠄁s󠄁t󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁s󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 h󠄁u󠄁m󠄁a󠄁n󠄁/A󠄁I󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁. I󠄁t󠄁 s󠄁h󠄁o󠄁w󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁i󠄁n󠄁g󠄁 e󠄁m󠄁b󠄁e󠄁d󠄁d󠄁e󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁a󠄁l󠄁 f󠄁o󠄁n󠄁t󠄁s󠄁. I󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁-r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁.</p>
+      <p><a href="./samples/marked-text.txt" download>D󠄁o󠄁w󠄁n󠄁l󠄁o󠄁a󠄁d󠄁 t󠄁h󠄁e󠄁 U󠄁T󠄁F󠄁-8󠄁 e󠄁x󠄁a󠄁m󠄁p󠄁l󠄁e󠄁</a>. T󠄁o󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁e󠄁d󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁, s󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁 e󠄁x󠄁p󠄁e󠄁r󠄁i󠄁m󠄁e󠄁n󠄁t󠄁a󠄁l󠄁 <a href="https://github.com/textprov/textprov/tree/main/js">J󠄁a󠄁v󠄁a󠄁S󠄁c󠄁r󠄁i󠄁p󠄁t󠄁</a>, <a href="https://github.com/textprov/textprov/tree/main/python">P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁</a>, a󠄁n󠄁d󠄁 <a href="https://github.com/textprov/textprov/tree/main/ruby">R󠄁u󠄁b󠄁y󠄁</a> S󠄁D󠄁K󠄁s󠄁.</p>
+      <p class="note">T󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁 <code>U+E0100</code> a󠄁n󠄁d󠄁 <code>U+E0101</code> a󠄁r󠄁e󠄁 a󠄁n󠄁 e󠄁x󠄁p󠄁e󠄁r󠄁i󠄁m󠄁e󠄁n󠄁t󠄁a󠄁l󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁, n󠄁o󠄁t󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 a󠄁l󠄁l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 f󠄁o󠄁r󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁. T󠄁h󠄁e󠄁 d󠄁e󠄁c󠄁o󠄁d󠄁e󠄁r󠄁 c󠄁a󠄁n󠄁 m󠄁i󠄁s󠄁r󠄁e󠄁a󠄁d󠄁 a󠄁 l󠄁e󠄁g󠄁i󠄁t󠄁i󠄁m󠄁a󠄁t󠄁e󠄁 J󠄁a󠄁p󠄁a󠄁n󠄁e󠄁s󠄁e󠄁 v󠄁a󠄁r󠄁i󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 s󠄁e󠄁q󠄁u󠄁e󠄁n󠄁c󠄁e󠄁, a󠄁n󠄁d󠄁 s󠄁t󠄁r󠄁i󠄁p󠄁p󠄁i󠄁n󠄁g󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 c󠄁a󠄁n󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁 a󠄁 r󠄁e󠄁a󠄁l󠄁 g󠄁l󠄁y󠄁p󠄁h󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁i󠄁o󠄁n󠄁. P󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁s󠄁 o󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁o󠄁f󠄁t󠄁w󠄁a󠄁r󠄁e󠄁 u󠄁s󠄁e󠄁d󠄁. <a href="./vs.html">R󠄁e󠄁a󠄁d󠄁 t󠄁h󠄁e󠄁 V󠄁S󠄁 a󠄁s󠄁s󠄁e󠄁s󠄁s󠄁m󠄁e󠄁n󠄁t󠄁</a>.</p>
+      <noscript><p>T󠄁h󠄁e󠄁 e󠄁m󠄁b󠄁e󠄁d󠄁d󠄁e󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 a󠄁r󠄁e󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 J󠄁a󠄁v󠄁a󠄁S󠄁c󠄁r󠄁i󠄁p󠄁t󠄁. D󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁s󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁p󠄁y󠄁 b󠄁u󠄁t󠄁t󠄁o󠄁n󠄁 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁 J󠄁a󠄁v󠄁a󠄁S󠄁c󠄁r󠄁i󠄁p󠄁t󠄁; t󠄁h󠄁e󠄁 d󠄁o󠄁w󠄁n󠄁l󠄁o󠄁a󠄁d󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 a󠄁v󠄁a󠄁i󠄁l󠄁a󠄁b󠄁l󠄁e󠄁.</p></noscript>
     </section>
     <section aria-labelledby="participate-title">
-      <h2 id="participate-title">Help resolve the open questions</h2>
-      <p>Useful evidence includes copying an interior excerpt, preserving distinct references from different documents, rendering multilingual text, and checking editing and accessibility behavior.</p>
-      <p><a href="./proposal.html#decisions">Review the open decisions</a>, then contribute observations or discuss alternatives in the <a href="https://github.com/textprov/textprov">GitHub repository</a>.</p>
+      <h2 id="participate-title">H󠄁e󠄁l󠄁p󠄁 r󠄁e󠄁s󠄁o󠄁l󠄁v󠄁e󠄁 t󠄁h󠄁e󠄁 o󠄁p󠄁e󠄁n󠄁 q󠄁u󠄁e󠄁s󠄁t󠄁i󠄁o󠄁n󠄁s󠄁</h2>
+      <p>U󠄁s󠄁e󠄁f󠄁u󠄁l󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁e󠄁s󠄁 c󠄁o󠄁p󠄁y󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁 i󠄁n󠄁t󠄁e󠄁r󠄁i󠄁o󠄁r󠄁 e󠄁x󠄁c󠄁e󠄁r󠄁p󠄁t󠄁, p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁i󠄁n󠄁g󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁s󠄁 f󠄁r󠄁o󠄁m󠄁 d󠄁i󠄁f󠄁f󠄁e󠄁r󠄁e󠄁n󠄁t󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁s󠄁, r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁i󠄁n󠄁g󠄁 m󠄁u󠄁l󠄁t󠄁i󠄁l󠄁i󠄁n󠄁g󠄁u󠄁a󠄁l󠄁 t󠄁e󠄁x󠄁t󠄁, a󠄁n󠄁d󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁i󠄁n󠄁g󠄁 e󠄁d󠄁i󠄁t󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁d󠄁 a󠄁c󠄁c󠄁e󠄁s󠄁s󠄁i󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁 b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁r󠄁.</p>
+      <p><a href="./decisions.html">R󠄁e󠄁v󠄁i󠄁e󠄁w󠄁 t󠄁h󠄁e󠄁 o󠄁p󠄁e󠄁n󠄁 d󠄁e󠄁c󠄁i󠄁s󠄁i󠄁o󠄁n󠄁s󠄁</a>, t󠄁h󠄁e󠄁n󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁 o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 o󠄁r󠄁 d󠄁i󠄁s󠄁c󠄁u󠄁s󠄁s󠄁 a󠄁l󠄁t󠄁e󠄁r󠄁n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁s󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 <a href="https://github.com/textprov/textprov">G󠄁i󠄁t󠄁H󠄁u󠄁b󠄁 r󠄁e󠄁p󠄁o󠄁s󠄁i󠄁t󠄁o󠄁r󠄁y󠄁</a>.</p>
     </section>
   </main>
-  <footer><p>TextProv is a proposal under development. <a href="https://github.com/textprov/textprov/blob/main/LICENSE">MIT License</a>.</p></footer>
+  <footer id="homepage-footer" data-prov-document><p>T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 i󠄁s󠄁 a󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 d󠄁e󠄁v󠄁e󠄁l󠄁o󠄁p󠄁m󠄁e󠄁n󠄁t󠄁. D󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁: <a href="https://creativecommons.org/licenses/by/4.0/">C󠄁C󠄁 B󠄁Y󠄁 4󠄁.0󠄁</a>. C󠄁o󠄁d󠄁e󠄁: <a href="https://www.apache.org/licenses/LICENSE-2.0">A󠄁p󠄁a󠄁c󠄁h󠄁e󠄁 2󠄁.0󠄁</a>.</p></footer>
 </body>
 </html>
