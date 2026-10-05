@@ -27,7 +27,7 @@ from .editing import (
 
 SUFFIXES = (".md", ".markdown")
 # Hand-built samples whose marks are the content; never touch them.
-EXCLUDED = ("docs/examples/", "site/public/", "site/dist/", "node_modules/")
+EXCLUDED = ("experiments/baseline/", "site/public/", "site/dist/", "node_modules/")
 PROMPT_LOG_TAIL = 300
 SNAPSHOT_MAX_AGE = 24 * 3600
 

@@ -144,7 +144,7 @@ class TestCommands(unittest.TestCase):
     def test_files_outside_scope_are_untouched(self):
         for path in (
             "script.py",
-            "docs/examples/sample.md",
+            "experiments/baseline/sample.md",
             "site/public/sample.md",
             "../outside.md",
         ):
