@@ -1,6 +1,6 @@
 # Proposal website
 
-The homepage introduces the proposal and places a bounded VS demonstration beside the ℗ switch. The switch reveals the embedded labels. Generated proposal pages have their own switch for the marked Markdown prose. The earlier human/AI decoder does not implement the proposed voice-reference model. `node mark-markdown.js` labels unmarked prose in the proposal documents as an AI demo; existing labels are preserved. Markdown syntax, URLs, and code stay intact.
+The homepage introduces the proposal and includes VS-marked prose and a mixed human/AI demonstration beside the ℗ switch. The switch reveals the embedded labels. Generated proposal pages have their own switch for the marked Markdown prose. The earlier human/AI decoder does not implement the proposed voice-reference model. `node mark-markdown.js` labels unmarked prose in the proposal documents as an AI demo; existing labels are preserved. Markdown syntax, URLs, and code stay intact. `node mark-html.js` applies the same AI demo labels to homepage prose, preserving the example’s existing labels. HTML attributes, controls, code, and the SVG diagram stay intact.
 
 `build-proposal.js` publishes the canonical proposal documents as fourteen individual HTML pages with document and section contents lists. `proposal.html` is their contents page; generated output is ignored. No special fonts are needed. The sun/moon button switches between light and dark. The first visit follows the system preference; a saved override applies to every page.
 
