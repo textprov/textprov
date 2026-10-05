@@ -64,4 +64,4 @@ Alternatively use `bundle exec rake test`. Checks cover shared
 producer behavior, CLI output, and Unicode 17.0.0 grapheme segmentation.
 See [UCD sources](../ucd/README.md).
 
-MIT; see [LICENSE](LICENSE).
+Apache-2.0; see [LICENSE](LICENSE).
