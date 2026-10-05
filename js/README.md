@@ -1,100 +1,76 @@
-# textprov
+# textprov — JavaScript SDK demonstration
 
-Client-side decorator for the [TextProv](https://github.com/textprov/textprov) protocol. Turns in-band provenance marks (Unicode variation selectors and a PUA block) into HTML `<span>` elements with a class and a `data-prov` attribute — so provenance is visible without installing any font.
+This browser decoder makes the experimental `human`/`ai` classifications visible
+using HTML spans. It also decodes the limited replacement-PUA baseline. It does
+not implement the proposal's voice references, infer authorship, or certify an
+encoding. Package name and version describe executable code, not a proposal
+standard. No special font is required. Python and Ruby provide producers;
+JavaScript provides decoding and decoration.
 
-The Python package of the same name (`pip install textprov`) is the full SDK — producer, decoder, and CLI. This npm package ships the browser decoder only.
+From this checkout:
 
-- ~37 KB (unminified, including vendored Unicode segmentation tables), no dependencies, browser-first (IIFE + `window.textprov`), also usable from Node (CJS) and via ESM default import.
-- Implements draft specification version 0.2 and registry version 0󠄁.󠄁2󠄁 (see [SPEC.md](https://github.com/textprov/textprov/blob/main/SPEC.md) and [mapping.json](https://github.com/textprov/textprov/blob/main/mapping.json)).
-- Optional companion stylesheet (`textprov.css`) uses a wavy underline for `ai` and a faint tint for `human`.
-
-States: `human`, `ai`. Other variation selectors are ordinary non-TextProv text and are preserved, including with `strip: true`.
-
-## Install
-
-```sh
-npm install textprov
+```js
+const textprov = require("./textprov.js");
+textprov.runs("f\u{E0101}oo");
+// [{ state: "ai", text: "f\u{E0101}" }, { state: null, text: "oo" }]
 ```
 
-## Usage
+Installable package identity remains `textprov`. It supports CommonJS,
+ESM default import, and browser scripts through `window.textprov`.
 
-### Browser (script tag)
+## Browser sample
 
 ```html
-<link rel="stylesheet" href="node_modules/textprov/textprov.css" />
-<script src="node_modules/textprov/textprov.js"></script>
-<script>
-  textprov.render(document.body);
-</script>
+<link rel="stylesheet" href="textprov.css">
+<script src="textprov.js"></script>
+<div id="sample">f&#xE0101;oo</div>
+<script>textprov.render(document.querySelector("#sample"));</script>
 ```
 
-### Node (CommonJS)
-
-```js
-const textprov = require("textprov");
-
-textprov.runs("Hello\u{E0101} world\u{E0100}");
-// [
-//   { state: null,    text: "Hell" },
-//   { state: "ai",    text: "o\u{E0101}" },
-//   { state: null,    text: " worl" },
-//   { state: "human", text: "d\u{E0100}" }
-// ]
-```
-
-### ESM
-
-```js
-import textprov from "textprov";
-
-textprov.render(document.body, { strip: true, prefix: "prov" });
-```
+Restrict rendering to deliberately marked demonstration text. Recognizing
+selectors by value collides with genuine variation sequences; stripping can
+remove legitimate glyph selection. Do not run the experimental decoder over
+arbitrary proposal prose. Read the [baseline limitations](../experiments/baseline/README.md),
+[VS profile](../docs/encodings/vs.md), and [model](../docs/model.md).
 
 ## API
 
-- `textprov.render(root?, options?)` — walks text nodes under `root` (default `document.body`), replaces marked runs with `<span>` elements. Skips `<script>`, `<style>`, `<textarea>`, and anything already inside a `.<prefix>` element. Returns the number of spans created. Browser only.
-- `textprov.runs(text, options?)` — returns `[{ state, text }]`. Environment-agnostic; use this in Node or for custom rendering.
-- `textprov.segments(text)` — splits `text` into e󠄁x󠄁t󠄁e󠄁n󠄁d󠄁e󠄁d󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁s󠄁 (󠄁U󠄁A󠄁X󠄁 #󠄁2󠄁9󠄁)󠄁,󠄁 t󠄁h󠄁e󠄁 u󠄁n󠄁i󠄁t󠄁s󠄁 a󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁,󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁 v󠄁e󠄁n󠄁d󠄁o󠄁r󠄁e󠄁d󠄁 a󠄁t󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 1󠄁7󠄁.󠄁0󠄁.󠄁0󠄁.󠄁 D󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 u󠄁s󠄁e󠄁 `Intl.Segmenter`,󠄁 s󠄁o󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 e󠄁n󠄁v󠄁i󠄁r󠄁o󠄁n󠄁m󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁d󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 p󠄁o󠄁r󠄁t󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 a󠄁l󠄁i󠄁k󠄁e󠄁.󠄁
-- `textprov.unicodeVersion` —󠄁 `"17.0.0"`,󠄁 t󠄁h󠄁e󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 v󠄁e󠄁n󠄁d󠄁o󠄁r󠄁e󠄁d󠄁 s󠄁e󠄁g󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁.󠄁
-- `textprov.specVersion` — `"0.2"`
-- `textprov.registryVersion` — `"0.2"`
-- `textprov.mapping` — `{ version, selectors, puaRanges }`, the embedded tables (checked against the canonical `mapping.json` in CI).
+- `render(root?, options?)` decorates marked runs with `<span>` elements and
+  returns the number created. It skips scripts, styles, textareas, and existing
+  decorated descendants. Omitting `root` uses `document.body`; explicit sample
+  scope is recommended.
+- `runs(text, options?)` returns `[{ state, text }]`. Unmarked text has `null`;
+  the proposal calls absence `Voice0` without adding a marker.
+- `segments(text)` returns extended grapheme clusters using vendored Unicode
+  17.0.0 tables, independently of the host's `Intl.Segmenter`.
+- `unicodeVersion` identifies those Unicode tables.
+- `mapping` exposes the embedded experimental selector and PUA tables.
+- Legacy `specVersion` and `registryVersion` retain baseline identifier `0.2`;
+  they do not version the proposal or reserve Unicode allocations.
 
-### Options
-
-| Option | Default | Description |
+| Option | Default | Implemented behavior |
 | --- | --- | --- |
-| `strip` | `false` | Remove the selector code point from run text. State is still reported via `data-prov` / the returned `state`. |
-| `merge_whitespace` | `true` | Whitespace between two runs of the same state joins them into a single run. `mergeWhitespace` is an accepted alias. |
-| `prefix` | `"prov"` | Class prefix. `render()` emits `class="<prefix> <prefix>-<state>"` and skips descendants of `.<prefix>` on re-render. |
+| `strip` | `false` | Remove recognized selectors or decode recognized PUA to bases; retain classification in returned state or `data-prov` |
+| `merge_whitespace` | `true` | Join whitespace between runs with the same classification; `mergeWhitespace` is an alias |
+| `prefix` | `"prov"` | Use `<prefix> <prefix>-<state>` CSS classes and skip their descendants on another render |
 
-## Output shape
+The default renderer preserves stored text code points. Optional `textprov.css`
+adds a wavy underline for `ai` and a tint for `human`. These display choices do
+not implement source identity or prescribe the proposal's presentation. The
+replacement-PUA mode is distinct from the [additive-PUA candidate](../docs/encodings/additive-pua.md).
 
-```html
-Hell<span class="prov prov-ai" data-prov="ai">o&#xE0101;</span>
+## Checks
+
+From `js/`:
+
+```sh
+npm ci
+npm test
 ```
 
-For input `Hello\u{E0101}`, only the final `o` is marked. The HTML character
-reference `&#xE0101;` above represents the retained selector; `render()` keeps
-the actual code point in the text node. To mark a whole word, a producer adds a
-selector after each eligible grapheme cluster.
+Checks compare embedded tables against [baseline data](../experiments/baseline/README.md),
+run shared fixtures and Unicode segmentation tests, and verify DOM decoration
+preserves underlying text and avoids duplicate spans. Test dependencies are for
+DOM checks; the runtime itself has none. See [UCD sources](../ucd/README.md).
 
-With `strip: true` the selector is removed from the span text; the class and `data-prov` remain.
-
-## Styles
-
-`textprov.css` is optional and not part of the decorator specification. It ships CSS custom properties on `:root` (with a `prefers-color-scheme: dark` override) and never affects layout — only `background` and `text-decoration` are set.
-
-```html
-<link rel="stylesheet" href="node_modules/textprov/textprov.css" />
-```
-
-## Links
-
-- Protocol spec: <https://github.com/textprov/textprov/blob/main/SPEC.md>
-- Mapping registry: <https://github.com/textprov/textprov/blob/main/mapping.json>
-- Issues: <https://github.com/textprov/textprov/issues>
-
-## License
-
-MIT
+MIT; see [LICENSE](LICENSE).

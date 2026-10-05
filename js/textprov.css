@@ -1,27 +1,10 @@
 /* js/textprov.css */
 
 /*
- *# textprov.css: provenance decorator styles
- *# TextProv protocol: https://github.com/textprov/textprov
- *# Specification version: 0.2 (see ../SPEC.md)
- *# Registry version: 0.1 (see ../mapping.json)
- *#
- *# Pairs with textprov.js. Not part of the decorator specification (SPEC.md
- *# "Not specified: Visual style"). It provides a CSS presentation inspired by
- *# the TextProv Utility P9E fonts; applications may choose other styling:
- *#
- *#   ai      sawtooth/wavy underline  -- resembles the P9E glyph's AI mark.
-
- *#   human   no underline, faint tint -- the "nothing to flag" state; a tint
- *#                                       keeps it discoverable via data-prov
- *#                                       without implying a warning.
-
- *#
- *# Colors are custom properties on :root so integrators can retheme without
- *# forking this file; a prefers-color-scheme: dark override is included.
- *# Marks never change layout: no border, padding, margin, or line-height is
- *# set, only background/text-decoration, and text-decoration-skip-ink is
- *# disabled so the underlines stay continuous under descenders.
+ * Optional styles for the TextProv baseline demonstration.
+ * Classifications are human and ai; these styles do not implement voice references.
+ * Mapping: ../experiments/baseline/mapping.json (experimental version 0.2).
+ * Applications may choose other presentation without changing the stored text.
  */
 
 :root {

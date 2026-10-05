@@ -1,4 +1,4 @@
-# python/tests/test_conformance.py
+# python/tests/test_baseline.py
 
 """Conformance and unit tests for the textprov package.
 
@@ -16,9 +16,9 @@ import textprov
 from textprov._core import _runs, _to_html
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURES_PATH = ROOT / "fixtures.json"
+FIXTURES_PATH = ROOT / "experiments" / "baseline" / "fixtures.json"
 GRAPHEME_TEST_PATH = ROOT / "ucd" / "GraphemeBreakTest.txt"
-REGISTRY_PATH = ROOT / "mapping.json"
+REGISTRY_PATH = ROOT / "experiments" / "baseline" / "mapping.json"
 
 MAPPING = textprov.default_mapping()
 SELECTORS = MAPPING.selectors
@@ -36,7 +36,7 @@ def span(state, text, prefix="prov"):
 
 
 class TestVendoredRegistry(unittest.TestCase):
-    """The package vendors the registry; the copy must not drift (ADR 0006)."""
+    """The package vendors the registry; the copy must not drift (shared experimental data)."""
 
     def test_vendored_copy_matches_canonical(self):
         vendored = Path(textprov._core.MAPPING_PATH).read_text(encoding="utf-8")
@@ -136,14 +136,14 @@ class TestObsoleteSelectors(unittest.TestCase):
 
 
 class TestFixtures(unittest.TestCase):
-    """fixtures.json defines conformance (ADR 0004)."""
+    """Shared fixtures record the implemented experimental behavior."""
 
     @classmethod
     def setUpClass(cls):
         cls.fx = json.loads(FIXTURES_PATH.read_text(encoding="utf-8"))
 
     def test_versions_match_the_implementation(self):
-        self.assertEqual(textprov.SPEC_VERSION, self.fx["spec_version"])
+        self.assertEqual(textprov.SPEC_VERSION, self.fx["experiment_version"])
         self.assertEqual(MAPPING.version, self.fx["registry_version"])
 
     def test_every_case(self):

@@ -15,7 +15,7 @@ from ._grapheme import UNICODE_VERSION, segments  # noqa: F401 (re-exported)
 
 MAPPING_PATH = Path(__file__).with_name("mapping.json")
 
-SPEC_VERSION = "0.2"  # see SPEC.md
+SPEC_VERSION = "0.2"  # baseline experiment identifier
 GENERATED_STATES = ("human", "ai")
 
 
@@ -80,7 +80,7 @@ def load_mapping(path=MAPPING_PATH):
     return mapping, selectors, pua2base, base2pua
 
 
-# Exact Unicode White_Space set from SPEC.md; str.isspace() also includes U+001C–U+001F.
+# Exact Unicode White_Space set used by the experiment; str.isspace() also includes U+001C–U+001F.
 _WHITE_SPACE = re.compile(
     r"[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a"
     r"\u2028\u2029\u202f\u205f\u3000]+"
@@ -110,7 +110,7 @@ def _strip(text, selectors, pua2base):
 def _runs(text, selectors, pua2base, strip=False, merge_whitespace=True):
     """Split `text` into an ordered list of (state, text) runs.
 
-    Implements the decoder algorithm in SPEC.md version 0.2: segment into
+    Implements the decoder algorithm in the baseline experiment: segment into
     extended grapheme clusters, classify each cluster, then merge. `state` is
     a selector name from mapping.json's variation_selectors, or None.
     """
@@ -166,7 +166,7 @@ def _to_html(
     merge_whitespace=True,
     class_prefix="prov",
 ):
-    """Render `text` as HTML spans per the decorator specification's Markup section."""
+    """Render `text` as HTML spans per the experimental decorator."""
     parts = []
     for state, out in _runs(text, selectors, pua2base, strip, merge_whitespace):
         escaped = html.escape(out)
@@ -184,7 +184,7 @@ def _to_html(
 
 
 def runs(text, mapping=None, strip=False, merge_whitespace=True):
-    """Split `text` into an ordered list of (state, text) runs per SPEC.md."""
+    """Split `text` into an ordered list of (state, text) runs for the baseline experiment."""
     mapping = mapping or default_mapping()
     return _runs(
         text, mapping.selectors, mapping.pua2base, strip, merge_whitespace
@@ -194,7 +194,7 @@ def runs(text, mapping=None, strip=False, merge_whitespace=True):
 def to_html(
     text, mapping=None, strip=False, merge_whitespace=True, class_prefix="prov"
 ):
-    """Render `text` as HTML spans per the specification's Markup section."""
+    """Render `text` as HTML spans per the experimental decorator."""
     mapping = mapping or default_mapping()
     return _to_html(
         text,

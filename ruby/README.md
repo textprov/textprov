@@ -1,81 +1,67 @@
-# textprov (Ruby)
+# textprov — Ruby SDK demonstration
 
-The TextProv reference implementation in Ruby: it puts provenance marks in text
-and reads them back out. Standard library only.
+This working experiment encodes and decodes `human`/`ai` classifications using
+variation selectors and a limited replacement-PUA mode. Ruby 3.2+, standard
+library only. Its package identity and version describe executable code, not a
+versioned proposal standard. It does not implement voice references or detect
+who wrote text.
+
+From `ruby/`, run with `ruby -Ilib`, or install this checkout as a gem:
 
 ```ruby
 require "textprov"
 
-Textprov.mark("foo", state: "ai")             # "f\u{E0101}o\u{E0101}o\u{E0101}"
-Textprov.mark_added("abc", "abXc")            # mark only what an edit added
-Textprov.convert(marked, "vs", "pua")         # same states, other encoding
-Textprov.strip_marks(marked)                  # back to the original text
-
-Textprov.runs("f\u{E0101}oo")
-# => [["ai", "f\u{E0101}"], [nil, "oo"]]
-
-Textprov.to_html("f\u{E0101}oo")
-# => '<span class="prov prov-ai" data-prov="ai">f\u{E0101}</span>oo'
-
-Textprov.inspect_text(marked)                 # a 'key: value' report of the states
+marked = Textprov.mark("foo", state: "ai")
+raise unless marked == "f\u{E0101}o\u{E0101}o\u{E0101}"
+raise unless Textprov.strip_marks(marked) == "foo"
+Textprov.runs(marked)  # [["ai", marked]]
+Textprov.to_html(marked)  # span carrying data-prov="ai"
+Textprov.mark_added("abc", "abXc")
+Textprov.convert(marked, "vs", "pua")
 ```
 
-`runs` and `to_html` take `strip:`, `merge_whitespace:` (also `mergeWhitespace:`
-as an alias per SPEC's cross-language rule), and (for `to_html`)
-`class_prefix:`. `mark` and `mark_added` take `state:` and `mode:` (`"vs"` or
-`"pua"`). Every function takes `mapping: Textprov::Mapping.load(path)` to use a
-registry other than the copy vendored in this package.
+`mark` and `mark_added` accept `state:` and `mode:` (`vs` or `pua`). Only `human`
+and `ai` are accepted classifications. `runs` and `to_html` accept `strip:` and
+`merge_whitespace:` (alias `mergeWhitespace:`); HTML also accepts `class_prefix:`.
+Core functions accept `mapping: Textprov::Mapping.load(path)`.
+`Textprov.inspect_text` reports classifications without shadowing Ruby's `inspect`.
 
-Only `human` and `ai` are provenance states. Producers reject obsolete state
-names (`mixed`, `edited`, `unknown`). Their former selectors, U+E0102–U+E0104,
-are ordinary non-TextProv selectors: decoding, rendering, stripping, and
-conversion preserve them, including with `strip: true`.
+The PUA mode replaces eligible base characters; it is distinct from the
+[additive-PUA candidate](../docs/encodings/additive-pua.md). Genuine Unicode
+variation sequences can collide with the decoder, and stripping can remove
+legitimate glyph selection. Read the [baseline limitations](../experiments/baseline/README.md)
+and [VS profile](../docs/encodings/vs.md) before using arbitrary text.
 
-The Ruby method is `Textprov.inspect_text`, not `.inspect`, so it does not
-shadow `Kernel#inspect`.
-
-## Install
-
-```sh
-gem install textprov
-```
-
-Ruby 3.2+ is required. No runtime dependencies.
+The proposal [model](../docs/model.md) defines unattributed text as `Voice0`.
+This experiment reports unmarked runs as `nil`; classification labels are not
+implementations of nonzero voice references. Legacy `SPEC_VERSION` is a baseline
+identifier, not a proposal version.
 
 ## CLI
 
 ```sh
-textprov -o marked.txt mark --ai draft.txt
-textprov mark-added old.txt new.txt
-textprov convert --from vs --to pua marked.txt
-textprov strip marked.txt
-textprov render marked.txt
-textprov inspect marked.txt
+ruby -Ilib exe/textprov -o marked.txt mark --ai draft.txt
+ruby -Ilib exe/textprov mark-added old.txt new.txt
+ruby -Ilib exe/textprov convert --from vs --to pua marked.txt
+ruby -Ilib exe/textprov strip marked.txt
+ruby -Ilib exe/textprov render marked.txt
+ruby -Ilib exe/textprov inspect marked.txt
 ```
 
-A file argument may be `-` for stdin; output goes to stdout unless `-o` is
-given. Text is read and written as UTF-8 verbatim, so CRLF survives.
+An installed gem exposes `textprov`. A file argument may be `-` for stdin;
+output goes to stdout unless `-o` is supplied. UTF-8 line endings are preserved.
 
-## Specification and registry versions
+## Checks
 
-- Draft specification version 0.2 (see [SPEC.md](../SPEC.md)).
-- Draft registry version 0󠄁.󠄁2󠄁 (see [mapping.json](../mapping.json)). `lib/textprov/mapping.json`
-  is a vendored copy and the test suite fails if it drifts from the canonical
-  file.
-
-## Tests
+From `ruby/`:
 
 ```sh
-bundle install
-bundle exec rake test
+ruby -Ilib -Itest -e 'Dir["test/test_*.rb"].each { |file| require File.expand_path(file) }'
 ```
 
-The suite runs every decoder, producer, and convert case in
-[fixtures.json](../fixtures.json), tests the producer properties from
-[SPEC.md](../SPEC.md) directly rather than only through recorded outputs, and
-r󠄁u󠄁n󠄁s󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 l󠄁i󠄁n󠄁e󠄁 o󠄁f󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁'󠄁s󠄁 `GraphemeBreakTest.txt` t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 `segments`,󠄁 a󠄁n󠄁d󠄁
-u󠄁n󠄁i󠄁t󠄁-󠄁t󠄁e󠄁s󠄁t󠄁s󠄁 `to_html`, `strip_marks`, and the CLI.
+Alternatively use `bundle exec rake test`. Checks cover shared
+[fixtures](../experiments/baseline/fixtures.json), vendored mapping agreement,
+producer behavior, CLI output, and Unicode 17.0.0 grapheme segmentation.
+See [UCD sources](../ucd/README.md).
 
-## License
-
-MIT. See [LICENSE](LICENSE).
+MIT; see [LICENSE](LICENSE).

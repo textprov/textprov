@@ -9,7 +9,7 @@ require "set"
 require_relative "grapheme"
 
 module Textprov
-  SPEC_VERSION = "0.2"
+  SPEC_VERSION = "0.2" # Legacy API name; experimental baseline identifier.
   UNICODE_VERSION = UCD::UNICODE_VERSION
   GENERATED_STATES = %w[human ai].freeze
 
@@ -63,7 +63,7 @@ module Textprov
     attr_writer :default_mapping
   end
 
-  # Exact Unicode White_Space set from SPEC.md, independent of runtime predicates.
+  # Exact Unicode White_Space set used by the experiment, independent of runtime predicates.
   def blank?(text)
     text.match?(/\A[\u0009-\u000D\u0020\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+\z/)
   end
@@ -84,7 +84,7 @@ module Textprov
     out
   end
 
-  # Implements the decoder algorithm in SPEC.md version 0.2: segment into
+  # Implements the decoder algorithm in the baseline experiment: segment into
   # extended grapheme clusters, classify each cluster, then merge.
   def _runs(text, selectors, pua2base, strip: false, merge_whitespace: true)
     sel2name = selectors.each_with_object({}) { |(name, cp), h| h[cp] = name }
@@ -145,8 +145,8 @@ module Textprov
     parts.join
   end
 
-  # Public API accepts either merge_whitespace (specification spelling) or
-  # mergeWhitespace (camelCase alias per SPEC's cross-language rule).
+  # Public API accepts either merge_whitespace (snake_case spelling) or
+  # mergeWhitespace (camelCase alias per the experimental cross-language API).
   def runs(text, mapping: nil, strip: false, merge_whitespace: nil, mergeWhitespace: nil)
     mw = if merge_whitespace.nil?
            mergeWhitespace.nil? || mergeWhitespace

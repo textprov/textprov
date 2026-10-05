@@ -9,9 +9,9 @@ require "json"
 require "textprov"
 
 ROOT = File.expand_path("../..", __dir__)
-FIXTURES_PATH = File.join(ROOT, "fixtures.json")
+FIXTURES_PATH = File.join(ROOT, "experiments", "baseline", "fixtures.json")
 GRAPHEME_TEST_PATH = File.join(ROOT, "ucd", "GraphemeBreakTest.txt")
-REGISTRY_PATH = File.join(ROOT, "mapping.json")
+REGISTRY_PATH = File.join(ROOT, "experiments", "baseline", "mapping.json")
 
 MAPPING   = Textprov.default_mapping
 SELECTORS = MAPPING.selectors

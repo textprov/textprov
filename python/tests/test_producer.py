@@ -14,7 +14,7 @@ from pathlib import Path
 import textprov
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURES = json.loads((ROOT / "fixtures.json").read_text(encoding="utf-8"))
+FIXTURES = json.loads((ROOT / "experiments" / "baseline" / "fixtures.json").read_text(encoding="utf-8"))
 
 AI = chr(textprov.default_mapping().selectors["ai"])
 HUMAN = chr(textprov.default_mapping().selectors["human"])
@@ -47,7 +47,7 @@ class TestProducerFixtures(unittest.TestCase):
 
 
 class TestProducerProperties(unittest.TestCase):
-    """The properties a conforming producer must hold, per SPEC.md."""
+    """Implemented baseline producer properties."""
 
     def test_obsolete_states_are_rejected(self):
         for state in ("mixed", "edited", "unknown"):
@@ -186,7 +186,7 @@ class TestProducerProperties(unittest.TestCase):
                 )
 
     def test_marked_text_decodes_to_the_state_it_was_marked_with(self):
-        # The producer and the decoder are the two halves of one specification.
+        # The producer and decoder agree on the experimental mapping.
         for state in textprov.GENERATED_STATES:
             for mode in ("vs", "pua"):
                 with self.subTest(state=state, mode=mode):

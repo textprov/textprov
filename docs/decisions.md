@@ -15,7 +15,7 @@ records rationale, evidence, and affected documents.
 | D08 | Fallback and accessibility | Glyphs, shaping, bidi, cursor stops, assistive technology | Open |
 | D09 | Search, normalization, offsets | Raw versus extracted text; explicit transforms; byte, scalar, or UTF-16 offsets | Open |
 | D10 | Standardization request | General function, stable properties, independent adoption, need for Unicode encoding | Open |
-| D11 | Compatibility and migration | Existing VS content and published mappings; false-detection risk | Open |
+| D11 | Profile evolution and unknown data | Unknown or older profiles; recognition context and false-detection risk; no backwards-compatibility commitment | Open |
 | D12 | Content scope | Prose, snippets, source files, eligibility responsibility | Open |
 | D13 | Voice-reference scope | Scope of nonzero references; independent documents using `Voice1`; merge and paste behavior | Open |
 | D14 | Source context portability | Dictionaries and descriptions; partial copying; unresolved references; privacy | Open |
@@ -32,8 +32,8 @@ makes absence referable while preserving uncertainty about origin; it does not
 choose an encoding or collapse unresolved references into ordinary text.
 
 Affected documents: [model](model.md), [requirements](requirements.md),
-[encoding candidates](encodings.md), [evaluation](demonstration.md), and the
-[project introduction](../../README.md).
+[encoding candidates](encodings/README.md), [evaluation](evaluation.md), and the
+[project introduction](../README.md).
 
 ## Framing established on this branch
 
@@ -44,5 +44,5 @@ serialization remain open.
 
 Concept, model, profiles, and demonstration are documented separately. The VS
 implementation remains an experimental baseline. No permanent encoding,
-additive PUA allocation, or standardized attribution character is selected. Older
-baseline ADRs do not determine the proposal's design.
+additive PUA allocation, or standardized attribution character is selected.
+Historical implementation decisions do not determine the proposal's design.

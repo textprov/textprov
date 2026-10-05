@@ -9,11 +9,9 @@
     >>> textprov.mark("hi", state="ai") == "h\U000e0101i\U000e0101"
     True
 
-The protocol is defined in SPEC.md; `mapping.json` is the code-point registry.
-Marking text needs the registry and nothing else, so the producer lives here
-too: `mark`, `mark_added`, and `convert`. Rendering marks in a *font* is a
-separate job and needs a font toolchain; that producer-side renderer is the
-`--provenance` option of the Nerd Fonts fork.
+This package implements the experimental VS/classification and replacement-PUA
+baseline. Its mapping does not allocate characters for the voice-attribution
+proposal. See experiments/baseline/README.md and python/README.md.
 """
 
 from ._core import (

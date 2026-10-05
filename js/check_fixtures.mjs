@@ -1,7 +1,7 @@
 // js/check_fixtures.mjs
 
-// Runs textprov.js against ../fixtures.json and ../ucd/GraphemeBreakTest.txt,
-// and checks the tables it embeds (textprov.mapping) against ../mapping.json,
+// Runs textprov.js against ../experiments/baseline/fixtures.json and ../ucd/GraphemeBreakTest.txt,
+// and checks the tables it embeds (textprov.mapping) against ../experiments/baseline/mapping.json,
 // which it never loads at runtime.
 // Usage: node check_fixtures.mjs [path/to/textprov.js]
 // Exits non-zero on any failing case, version mismatch, or table drift.
@@ -14,12 +14,12 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(here, "..");
 const target = path.resolve(process.argv[2] || path.join(here, "textprov.js"));
 const textprov = createRequire(import.meta.url)(target);
-const fx = JSON.parse(fs.readFileSync(path.join(root, "fixtures.json"), "utf8"));
+const fx = JSON.parse(fs.readFileSync(path.join(root, "experiments", "baseline", "fixtures.json"), "utf8"));
 
 let fail = 0;
 
-// The embedded tables must match the canonical registry.
-const map = JSON.parse(fs.readFileSync(path.join(root, "mapping.json"), "utf8"));
+// The embedded tables must match the shared experimental mapping.
+const map = JSON.parse(fs.readFileSync(path.join(root, "experiments", "baseline", "mapping.json"), "utf8"));
 const cp = (s) => parseInt(s.slice(2), 16);
 const selectors = {};
 for (const [name, value] of Object.entries(map.variation_selectors)) selectors[name] = cp(value);
@@ -60,10 +60,10 @@ if (textprov.mapping.version !== map.version) {
   );
 }
 
-if (textprov.specVersion !== fx.spec_version) {
+if (textprov.specVersion !== fx.experiment_version) {
   fail++;
   console.log(
-    `FAIL specification version: implementation ${textprov.specVersion}, fixture ${fx.spec_version}`,
+    `FAIL experiment identifier: implementation ${textprov.specVersion}, fixture ${fx.experiment_version}`,
   );
 }
 if (textprov.registryVersion !== fx.registry_version) {

@@ -74,7 +74,7 @@ def build_parser():
         action="version",
         version=(
             f"{PROG} {__version__} "
-            f"(specification {SPEC_VERSION}, registry {mapping.version})"
+            f"(experiment {SPEC_VERSION}, registry {mapping.version})"
         ),
     )
     parser.add_argument(

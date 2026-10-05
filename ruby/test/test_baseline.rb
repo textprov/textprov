@@ -1,4 +1,4 @@
-# ruby/test/test_conformance.rb
+# ruby/test/test_baseline.rb
 #
 # frozen_string_literal: true
 
@@ -61,7 +61,7 @@ class TestFixtures < Minitest::Test
   FX = JSON.parse(File.read(FIXTURES_PATH, encoding: "UTF-8"))
 
   def test_versions_match_the_implementation
-    assert_equal FX["spec_version"], Textprov::SPEC_VERSION
+    assert_equal FX["experiment_version"], Textprov::SPEC_VERSION
     assert_equal FX["registry_version"], MAPPING.version
   end
 

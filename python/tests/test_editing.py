@@ -198,7 +198,7 @@ class TestMarkdown(unittest.TestCase):
 
     def test_link_destination(self):
         self.unmarked(
-            "see [the spec](../SPEC.md#markup) here\n", "](../SPEC.md#markup)"
+            "see [the model](../docs/model.md) here\n", "](../docs/model.md)"
         )
 
     def test_reference_link_and_definition(self):

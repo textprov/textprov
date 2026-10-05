@@ -2,13 +2,12 @@
 
 TextProv explores how text can retain attribution to distinct voices when
 passages are copied between applications, including through plain-text workflows.
-A voice identifies a source within an attribution context: a person, software
-system, quoted speaker, or another defined source. The proposal separates
-attribution meaning from the mechanism used to encode it.
+A voice distinguishes a source within an attribution context: a person, software
+system, quoted speaker, or another defined source.
 
 **Status: proposal under discussion.** No permanent encoding is selected and no
-new Unicode characters are assigned by this project. The retained
-variation-selector (VS) implementation is an experimental demonstration.
+new Unicode characters are assigned by this project. A variation-selector (VS)
+demonstration illustrates one experimental mechanism, with known limitations.
 
 ## The idea
 
@@ -20,66 +19,74 @@ Here, `+` means association, not necessarily character concatenation. A text uni
 may contain several Unicode characters. Attribution is supplied by a person or
 application; it neither detects a speaker nor proves authorship.
 
-Illustrative voices might be `Voice1` for an author, `Voice2` for a quoted
-participant, and `Voice3` for an assistant. These are example references, not
-reserved labels. `Voice0` represents unattributed text, including ordinary
-Unicode text without added markers. It implies no human/AI classification and
-no common source identity. Multiple people or assistants can have distinct voices.
-Human/AI classification, source descriptions, and verified identity are optional
-information separate from the attribution reference.
+`Voice1`, `Voice2`, and `Voice3` illustrate distinct sources, not reserved labels.
+Several people or assistants can have distinct voices. Human/AI classification,
+source descriptions, and verified identity are optional information separate
+from the reference.
+
+`Voice0` represents unattributed text, including ordinary Unicode text without
+added markers. It implies no human/AI classification and no common source
+identity. An anonymous source with a distinct reference differs from absent
+attribution.
 
 The central design objective is that a copied interior passage retains its
 attribution without requiring every intermediate application to understand
-TextProv. Reference scope and the portability of source descriptions remain
-open: `Voice1` from two unrelated documents need not identify the same source.
-Whether an encoding meets that objective with acceptable display, editing,
-and interoperability remains a question for evaluation.
+TextProv. Reference scope, source-context portability, and the minimum copying
+outcome remain open: `Voice1` in two unrelated documents need not identify the
+same source. Display, editing, recognition, and interoperability require
+separate evaluation.
 
 ## Read the proposal
 
 | Document | Role |
 | --- | --- |
-| [Model](docs/proposal/model.md) | Concept, semantics, and abstract representation |
-| [Requirements](docs/proposal/requirements.md) | Desired outcomes and evaluation criteria |
-| [Encoding candidates](docs/proposal/encodings.md) | VS, additive PUA, annotations, tags, and new-character proposals |
-| [Open decisions](docs/proposal/decisions.md) | Choices, evidence needed, and decision status |
-| [Unicode proposal direction](docs/proposal/unicode.md) | Possible standardization request, separate from private experiments |
-| [Demonstration and evaluation](docs/proposal/demonstration.md) | Existing implementation, limitations, and measurement plan |
+| [Model](docs/model.md) | Semantics and abstract representation |
+| [Requirements](docs/requirements.md) | Desired behavior and evaluation criteria |
+| [Encoding candidates](docs/encodings/README.md) | Experimental VS, private-use, annotation, tag, run, and external options |
+| [Open decisions](docs/decisions.md) | Choices and evidence needed |
+| [Unicode proposal direction](docs/proposals/unicode.md) | Possible standardized function, properties, and allocation process |
+| [Evaluation](docs/evaluation.md) | Historical observations, limitations, and planned measurements |
 
-These documents define the proposal framing. Existing specifications, mappings,
-fixtures, architecture records, and package documentation describe the retained
-experimental baseline. Their implementation choices and compatibility statements
-do not settle the proposal's open decisions.
+## Demonstration
 
-## Existing demonstration
+The [homepage source](site/index.html) includes a provenance toggle for a
+deliberately marked VS sample. Ordinary rendering generally shows the underlying
+text without a special font; the toggle uses a decoder and CSS to expose the
+sample's historical human/AI classifications. It does not implement voice
+references, source dictionaries, or optional attribution metadata.
 
-The VS demonstration stores labels in text that ordinary renderers generally
-display without a special font. A TextProv decoder interprets or displays the
-baseline human/AI classifications. It does not implement the proposed voice
-references. Copying and editing depend on the application and preservation of
-the marked sequence.
+The VS experiment collides with legitimate Unicode variation sequences. Its
+useful rendering and attachment properties are evidence to evaluate, not a
+private Unicode namespace or a selected permanent encoding. See the
+[experimental profile](docs/encodings/vs.md) and [recorded collision](docs/evaluation.md#variation-sequence-collision).
 
-The VS profile has a documented collision with legitimate Unicode variation
-sequences. Its display and attachment behavior are useful experimental evidence;
-they do not establish a private Unicode namespace or permanent encoding.
-See the [encoding assessment](docs/development/encoding-recommendation.md).
+The website is generated from the proposal documents and contains the bounded
+demonstration. Build instructions are in [site/README.md](site/README.md).
 
-Retained code: [Python](python/README.md), [Ruby](ruby/README.md),
-[JavaScript](js/README.md), and [website source](site/README.md).
-The [baseline specification](SPEC.md), [mapping](mapping.json), and
-[fixtures](fixtures.json) describe the experiment. The website and generated
-specification pages retain the baseline presentation; they have not been
-rewritten as the proposal.
+## Working SDK demonstrations
 
-## Branch provenance
+The [Python](python/README.md), [Ruby](ruby/README.md), and
+[JavaScript](js/README.md) SDKs remain working experiments for the historical
+human/AI classifications and limited replacement-PUA mode. Their guides include
+checkout examples, APIs, and test commands. The homepage uses the JavaScript
+SDK for its deliberately marked sample. These SDKs do not implement voice
+references or define the proposal's eventual encoding.
 
-This proposal starts a separate Git history. The demonstration snapshot comes
-from commit `466e82cd7037fe2c8b3984ff0144e68492a09e7c`; that commit is a documentary
-reference, not a parent of this branch. Earlier history remains on existing
-repository branches.
+For a Python example, run from the repository root:
 
-## License
+```sh
+PYTHONPATH=python python3 -c 'import textprov; marked = textprov.mark("hello", state="ai"); print(textprov.runs(marked)); assert textprov.strip_marks(marked) == "hello"'
+```
 
-Project code is MIT licensed; see [LICENSE](LICENSE). Bundled fonts retain their
-own licenses, including the SIL Open Font License 1.1. See the
-[font licensing guide](docs/FONT-UTILITIES.md#licensing-and-attribution).
+Restrict decoding and stripping to intentional experiments: genuine variation
+sequences can be misclassified or altered. [Baseline test data](experiments/baseline/README.md)
+describes the executable experiment rather than proposal conformance.
+
+## Project status and license
+
+This proposal has an independent Git history. No permanent encoding or proposal
+conformance specification is selected; working SDKs demonstrate the earlier
+experimental profile.
+
+Project code is MIT licensed; see [LICENSE](LICENSE). Retained third-party data
+or code carry their own notices alongside the relevant files.

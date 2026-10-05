@@ -3,7 +3,7 @@
 
 """Generate the grapheme-cluster property tables vendored by every port.
 
-The three reference implementations segment text into extended grapheme
+The three SDK demonstrations segment text into extended grapheme
 clusters (UAX #29) from the same tables, pinned to one Unicode version, so
 they agree with each other and with GraphemeBreakTest.txt regardless of the
 Unicode version their runtime happens to ship.

@@ -2,12 +2,9 @@
 
 """Producer and diagnostics: add marks to text, change encoding, report states.
 
-A producer is pure text processing. It needs the registry and nothing else: no
-font, no shaping engine, no build step. Producing marks and rendering them are
-separate jobs, and a font is one renderer among three (see ../SPEC.md).
-
-Extracted from bin/scripts/nfprov.py in the nerd-fonts provenance fork, which
-uses these operations to mark its example text and keeps the font patcher.
+These experimental operations use the vendored mapping, with no font or shaping
+engine. The replacement-PUA mode is distinct from the proposed additive-PUA
+candidate.
 """
 
 from ._core import GENERATED_STATES, _blank, default_mapping, segments
@@ -177,7 +174,7 @@ def mark(text, state="ai", mode="vs", mapping=None):
 
     `mode` is "vs" for the selector encoding or "pua" for the PUA encoding.
     Idempotent: marking marked text returns it unchanged. Whitespace and
-    control-break clusters are never marked. See ../SPEC.md, Producer.
+    control-break clusters are never marked. These are the implemented producer rules.
     """
     mapping = mapping or default_mapping()
     return _mark(

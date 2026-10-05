@@ -5,8 +5,8 @@ require_relative "lib/textprov/version"
 Gem::Specification.new do |spec|
   spec.name        = "textprov"
   spec.version     = Textprov::VERSION
-  spec.summary     = "Label AI output down to the character, directly in ordinary Unicode text."
-  spec.description = "Ruby reference implementation of the TextProv protocol. " \
+  spec.summary     = "Experimental TextProv text attribution encoder and decoder."
+  spec.description = "Ruby SDK demonstration for the TextProv proposal. " \
                      "Encodes and decodes producer-declared origin labels in Unicode text; " \
                      "does not detect or verify origin."
   spec.authors     = ["TextProv contributors"]
@@ -15,7 +15,6 @@ Gem::Specification.new do |spec|
 
   spec.metadata = {
     "source_code_uri" => "https://github.com/textprov/textprov",
-    "specification_uri" => "https://github.com/textprov/textprov/blob/main/SPEC.md",
     "bug_tracker_uri" => "https://github.com/textprov/textprov/issues",
     "rubygems_mfa_required" => "true"
   }
