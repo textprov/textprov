@@ -1,4 +1,4 @@
-// Site-wide provenance display: the TextProv counterpart of a light/dark toggle.
+// Display preference for the bounded historical VS demonstration.
 // Regions marked [data-prov-document] are decorated once with textprov.render();
 // the preference only switches their styling, so the text and its marks never
 // change and copied text keeps its labels either way.
@@ -7,7 +7,7 @@ export const STORAGE_KEY = "textprov:provenance";
 export const SHOWN = "shown";
 export const HIDDEN = "hidden";
 
-// Exact Unicode White_Space set from SPEC.md, not JavaScript's \s.
+// Unicode White_Space set used by the retained experimental decoder.
 var whitespace =
   /^[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/u;
 

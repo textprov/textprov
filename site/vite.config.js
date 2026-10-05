@@ -23,8 +23,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(here, "index.html"),
-        encoder: resolve(here, "encoder.html"),
-        spec: resolve(here, "spec.html"),
+        proposal: resolve(here, "proposal.html"),
       },
     },
   },

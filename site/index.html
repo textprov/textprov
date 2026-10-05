@@ -1,160 +1,56 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="TextProv is a draft specification for character-level origin labels in prose. Try the demo, open a marked .txt file, and help shape the proposal.">
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
-    <title>TextProv — origin labels that travel with text</title>
-    <link rel="stylesheet" href="styles.css">
-    <script type="module" src="app.js"></script>
-  </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-      <a class="wordmark" href="./">TextProv</a>
-      <nav aria-label="Primary navigation">
-        <a href="#try-it">Try it</a>
-        <a href="#how">How it works</a>
-        <a href="./spec.html">Specification</a>
-        <a href="#contribute">Contribute</a>
-      </nav>
-    </header>
-
-    <main id="main">
-      <section class="intro" aria-labelledby="intro-title">
-        <p class="version-line">Draft 0.2 · Open for feedback and contributions</p>
-        <h1 id="intro-title">Origin labels that travel with text</h1>
-        <p class="tagline">TextProv is a draft specification for marking the origin of individual characters within prose. Start with one person and one AI: keep track of text from each as passages are copied, combined, and reused.</p>
-        <p>A small shared vocabulary, carried in the text itself. Applications choose how to display and use it.</p>
-      </section>
-
-      <section id="try-it" aria-labelledby="try-title">
-        <h2 id="try-title">Try a marked passage</h2>
-        <p>In this example, a person writes the opening and an AI completes the sentence.</p>
-        <div class="passage-demo">
-          <p id="sample-passage" class="sample-passage">M󠄀a󠄀k󠄀e󠄀 i󠄀t󠄀 s󠄀i󠄀m󠄀p󠄀l󠄀e󠄀,󠄀 t󠄁h󠄁e󠄁n󠄁 m󠄁a󠄁k󠄁e󠄁 i󠄁t󠄁 u󠄁s󠄁e󠄁f󠄁u󠄁l󠄁.󠄁</p>
-          <div class="demo-toolbar">
-            <div class="demo-actions">
-              <button id="reveal-button" type="button" aria-pressed="false" aria-controls="sample-passage sample-legend" hidden>Reveal labels</button>
-              <button id="sample-copy-button" type="button" hidden>Copy passage</button>
-            </div>
-            <span id="sample-copy-status" class="note" role="status"></span>
-          </div>
-          <p id="sample-legend" class="sample-legend" hidden><span class="legend-human">Human: “Make it simple,”</span> <span class="legend-ai">AI: “then make it useful.”</span></p>
-          <p id="sample-reveal-status" class="sr-only" role="status"></p>
-        </div>
-        <p class="note">The marks are already in this text. Revealing them changes only the display; the colours and underlines are this demo’s choices.</p>
-
-        <h3>Copy the file to your clipboard</h3>
-        <div id="clip-desktop">
-          <p class="note">Run the command for your system to copy the same UTF-8 passage, then paste it into another app or the reader below. These commands replace your current clipboard contents.</p>
-          <div id="clip-tabs" class="clip-tabs" role="tablist" aria-label="Operating system" hidden>
-            <button id="clip-tab-macos" type="button" role="tab" aria-controls="clip-panel-macos">macOS</button>
-            <button id="clip-tab-windows" type="button" role="tab" aria-controls="clip-panel-windows">Windows</button>
-            <button id="clip-tab-wayland" type="button" role="tab" aria-controls="clip-panel-wayland">Linux (Wayland)</button>
-            <button id="clip-tab-x11" type="button" role="tab" aria-controls="clip-panel-x11">Linux (X11)</button>
-          </div>
-          <div id="clip-panel-macos" class="clip-panel">
-            <p class="note"><strong>macOS (Terminal)</strong></p>
-            <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | LANG=en_US.UTF-8 pbcopy</code></pre>
-          </div>
-          <div id="clip-panel-windows" class="clip-panel">
-            <p class="note"><strong>Windows (PowerShell)</strong> — decode UTF-8 explicitly to preserve the marks.</p>
-            <pre><code>[System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -UseBasicParsing 'https://textprov.org/samples/marked-text.txt').RawContentStream.ToArray()) | Set-Clipboard</code></pre>
-          </div>
-          <div id="clip-panel-wayland" class="clip-panel">
-            <p class="note"><strong>Linux (Wayland)</strong> — requires <code>curl</code> and <code>wl-copy</code> from <code>wl-clipboard</code>.</p>
-            <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | wl-copy</code></pre>
-          </div>
-          <div id="clip-panel-x11" class="clip-panel">
-            <p class="note"><strong>Linux (X11)</strong> — requires <code>curl</code> and <code>xclip</code>.</p>
-            <pre><code>curl -fsSL https://textprov.org/samples/marked-text.txt | xclip -selection clipboard</code></pre>
-          </div>
-        </div>
-        <p id="clip-mobile" class="note" hidden>On a phone or tablet, open the marked .txt file below, select all of its text and copy it, then paste it into the reader.</p>
-
-        <div class="text-file">
-          <div>
-            <a class="text-file-link" href="./samples/marked-text.txt" target="_blank" rel="noopener">Open the marked .txt file ↗</a>
-            <p class="note">Prefer to copy it manually? Open or download the plain UTF-8 file, then copy and paste it below.</p>
-          </div>
-          <a href="./samples/marked-text.txt" download>Download .txt</a>
-        </div>
-
-        <details class="reader" id="reader">
-          <summary>Paste text to reveal labels</summary>
-          <p class="note" id="check-help">Paste an excerpt from the passage or file. Your text stays in your browser.</p>
-          <label for="check-input">Text to inspect</label>
-          <textarea id="check-input" rows="3" aria-describedby="check-help" placeholder="Paste text here"></textarea>
-          <div class="output-heading"><span>Labels in your text</span></div>
-          <div id="check-output" class="demo-output"></div>
-          <p id="check-status" class="note" role="status">Waiting for text.</p>
-          <p class="reader-next">To mark your own text, use the <a href="./encoder.html">encoder</a>.</p>
-        </details>
-        <noscript><p>Revealing labels and using the reader need JavaScript. The marked passage and .txt file already contain their labels.</p></noscript>
-        <p class="note limits">Marks record supplied labels; they do not detect AI writing or verify authorship. They travel where software preserves them.</p>
-      </section>
-
-      <section id="how" aria-labelledby="how-title">
-        <h2 id="how-title">A mark alongside each character</h2>
-        <p>TextProv adds a normally invisible Unicode mark after each character being labelled. Copy a passage and its marks can come along, without a separate metadata file.</p>
-        <figure class="encoding-figure">
-          <div class="encoding-example">
-            <div class="character-pair">
-              <span class="base-character">M<span>letter</span></span>
-              <span class="stored-mark human-mark"><code>U+E0100</code><span>human mark</span></span>
-            </div>
-            <span class="encoding-gap" aria-hidden="true">…</span>
-            <div class="character-pair">
-              <span class="base-character">t<span>letter</span></span>
-              <span class="stored-mark ai-mark"><code>U+E0101</code><span>AI mark</span></span>
-            </div>
-          </div>
-          <figcaption>Two characters from the example, with their normally invisible marks exposed. The file stores the letters and the marks together.</figcaption>
-        </figure>
-        <p class="note">The encoding follows visible characters (grapheme clusters); spaces in this example are unmarked. These label meanings are a TextProv convention, not Unicode-registered variation sequences.</p>
-      </section>
-
-      <section id="proposal" aria-labelledby="proposal-title">
-        <h2 id="proposal-title">A small vocabulary to build on</h2>
-        <p>TextProv has two provenance labels:</p>
-        <table class="state-table">
-          <thead><tr><th scope="col">Label</th><th scope="col">Code point</th><th scope="col">Declared origin</th></tr></thead>
-          <tbody>
-            <tr><th scope="row"><code>human</code></th><td><code>U+E0100</code></td><td>Human-written</td></tr>
-            <tr><th scope="row"><code>ai</code></th><td><code>U+E0101</code></td><td>AI-generated</td></tr>
-
-          </tbody>
-        </table>
-        <p><strong>Shared labels; application choices.</strong> A label has a common meaning across tools. How it looks, whether to show it, and how it affects an application’s behaviour are up to that application.</p>
-        <p class="note">Unmarked text has no label. Labels do not identify a particular person or model, or assign a trust level.</p>
-        <p class="note">For prose communicated between people. Source code files, including comments and docstrings, are excluded. Code snippets within prose may be marked. See the <a href="./spec.html#marking-scope">marking scope</a>.</p>
-        <details>
-          <summary>What is settled, and what is open?</summary>
-          <p>Published code-point allocations remain reserved and will not be reassigned. Specification behaviour is experimental and may change before Stable.</p>
-          <p>Only <code>human</code> and <code>ai</code> are provenance states. Other variation selectors are ordinary non-TextProv text, not additional labels. Presentation and application policies remain integration choices.</p>
-          <p>See the <a href="./spec.html#states">draft’s state definitions</a> and <a href="https://github.com/textprov/textprov/blob/main/docs/MATURITY.md">maturity policy</a>.</p>
-        </details>
-      </section>
-
-      <section id="contribute" aria-labelledby="contribute-title">
-        <h2 id="contribute-title">Help shape the draft</h2>
-        <p>Try it in a real workflow. Small experiments and specific questions will help make the next draft better.</p>
-        <ul class="contribution-list">
-          <li><strong>Test a text journey.</strong> Where do marks survive copying, editing, and saving? Where do they disappear?</li>
-          <li><strong>Discuss the vocabulary.</strong> What should happen when a person edits AI text, or several sources contribute?</li>
-          <li><strong>Build an integration.</strong> Try marking and reading text in a prose editor, conversation, or content pipeline.</li>
-        </ul>
-        <p class="resource-links"><a href="https://github.com/textprov/textprov/discussions">Join the discussion</a> <a href="https://github.com/textprov/textprov/issues">Report a finding</a> <a href="./spec.html">Read the specification</a></p>
-        <p class="note">Start building with <a href="https://github.com/textprov/textprov/blob/main/python/README.md">Python</a>, <a href="https://github.com/textprov/textprov/blob/main/js/README.md">JavaScript</a>, or <a href="https://github.com/textprov/textprov/blob/main/ruby/README.md">Ruby</a>. See the <a href="https://github.com/textprov/textprov/blob/main/mapping.json">registry</a> and <a href="https://github.com/textprov/textprov/blob/main/fixtures.json">conformance examples</a>.</p>
-        <p class="note" id="fonts">Further reading: <a href="https://github.com/textprov/textprov/blob/main/docs/FONT-UTILITIES.md">utility fonts for inspection</a> (<a href="./fonts/utility/textprov-utility-p9e.zip" download>download</a>) · <a href="https://github.com/textprov/textprov#alongside-c2pa-and-sidecar-metadata">C2PA and sidecar metadata</a>.</p>
-      </section>
-    </main>
-
-    <footer>
-      <p><a href="https://github.com/textprov/textprov">Source and contributions</a> · <a href="https://github.com/textprov/textprov/blob/main/LICENSE">Code: MIT</a> · <a href="./fonts/README.txt">Font licences</a></p>
-    </footer>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TextProv is a proposal for voice attribution that travels with text. Explore the model, encoding candidates, and an experimental demonstration.">
+  <title>TextProv — a proposal for voice attribution</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><a class="wordmark" href="./">TextProv</a><nav aria-label="Primary navigation"><a href="https://github.com/textprov/textprov">GitHub</a></nav></header>
+  <main id="main">
+    <section class="intro" aria-labelledby="intro-title">
+      <p class="eyebrow">Proposal · decisions remain open</p>
+      <div class="title-row"><h1 id="intro-title">Voice attribution that travels with text</h1>
+        <button type="button" class="prov-toggle" role="switch" aria-checked="true" aria-label="Show provenance labels in the experimental example" aria-controls="sample-passage" title="Show provenance labels in the experimental example" data-prov-toggle hidden><span class="prov-toggle-knob" aria-hidden="true">℗</span></button>
+      </div>
+      <p class="lead">TextProv explores how text can retain references to its contributing voices as passages are copied, edited, and combined.</p>
+      <p>A voice may represent a person, a model, or another source. Attribution records a supplied reference; it does not detect authorship or verify identity.</p>
+      <p><a href="./proposal.html">Read the proposal and its open decisions →</a></p>
+    </section>
+    <section aria-labelledby="model-title">
+      <h2 id="model-title">Text and a voice reference</h2>
+      <pre><code>TextUnit + VoiceReference → AttributedUnit</code></pre>
+      <p><code>Voice1</code>, <code>Voice2</code>, and further references distinguish sources. Their descriptions and optional classifications are separate from the reference itself.</p>
+      <p><code>Voice0</code> represents unattributed characters: ordinary Unicode text, without an extra marker or an assumption about who wrote it.</p>
+      <p>The text unit, reference scope, copying behavior, and encoding are decisions to make. <a href="./proposal.html#model">Explore the model</a>.</p>
+    </section>
+    <section aria-labelledby="encoding-title">
+      <h2 id="encoding-title">Several mechanisms to evaluate</h2>
+      <p>Variation selectors provide a useful demonstration of attachment and normally invisible rendering, but collide with legitimate Unicode variation sequences. Private-use markers permit a private convention, with harder display and cursor trade-offs.</p>
+      <p>Other candidates include interlinear annotations, tag characters, explicit run delimiters, and a proposed standardized mechanism. Existing controls also provide structural precedents; using them for attribution would need its own justification.</p>
+      <p><a href="./proposal.html#encodings">Compare the encoding candidates</a> and <a href="./proposal.html#requirements">evaluation criteria</a>.</p>
+    </section>
+    <section id="experiment" aria-labelledby="experiment-title">
+      <h2 id="experiment-title">An experimental VS example</h2>
+      <p>This retained demonstration uses the earlier human/AI labels. It shows text containing embedded marks rendering without special fonts. It does not implement the proposed voice-reference model.</p>
+      <blockquote><p id="sample-passage" data-prov-document>M󠄀a󠄀k󠄀e󠄀 i󠄀t󠄀 s󠄀i󠄀m󠄀p󠄀l󠄀e󠄀,󠄀 t󠄁h󠄁e󠄁n󠄁 m󠄁a󠄁k󠄁e󠄁 i󠄁t󠄁 u󠄁s󠄁e󠄁f󠄁u󠄁l󠄁.󠄁</p></blockquote>
+      <p id="prov-legend" class="note" hidden><span class="prov-human">Human label: “Make it simple,”</span> · <span class="prov-ai">AI label: “then make it useful.”</span><br><span id="prov-summary"></span> of non-whitespace grapheme clusters.</p>
+      <p class="note">The ℗ switch beside the heading changes the example’s appearance. Its embedded code points remain unchanged.</p>
+      <button id="sample-copy-button" type="button" hidden>Copy marked example</button> <span id="sample-copy-status" role="status" class="note"></span>
+      <p><a href="./samples/marked-text.txt" download>Download the UTF-8 example</a>. To inspect the retained implementations, see the experimental <a href="https://github.com/textprov/textprov/tree/main/js">JavaScript</a>, <a href="https://github.com/textprov/textprov/tree/main/python">Python</a>, and <a href="https://github.com/textprov/textprov/tree/main/ruby">Ruby</a> SDKs.</p>
+      <p class="note">The selectors <code>U+E0100</code> and <code>U+E0101</code> are an experimental convention, not Unicode allocations for attribution. The decoder can misread a legitimate Japanese variation sequence, and stripping marks can remove a real glyph distinction. Marks travel only where software preserves them. <a href="./proposal.html#vs">Read the VS assessment</a>.</p>
+      <noscript><p>The embedded marks are present without JavaScript. Displaying their labels and the copy button require JavaScript; the download remains available.</p></noscript>
+    </section>
+    <section aria-labelledby="participate-title">
+      <h2 id="participate-title">Help resolve the open questions</h2>
+      <p>Useful evidence includes copying an interior excerpt, preserving distinct references from different documents, rendering multilingual text, and checking editing and accessibility behavior.</p>
+      <p><a href="./proposal.html#decisions">Review the open decisions</a>, then contribute observations or discuss alternatives in the <a href="https://github.com/textprov/textprov">GitHub repository</a>.</p>
+    </section>
+  </main>
+  <footer><p>TextProv is a proposal under development. <a href="https://github.com/textprov/textprov/blob/main/LICENSE">MIT License</a>.</p></footer>
+</body>
 </html>

@@ -3,11 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test app.test.js build-spec.test.js provenance.test.js",
-    "spec": "node build-spec.js",
-    "predev": "node build-spec.js",
-    "prebuild": "node build-spec.js",
-    "prepreview": "node build-spec.js",
+    "test": "node --test app.test.js build-proposal.test.js provenance.test.js",
+    "proposal": "node build-proposal.js",
+    "predev": "node build-proposal.js",
+    "prebuild": "node build-proposal.js",
+    "prepreview": "node build-proposal.js",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
