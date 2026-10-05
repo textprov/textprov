@@ -10,7 +10,7 @@ export const stripDemo = text => text.replace(/[\u{E0100}\u{E0101}]/gu, "");
 
 function markText(text, selector) {
   // Entities remain literal Markdown syntax, not marked letter sequences.
-  return text.split(/(&(?:#\d+|#x[\da-f]+|[a-z]+);)/gi).map((part, i) => i % 2 ? part : textprov.segments(part).map(cluster => {
+  return text.split(/(&(?:#\d+|#x[\da-f]+|[a-z][a-z\d]*);)/gi).map((part, i) => i % 2 ? part : textprov.segments(part).map(cluster => {
     if (/[\u{E0100}\u{E0101}]/u.test(cluster) || !/[\p{L}\p{N}]/u.test(cluster)) return cluster;
     return cluster + selector;
   }).join("")).join("");
