@@ -18,3 +18,7 @@ tools/.ucd/
 
 # Deliberately marked UTF-8 demonstration sample
 !site/public/samples/*.txt
+
+# Markdown-generated site pages (index.html is maintained by hand)
+site/*.html
+!site/index.html

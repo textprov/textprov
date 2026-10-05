@@ -3,54 +3,80 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="TextProv is a proposal for voice attribution that travels with text. Explore the model, encoding candidates, and an experimental demonstration.">
+  <meta name="description" content="A proposal for keeping track of what you wrote and what AI generated, using invisible labels embedded directly in text.">
   <title>TextProv — a proposal for voice attribution</title>
-  <link rel="stylesheet" href="styles.css">
+  <script src="/theme.js"></script><link rel="stylesheet" href="styles.css">
   <script type="module" src="app.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header"><a class="wordmark" href="./">TextProv</a><nav aria-label="Primary navigation"><a href="https://github.com/textprov/textprov">GitHub</a></nav></header>
+  <header class="site-header"><a class="wordmark" href="./">TextProv</a><div class="header-controls"><button type="button" class="theme-toggle" data-theme-toggle hidden aria-label="Switch color theme">🌙</button><nav aria-label="Primary navigation"><a href="https://github.com/textprov/textprov">GitHub</a></nav></div></header>
   <main id="main">
     <section class="intro" aria-labelledby="intro-title">
-      <p class="eyebrow">Proposal · decisions remain open</p>
-      <div class="title-row"><h1 id="intro-title">Voice attribution that travels with text</h1>
-        <button type="button" class="prov-toggle" role="switch" aria-checked="true" aria-label="Show provenance labels in the experimental example" aria-controls="sample-passage" title="Show provenance labels in the experimental example" data-prov-toggle hidden><span class="prov-toggle-knob" aria-hidden="true">℗</span></button>
+      <p class="eyebrow">Draft proposal</p>
+      <div class="title-row"><h1 id="intro-title">Invisible labels, directly in text</h1>
+        <span class="provenance-controls"><button type="button" class="prov-toggle" role="switch" aria-checked="true" aria-label="Show embedded provenance labels" aria-controls="sample-passage" data-prov-toggle hidden><span class="prov-toggle-knob" aria-hidden="true">℗</span></button><span class="info-tip"><button type="button" class="info-button" aria-label="About the provenance toggle" aria-describedby="prov-tip">ⓘ</button><span class="tooltip" id="prov-tip" role="tooltip">Reveal the embedded VS demo labels. Turning the display off leaves the labels in the text. Copying preserves them where supported. These demo labels do not verify authorship.</span></span></span>
       </div>
-      <p class="lead">TextProv explores how text can retain references to its contributing voices as passages are copied, edited, and combined.</p>
+      <div class="intro-example" aria-label="Experimental VS demonstration">
+        <p class="note">Try the ℗ switch: this example contains invisible human and AI labels.</p>
+      <blockquote><p id="sample-passage" data-prov-document>I󠄀 d󠄀o󠄀n󠄀'󠄀t󠄀 w󠄀a󠄀n󠄀t󠄀 m󠄀y󠄀 w󠄀o󠄀r󠄀d󠄀s󠄀 q󠄀u󠄀i󠄀e󠄀t󠄀l󠄀y󠄀 r󠄀e󠄀w󠄀r󠄀i󠄀t󠄀t󠄀e󠄀n󠄀.󠄀 A󠄁n󠄁 a󠄁s󠄁s󠄁i󠄁s󠄁t󠄁a󠄁n󠄁t󠄁 c󠄁a󠄁n󠄁 s󠄁u󠄁g󠄁g󠄁e󠄁s󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 e󠄁r󠄁a󠄁s󠄁i󠄁n󠄁g󠄁 w󠄁h󠄁o󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁d󠄁 t󠄁h󠄁e󠄁m󠄁.󠄁</p></blockquote>
+      <p id="prov-legend" class="note" hidden><span class="prov-human">Human-labelled text</span> · <span class="prov-ai">AI-labelled text</span></p>
+
+      <button id="sample-copy-button" type="button" hidden>Copy marked example</button> <span id="sample-copy-status" role="status" class="note"></span>
+      </div>
+      <p class="lead">A proposal for keeping track of what you wrote and what AI generated, using Unicode’s existing capabilities to embed invisible labels directly in text. Open encoding choices and working demonstrations.</p>
       <p>A voice may represent a person, a model, or another source. Attribution records a supplied reference; it does not detect authorship or verify identity.</p>
-      <p><a href="./proposal.html">Read the proposal and its open decisions →</a></p>
+      <p><a href="./proposal.html">Read the proposal →</a></p>
     </section>
+    <nav class="proposal-toc homepage-toc" aria-labelledby="contents-title">
+      <h2 id="contents-title">Proposal contents</h2>
+      <ol>
+        <li><a href="./model.html">Model</a> — semantics and voice references</li>
+        <li><a href="./requirements.html">Requirements</a> — behavior and evaluation criteria</li>
+        <li><a href="./encodings.html">Encoding candidates</a> — mechanisms and trade-offs</li>
+        <li><a href="./decisions.html">Open decisions</a> — questions to resolve</li>
+        <li><a href="./unicode.html">Unicode proposal direction</a> — a possible standardized mechanism</li>
+        <li><a href="./evaluation.html">Evaluation</a> — observations and planned measurements</li>
+      </ol>
+    </nav>
     <section aria-labelledby="model-title">
       <h2 id="model-title">Text and a voice reference</h2>
-      <pre><code>TextUnit + VoiceReference → AttributedUnit</code></pre>
+      <figure class="model-figure">
+        <svg class="model-diagram" viewBox="0 0 720 300" role="img" aria-labelledby="diagram-title diagram-desc" xmlns="http://www.w3.org/2000/svg">
+          <title id="diagram-title">Associate text with a voice reference</title>
+          <desc id="diagram-desc">The text “Hello” and the reference Voice1 are associated to form attributed text. The text stays “Hello”; Voice1 identifies its source. This illustrates the abstract model, with the encoding still open.</desc>
+          <defs><marker id="diagram-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
+          <g class="diagram-box"><rect x="16" y="20" width="224" height="94" rx="8"/><rect x="16" y="160" width="224" height="94" rx="8"/><rect x="396" y="56" width="308" height="198" rx="8"/></g>
+          <g text-anchor="middle"><text class="diagram-label" x="128" y="49">Text</text><text class="diagram-value" x="128" y="87">Hello</text><text class="diagram-label" x="128" y="189">Voice reference</text><text class="diagram-value" x="128" y="227">Voice1</text><text class="diagram-label" x="550" y="88">Attributed text</text><text class="diagram-value" x="550" y="146">Hello</text></g>
+          <path class="diagram-connector" d="M 240 67 H 282 V 137 M 240 207 H 282 V 137 H 380" marker-end="url(#diagram-arrow)"/>
+          <rect class="diagram-reference" x="489" y="168" width="122" height="42" rx="21"/><text x="550" y="195" text-anchor="middle" class="diagram-reference-text">Voice1</text>
+          <text x="360" y="286" text-anchor="middle" class="diagram-label">Association is the model; encoding is an open choice.</text>
+        </svg>
+        <figcaption>The visible text stays the same. A voice reference identifies its source.</figcaption>
+      </figure>
       <p><code>Voice1</code>, <code>Voice2</code>, and further references distinguish sources. Their descriptions and optional classifications are separate from the reference itself.</p>
       <p><code>Voice0</code> represents unattributed characters: ordinary Unicode text, without an extra marker or an assumption about who wrote it.</p>
-      <p>The text unit, reference scope, copying behavior, and encoding are decisions to make. <a href="./proposal.html#model">Explore the model</a>.</p>
+      <p>The text unit, reference scope, copying behavior, and encoding are decisions to make. <a href="./model.html">Explore the model</a>.</p>
     </section>
     <section aria-labelledby="encoding-title">
       <h2 id="encoding-title">Several mechanisms to evaluate</h2>
       <p>Variation selectors provide a useful demonstration of attachment and normally invisible rendering, but collide with legitimate Unicode variation sequences. Private-use markers permit a private convention, with harder display and cursor trade-offs.</p>
       <p>Other candidates include interlinear annotations, tag characters, explicit run delimiters, and a proposed standardized mechanism. Existing controls also provide structural precedents; using them for attribution would need its own justification.</p>
-      <p><a href="./proposal.html#encodings">Compare the encoding candidates</a> and <a href="./proposal.html#requirements">evaluation criteria</a>.</p>
+      <p><a href="./encodings.html">Compare the encoding candidates</a> and <a href="./requirements.html">evaluation criteria</a>.</p>
     </section>
     <section id="experiment" aria-labelledby="experiment-title">
       <h2 id="experiment-title">An experimental VS example</h2>
       <p>This retained demonstration uses the earlier human/AI labels. It shows text containing embedded marks rendering without special fonts. It does not implement the proposed voice-reference model.</p>
-      <blockquote><p id="sample-passage" data-prov-document>M󠄀a󠄀k󠄀e󠄀 i󠄀t󠄀 s󠄀i󠄀m󠄀p󠄀l󠄀e󠄀,󠄀 t󠄁h󠄁e󠄁n󠄁 m󠄁a󠄁k󠄁e󠄁 i󠄁t󠄁 u󠄁s󠄁e󠄁f󠄁u󠄁l󠄁.󠄁</p></blockquote>
-      <p id="prov-legend" class="note" hidden><span class="prov-human">Human label: “Make it simple,”</span> · <span class="prov-ai">AI label: “then make it useful.”</span><br><span id="prov-summary"></span> of non-whitespace grapheme clusters.</p>
-      <p class="note">The ℗ switch beside the heading changes the example’s appearance. Its embedded code points remain unchanged.</p>
-      <button id="sample-copy-button" type="button" hidden>Copy marked example</button> <span id="sample-copy-status" role="status" class="note"></span>
       <p><a href="./samples/marked-text.txt" download>Download the UTF-8 example</a>. To inspect the retained implementations, see the experimental <a href="https://github.com/textprov/textprov/tree/main/js">JavaScript</a>, <a href="https://github.com/textprov/textprov/tree/main/python">Python</a>, and <a href="https://github.com/textprov/textprov/tree/main/ruby">Ruby</a> SDKs.</p>
-      <p class="note">The selectors <code>U+E0100</code> and <code>U+E0101</code> are an experimental convention, not Unicode allocations for attribution. The decoder can misread a legitimate Japanese variation sequence, and stripping marks can remove a real glyph distinction. Marks travel only where software preserves them. <a href="./proposal.html#vs">Read the VS assessment</a>.</p>
+      <p class="note">The selectors <code>U+E0100</code> and <code>U+E0101</code> are an experimental convention, not Unicode allocations for attribution. The decoder can misread a legitimate Japanese variation sequence, and stripping marks can remove a real glyph distinction. Preservation depends on the software used. <a href="./vs.html">Read the VS assessment</a>.</p>
       <noscript><p>The embedded marks are present without JavaScript. Displaying their labels and the copy button require JavaScript; the download remains available.</p></noscript>
     </section>
     <section aria-labelledby="participate-title">
       <h2 id="participate-title">Help resolve the open questions</h2>
       <p>Useful evidence includes copying an interior excerpt, preserving distinct references from different documents, rendering multilingual text, and checking editing and accessibility behavior.</p>
-      <p><a href="./proposal.html#decisions">Review the open decisions</a>, then contribute observations or discuss alternatives in the <a href="https://github.com/textprov/textprov">GitHub repository</a>.</p>
+      <p><a href="./decisions.html">Review the open decisions</a>, then contribute observations or discuss alternatives in the <a href="https://github.com/textprov/textprov">GitHub repository</a>.</p>
     </section>
   </main>
-  <footer><p>TextProv is a proposal under development. <a href="https://github.com/textprov/textprov/blob/main/LICENSE">MIT License</a>.</p></footer>
+  <footer><p>TextProv is a proposal under development. Documentation: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Code: <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.</p></footer>
 </body>
 </html>

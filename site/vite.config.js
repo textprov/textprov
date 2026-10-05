@@ -1,3 +1,4 @@
+import { documents } from "./build-proposal.js";
 import { defineConfig, searchForWorkspaceRoot } from "vite";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -24,6 +25,7 @@ export default defineConfig({
       input: {
         main: resolve(here, "index.html"),
         proposal: resolve(here, "proposal.html"),
+        ...Object.fromEntries(documents.map(([id]) => [id, resolve(here, `${id}.html`)])),
       },
     },
   },

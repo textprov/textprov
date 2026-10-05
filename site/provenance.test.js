@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { test } from "node:test";
-import { HIDDEN, SHOWN, STORAGE_KEY, describe, initProvenanceDisplay, summarize } from "./provenance.js";
+import { HIDDEN, SHOWN, STORAGE_KEY, initProvenanceDisplay } from "./provenance.js";
 
 const textprov = createRequire(import.meta.url)("../js/textprov.js");
 const HUMAN = "\u{E0100}";
@@ -40,7 +40,7 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
       this.listeners[event] = callback;
     },
   };
-  const elements = { "prov-summary": { textContent: "" }, "prov-legend": { hidden: true } };
+  const elements = { "prov-legend": { hidden: true } };
   const regionElements = regions.map((textContent) => ({ textContent }));
   const rendered = [];
   const document = {
@@ -108,21 +108,7 @@ test("unknown stored values and blocked storage fall back to shown", () => {
   assert.equal(root.dataset.provenance, HIDDEN);
 });
 
-test("the legend reports label shares across every region", () => {
-  const { counts, elements } = page({
-    regions: [mark("Hi", HUMAN) + " " + mark("AI", AI), " plain\ttext\n"],
-  });
-  assert.deepEqual(counts, { ai: 2, human: 2, unmarked: 9 });
-  assert.equal(elements["prov-summary"].textContent, "AI 15% · human 15% · unmarked 69%");
+test("the simple legend is revealed after display initialization", () => {
+  const { elements } = page();
   assert.equal(elements["prov-legend"].hidden, false);
-});
-
-test("summaries count grapheme clusters, not code points or whitespace", () => {
-  const text = mark("é", AI) + " " + mark("👩‍💻", HUMAN) + " x";
-  assert.deepEqual(summarize(textprov, text), { ai: 1, human: 1, unmarked: 1 });
-});
-
-test("summaries flag small but present shares", () => {
-  assert.equal(describe({ ai: 1, human: 0, unmarked: 199 }), "AI <1% · human 0% · unmarked 100%");
-  assert.equal(describe({ ai: 0, human: 0, unmarked: 0 }), "No text to label.");
 });
