@@ -7,8 +7,9 @@ replacement, publication, and Discussion updates have not been performed.
 
 The active tree presents one coherent proposal for voice attribution. It contains
 its model, desired behavior, encoding alternatives, open decisions, evidence, and
-a small demonstration. It does not present the former v0.2 specification and
-SDKs as a second governing account of TextProv.
+working SDK demonstrations. The SDKs retain their reserved package identities
+and implemented experimental behavior; they do not define the proposal or settle
+its open choices. The former v0.2 specification is removed.
 
 `Voice0` remains unattributed ordinary Unicode text. Nonzero voices distinguish
 sources; human/AI classification is optional metadata. No encoding, reference
@@ -46,22 +47,30 @@ docs/proposals/unicode.md         Possible standardized mechanism
 site/index.html                  Proposal introduction and homepage toggle
 site/proposal.template.html      Full proposal presentation
 site/build-proposal.js           Renders canonical proposal Markdown
-site/spec.html                   Small transition notice for former URL
 site/app.js                      Homepage initialization
 site/provenance.js               Toggle controller
 site/styles.css
-site/demo/                       Only VS runtime, CSS, samples, focused tests
+site/demo/                       Marked samples and site-specific demo tests
 site/package.json
 site/package-lock.json
 site/vite.config.js
 site/README.md
+
+python/                          Working Python SDK demonstration
+ruby/                            Working Ruby SDK demonstration
+js/                              Working JavaScript SDK and site renderer
+experiments/baseline/                  Current demo mapping, shared fixtures, notes
+ucd/                             Segmentation data needed by SDK demonstrations
+tools/gen_grapheme_tables.py      Reproducible shared SDK table generation
 ```
 
 The tree is a responsibility map, not a requirement to create each file exactly
 as named. Tests and notices accompany retained code. `site/proposal.html` is a
-generated build artifact. There is one runtime for the retained experiment,
-owned by `site/demo/`; no parallel SDK or duplicate experiment implementation is
-introduced. External metadata and newly standardized characters remain visible
+generated build artifact. Python, Ruby, and JavaScript remain working examples
+with their reserved package names and package metadata. The site imports the
+JavaScript SDK rather than copying its runtime into a second implementation.
+Shared experimental mappings and fixtures live under `experiments/baseline/`; SDK tests
+and generation tools are updated to those paths. External metadata and newly standardized characters remain visible
 in the candidate index and relevant linked documents.
 
 This plan is a temporary coordination artifact. Its completion record can live
@@ -72,20 +81,21 @@ permanent additional proposal guide.
 
 | Existing content | Action | Destination or reason |
 | --- | --- | --- |
-| `README.md` | Rewrite | Reading order and status; remove retained-package/spec onboarding and obsolete caveats about the site |
+| `README.md` | Rewrite | Reading order and status; replace normative spec onboarding with concise SDK demo links; remove obsolete site caveats |
 | `docs/proposal/model.md`, `requirements.md`, `decisions.md` | Move and edit links | Flatter `docs/` layout; retain agreed semantics and explicit open choices |
 | `docs/proposal/encodings.md` | Split and reconcile | Candidate index plus focused documents; preserve alternatives without duplicating their full explanations |
 | `docs/proposal/unicode.md` | Move | `docs/proposals/unicode.md` |
 | `docs/proposal/demonstration.md` | Rewrite | `docs/evaluation.md`: distinguish observations from future measurements |
 | `docs/adr/**`, `docs/development/**` | Extract selected evidence, then remove | Previous implementation decisions and operational advice do not govern the proposal |
 | `docs/GOAL.md`, `MATURITY.md`, `SELECTORS-PUA-AND-INTERCHANGE.md`, `HTML-RENDERING.md`, `FONT-UTILITIES.md` | Extract selected evidence, then remove | Consolidate relevant substance; avoid parallel goals, maturity rules, and obsolete integration guides |
-| `SPEC.md`, `mapping.json`, `fixtures.json`, `CHANGELOG.md`, `genesis.md` | Remove | Historical material remains in previous revisions; bounded demo details move into the VS experiment |
-| `python/**`, `ruby/**` | Remove | No supported proposal SDK exists; their former behavior is historical |
-| `js/**` | Extract only required VS display code/tests, then remove | Relocate to `site/demo/`; drop package distribution identity and general integration claims |
+| `SPEC.md`, `CHANGELOG.md`, `genesis.md` | Remove | Historical material remains in previous revisions; necessary implemented rules are documented as experiments |
+| `mapping.json`, `fixtures.json` | Relocate and reframe | `experiments/baseline/`; working SDK data and shared behavioral checks, not the proposal registry or conformance definition |
+| `python/**`, `ruby/**`, `js/**` | Retain and reframe | Working SDK demos; keep package identities, code, necessary data, tests and licenses; rewrite READMEs and comments to explain experimental scope |
 | `.claude/**`, `site/.claude` | Remove first | Automatic hooks inject old classifications and hidden selectors into new prose |
-| `tools/**`, `ucd/**`, `site/public/fonts/**` | Remove by default | No font is needed for the homepage toggle; retain only a dependency proven necessary for the narrowed experiment |
-| `.github/workflows/conformance.yml` | Replace | Checks validate the proposal/site/demo rather than old registry and port conformance |
-| `.gitignore`, `.gitattributes`, remaining configuration | Simplify | Remove deleted-package/font/cache rules; preserve notices and rules still needed |
+| `tools/gen_grapheme_tables.py`, `ucd/**` | Retain required sources and tooling | SDK demonstrations need reproducible segmentation tables; update moved-data paths and preserve source/version/notices |
+| Other `tools/**`, `site/public/fonts/**` | Remove by default | Keep only a demonstrated SDK/evaluation dependency; font downloads and font builders are unnecessary for the homepage toggle |
+| `.github/workflows/conformance.yml` | Replace | Checks validate proposal links, site, and working SDK demos; experimental behavioral agreement does not certify the proposal |
+| `.gitignore`, `.gitattributes`, remaining configuration | Simplify | Retain SDK build/cache rules and remove unused font/tool rules; preserve notices and rules still needed |
 
 No `archive/` subtree copies the obsolete repository into the active proposal.
 Before removal, record verified immutable source revisions for historical links.
@@ -114,6 +124,29 @@ decoration option is unimplemented, not an observed result. Proposed
 application tests occupy a separate section. Evidence unavailable in the
 repository is explicitly identified; missing details are not invented.
 
+## Working SDK demonstrations
+
+Retain Python, Ruby, and JavaScript in their existing package directories,
+including reserved package names, manifests, entry points, implemented features,
+required data, licenses, and meaningful tests. Package versions describe the
+executable experiments, not a versioned proposal standard. The cleanup does not
+publish new packages or invent implementations of the voice-reference model.
+
+Rewrite each SDK README to lead with its working-demo status, show a runnable
+example, identify the implemented VS/classification and replacement-PUA behavior,
+and link to the model, candidate profiles, and known collision. Remove claims
+that the former specification governs the proposal. Implemented generation or
+mapping rules may remain documented as experimental behavior when needed to use
+the code; they are not reserved allocations or requirements of the proposal.
+
+Keep shared fixtures and mapping data as explicit experiment assets. Update
+Python/Ruby/JS checks, copied mappings, generation scripts, and relative references
+together. Retain tests for implemented behavior and Unicode segmentation; remove
+or rewrite tests tied to deleted automatic hooks and obsolete publication pages.
+CI continues to run the SDK suites and checks shared data agreement, naming that
+scope explicitly. No old URL, API, or file-path compatibility is required by this
+reclamation plan; changes are guided by coherent working examples.
+
 ## Site reclamation
 
 The homepage leads with the proposal and its unresolved choices, explains voices
@@ -136,10 +169,10 @@ demo decoration to the sample. Ordinary proposal prose remains plain Unicode.
 No custom font is required.
 
 Remove `encoder.html`, font galleries/downloads, package installation and OS
-clipboard instructions, and the normative spec template/scripts/styles. A small
-`spec.html` transition notice links to the proposal and a verified immutable
-historical revision. It contains no normative rules or old specification body.
-Old deep links can land on that notice rather than preserving obsolete sections.
+clipboard instructions, and the normative spec page/template/scripts/styles.
+Remove `/spec.html` entirely. No transition notice, redirect, or old-link
+compatibility is needed. SDK installation and usage belong in the package
+READMEs; the homepage can link to the working examples in its body.
 
 Replace `build-spec.js` with proposal rendering. The build consumes a declared
 ordered set of proposal docs, rewrites relative links, and handles headings and
@@ -147,14 +180,12 @@ anchors consistently. It does not parse specification versions, fixed selector
 registries, or release metadata. Update package scripts, lockfile, and Vite inputs
 together. Retain `marked` only if the chosen Markdown build uses it.
 
-Move the necessary JS renderer/CSS into `site/demo/` before removing `js/`.
-The current module embeds registry and segmentation tables and does not load the
-root mapping at runtime. Narrow its exposed behavior and samples to the VS
-experiment; remove unrelated replacement-PUA, generation-grid, font, and producer
-UI paths. If embedded segmentation data remains, preserve its source/version and
-required notices rather than silently switching algorithms during relocation.
-A legacy table value required for reproducibility remains an experiment fact,
-not a proposed allocation.
+Keep the site's JavaScript SDK import and CSS dependency, updating paths only
+where the experimental data layout changes. The module embeds registry and
+segmentation tables and does not load the root mapping at runtime. Retain its
+implemented behavior as a working example; constrain the homepage UI to the
+small VS demonstration. Preserve segmentation source/version and required
+notices. Shared runtime fixes belong in `js/`, not a copied site-only fork.
 
 The Pages workflow currently deploys pushes to `main`, not this work branch.
 Adjust watched paths to include canonical proposal docs and retained demo files.
@@ -162,7 +193,7 @@ Prepare build/deployment changes, but keep branch/default-branch migration and
 live publication explicit. A local cleanup is not evidence that the public site
 has changed.
 
-## GitHub Discussions transition
+## GitHub Discussions
 
 The read-only audit found eight Discussions, all in Q&A, with no accepted answers
 or locks. Seven are open with no comments. #14 is closed and has one comment.
@@ -179,14 +210,13 @@ These observations describe the audit; re-read each topic before applying edits.
 | [#19: alternate generation layouts](https://github.com/textprov/textprov/discussions/19) | Encoding profiles: how are profiles recognized without collisions? | Context, versioning, escaping, unknown profiles; genuine IVS/emoji tags/unrelated PUA; private agreement versus standardization. D04–D06/D10/D11 |
 | [#20: generation APIs and fixtures](https://github.com/textprov/textprov/discussions/20) | Evaluation: which application observations would distinguish the candidates? | Copying, editing, normalization, cursor, accessibility, search; recovery and preservation criteria; reproducible evidence. D01/D02/D08/D09 |
 
-Each replacement opening post has a short dated transition notice, a link to the
-published proposal, the relevant established framing, and a small set of current
-questions. Remove fixed selector-grid reservations, generation rules, assumed
-human defaults, and normative implementation instructions from the current
+Each replacement opening post leads with the current proposal question and links
+to the relevant published documents. No transition notice is needed. Remove
+fixed selector-grid reservations, generation rules, assumed human defaults, and normative implementation instructions from the current
 questions. Do not present eight historical opening posts in full as the new
 agenda. Preserve original bodies and metadata in a rollback export before
 editing; any historical source link used in a post must actually recover that
-material. A brief summary of the former topic provides reader continuity.
+material. Historical opening-post text need not remain in the rewritten agenda.
 
 The comment on #14 says that human meant a person wrote the text. Preserve it
 unchanged, and explain in the new opening post that it answered the earlier
@@ -194,7 +224,7 @@ classification model. The proposal leaves source roles open and classification
 optional. Reopening the thread does not endorse that historical comment as the
 new model's resolution.
 
-Add a short announcement introducing the proposal reset and linking the reading
+Add a short announcement introducing the proposal and linking the reading
 order, open decisions, and bounded VS demonstration. Pin it if available. Add a
 focused source-reference scope topic covering D13/D14: independent contexts both
 using Voice1, merging/copied passages, and reference versus description survival.
@@ -218,37 +248,45 @@ plan-preparation task.
 | --- | --- | --- | --- |
 | 1. Remove obsolete automation and capture sources | Coordinator | Disable/remove old attribution hooks; record source revisions and evidence locations | None |
 | 2. Reclaim canonical docs | Documentation agent | Target docs, extracted evidence, corrected links, disposition checklist | Phase 1 |
-| 3. Reclaim site and demo | Site agent | Homepage toggle, minimal runtime, proposal rendering, transition route, working build | Agreed target paths from phase 2; runtime extraction precedes package deletion |
-| 4. Remove obsolete tree and replace CI | Coordinator | Old docs/packages/data/fonts/tools removed, configs and workflows reconciled | Evidence capture and site imports/tests migrated |
-| 5. Prepare Discussion replacements | Discussion agent | Exact titles/bodies and transition notes for all eight topics, reconciled with final docs | Phase 2; can draft in parallel with phase 3 |
-| 6. Validate and review | Review agent and coordinator | Build/demo/link results, final tree audit, coverage and remote-edit checklist | Phases 2–5 |
-| 7. Publish branch, update Discussions, then publish site deliberately | Coordinator | Publish the branch and verify doc URLs first; apply/re-read Discussion updates; track site deployment separately | Reviewed exact text and working site; publication scope settled |
+| 3. Reframe working SDKs | SDK agent | Package identities retained; usable demo READMEs; relocated data dependencies; SDK tests and generation tooling working | Canonical paths and experimental data layout from phase 2 |
+| 4. Reclaim site | Site agent | Homepage toggle using JS SDK; proposal rendering; obsolete routes removed; working build | Agreed docs and SDK paths; can overlap phase 3 |
+| 5. Remove obsolete tree and replace CI | Coordinator | Old docs/hooks/pages/font tooling removed; SDK checks retained; configs reconciled | Evidence capture and retained dependencies migrated |
+| 6. Prepare Discussion replacements | Discussion agent | Current titles/bodies for all eight topics, reconciled with final docs | Phase 2; use an available slot after docs or SDK work |
+| 7. Validate and review | Review agent and coordinator | Build/SDK/demo/link results, final tree audit, coverage and remote-edit checklist | Phases 2–6 |
+| 8. Publish branch, update Discussions, then publish site deliberately | Coordinator | Publish the branch and verify doc URLs first; apply/re-read Discussion updates; track site deployment separately | Reviewed exact text and working site; publication scope settled |
 
 The audits already used all three available subagent slots. During implementation,
-the documentation and site agents own disjoint paths; the Discussion agent owns
-only local drafts. The coordinator owns deletions, workflows, commits, and remote mutations. The site agent owns site package
-scripts, lockfile, and Vite configuration; the coordinator owns repository-wide
+documentation, SDK, and site agents own disjoint paths, with SDK data/layout
+changes handed to the site agent. The Discussion agent owns only local drafts
+and runs when a slot becomes available. The coordinator owns deletions, workflows, commits, and remote mutations. The
+site agent owns site package scripts, lockfile, and Vite configuration; the coordinator owns repository-wide
 configuration. Hand over the canonical path map before the site
-agent rewrites imports. Do not let agents independently delete shared runtime,
-fixtures, or workflows. A final review checks cross-area claims and dependencies.
+agent updates imports. The SDK agent owns package directories, experimental
+data, UCD sources, and required generators. Do not let agents independently
+delete retained runtime, fixtures, or workflows. A final review checks cross-area
+claims and dependencies.
 
-Use coherent commits for documentation/evidence, site/demo, and removals/CI.
+Use coherent commits for documentation/evidence, SDK demos, site, and removals/CI.
 Each commit includes coupled dependency changes so retained tests do not require
-already deleted files. No package release, encoding implementation, or change to
-open semantic choices is bundled into reclamation.
+already deleted files. No package release, new encoding implementation, or change to open semantic
+choices is bundled into reclamation. Existing SDK demonstrations remain working.
 
 ## Completion criteria
 
 - README and homepage consistently say proposal, explain `Voice0`, and identify
   encoding and reference scope as unresolved.
-- No competing normative v0.2 spec, ADR/development bulk, SDK onboarding, registry
-  promises, generation reservations, or font downloads remain in active content.
+- No competing normative v0.2 spec, ADR/development bulk, proposal-wide registry
+  promises, generation reservations, font downloads, transition pages, or
+  compatibility routes remain in active content.
+- All three SDKs retain their package names and working demo examples. Their
+  manifests, entry points, required data, generation tools, and behavioral tests
+  agree with the revised layout; SDK documentation states experimental scope.
 - Every discussed candidate remains findable. Musical delimiters are described
   as a scope precedent; obsolete assigned characters are not treated as free PUA.
 - Human/AI labels and old selector values appear only in bounded historical
-  experiment/evidence descriptions, never as the proposal's universal taxonomy.
-- Markdown links and generated site links/anchors resolve. Removed URLs have
-  deliberate transition handling where useful.
+  SDK demo/profile/evidence descriptions, never as the proposal's universal taxonomy.
+- Markdown links and generated site links/anchors resolve. Old routes are removed
+  without redirects or transition notices.
 - Site tests and production build pass. The toggle works by keyboard and on
   mobile, exposes correct accessibility state, handles blocked storage, and
   leaves underlying sample code points unchanged.
@@ -256,8 +294,8 @@ open semantic choices is bundled into reclamation.
   text are not passed through an experimental attribution decoder.
 - Copy observations identify their actual method; DOM selection, real clipboard
   transport, and destination behavior are not conflated.
-- CI checks retained docs/site/demo without referring to deleted packages,
-  mappings, fixtures, fonts, or UCD generators.
+- CI checks docs, site, and SDK demos using the retained experimental mappings,
+  fixtures, and segmentation data, with no deleted-hook/font/spec dependencies.
 - A hidden-marker scan allows only explicit demonstration samples. Required
   licenses/notices remain attached to all retained code/data.
 - All eight Discussion topics have a recorded outcome and verified update;
