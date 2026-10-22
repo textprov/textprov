@@ -1,7 +1,7 @@
 # T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁t󠄁y󠄁p󠄁e󠄁 d󠄁e󠄁s󠄁i󠄁g󠄁n󠄁
 
 S󠄁t󠄁a󠄁t󠄁u󠄁s󠄁: p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁e󠄁s󠄁i󠄁g󠄁n󠄁; n󠄁o󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 i󠄁s󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁e󠄁d󠄁 b󠄁y󠄁 t󠄁h󠄁i󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁.
-A󠄁 w󠄁o󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁-󠄁c󠄁o󠄁r󠄁e󠄁 s󠄁l󠄁i󠄁c󠄁e󠄁 i󠄁s󠄁 a󠄁v󠄁a󠄁i󠄁l󠄁a󠄁b󠄁l󠄁e󠄁;󠄁 s󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁 [p󠄁r󠄁o󠄁t󠄁o󠄁t󠄁y󠄁p󠄁e󠄁 u󠄁s󠄁a󠄁g󠄁e󠄁 g󠄁u󠄁i󠄁d󠄁e󠄁](../../python/LEDGER.md).󠄁 H󠄁o󠄁s󠄁t󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 u󠄁n󠄁i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁e󠄁d󠄁.󠄁
+A󠄁 w󠄁o󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁-󠄁c󠄁o󠄁r󠄁e󠄁 s󠄁l󠄁i󠄁c󠄁e󠄁 i󠄁s󠄁 a󠄁v󠄁a󠄁i󠄁l󠄁a󠄁b󠄁l󠄁e󠄁;󠄁 s󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁 [p󠄁r󠄁o󠄁t󠄁o󠄁t󠄁y󠄁p󠄁e󠄁 u󠄁s󠄁a󠄁g󠄁e󠄁 g󠄁u󠄁i󠄁d󠄁e󠄁](../../python/CHRONICLE.md).󠄁 H󠄁o󠄁s󠄁t󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 u󠄁n󠄁i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁e󠄁d󠄁.󠄁
 D󠄁e󠄁s󠄁i󠄁g󠄁n󠄁 c󠄁a󠄁p󠄁t󠄁u󠄁r󠄁e󠄁d󠄁: 2󠄁0󠄁2󠄁6󠄁-1󠄁0󠄁-2󠄁2󠄁. H󠄁o󠄁s󠄁t󠄁 A󠄁P󠄁I󠄁 d󠄁e󠄁t󠄁a󠄁i󠄁l󠄁s󠄁 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁 v󠄁e󠄁r󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁g󠄁a󠄁i󠄁n󠄁s󠄁t󠄁 t󠄁h󠄁e󠄁
 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁s󠄁 t󠄁a󠄁r󠄁g󠄁e󠄁t󠄁e󠄁d󠄁 b󠄁y󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.
 
@@ -39,7 +39,7 @@ R󠄁e󠄁l󠄁e󠄁v󠄁a󠄁n󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n�
 T󠄁h󠄁i󠄁s󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁o󠄁u󠄁t󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 w󠄁o󠄁r󠄁k󠄁s󠄁p󠄁a󠄁c󠄁e󠄁 h󠄁e󠄁l󠄁p󠄁e󠄁r󠄁s󠄁 b󠄁u󠄁t󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁s󠄁 n󠄁o󠄁 a󠄁u󠄁t󠄁o󠄁m󠄁a󠄁t󠄁i󠄁c󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁 h󠄁o󠄁o󠄁k󠄁s󠄁.
 T󠄁h󠄁e󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 `record_prompt` h󠄁e󠄁l󠄁p󠄁e󠄁r󠄁 s󠄁t󠄁o󠄁r󠄁e󠄁s󠄁 p󠄁r󠄁o󠄁m󠄁p󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁 c󠄁l󠄁a󠄁s󠄁s󠄁i󠄁f󠄁i󠄁e󠄁d󠄁 a󠄁s󠄁 h󠄁u󠄁m󠄁a󠄁n󠄁 b󠄁y󠄁
 p󠄁o󠄁l󠄁i󠄁c󠄁y󠄁; s󠄁u󠄁b󠄁m󠄁i󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 i󠄁s󠄁 n󠄁o󠄁t󠄁 p󠄁r󠄁o󠄁o󠄁f󠄁 o󠄁f󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁s󠄁h󠄁i󠄁p󠄁. I󠄁t󠄁s󠄁 q󠄁u󠄁o󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 h󠄁e󠄁u󠄁r󠄁i󠄁s󠄁t󠄁i󠄁c󠄁 i󠄁s󠄁 a󠄁
-r󠄁e󠄁u󠄁s󠄁a󠄁b󠄁l󠄁e󠄁 e󠄁x󠄁p󠄁e󠄁r󠄁i󠄁m󠄁e󠄁n󠄁t󠄁, n󠄁o󠄁t󠄁 t󠄁h󠄁e󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁u󠄁l󠄁e󠄁 f󠄁o󠄁r󠄁 t󠄁h󠄁e󠄁 n󠄁e󠄁w󠄁 l󠄁e󠄁d󠄁g󠄁e󠄁r󠄁.
+r󠄁e󠄁u󠄁s󠄁a󠄁b󠄁l󠄁e󠄁 e󠄁x󠄁p󠄁e󠄁r󠄁i󠄁m󠄁e󠄁n󠄁t󠄁, n󠄁o󠄁t󠄁 t󠄁h󠄁e󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁u󠄁l󠄁e󠄁 f󠄁o󠄁r󠄁 t󠄁h󠄁e󠄁 n󠄁e󠄁w󠄁 c󠄁h󠄁r󠄁o󠄁n󠄁i󠄁c󠄁l󠄁e󠄁.
 
 ## C󠄁o󠄁r󠄁e󠄁 p󠄁r󠄁i󠄁n󠄁c󠄁i󠄁p󠄁l󠄁e󠄁s󠄁
 
@@ -53,7 +53,7 @@ r󠄁e󠄁u󠄁s󠄁a󠄁b󠄁l󠄁e󠄁 e󠄁x󠄁p󠄁e󠄁r󠄁i󠄁m󠄁e�
    t󠄁h󠄁e󠄁i󠄁r󠄁 s󠄁u󠄁p󠄁p󠄁l󠄁i󠄁e󠄁d󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁.
 5. U󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 i󠄁t󠄁s󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁; o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 b󠄁a󠄁c󠄁k󠄁f󠄁i󠄁l󠄁l󠄁 l󠄁e󠄁g󠄁a󠄁c󠄁y󠄁
    p󠄁r󠄁o󠄁s󠄁e󠄁. G󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 i󠄁n󠄁t󠄁a󠄁c󠄁t󠄁.
-6. T󠄁h󠄁e󠄁 l󠄁e󠄁d󠄁g󠄁e󠄁r󠄁 s󠄁u󠄁p󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁 a󠄁n󠄁d󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁. E󠄁m󠄁b󠄁e󠄁d󠄁d󠄁e󠄁d󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁t󠄁 t󠄁h󠄁e󠄁
+6. T󠄁h󠄁e󠄁 c󠄁h󠄁r󠄁o󠄁n󠄁i󠄁c󠄁l󠄁e󠄁 s󠄁u󠄁p󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁 a󠄁n󠄁d󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁. E󠄁m󠄁b󠄁e󠄁d󠄁d󠄁e󠄁d󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁t󠄁 t󠄁h󠄁e󠄁
    c󠄁o󠄁p󠄁y󠄁/e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁y󠄁 s󠄁u󠄁p󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 p󠄁o󠄁r󠄁t󠄁a󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁. A󠄁 s󠄁i󠄁d󠄁e󠄁c󠄁a󠄁r󠄁 a󠄁l󠄁o󠄁n󠄁e󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁
    s󠄁a󠄁t󠄁i󠄁s󠄁f󠄁y󠄁 t󠄁h󠄁a󠄁t󠄁 p󠄁o󠄁r󠄁t󠄁a󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁 g󠄁o󠄁a󠄁l󠄁.
 7. H󠄁o󠄁s󠄁t󠄁-s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 f󠄁o󠄁r󠄁k󠄁 t󠄁h󠄁e󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁l󠄁g󠄁o󠄁r󠄁i󠄁t󠄁h󠄁m󠄁.
@@ -66,7 +66,7 @@ flowchart TB
     CX[Codex hooks] --> N
     CM[Claude mod] --> N
     subgraph shared[Shared TextProv engine]
-        N[Normalize observations] --> L[Event ledger and ID joins]
+        N[Normalize observations] --> L[Event chronicle and ID joins]
         L -->|Direct observations| P[Attribution policy]
         L --> M[Passage matching]
         M -.->|Candidates with evidence| P
@@ -156,7 +156,7 @@ m󠄁u󠄁s󠄁t󠄁 n󠄁o󠄁t󠄁 b󠄁e󠄁 m󠄁i󠄁s󠄁t󠄁a󠄁k󠄁e�
 
 ## R󠄁e󠄁l󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁h󠄁i󠄁p󠄁s󠄁, c󠄁l󠄁a󠄁i󠄁m󠄁s󠄁 a󠄁n󠄁d󠄁 m󠄁a󠄁t󠄁c󠄁h󠄁i󠄁n󠄁g󠄁
 
-T󠄁h󠄁e󠄁 l󠄁e󠄁d󠄁g󠄁e󠄁r󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 t󠄁y󠄁p󠄁e󠄁s󠄁:
+T󠄁h󠄁e󠄁 c󠄁h󠄁r󠄁o󠄁n󠄁i󠄁c󠄁l󠄁e󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 t󠄁y󠄁p󠄁e󠄁s󠄁:
 
 | R󠄁e󠄁c󠄁o󠄁r󠄁d󠄁 | E󠄁x󠄁a󠄁m󠄁p󠄁l󠄁e󠄁 | E󠄁s󠄁t󠄁a󠄁b󠄁l󠄁i󠄁s󠄁h󠄁e󠄁s󠄁 |
 | --- | --- | --- |
@@ -232,7 +232,7 @@ r󠄁e󠄁t󠄁r󠄁i󠄁e󠄁v󠄁a󠄁b󠄁l󠄁e󠄁.
 | S󠄁t󠄁o󠄁r󠄁a󠄁g󠄁e󠄁 | C󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁s󠄁 | L󠄁i󠄁f󠄁e󠄁t󠄁i󠄁m󠄁e󠄁 |
 | --- | --- | --- |
 | M󠄁a󠄁t󠄁c󠄁h󠄁i󠄁n󠄁g󠄁 c󠄁a󠄁c󠄁h󠄁e󠄁 | E󠄁x󠄁a󠄁c󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁 o󠄁r󠄁 s󠄁e󠄁a󠄁r󠄁c󠄁h󠄁a󠄁b󠄁l󠄁e󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 f󠄁i󠄁n󠄁g󠄁e󠄁r󠄁p󠄁r󠄁i󠄁n󠄁t󠄁s󠄁 n󠄁e󠄁e󠄁d󠄁e󠄁d󠄁 f󠄁o󠄁r󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁r󠄁i󠄁s󠄁o󠄁n󠄁 | B󠄁o󠄁u󠄁n󠄁d󠄁e󠄁d󠄁 b󠄁y󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 s󠄁i󠄁z󠄁e󠄁/a󠄁g󠄁e󠄁/s󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 p󠄁o󠄁l󠄁i󠄁c󠄁y󠄁 |
-| A󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 l󠄁e󠄁d󠄁g󠄁e󠄁r󠄁 | O󠄁b󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁' m󠄁e󠄁t󠄁a󠄁d󠄁a󠄁t󠄁a󠄁, h󠄁a󠄁s󠄁h󠄁e󠄁s󠄁, r󠄁e󠄁l󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁h󠄁i󠄁p󠄁s󠄁, c󠄁l󠄁a󠄁i󠄁m󠄁s󠄁 a󠄁n󠄁d󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 | D󠄁u󠄁r󠄁a󠄁b󠄁l󠄁e󠄁 u󠄁n󠄁t󠄁i󠄁l󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁l󠄁y󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁t󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁 p󠄁o󠄁l󠄁i󠄁c󠄁y󠄁 |
+| A󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁h󠄁r󠄁o󠄁n󠄁i󠄁c󠄁l󠄁e󠄁 | O󠄁b󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁' m󠄁e󠄁t󠄁a󠄁d󠄁a󠄁t󠄁a󠄁, h󠄁a󠄁s󠄁h󠄁e󠄁s󠄁, r󠄁e󠄁l󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁h󠄁i󠄁p󠄁s󠄁, c󠄁l󠄁a󠄁i󠄁m󠄁s󠄁 a󠄁n󠄁d󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 | D󠄁u󠄁r󠄁a󠄁b󠄁l󠄁e󠄁 u󠄁n󠄁t󠄁i󠄁l󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁l󠄁y󠄁 r󠄁e󠄁m󠄁o󠄁v󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 r󠄁e󠄁t󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁 p󠄁o󠄁l󠄁i󠄁c󠄁y󠄁 |
 | O󠄁p󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁y󠄁 a󠄁r󠄁c󠄁h󠄁i󠄁v󠄁e󠄁 | F󠄁u󠄁l󠄁l󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 p󠄁a󠄁y󠄁l󠄁o󠄁a󠄁d󠄁s󠄁 | O󠄁p󠄁t󠄁-i󠄁n󠄁; s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁 f󠄁r󠄁o󠄁m󠄁 n󠄁o󠄁r󠄁m󠄁a󠄁l󠄁 o󠄁p󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 |
 | H󠄁o󠄁s󠄁t󠄁 h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁y󠄁 | H󠄁o󠄁s󠄁t󠄁-o󠄁w󠄁n󠄁e󠄁d󠄁 m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁/t󠄁r󠄁a󠄁n󠄁s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁s󠄁 | R󠄁e󠄁c󠄁o󠄁v󠄁e󠄁r󠄁y󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 h󠄁o󠄁s󠄁t󠄁-d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁d󠄁 a󠄁v󠄁a󠄁i󠄁l󠄁a󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁 |
 
@@ -248,7 +248,7 @@ t󠄁r󠄁a󠄁n󠄁s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁s󠄁 a󠄁r󠄁e󠄁 o󠄁p�
 R󠄁e󠄁t󠄁a󠄁i󠄁n󠄁e󠄁d󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 r󠄁e󠄁a󠄁d󠄁a󠄁b󠄁l󠄁e󠄁 a󠄁f󠄁t󠄁e󠄁r󠄁 c󠄁a󠄁c󠄁h󠄁e󠄁 e󠄁x󠄁p󠄁i󠄁r󠄁y󠄁, b󠄁u󠄁t󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁y󠄁 m󠄁a󠄁y󠄁 n󠄁o󠄁
 l󠄁o󠄁n󠄁g󠄁e󠄁r󠄁 b󠄁e󠄁 p󠄁o󠄁s󠄁s󠄁i󠄁b󠄁l󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁e󠄁d󠄁 p󠄁a󠄁y󠄁l󠄁o󠄁a󠄁d󠄁s󠄁.
 
-T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 d󠄁u󠄁r󠄁a󠄁b󠄁l󠄁e󠄁 l󠄁e󠄁d󠄁g󠄁e󠄁r󠄁/c󠄁a󠄁c󠄁h󠄁e󠄁 u󠄁s󠄁e󠄁s󠄁 S󠄁Q󠄁L󠄁i󠄁t󠄁e󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 e󠄁n󠄁g󠄁i󠄁n󠄁e󠄁 f󠄁o󠄁r󠄁
+T󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁e󠄁d󠄁 d󠄁u󠄁r󠄁a󠄁b󠄁l󠄁e󠄁 c󠄁h󠄁r󠄁o󠄁n󠄁i󠄁c󠄁l󠄁e󠄁/c󠄁a󠄁c󠄁h󠄁e󠄁 u󠄁s󠄁e󠄁s󠄁 S󠄁Q󠄁L󠄁i󠄁t󠄁e󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 e󠄁n󠄁g󠄁i󠄁n󠄁e󠄁 f󠄁o󠄁r󠄁
 t󠄁r󠄁a󠄁n󠄁s󠄁a󠄁c󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 a󠄁c󠄁r󠄁o󠄁s󠄁s󠄁 h󠄁o󠄁o󠄁k󠄁 p󠄁r󠄁o󠄁c󠄁e󠄁s󠄁s󠄁e󠄁s󠄁. A󠄁 s󠄁t󠄁o󠄁r󠄁a󠄁g󠄁e󠄁 i󠄁n󠄁t󠄁e󠄁r󠄁f󠄁a󠄁c󠄁e󠄁 k󠄁e󠄁e󠄁p󠄁s󠄁 t󠄁h󠄁i󠄁s󠄁 c󠄁h󠄁o󠄁i󠄁c󠄁e󠄁
 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁a󠄁b󠄁l󠄁e󠄁. C󠄁o󠄁d󠄁e󠄁x󠄁 u󠄁s󠄁e󠄁s󠄁 a󠄁 p󠄁r󠄁o󠄁j󠄁e󠄁c󠄁t󠄁/s󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 n󠄁a󠄁m󠄁e󠄁s󠄁p󠄁a󠄁c󠄁e󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 `PLUGIN_DATA`; t󠄁h󠄁e󠄁
 C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 s󠄁t󠄁o󠄁r󠄁a󠄁g󠄁e󠄁 l󠄁o󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 b󠄁r󠄁i󠄁d󠄁g󠄁e󠄁 a󠄁c󠄁c󠄁e󠄁s󠄁s󠄁i󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁 a󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁o󠄁b󠄁e󠄁.
@@ -307,7 +307,7 @@ A󠄁n󠄁y󠄁 p󠄁r󠄁o󠄁j󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 f󠄁r󠄁o�
 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁; t󠄁r󠄁a󠄁n󠄁s󠄁p󠄁o󠄁r󠄁t󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 i󠄁s󠄁 n󠄁o󠄁t󠄁 a󠄁u󠄁t󠄁o󠄁m󠄁a󠄁t󠄁i󠄁c󠄁a󠄁l󠄁l󠄁y󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁e󠄁d󠄁 h󠄁u󠄁m󠄁a󠄁n󠄁 o󠄁r󠄁 A󠄁I󠄁.
 
 F󠄁u󠄁l󠄁l󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁-r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁 n󠄁e󠄁e󠄁d󠄁s󠄁 a󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁l󠄁y󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁e󠄁d󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁a󠄁c󠄁t󠄁.
-T󠄁h󠄁e󠄁 J󠄁S󠄁O󠄁N󠄁 l󠄁e󠄁d󠄁g󠄁e󠄁r󠄁 i󠄁s󠄁 a󠄁n󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁n󠄁i󠄁o󠄁n󠄁, n󠄁o󠄁t󠄁 a󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁m󠄁e󠄁n󠄁t󠄁 f󠄁o󠄁r󠄁 p󠄁o󠄁r󠄁t󠄁a󠄁b󠄁l󠄁e󠄁
+T󠄁h󠄁e󠄁 J󠄁S󠄁O󠄁N󠄁 c󠄁h󠄁r󠄁o󠄁n󠄁i󠄁c󠄁l󠄁e󠄁 i󠄁s󠄁 a󠄁n󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁n󠄁i󠄁o󠄁n󠄁, n󠄁o󠄁t󠄁 a󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁m󠄁e󠄁n󠄁t󠄁 f󠄁o󠄁r󠄁 p󠄁o󠄁r󠄁t󠄁a󠄁b󠄁l󠄁e󠄁
 i󠄁n󠄁-b󠄁a󠄁n󠄁d󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁. E󠄁x󠄁p󠄁o󠄁r󠄁t󠄁 m󠄁u󠄁s󠄁t󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁 l󠄁e󠄁g󠄁i󠄁t󠄁i󠄁m󠄁a󠄁t󠄁e󠄁 U󠄁n󠄁i󠄁c󠄁o󠄁d󠄁e󠄁 v󠄁a󠄁r󠄁i󠄁a󠄁t󠄁i󠄁o󠄁n󠄁
 s󠄁e󠄁q󠄁u󠄁e󠄁n󠄁c󠄁e󠄁s󠄁, i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁 `U+8FBB U+E0100` r󠄁e󠄁g󠄁r󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁; r󠄁e󠄁c󠄁o󠄁g󠄁n󠄁i󠄁z󠄁i󠄁n󠄁g󠄁 e󠄁v󠄁e󠄁r󠄁y󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁
 a󠄁s󠄁 a󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 m󠄁a󠄁r󠄁k󠄁 i󠄁s󠄁 u󠄁n󠄁s󠄁a󠄁f󠄁e󠄁 f󠄁o󠄁r󠄁 a󠄁r󠄁b󠄁i󠄁t󠄁r󠄁a󠄁r󠄁y󠄁 t󠄁e󠄁x󠄁t󠄁.
@@ -331,7 +331,7 @@ a󠄁s󠄁 a󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 m󠄁a󠄁r󠄁k󠄁 i
 8. A󠄁d󠄁d󠄁 C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 m󠄁o󠄁d󠄁 s󠄁t󠄁o󠄁r󠄁e󠄁d󠄁-r󠄁o󠄁w󠄁 c󠄁a󠄁p󠄁t󠄁u󠄁r󠄁e󠄁, i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁s󠄁 a󠄁n󠄁d󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 c󠄁o󠄁p󠄁y󠄁.
    C󠄁o󠄁n󠄁f󠄁i󠄁r󠄁m󠄁 s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁 o󠄁w󠄁n󠄁e󠄁r󠄁s󠄁h󠄁i󠄁p󠄁 w󠄁h󠄁e󠄁n󠄁 h󠄁o󠄁o󠄁k󠄁s󠄁 a󠄁n󠄁d󠄁 m󠄁o󠄁d󠄁s󠄁 c󠄁o󠄁e󠄁x󠄁i󠄁s󠄁t󠄁.
 
-T󠄁h󠄁e󠄁 f󠄁i󠄁r󠄁s󠄁t󠄁 m󠄁i󠄁l󠄁e󠄁s󠄁t󠄁o󠄁n󠄁e󠄁 i󠄁s󠄁 a󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁 l󠄁e󠄁d󠄁g󠄁e󠄁r󠄁 p󠄁o󠄁p󠄁u󠄁l󠄁a󠄁t󠄁e󠄁d󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 b󠄁o󠄁t󠄁h󠄁 h󠄁o󠄁o󠄁k󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁
+T󠄁h󠄁e󠄁 f󠄁i󠄁r󠄁s󠄁t󠄁 m󠄁i󠄁l󠄁e󠄁s󠄁t󠄁o󠄁n󠄁e󠄁 i󠄁s󠄁 a󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁 c󠄁h󠄁r󠄁o󠄁n󠄁i󠄁c󠄁l󠄁e󠄁 p󠄁o󠄁p󠄁u󠄁l󠄁a󠄁t󠄁e󠄁d󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 b󠄁o󠄁t󠄁h󠄁 h󠄁o󠄁o󠄁k󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁
 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁a󠄁b󠄁l󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 a󠄁 s󠄁e󠄁c󠄁o󠄁n󠄁d󠄁 p󠄁e󠄁r󠄁m󠄁a󠄁n󠄁e󠄁n󠄁t󠄁 p󠄁r󠄁o󠄁m󠄁p󠄁t󠄁 a󠄁r󠄁c󠄁h󠄁i󠄁v󠄁e󠄁. F󠄁i󠄁l󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁i󠄁n󠄁g󠄁, e󠄁x󠄁p󠄁e󠄁r󠄁i󠄁m󠄁e󠄁n󠄁t󠄁a󠄁l󠄁
 e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁 a󠄁n󠄁d󠄁 d󠄁e󠄁e󠄁p󠄁e󠄁r󠄁 C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 U󠄁I󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 f󠄁o󠄁l󠄁l󠄁o󠄁w󠄁 i󠄁n󠄁 t󠄁h󠄁a󠄁t󠄁 o󠄁r󠄁d󠄁e󠄁r󠄁.
 
@@ -376,6 +376,6 @@ e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁 a󠄁n󠄁d󠄁 d󠄁e󠄁e󠄁p󠄁e󠄁r󠄁 C�
 
 R󠄁e󠄁a󠄁d󠄁 t󠄁h󠄁i󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁, t󠄁h󠄁e󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 a󠄁n󠄁d󠄁 S󠄁D󠄁K󠄁 R󠄁E󠄁A󠄁D󠄁M󠄁E󠄁s󠄁, t󠄁h󠄁e󠄁n󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁 t󠄁h󠄁e󠄁 l󠄁i󠄁v󠄁e󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁o󠄁u󠄁t󠄁 a󠄁n󠄁d󠄁
 w󠄁o󠄁r󠄁k󠄁s󠄁p󠄁a󠄁c󠄁e󠄁 h󠄁e󠄁l󠄁p󠄁e󠄁r󠄁s󠄁. R󠄁e󠄁c󠄁h󠄁e󠄁c󠄁k󠄁 h󠄁o󠄁s󠄁t󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 t󠄁y󠄁p󠄁e󠄁s󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 u󠄁s󠄁i󠄁n󠄁g󠄁
-A󠄁P󠄁I󠄁 f󠄁i󠄁e󠄁l󠄁d󠄁s󠄁. B󠄁e󠄁g󠄁i󠄁n󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁o󠄁n󠄁 l󠄁e󠄁d󠄁g󠄁e󠄁r󠄁/s󠄁c󠄁h󠄁e󠄁m󠄁a󠄁 a󠄁n󠄁d󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁; d󠄁o󠄁 n󠄁o󠄁t󠄁
+A󠄁P󠄁I󠄁 f󠄁i󠄁e󠄁l󠄁d󠄁s󠄁. B󠄁e󠄁g󠄁i󠄁n󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁m󠄁m󠄁o󠄁n󠄁 c󠄁h󠄁r󠄁o󠄁n󠄁i󠄁c󠄁l󠄁e󠄁/s󠄁c󠄁h󠄁e󠄁m󠄁a󠄁 a󠄁n󠄁d󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁; d󠄁o󠄁 n󠄁o󠄁t󠄁
 r󠄁e󠄁i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁 r󠄁e󠄁t󠄁i󠄁r󠄁e󠄁d󠄁 a󠄁u󠄁t󠄁o󠄁m󠄁a󠄁t󠄁i󠄁c󠄁 h󠄁o󠄁o󠄁k󠄁s󠄁 o󠄁r󠄁 r󠄁e󠄁w󠄁r󠄁i󠄁t󠄁e󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 m󠄁e󠄁r󠄁e󠄁l󠄁y󠄁 t󠄁o󠄁 a󠄁c󠄁t󠄁i󠄁v󠄁a󠄁t󠄁e󠄁
 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁t󠄁y󠄁p󠄁e󠄁. T󠄁h󠄁e󠄁 n󠄁e󠄁x󠄁t󠄁 s󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 s󠄁t󠄁a󠄁r󠄁t󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 l󠄁i󠄁v󠄁e󠄁-s󠄁t󠄁a󠄁t󠄁e󠄁 a󠄁n󠄁d󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁t󠄁i󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁.

@@ -1,6 +1,6 @@
 """Experimental shared plugin core. No host integration or in-band encoding.
 
-Run ``python -m textprov.ledger --db PATH`` with one JSON request on stdin.
+Run ``python -m textprov.chronicle --db PATH`` with one JSON request on stdin.
 The database belongs to one project; provider/session/agent scope isolates joins.
 """
 
@@ -34,7 +34,7 @@ def _boundaries(text):
     return result
 
 
-class Ledger:
+class Chronicle:
     """Transactional metadata with an expiring, globally byte-bounded text cache.
 
     Cache policy is persisted on creation and shared by all processes. Expiration
@@ -81,7 +81,7 @@ class Ledger:
         settings = self.db.execute("SELECT * FROM settings").fetchone()
         if settings["version"] != 1:
             self.close()
-            raise ValueError("unsupported ledger schema")
+            raise ValueError("unsupported chronicle schema")
         self.max_bytes, self.ttl = settings["max_bytes"], settings["ttl"]
 
     def close(self):
@@ -301,8 +301,8 @@ def main(argv=None):
         operation = request.pop("operation", None)
         if operation not in {"observe", "inspect", "match", "claim"}:
             raise ValueError("unknown operation")
-        with Ledger(args.db) as ledger:
-            result = getattr(ledger, operation)(**request)
+        with Chronicle(args.db) as chronicle:
+            result = getattr(chronicle, operation)(**request)
         print(_json({"result": result}))
         return 0
     except (ValueError, TypeError, OSError, sqlite3.Error) as error:

@@ -8,7 +8,7 @@ import sys
 import tempfile
 import unittest
 
-from textprov.ledger import Ledger
+from textprov.chronicle import Chronicle
 
 
 def observation(key="prompt", **changes):
@@ -19,121 +19,121 @@ def observation(key="prompt", **changes):
     return fields
 
 
-class TestLedger(unittest.TestCase):
+class TestChronicle(unittest.TestCase):
     def setUp(self):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
-        self.path = Path(temp.name) / "ledger.sqlite"
+        self.path = Path(temp.name) / "chronicle.sqlite"
         self.now = 100
-        self.ledger = Ledger(self.path, max_bytes=100, ttl_seconds=10,
+        self.chronicle = Chronicle(self.path, max_bytes=100, ttl_seconds=10,
                              clock=lambda: self.now)
-        self.addCleanup(self.ledger.close)
+        self.addCleanup(self.chronicle.close)
 
     def test_idempotent_delivery_is_not_content_deduplication(self):
-        first = self.ledger.observe(**observation())
-        self.assertEqual(first, self.ledger.observe(**observation()))
-        second = self.ledger.observe(**observation("another"))
+        first = self.chronicle.observe(**observation())
+        self.assertEqual(first, self.chronicle.observe(**observation()))
+        second = self.chronicle.observe(**observation("another"))
         self.assertNotEqual(first, second)
         with self.assertRaisesRegex(ValueError, "delivery key"):
-            self.ledger.observe(**observation(text="changed"))
-        self.assertEqual([], self.ledger.inspect(first)["claims"])
+            self.chronicle.observe(**observation(text="changed"))
+        self.assertEqual([], self.chronicle.inspect(first)["claims"])
 
     def test_typed_scoped_ids_correlate_parallel_calls(self):
-        first = self.ledger.observe(**observation("call-a", host_ids={"call": "a"}))
-        self.ledger.observe(**observation("call-b", host_ids={"call": "b"}))
-        result = self.ledger.observe(**observation("result-a", host_ids={"call": "a"},
+        first = self.chronicle.observe(**observation("call-a", host_ids={"call": "a"}))
+        self.chronicle.observe(**observation("call-b", host_ids={"call": "b"}))
+        result = self.chronicle.observe(**observation("result-a", host_ids={"call": "a"},
                                                   visibility="model", channel="tool"))
         for changes in ({"session_id": "other"}, {"agent_id": "child"},
                         {"provider": "other"}, {"host_ids": {"display": "a"}}):
             data = observation("unrelated", host_ids={"call": "a"})
             data.update(changes)
-            self.ledger.observe(**data)
-        joins = self.ledger.inspect(first)["event_relationships"]
+            self.chronicle.observe(**data)
+        joins = self.chronicle.inspect(first)["event_relationships"]
         self.assertEqual([result], [j["observation_id"] for j in joins])
         self.assertEqual("call", joins[0]["kind"])
 
     def test_repeated_exact_passages_are_candidates_not_claims(self):
-        source = self.ledger.observe(**observation(text="😀é"))
-        target = self.ledger.observe(**observation("write", text="😀é and 😀é"))
-        matches = self.ledger.match(source, target)
+        source = self.chronicle.observe(**observation(text="😀é"))
+        target = self.chronicle.observe(**observation("write", text="😀é and 😀é"))
+        matches = self.chronicle.match(source, target)
         self.assertEqual("ambiguous", matches["status"])
         self.assertEqual([[0, 2], [7, 9]], [c["target_range"] for c in matches["candidates"]])
-        self.assertEqual([], self.ledger.inspect(target)["claims"])
+        self.assertEqual([], self.chronicle.inspect(target)["claims"])
         self.assertTrue(all(not c["selected"] for c in matches["candidates"]))
 
     def test_matching_never_splits_clusters_or_normalizes(self):
-        source = self.ledger.observe(**observation(text="e"))
-        target = self.ledger.observe(**observation("write", text="e\u0301"))
-        self.assertEqual([], self.ledger.match(source, target)["candidates"])
-        composed = self.ledger.observe(**observation("composed", text="é"))
-        self.assertEqual([], self.ledger.match(composed, target)["candidates"])
+        source = self.chronicle.observe(**observation(text="e"))
+        target = self.chronicle.observe(**observation("write", text="e\u0301"))
+        self.assertEqual([], self.chronicle.match(source, target)["candidates"])
+        composed = self.chronicle.observe(**observation("composed", text="é"))
+        self.assertEqual([], self.chronicle.match(composed, target)["candidates"])
 
     def test_scope_and_missing_evidence_are_explicit(self):
-        source = self.ledger.observe(**observation())
-        other = self.ledger.observe(**observation("other", session_id="other"))
+        source = self.chronicle.observe(**observation())
+        other = self.chronicle.observe(**observation("other", session_id="other"))
         with self.assertRaisesRegex(ValueError, "same scope"):
-            self.ledger.match(source, other)
-        missing = self.ledger.observe(**observation("missing", text=None, completeness="unobserved"))
-        self.assertEqual("content_unavailable", self.ledger.match(source, missing)["status"])
-        partial = self.ledger.observe(**observation("partial", completeness="partial"))
-        self.assertEqual("incomplete_source", self.ledger.match(partial, source)["status"])
+            self.chronicle.match(source, other)
+        missing = self.chronicle.observe(**observation("missing", text=None, completeness="unobserved"))
+        self.assertEqual("content_unavailable", self.chronicle.match(source, missing)["status"])
+        partial = self.chronicle.observe(**observation("partial", completeness="partial"))
+        self.assertEqual("incomplete_source", self.chronicle.match(partial, source)["status"])
 
     def claim_args(self, target, **changes):
         args = dict(observation_id=target, start=0, end=5,
-                    content_hash=self.ledger.inspect(target)["content_hash"],
+                    content_hash=self.chronicle.inspect(target)["content_hash"],
                     voice_context="example", voice_id="author-a", voice_definition="Supplied author A",
                     basis="user_attestation", policy_version="manual-v1")
         args.update(changes)
         return args
 
     def test_claims_survive_expiry_but_text_and_new_claims_do_not(self):
-        target = self.ledger.observe(**observation())
+        target = self.chronicle.observe(**observation())
         args = self.claim_args(target)
-        claim_id = self.ledger.claim(**args)
+        claim_id = self.chronicle.claim(**args)
         self.now += 11
-        info = self.ledger.inspect(target)
+        info = self.chronicle.inspect(target)
         self.assertFalse(info["content_available"])
         self.assertEqual(claim_id, info["claims"][0]["claim_id"])
-        self.assertEqual(claim_id, self.ledger.claim(**args))
+        self.assertEqual(claim_id, self.chronicle.claim(**args))
         with self.assertRaisesRegex(ValueError, "unavailable"):
-            self.ledger.claim(**dict(args, basis="another_attestation"))
-        self.assertEqual(target, self.ledger.observe(**observation()))
-        self.assertFalse(self.ledger.inspect(target)["content_available"])
+            self.chronicle.claim(**dict(args, basis="another_attestation"))
+        self.assertEqual(target, self.chronicle.observe(**observation()))
+        self.assertFalse(self.chronicle.inspect(target)["content_available"])
 
     def test_claim_rejects_stale_hash_split_cluster_and_foreign_support(self):
-        target = self.ledger.observe(**observation(text="e\u0301😀"))
+        target = self.chronicle.observe(**observation(text="e\u0301😀"))
         with self.assertRaisesRegex(ValueError, "grapheme"):
-            self.ledger.claim(**self.claim_args(target, end=1))
+            self.chronicle.claim(**self.claim_args(target, end=1))
         with self.assertRaisesRegex(ValueError, "hash"):
-            self.ledger.claim(**self.claim_args(target, end=2, content_hash="stale"))
-        foreign = self.ledger.observe(**observation("foreign", agent_id="child"))
+            self.chronicle.claim(**self.claim_args(target, end=2, content_hash="stale"))
+        foreign = self.chronicle.observe(**observation("foreign", agent_id="child"))
         with self.assertRaisesRegex(ValueError, "outside scope"):
-            self.ledger.claim(**self.claim_args(target, end=2, supporting_ids=[foreign]))
-        self.ledger.claim(**self.claim_args(target, end=2))
+            self.chronicle.claim(**self.claim_args(target, end=2, supporting_ids=[foreign]))
+        self.chronicle.claim(**self.claim_args(target, end=2))
 
     def test_cache_byte_bound_and_policy_survive_reopen(self):
-        first = self.ledger.observe(**observation(text="é" * 30))  # 60 UTF-8 bytes
-        second = self.ledger.observe(**observation("second", text="😀" * 15))
-        oversized = self.ledger.observe(**observation("oversized", text="x" * 101))
-        with Ledger(self.path) as reopened:
+        first = self.chronicle.observe(**observation(text="é" * 30))  # 60 UTF-8 bytes
+        second = self.chronicle.observe(**observation("second", text="😀" * 15))
+        oversized = self.chronicle.observe(**observation("oversized", text="x" * 101))
+        with Chronicle(self.path) as reopened:
             self.assertEqual(100, reopened.max_bytes)
             # Use the same clock as the original connection for inspection.
             reopened.clock = lambda: self.now
             self.assertFalse(reopened.inspect(first)["content_available"])
             self.assertTrue(reopened.inspect(second)["content_available"])
             self.assertFalse(reopened.inspect(oversized)["content_available"])
-        self.assertEqual("content_unavailable", self.ledger.match(first, second)["status"])
+        self.assertEqual("content_unavailable", self.chronicle.match(first, second)["status"])
 
     def test_invalid_observation_leaves_no_row(self):
         for changes in ({"text": None}, {"visibility": "guess"}, {"host_ids": []},
                         {"capture_sequence": True}, {"text": "\ud800"}):
             with self.assertRaises(ValueError):
-                self.ledger.observe(**observation(**changes))
-        self.assertEqual(0, self.ledger.db.execute("SELECT count(*) FROM observations").fetchone()[0])
+                self.chronicle.observe(**observation(**changes))
+        self.assertEqual(0, self.chronicle.db.execute("SELECT count(*) FROM observations").fetchone()[0])
 
     def test_separate_process_bridge_retries_and_inspection(self):
         env = dict(os.environ, PYTHONPATH=str(Path(__file__).resolve().parents[1]))
-        command = [sys.executable, "-m", "textprov.ledger", "--db",
+        command = [sys.executable, "-m", "textprov.chronicle", "--db",
                    str(self.path.with_name("bridge.sqlite"))]
         payload = json.dumps(dict(operation="observe", **observation()))
         workers = [subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,

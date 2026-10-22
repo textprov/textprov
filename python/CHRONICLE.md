@@ -1,6 +1,6 @@
 # S󠄁h󠄁a󠄁r󠄁e󠄁d󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 c󠄁o󠄁r󠄁e󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁t󠄁y󠄁p󠄁e󠄁
 
-`textprov.ledger` i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁r󠄁s󠄁t󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁-c󠄁o󠄁r󠄁e󠄁 s󠄁l󠄁i󠄁c󠄁e󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁
+`textprov.chronicle` i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁r󠄁s󠄁t󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁-c󠄁o󠄁r󠄁e󠄁 s󠄁l󠄁i󠄁c󠄁e󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁
 [p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 d󠄁e󠄁s󠄁i󠄁g󠄁n󠄁](../docs/development/plugin-prototype.md). I󠄁t󠄁 i󠄁s󠄁 a󠄁 l󠄁o󠄁c󠄁a󠄁l󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 A󠄁P󠄁I󠄁
 a󠄁n󠄁d󠄁 J󠄁S󠄁O󠄁N󠄁 b󠄁r󠄁i󠄁d󠄁g󠄁e󠄁, i󠄁n󠄁d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁e󠄁n󠄁t󠄁 o󠄁f󠄁 C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 o󠄁r󠄁 C󠄁o󠄁d󠄁e󠄁x󠄁. I󠄁t󠄁 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁s󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 3󠄁.9󠄁+ a󠄁n󠄁d󠄁 o󠄁n󠄁l󠄁y󠄁
 t󠄁h󠄁e󠄁 s󠄁t󠄁a󠄁n󠄁d󠄁a󠄁r󠄁d󠄁 l󠄁i󠄁b󠄁r󠄁a󠄁r󠄁y󠄁. N󠄁o󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 o󠄁r󠄁 a󠄁u󠄁t󠄁o󠄁m󠄁a󠄁t󠄁i󠄁c󠄁 h󠄁o󠄁o󠄁k󠄁 i󠄁s󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁.
@@ -11,14 +11,14 @@ F󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁p󠄁o󠄁s󠄁i󠄁t󠄁o󠄁r�
 
 ```sh
 printf '%s\n' '{"operation":"observe","provider":"example","adapter":"fixture-v1","session_id":"session-1","delivery_key":"submission-1","event_kind":"submission","channel":"user","visibility":"stored","text":"A supplied passage","host_ids":{"turn":"turn-1"}}' \
-  | PYTHONPATH=python python3 -m textprov.ledger --db /tmp/textprov-demo.sqlite
+  | PYTHONPATH=python python3 -m textprov.chronicle --db /tmp/textprov-demo.sqlite
 ```
 
 T󠄁h󠄁e󠄁 r󠄁e󠄁s󠄁u󠄁l󠄁t󠄁 i󠄁s󠄁 `{"result":"<observation UUID>"}`. U󠄁s󠄁e󠄁 t󠄁h󠄁a󠄁t󠄁 U󠄁U󠄁I󠄁D󠄁 t󠄁o󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁:
 
 ```sh
 printf '%s\n' '{"operation":"inspect","observation_id":"<observation UUID>"}' \
-  | PYTHONPATH=python python3 -m textprov.ledger --db /tmp/textprov-demo.sqlite
+  | PYTHONPATH=python python3 -m textprov.chronicle --db /tmp/textprov-demo.sqlite
 ```
 
 I󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁s󠄁 m󠄁e󠄁t󠄁a󠄁d󠄁a󠄁t󠄁a󠄁, c󠄁o󠄁n󠄁t󠄁e󠄁n󠄁t󠄁 a󠄁v󠄁a󠄁i󠄁l󠄁a󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁, t󠄁y󠄁p󠄁e󠄁d󠄁 I󠄁D󠄁 r󠄁e󠄁l󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁h󠄁i󠄁p󠄁s󠄁 a󠄁n󠄁d󠄁
@@ -30,18 +30,18 @@ s󠄁t󠄁a󠄁t󠄁e󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁o󠄁r󠄁y󠄁. T󠄁h�
 ## P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 A󠄁P󠄁I󠄁
 
 ```python
-from textprov.ledger import Ledger
+from textprov.chronicle import Chronicle
 
-with Ledger("/tmp/textprov-demo.sqlite") as ledger:
+with Chronicle("/tmp/textprov-demo.sqlite") as chronicle:
     common = dict(provider="example", adapter="fixture-v1", session_id="session-1",
                   event_kind="submission", channel="user", visibility="stored")
-    source = ledger.observe(delivery_key="source-1", text="supplied passage", **common)
-    target = ledger.observe(delivery_key="target-1",
+    source = chronicle.observe(delivery_key="source-1", text="supplied passage", **common)
+    target = chronicle.observe(delivery_key="target-1",
                             text="A supplied passage appears here.", **common)
-    candidates = ledger.match(source, target)
-    info = ledger.inspect(target)
+    candidates = chronicle.match(source, target)
+    info = chronicle.inspect(target)
     # An explicit application policy or user action supplies this attribution.
-    claim_id = ledger.claim(
+    claim_id = chronicle.claim(
         observation_id=target, start=2, end=18,
         content_hash=info["content_hash"], voice_context="example-context",
         voice_id="author-a", voice_definition="Author A, as supplied by the user",
@@ -91,7 +91,7 @@ i󠄁n󠄁t󠄁e󠄁r󠄁n󠄁a󠄁l󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁a󠄁c󠄁t�
 - E󠄁x󠄁p󠄁i󠄁r󠄁y󠄁 i󠄁s󠄁 e󠄁n󠄁f󠄁o󠄁r󠄁c󠄁e󠄁d󠄁 l󠄁a󠄁z󠄁i󠄁l󠄁y󠄁 d󠄁u󠄁r󠄁i󠄁n󠄁g󠄁 s󠄁u󠄁c󠄁c󠄁e󠄁s󠄁s󠄁f󠄁u󠄁l󠄁 o󠄁p󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁. I󠄁t󠄁 i󠄁s󠄁 n󠄁o󠄁t󠄁 a󠄁 b󠄁a󠄁c󠄁k󠄁g󠄁r󠄁o󠄁u󠄁n󠄁d󠄁
   p󠄁u󠄁r󠄁g󠄁e󠄁 o󠄁r󠄁 s󠄁e󠄁c󠄁u󠄁r󠄁e󠄁-e󠄁r󠄁a󠄁s󠄁u󠄁r󠄁e󠄁 g󠄁u󠄁a󠄁r󠄁a󠄁n󠄁t󠄁e󠄁e󠄁. T󠄁h󠄁e󠄁 b󠄁y󠄁t󠄁e󠄁 l󠄁i󠄁m󠄁i󠄁t󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁s󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁e󠄁d󠄁 p󠄁a󠄁y󠄁l󠄁o󠄁a󠄁d󠄁s󠄁, n󠄁o󠄁t󠄁
   t󠄁h󠄁e󠄁 p󠄁h󠄁y󠄁s󠄁i󠄁c󠄁a󠄁l󠄁 d󠄁a󠄁t󠄁a󠄁b󠄁a󠄁s󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁 o󠄁r󠄁 d󠄁u󠄁r󠄁a󠄁b󠄁l󠄁e󠄁 m󠄁e󠄁t󠄁a󠄁d󠄁a󠄁t󠄁a󠄁. A󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁t󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁 p󠄁o󠄁l󠄁i󠄁c󠄁y󠄁
-  a󠄁n󠄁d󠄁 l󠄁e󠄁d󠄁g󠄁e󠄁r󠄁 d󠄁e󠄁l󠄁e󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 f󠄁u󠄁t󠄁u󠄁r󠄁e󠄁 w󠄁o󠄁r󠄁k󠄁.
+  a󠄁n󠄁d󠄁 c󠄁h󠄁r󠄁o󠄁n󠄁i󠄁c󠄁l󠄁e󠄁 d󠄁e󠄁l󠄁e󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 f󠄁u󠄁t󠄁u󠄁r󠄁e󠄁 w󠄁o󠄁r󠄁k󠄁.
 
 T󠄁h󠄁i󠄁s󠄁 s󠄁l󠄁i󠄁c󠄁e󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 m󠄁o󠄁d󠄁i󠄁f󠄁y󠄁 w󠄁o󠄁r󠄁k󠄁s󠄁p󠄁a󠄁c󠄁e󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁 o󠄁r󠄁 t󠄁r󠄁a󠄁n󠄁s󠄁c󠄁r󠄁i󠄁p󠄁t󠄁s󠄁 a󠄁n󠄁d󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁
 i󠄁n󠄁-b󠄁a󠄁n󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁. H󠄁o󠄁s󠄁t󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁s󠄁, p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁i󠄁n󠄁g󠄁, p󠄁e󠄁r󠄁s󠄁i󠄁s󠄁t󠄁e󠄁d󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 r󠄁e󠄁l󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁h󠄁i󠄁p󠄁s󠄁,
@@ -102,7 +102,7 @@ e󠄁s󠄁t󠄁a󠄁b󠄁l󠄁i󠄁s󠄁h󠄁 l󠄁i󠄁v󠄁e󠄁 h󠄁o󠄁s�
 ## V󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁i󠄁o󠄁n󠄁
 
 ```sh
-PYTHONPATH=python python3 -m unittest python.tests.test_ledger -v
+PYTHONPATH=python python3 -m unittest python.tests.test_chronicle -v
 PYTHONPATH=python python3 -m unittest discover -s python/tests
 ```
 
