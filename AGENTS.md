@@ -10,8 +10,9 @@ During a trial:
 
 - Do not edit code in this repo or in `claude-textprov-plugin`. This includes
   small fixes, and you should not offer to make one.
-- Record the findings in `../trials/YYYY-MM-DD-<topic>.md`, which sits outside
+- Record the findings in `../trials/YYYY-MMDD-N-<topic>.md`, which sits outside
   both repos. Include:
+  - trial index N, relative to the current date only
   - versions: Claude Code, plugin version and commit, core version and commit, Python
   - `/textprov status` output, copied unchanged
   - the observations as read from the chronicle database
