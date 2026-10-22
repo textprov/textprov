@@ -162,7 +162,7 @@ class TestChronicle(unittest.TestCase):
             b = self.chronicle.observe(**observation(key, **changes))
             self.assertIsNone(self.chronicle.inspect(b)["content_expires_at"])
 
-    def test_attributes_are_bounded_canonical_and_backward_compatible(self):
+    def test_attributes_are_bounded_and_canonical(self):
         data = observation(attributes={"replace_all": False, "nested": [None, {"a": 1}]})
         a = self.chronicle.observe(**data)
         self.assertEqual(data["attributes"], self.chronicle.inspect(a)["attributes"])
@@ -183,12 +183,6 @@ class TestChronicle(unittest.TestCase):
         self.chronicle.observe(**observation("limit", attributes={"x": "a" * 4088}))
         with self.assertRaisesRegex(ValueError, "4096"):
             self.chronicle.observe(**observation("over-limit", attributes={"x": "a" * 4089}))
-        b = self.chronicle.observe(**observation("legacy"))
-        # Simulate the canonical record from an earlier core version.
-        self.chronicle.db.execute(
-            "UPDATE observations SET record=json_remove(record, '$.attributes') WHERE id=?", (b,))
-        self.assertEqual(b, self.chronicle.observe(**observation("legacy", attributes={})))
-        self.assertEqual({}, self.chronicle.inspect(b)["attributes"])
 
     def test_cross_agent_access_is_explicit_and_session_bounded(self):
         a = self.chronicle.observe(**observation(host_ids={"agent": "child"}))
@@ -222,6 +216,28 @@ class TestChronicle(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "boolean"):
                 operation()
 
+    def test_shared_matching_keeps_claims_explicit_and_observations_unchanged(self):
+        a = self.chronicle.observe(**observation(text="  alpha\r\n    beta"))
+        b = self.chronicle.observe(**observation("write", text="\talpha\n\t  beta",
+                                                agent_id="child"))
+        before = self.chronicle.inspect(b)
+        result = self.chronicle.match(a, b, policy="common-indent-v1", cross_agent=True)
+        candidate = result["candidates"][0]
+        self.assertEqual(a, candidate["source_id"])
+        self.assertEqual(before["content_hash"], candidate["target_hash"])
+        self.assertEqual(before, self.chronicle.inspect(b))
+        for start, end in candidate["target_segments"]:
+            self.chronicle.claim(**self.claim_args(
+                b, start=start, end=end, supporting_ids=[a], cross_agent=True,
+                basis="explicit_test_selection", policy_version="test-policy-v1"))
+        self.assertEqual([[1, 7], [8, 14]], sorted(
+            c["range"] for c in self.chronicle.inspect(b)["claims"]))
+        with self.assertRaises(ValueError):
+            self.chronicle.match(a, b, policy="common-indent-v1")
+        self.now = 110
+        self.assertEqual("content_unavailable", self.chronicle.match(
+            a, b, policy="common-indent-v1", partial=True, cross_agent=True)["status"])
+
     def test_separate_process_bridge_retries_and_inspection(self):
         env = dict(os.environ, PYTHONPATH=str(Path(__file__).resolve().parents[1]))
         command = [sys.executable, "-m", "textprov.chronicle", "--db",
@@ -248,6 +264,19 @@ class TestChronicle(unittest.TestCase):
                                     text=True, env=env, timeout=15)
             self.assertEqual(0, result.returncode, result.stderr)
             self.assertEqual(expected, json.loads(result.stdout)["result"]["observation_count"])
+        target = subprocess.run(command, input=json.dumps(dict(
+            operation="observe", **observation("write", text="  hel\r\nworld"))),
+            capture_output=True, text=True, env=env, timeout=15)
+        self.assertEqual(0, target.returncode, target.stderr)
+        target_id = json.loads(target.stdout)["result"]
+        matched = subprocess.run(command, input=json.dumps(dict(
+            operation="match", source_id=ids[0], target_id=target_id,
+            policy="common-indent-v1", partial=True, min_match_chars=3)),
+            capture_output=True, text=True, env=env, timeout=15)
+        self.assertEqual(0, matched.returncode, matched.stderr)
+        candidate = json.loads(matched.stdout)["result"]["candidates"][0]
+        self.assertEqual([0, 3], candidate["source_range"])
+        self.assertEqual([2, 5], candidate["target_range"])
         bad = subprocess.run(command, input='{"operation":"close"}', capture_output=True,
                              text=True, env=env, timeout=15)
         self.assertEqual(1, bad.returncode)

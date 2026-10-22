@@ -12,7 +12,7 @@ import sys
 import time
 import uuid
 
-from ._grapheme import segments
+from .attribution import boundaries as _boundaries, match_passages, validate_options
 
 
 def _json(value):
@@ -61,14 +61,6 @@ def _validate_cross_agent(cross_agent):
 
 def _scope_matches(a, b, cross_agent):
     return a == b or (cross_agent and json.loads(a)[:2] == json.loads(b)[:2])
-
-
-def _boundaries(text):
-    result, offset = {0}, 0
-    for cluster in segments(text):
-        offset += len(cluster)
-        result.add(offset)
-    return result
 
 
 class Chronicle:
@@ -216,9 +208,7 @@ class Chronicle:
                 WHERE scope = ? AND adapter = ? AND delivery_key = ?""",
                 (scope, adapter, delivery_key)).fetchone()
             if previous:
-                prior = json.loads(previous["record"])
-                prior.setdefault("attributes", {})  # Records written before attributes.
-                if _json(prior) != canonical:
+                if previous["record"] != canonical:
                     raise ValueError("delivery key reused with different observation")
                 return previous["id"]
             observation_id = str(uuid.uuid4())
@@ -280,7 +270,6 @@ class Chronicle:
             claims = self.db.execute("SELECT record FROM claims WHERE observation_id = ? ORDER BY id",
                                      (observation_id,))
             metadata = json.loads(row["record"])
-            metadata.setdefault("attributes", {})
             return dict(metadata, observation_id=observation_id,
                         captured_at=row["captured_at"], content_available=retained is not None,
                         content_expires_at=None if retained is None else retained["expires"],
@@ -291,14 +280,16 @@ class Chronicle:
                         claims=[json.loads(c[0]) for c in claims])
         return self._transaction(action)
 
-    def match(self, source_id, target_id, *, cross_agent=False):
-        """Find every exact occurrence of the full source block in a target block.
+    def match(self, source_id, target_id, *, cross_agent=False, policy="exact-v1",
+              partial=False, min_match_chars=16):
+        """Compare retained observations through the shared attribution module.
 
-        This deliberately small matcher does not infer chronology or attribution,
-        normalize text or match partial source blocks. Cross-agent access is opt-in
-        and always stays within a provider/session.
+        Policies and partial matching are opt-in; candidates never create claims.
+        Cross-agent access stays within one provider/session.
         """
         _validate_cross_agent(cross_agent)
+        validate_options(policy, partial, min_match_chars)
+        options = dict(policy=policy, partial=partial, min_match_chars=min_match_chars)
 
         def action():
             source, target = self._observation(source_id), self._observation(target_id)
@@ -306,29 +297,16 @@ class Chronicle:
                 raise ValueError("matching requires distinct observations in the same scope")
             a, b = json.loads(source["record"]), json.loads(target["record"])
             if a["completeness"] != "complete":
-                return {"status": "incomplete_source", "candidates": []}
+                return dict(options, status="incomplete_source", candidates=[])
             try:
                 needle, haystack = self._text(source_id), self._text(target_id)
             except ValueError:
-                return {"status": "content_unavailable", "candidates": []}
-            if not needle:
-                return {"status": "empty_source", "candidates": []}
-            boundaries = _boundaries(haystack)
-            candidates, start = [], 0
-            while True:
-                start = haystack.find(needle, start)
-                if start < 0:
-                    break
-                end = start + len(needle)
-                if start in boundaries and end in boundaries:
-                    candidates.append(dict(source_id=source_id, target_id=target_id,
-                        source_range=[0, len(needle)], target_range=[start, end],
-                        source_hash=a["content_hash"], target_hash=b["content_hash"],
-                        method="exact", basis="text_equality", selected=False,
-                        target_completeness=b["completeness"]))
-                start += 1
-            return {"status": "ambiguous" if len(candidates) > 1 else "searched",
-                    "candidates": candidates}
+                return dict(options, status="content_unavailable", candidates=[])
+            result = match_passages(needle, haystack, **options)
+            for candidate in result["candidates"]:
+                candidate.update(source_id=source_id, target_id=target_id,
+                                 target_completeness=b["completeness"])
+            return result
         return self._transaction(action)
 
     def claim(self, *, observation_id, start, end, content_hash, voice_context,
