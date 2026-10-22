@@ -129,7 +129,98 @@ class TestChronicle(unittest.TestCase):
                         {"capture_sequence": True}, {"text": "\ud800"}):
             with self.assertRaises(ValueError):
                 self.chronicle.observe(**observation(**changes))
-        self.assertEqual(0, self.chronicle.db.execute("SELECT count(*) FROM observations").fetchone()[0])
+        self.assertEqual(0, self.chronicle.status()["observation_count"])
+
+    def test_session_and_status_hide_storage_and_prune_cache(self):
+        self.assertEqual(dict(observation_count=0, max_capture_sequence=None),
+                         self.chronicle.session("synthetic", "session-1"))
+        a = self.chronicle.observe(**observation(capture_sequence=0))
+        self.chronicle.observe(**observation("child", agent_id="child", capture_sequence=9))
+        self.chronicle.observe(**observation("missing-sequence"))
+        self.chronicle.observe(**observation("foreign", provider="other", capture_sequence=99))
+        self.chronicle.observe(**observation("session", session_id="other", capture_sequence=99))
+        self.assertEqual(dict(observation_count=3, max_capture_sequence=9),
+                         self.chronicle.session("synthetic", "session-1"))
+        self.chronicle.claim(**self.claim_args(a))
+        self.assertEqual(5, self.chronicle.status()["cached_observation_count"])
+        self.assertEqual(25, self.chronicle.status()["cached_bytes"])
+        self.now = 110
+        status = self.chronicle.status()
+        self.assertEqual((5, 1, 0, 0), tuple(status[k] for k in
+                         ("observation_count", "claim_count", "cached_observation_count", "cached_bytes")))
+
+    def test_inspect_expiry_is_live_cache_deadline(self):
+        a = self.chronicle.observe(**observation())
+        self.assertEqual(110, self.chronicle.inspect(a)["content_expires_at"])
+        self.now = 105
+        self.chronicle.observe(**observation())
+        self.assertEqual(110, self.chronicle.inspect(a)["content_expires_at"])
+        self.now = 110
+        self.assertIsNone(self.chronicle.inspect(a)["content_expires_at"])
+        for key, changes in (("missing", dict(text=None, completeness="unobserved")),
+                             ("oversized", dict(text="x" * 101))):
+            b = self.chronicle.observe(**observation(key, **changes))
+            self.assertIsNone(self.chronicle.inspect(b)["content_expires_at"])
+
+    def test_attributes_are_bounded_canonical_and_backward_compatible(self):
+        data = observation(attributes={"replace_all": False, "nested": [None, {"a": 1}]})
+        a = self.chronicle.observe(**data)
+        self.assertEqual(data["attributes"], self.chronicle.inspect(a)["attributes"])
+        self.assertEqual(a, self.chronicle.observe(**data))
+        with self.assertRaisesRegex(ValueError, "delivery key"):
+            self.chronicle.observe(**dict(data, attributes={"replace_all": True}))
+        for attributes in ([], {"x": float("nan")}, {"x": float("inf")},
+                           {1: "bad"}, {"nested": {2: "bad"}}, {"x": (1, 2)},
+                           {"x": "é" * 2048}):
+            with self.assertRaises(ValueError):
+                self.chronicle.observe(**observation("invalid", attributes=attributes))
+        self.assertEqual(1, self.chronicle.status()["observation_count"])
+        deep = {}
+        for _ in range(17):
+            deep = {"x": deep}
+        with self.assertRaisesRegex(ValueError, "nesting"):
+            self.chronicle.observe(**observation("deep", attributes=deep))
+        self.chronicle.observe(**observation("limit", attributes={"x": "a" * 4088}))
+        with self.assertRaisesRegex(ValueError, "4096"):
+            self.chronicle.observe(**observation("over-limit", attributes={"x": "a" * 4089}))
+        b = self.chronicle.observe(**observation("legacy"))
+        # Simulate the canonical record from an earlier core version.
+        self.chronicle.db.execute(
+            "UPDATE observations SET record=json_remove(record, '$.attributes') WHERE id=?", (b,))
+        self.assertEqual(b, self.chronicle.observe(**observation("legacy", attributes={})))
+        self.assertEqual({}, self.chronicle.inspect(b)["attributes"])
+
+    def test_cross_agent_access_is_explicit_and_session_bounded(self):
+        a = self.chronicle.observe(**observation(host_ids={"agent": "child"}))
+        b = self.chronicle.observe(**observation("write", agent_id="child",
+                                                host_ids={"agent": "child"}))
+        self.assertEqual([], self.chronicle.inspect(a)["event_relationships"])
+        joins = self.chronicle.inspect(a, cross_agent=True)["event_relationships"]
+        self.assertEqual([b], [j["observation_id"] for j in joins])
+        with self.assertRaises(ValueError):
+            self.chronicle.match(a, b)
+        matches = self.chronicle.match(a, b, cross_agent=True)
+        self.assertEqual(1, len(matches["candidates"]))
+        self.assertFalse(matches["candidates"][0]["selected"])
+        self.assertEqual([], self.chronicle.inspect(b)["claims"])
+        args = self.claim_args(b, supporting_ids=[a])
+        with self.assertRaises(ValueError):
+            self.chronicle.claim(**args)
+        self.chronicle.claim(**args, cross_agent=True)
+        for key, change in (("provider", dict(provider="other")),
+                            ("session", dict(session_id="other"))):
+            foreign = self.chronicle.observe(**observation(key, host_ids={"agent": "child"}, **change))
+            with self.assertRaises(ValueError):
+                self.chronicle.match(a, foreign, cross_agent=True)
+            with self.assertRaises(ValueError):
+                self.chronicle.claim(**self.claim_args(b, supporting_ids=[foreign]), cross_agent=True)
+        self.assertEqual([b], [j["observation_id"] for j in
+                              self.chronicle.inspect(a, cross_agent=True)["event_relationships"]])
+        for operation in (lambda: self.chronicle.inspect(a, cross_agent="false"),
+                          lambda: self.chronicle.match(a, b, cross_agent=1),
+                          lambda: self.chronicle.claim(**args, cross_agent=None)):
+            with self.assertRaisesRegex(ValueError, "boolean"):
+                operation()
 
     def test_separate_process_bridge_retries_and_inspection(self):
         env = dict(os.environ, PYTHONPATH=str(Path(__file__).resolve().parents[1]))
@@ -150,6 +241,13 @@ class TestChronicle(unittest.TestCase):
                                    capture_output=True, text=True, env=env, timeout=15)
         self.assertEqual(0, inspected.returncode, inspected.stderr)
         self.assertEqual("submission", json.loads(inspected.stdout)["result"]["event_kind"])
+        for request, expected in (
+            (dict(operation="session", provider="synthetic", session_id="session-1"), 1),
+            (dict(operation="status"), 1)):
+            result = subprocess.run(command, input=json.dumps(request), capture_output=True,
+                                    text=True, env=env, timeout=15)
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertEqual(expected, json.loads(result.stdout)["result"]["observation_count"])
         bad = subprocess.run(command, input='{"operation":"close"}', capture_output=True,
                              text=True, env=env, timeout=15)
         self.assertEqual(1, bad.returncode)

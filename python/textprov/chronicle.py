@@ -1,7 +1,7 @@
 """Experimental shared plugin core. No host integration or in-band encoding.
 
 Run ``python -m textprov.chronicle --db PATH`` with one JSON request on stdin.
-The database belongs to one project; provider/session/agent scope isolates joins.
+The database belongs to one project; provider/session scope bounds optional cross-agent joins.
 """
 
 import argparse
@@ -24,6 +24,43 @@ def _string(value, name):
         raise ValueError(name + " must be a nonempty string")
     value.encode("utf-8")  # Reject lone surrogates: offsets are Unicode scalars.
     return value
+
+
+def _attributes(value):
+    """Accept bounded, strict JSON metadata, never Python-only coercions."""
+    value = {} if value is None else value
+
+    def validate(item, depth=0):
+        if depth > 16:
+            raise ValueError("attributes nesting exceeds 16 levels")
+        if isinstance(item, dict):
+            for key, child in item.items():
+                if not isinstance(key, str):
+                    raise ValueError("attributes keys must be strings")
+                validate(child, depth + 1)
+        elif isinstance(item, list):
+            for child in item:
+                validate(child, depth + 1)
+        elif item is not None and type(item) not in (str, int, float, bool):
+            raise ValueError("attributes must contain JSON values")
+
+    if not isinstance(value, dict):
+        raise ValueError("attributes must be an object")
+    validate(value)
+    encoded = json.dumps(value, sort_keys=True, ensure_ascii=False,
+                         separators=(",", ":"), allow_nan=False)
+    if len(encoded.encode("utf-8")) > 4096:
+        raise ValueError("attributes exceed 4096 UTF-8 bytes")
+    return json.loads(encoded)
+
+
+def _validate_cross_agent(cross_agent):
+    if type(cross_agent) is not bool:
+        raise ValueError("cross_agent must be a boolean")
+
+
+def _scope_matches(a, b, cross_agent):
+    return a == b or (cross_agent and json.loads(a)[:2] == json.loads(b)[:2])
 
 
 def _boundaries(text):
@@ -132,7 +169,8 @@ class Chronicle:
 
     def observe(self, *, provider, adapter, session_id, delivery_key, event_kind,
                 channel, visibility, text=None, completeness="complete",
-                agent_id=None, host_version=None, host_ids=None, capture_sequence=None):
+                agent_id=None, host_version=None, host_ids=None, capture_sequence=None,
+                attributes=None):
         """Record one content block. Retry with the same key and identical fields.
 
         A changed payload under an existing delivery key is rejected. Missing text
@@ -162,12 +200,14 @@ class Chronicle:
         for kind, value in ids.items():
             _string(kind, "ID kind")
             _string(value, "ID value")
+        attributes = _attributes(attributes)
         raw = None if text is None else text.encode("utf-8")
         record = dict(fields, schema_version=1, agent_id=agent_id, host_version=host_version,
                       host_ids=ids, visibility=visibility, completeness=completeness,
                       capture_sequence=capture_sequence,
                       content_hash=None if raw is None else hashlib.sha256(raw).hexdigest(),
                       scalar_length=None if text is None else len(text))
+        record["attributes"] = attributes
         canonical = _json(record)
         scope = _json([provider, session_id, agent_id])
 
@@ -176,7 +216,9 @@ class Chronicle:
                 WHERE scope = ? AND adapter = ? AND delivery_key = ?""",
                 (scope, adapter, delivery_key)).fetchone()
             if previous:
-                if previous["record"] != canonical:
+                prior = json.loads(previous["record"])
+                prior.setdefault("attributes", {})  # Records written before attributes.
+                if _json(prior) != canonical:
                     raise ValueError("delivery key reused with different observation")
                 return previous["id"]
             observation_id = str(uuid.uuid4())
@@ -192,34 +234,75 @@ class Chronicle:
             return observation_id
         return self._transaction(action)
 
-    def inspect(self, observation_id):
+    def session(self, provider, session_id):
+        """Summarize observations across all agents in one provider/session.
+
+        The maximum sequence is a snapshot, not an atomic sequence allocator.
+        """
+        _string(provider, "provider")
+        _string(session_id, "session_id")
+
+        def action():
+            row = self.db.execute("""
+                SELECT count(*) AS observation_count,
+                       max(json_extract(record, '$.capture_sequence')) AS max_capture_sequence
+                FROM observations
+                WHERE json_extract(scope, '$[0]') = ?
+                  AND json_extract(scope, '$[1]') = ?
+            """, (provider, session_id)).fetchone()
+            return dict(row)
+        return self._transaction(action)
+
+    def status(self):
+        """Return project totals and live cache usage after lazy expiration."""
+        def action():
+            return dict(
+                observation_count=self.db.execute("SELECT count(*) FROM observations").fetchone()[0],
+                claim_count=self.db.execute("SELECT count(*) FROM claims").fetchone()[0],
+                cached_observation_count=self.db.execute("SELECT count(*) FROM cache").fetchone()[0],
+                cached_bytes=self.db.execute("SELECT coalesce(sum(bytes), 0) FROM cache").fetchone()[0],
+                max_bytes=self.max_bytes, ttl_seconds=self.ttl)
+        return self._transaction(action)
+
+    def inspect(self, observation_id, *, cross_agent=False):
         """Inspect metadata, typed ID joins and claims without returning raw text."""
+        _validate_cross_agent(cross_agent)
+
         def action():
             row = self._observation(observation_id)
-            joins = self.db.execute("""SELECT b.observation_id, a.kind, a.value
+            joins = self.db.execute("""SELECT b.observation_id, a.kind, a.value, b.scope
                 FROM host_ids a JOIN host_ids b
-                  ON a.scope = b.scope AND a.kind = b.kind AND a.value = b.value
+                  ON a.kind = b.kind AND a.value = b.value
                 WHERE a.observation_id = ? AND b.observation_id != ?
                 ORDER BY b.observation_id, a.kind""", (observation_id, observation_id))
-            retained = self.db.execute("SELECT 1 FROM cache WHERE observation_id = ?",
-                                       (observation_id,)).fetchone() is not None
+            retained = self.db.execute("SELECT expires FROM cache WHERE observation_id = ?",
+                                       (observation_id,)).fetchone()
             claims = self.db.execute("SELECT record FROM claims WHERE observation_id = ? ORDER BY id",
                                      (observation_id,))
-            return dict(json.loads(row["record"]), observation_id=observation_id,
-                        captured_at=row["captured_at"], content_available=retained,
-                        event_relationships=[dict(j, basis="host_id") for j in joins],
+            metadata = json.loads(row["record"])
+            metadata.setdefault("attributes", {})
+            return dict(metadata, observation_id=observation_id,
+                        captured_at=row["captured_at"], content_available=retained is not None,
+                        content_expires_at=None if retained is None else retained["expires"],
+                        event_relationships=[
+                            dict(observation_id=j["observation_id"], kind=j["kind"],
+                                 value=j["value"], basis="host_id")
+                            for j in joins if _scope_matches(row["scope"], j["scope"], cross_agent)],
                         claims=[json.loads(c[0]) for c in claims])
         return self._transaction(action)
 
-    def match(self, source_id, target_id):
+    def match(self, source_id, target_id, *, cross_agent=False):
         """Find every exact occurrence of the full source block in a target block.
 
         This deliberately small matcher does not infer chronology or attribution,
-        normalize text, match partial source blocks, or cross session/agent scopes.
+        normalize text or match partial source blocks. Cross-agent access is opt-in
+        and always stays within a provider/session.
         """
+        _validate_cross_agent(cross_agent)
+
         def action():
             source, target = self._observation(source_id), self._observation(target_id)
-            if source_id == target_id or source["scope"] != target["scope"]:
+            if source_id == target_id or not _scope_matches(source["scope"], target["scope"], cross_agent):
                 raise ValueError("matching requires distinct observations in the same scope")
             a, b = json.loads(source["record"]), json.loads(target["record"])
             if a["completeness"] != "complete":
@@ -249,7 +332,8 @@ class Chronicle:
         return self._transaction(action)
 
     def claim(self, *, observation_id, start, end, content_hash, voice_context,
-              voice_id, voice_definition, basis, policy_version, supporting_ids=None):
+              voice_id, voice_definition, basis, policy_version, supporting_ids=None,
+              cross_agent=False):
         """Persist an explicit claim; identical requests are idempotent.
 
         Claims can conflict and remain separately inspectable. No automatic winner
@@ -259,6 +343,7 @@ class Chronicle:
                                 voice_definition=voice_definition, basis=basis,
                                 policy_version=policy_version).items():
             _string(value, name)
+        _validate_cross_agent(cross_agent)
         support = [] if supporting_ids is None else supporting_ids
         if not isinstance(support, list) or any(not isinstance(s, str) for s in support):
             raise ValueError("supporting_ids must be a list of observation IDs")
@@ -271,7 +356,8 @@ class Chronicle:
             if type(start) is not int or type(end) is not int or not 0 <= start < end <= metadata["scalar_length"]:
                 raise ValueError("invalid scalar range")
             for supporting_id in support:
-                if self._observation(supporting_id)["scope"] != row["scope"]:
+                if not _scope_matches(self._observation(supporting_id)["scope"],
+                                      row["scope"], cross_agent):
                     raise ValueError("supporting observation is outside scope")
             record = dict(observation_id=observation_id, range=[start, end],
                           content_hash=content_hash, voice_context=voice_context,
@@ -299,7 +385,7 @@ def main(argv=None):
         if not isinstance(request, dict):
             raise ValueError("request must be an object")
         operation = request.pop("operation", None)
-        if operation not in {"observe", "inspect", "match", "claim"}:
+        if operation not in {"observe", "inspect", "match", "claim", "session", "status"}:
             raise ValueError("unknown operation")
         with Chronicle(args.db) as chronicle:
             result = getattr(chronicle, operation)(**request)
