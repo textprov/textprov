@@ -377,8 +377,11 @@ class Chronicle:
             if (len(text) != resolution["scalar_length"] or
                     hashlib.sha256(text.encode("utf-8")).hexdigest() != content_hash):
                 raise ValueError("retained content integrity check failed")
-            return project(text, resolution, voice_states=voice_states, profile=profile,
-                           allow_lossy=allow_lossy, markdown=markdown)
+            report = project(text, resolution, voice_states=voice_states, profile=profile,
+                             allow_lossy=allow_lossy, markdown=markdown)
+            metadata = json.loads(self._observation(observation_id)["record"])
+            return dict(report, observation_id=observation_id,
+                        source_completeness=metadata["completeness"], resolution=resolution)
         return self._transaction(action)
 
     def transfer(self, source_id, target_id, *, candidate_index, source_claim_ids,

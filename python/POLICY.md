@@ -78,7 +78,8 @@ not a rich voice encoding. Unknown ranges receive no new marks. Markdown syntax,
 code and destinations are protected by default. Existing selectors and PUA remain
 verbatim; the exporter never runs a general stripping operation on source text.
 
-Keep the full result beside any exported text. It records source/output hashes,
+Keep the full result beside any exported text. It records observation identity,
+source completeness, resolved voice definitions, source/output hashes,
 the explicit projection, unencoded ranges and the exact inserted-selector
 positions. `textprov.export.restore(report)` verifies both hashes and removes only
 those inserted selectors, preserving genuine Unicode variation sequences such

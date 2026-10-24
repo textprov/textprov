@@ -259,6 +259,9 @@ class TestPolicy(unittest.TestCase):
                          content_hash=self.chronicle.inspect(observation)["content_hash"],
                          voice_states=mappings, allow_lossy=True)
         report = self.chronicle.export(**arguments)
+        self.assertEqual(observation, report["observation_id"])
+        self.assertEqual("complete", report["source_completeness"])
+        self.assertEqual(self.chronicle.resolve(observation), report["resolution"])
         self.assertEqual(text.encode("utf-8"), restore(report).encode("utf-8"))
         self.assertIn("辻\U000e0100 ", report["text"])
         self.assertIn(" ? ", report["text"])
@@ -290,6 +293,18 @@ class TestPolicy(unittest.TestCase):
         self.claim(observation, 1, 4, "b")
         with self.assertRaisesRegex(ValueError, "conflicting overlapping"):
             self.chronicle.export(**arguments)
+
+    def test_export_companion_discloses_partial_source_without_inventing_voice(self):
+        observation = self.chronicle.observe(
+            provider="synthetic", adapter="fixture", session_id="session-1",
+            delivery_key="partial-export", event_kind="answer", channel="assistant",
+            visibility="model", text="observed excerpt", completeness="partial")
+        report = self.chronicle.export(
+            observation, content_hash=self.chronicle.inspect(observation)["content_hash"],
+            voice_states=[], allow_lossy=True)
+        self.assertEqual("partial", report["source_completeness"])
+        self.assertEqual("observed excerpt", report["text"])
+        self.assertEqual([], report["resolution"]["ranges"][0]["claim_ids"])
 
 
 if __name__ == "__main__":
