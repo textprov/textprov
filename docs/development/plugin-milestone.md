@@ -10,8 +10,8 @@ a󠄁u󠄁t󠄁o󠄁m󠄁a󠄁t󠄁i󠄁c󠄁 h󠄁o󠄁s󠄁t󠄁 c󠄁o󠄁n�
 | S󠄁l󠄁i󠄁c󠄁e󠄁 | R󠄁e󠄁s󠄁u󠄁l󠄁t󠄁 | V󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 |
 | --- | --- | --- |
 | C󠄁o󠄁r󠄁e󠄁 0󠄁.󠄁1󠄁.󠄁5󠄁 | P󠄁u󠄁b󠄁l󠄁i󠄁c󠄁 l󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁;󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 t󠄁r󠄁a󠄁n󠄁s󠄁f󠄁e󠄁r󠄁;󠄁 d󠄁u󠄁r󠄁a󠄁b󠄁l󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁;󠄁 v󠄁o󠄁i󠄁c󠄁e󠄁 r󠄁e󠄁s󠄁o󠄁l󠄁u󠄁t󠄁i󠄁o󠄁n󠄁;󠄁 e󠄁x󠄁p󠄁e󠄁r󠄁i󠄁m󠄁e󠄁n󠄁t󠄁a󠄁l󠄁 e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁;󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁l󠄁e󠄁d󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁;󠄁 r󠄁e󠄁l󠄁i󠄁a󠄁b󠄁l󠄁e󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 | C󠄁o󠄁r󠄁e󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 i󠄁s󠄁o󠄁l󠄁a󠄁t󠄁e󠄁d󠄁 w󠄁h󠄁e󠄁e󠄁l󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁 |
-| C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 0󠄁.󠄁1󠄁.󠄁2󠄁 | P󠄁u󠄁b󠄁l󠄁i󠄁c󠄁 c󠄁o󠄁r󠄁e󠄁 A󠄁P󠄁I󠄁s󠄁;󠄁 E󠄁d󠄁i󠄁t󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁s󠄁;󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 m󠄁a󠄁t󠄁c󠄁h󠄁i󠄁n󠄁g󠄁/󠄁s󠄁c󠄁o󠄁p󠄁e󠄁;󠄁 s󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 l󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁;󠄁 t󠄁r󠄁a󠄁n󠄁s󠄁f󠄁e󠄁r󠄁/󠄁r󠄁e󠄁s󠄁o󠄁l󠄁v󠄁e󠄁/󠄁e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁s󠄁;󠄁 n󠄁e󠄁s󠄁t󠄁e󠄁d󠄁-󠄁a󠄁g󠄁e󠄁n󠄁t󠄁 c󠄁o󠄁r󠄁r󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 | S󠄁t󠄁a󠄁g󠄁e󠄁d󠄁 b󠄁r󠄁i󠄁d󠄁g󠄁e󠄁 a󠄁n󠄁d󠄁 e󠄁n󠄁g󠄁i󠄁n󠄁e󠄁 t󠄁e󠄁s󠄁t󠄁s󠄁,󠄁 t󠄁y󠄁p󠄁e󠄁s󠄁,󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 v󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁o󠄁r󠄁 |
-| C󠄁o󠄁d󠄁e󠄁x󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 0󠄁.󠄁1󠄁.󠄁0󠄁 | L󠄁o󠄁c󠄁a󠄁l󠄁 m󠄁a󠄁n󠄁i󠄁f󠄁e󠄁s󠄁t󠄁/󠄁h󠄁o󠄁o󠄁k󠄁s󠄁;󠄁 p󠄁r󠄁o󠄁m󠄁p󠄁t󠄁/󠄁t󠄁o󠄁o󠄁l󠄁/󠄁f󠄁i󠄁n󠄁a󠄁l󠄁-󠄁m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁;󠄁 n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁-󠄁I󠄁D󠄁 r󠄁e󠄁t󠄁r󠄁y󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁;󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 g󠄁a󠄁p󠄁s󠄁;󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 p󠄁o󠄁l󠄁i󠄁c󠄁y󠄁 C󠄁L󠄁I󠄁 | S󠄁a󠄁n󠄁i󠄁t󠄁i󠄁z󠄁e󠄁d󠄁 p󠄁a󠄁y󠄁l󠄁o󠄁a󠄁d󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁-󠄁p󠄁r󠄁o󠄁c󠄁e󠄁s󠄁s󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁s󠄁 |
+| C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 0󠄁.󠄁1󠄁.󠄁3󠄁 | P󠄁u󠄁b󠄁l󠄁i󠄁c󠄁 c󠄁o󠄁r󠄁e󠄁 A󠄁P󠄁I󠄁s󠄁;󠄁 E󠄁d󠄁i󠄁t󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁s󠄁;󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 m󠄁a󠄁t󠄁c󠄁h󠄁i󠄁n󠄁g󠄁/󠄁s󠄁c󠄁o󠄁p󠄁e󠄁;󠄁 s󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 l󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁;󠄁 t󠄁r󠄁a󠄁n󠄁s󠄁f󠄁e󠄁r󠄁/󠄁r󠄁e󠄁s󠄁o󠄁l󠄁v󠄁e󠄁/󠄁e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁s󠄁;󠄁 n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁 f󠄁a󠄁c󠄁t󠄁s󠄁;󠄁 n󠄁e󠄁s󠄁t󠄁e󠄁d󠄁-󠄁a󠄁g󠄁e󠄁n󠄁t󠄁 c󠄁o󠄁r󠄁r󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 | S󠄁t󠄁a󠄁g󠄁e󠄁d󠄁 b󠄁r󠄁i󠄁d󠄁g󠄁e󠄁 a󠄁n󠄁d󠄁 e󠄁n󠄁g󠄁i󠄁n󠄁e󠄁 t󠄁e󠄁s󠄁t󠄁s󠄁,󠄁 t󠄁y󠄁p󠄁e󠄁s󠄁,󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 v󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁o󠄁r󠄁 |
+| C󠄁o󠄁d󠄁e󠄁x󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 0󠄁.󠄁1󠄁.󠄁1󠄁 | P󠄁i󠄁n󠄁n󠄁e󠄁d󠄁-󠄁h󠄁o󠄁s󠄁t󠄁 m󠄁a󠄁n󠄁i󠄁f󠄁e󠄁s󠄁t󠄁/󠄁h󠄁o󠄁o󠄁k󠄁s󠄁;󠄁 p󠄁r󠄁o󠄁m󠄁p󠄁t󠄁/󠄁t󠄁o󠄁o󠄁l󠄁/󠄁f󠄁i󠄁n󠄁a󠄁l󠄁-󠄁m󠄁e󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁;󠄁 n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁-󠄁I󠄁D󠄁 r󠄁e󠄁t󠄁r󠄁y󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁;󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 g󠄁a󠄁p󠄁s󠄁;󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 a󠄁n󠄁d󠄁 p󠄁o󠄁l󠄁i󠄁c󠄁y󠄁 C󠄁L󠄁I󠄁 | S󠄁a󠄁n󠄁i󠄁t󠄁i󠄁z󠄁e󠄁d󠄁 p󠄁a󠄁y󠄁l󠄁o󠄁a󠄁d󠄁 f󠄁i󠄁x󠄁t󠄁u󠄁r󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁-󠄁p󠄁r󠄁o󠄁c󠄁e󠄁s󠄁s󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁s󠄁 |
 | I󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁-󠄁h󠄁o󠄁s󠄁t󠄁 t󠄁r󠄁i󠄁a󠄁l󠄁s󠄁 | F󠄁i󠄁x󠄁e󠄁d󠄁-󠄁b󠄁u󠄁i󠄁l󠄁d󠄁 c󠄁a󠄁p󠄁t󠄁u󠄁r󠄁e󠄁 a󠄁n󠄁d󠄁 b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁r󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁 | R󠄁e󠄁c󠄁o󠄁r󠄁d󠄁e󠄁d󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁l󠄁y󠄁 a󠄁f󠄁t󠄁e󠄁r󠄁 d󠄁e󠄁v󠄁e󠄁l󠄁o󠄁p󠄁m󠄁e󠄁n󠄁t󠄁 f󠄁r󠄁e󠄁e󠄁z󠄁e󠄁s󠄁 |
 
 T󠄁h󠄁e󠄁 [p󠄁o󠄁l󠄁i󠄁c󠄁y󠄁 g󠄁u󠄁i󠄁d󠄁e󠄁](../../python/POLICY.md) d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁s󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 p󠄁r󠄁o󠄁j󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 r󠄁e󠄁c󠄁o󠄁v󠄁e󠄁r󠄁y󠄁
@@ -42,8 +42,8 @@ r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁e󠄁d󠄁 o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t�
 e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁n󠄁i󠄁o󠄁n󠄁s󠄁.󠄁 R󠄁e󠄁g󠄁r󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁v󠄁e󠄁r󠄁a󠄁g󠄁e󠄁 v󠄁e󠄁r󠄁i󠄁f󠄁i󠄁e󠄁s󠄁 b󠄁o󠄁t󠄁h󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁i󠄁e󠄁s󠄁.󠄁
 
 I󠄁n󠄁d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁e󠄁n󠄁t󠄁 a󠄁g󠄁e󠄁n󠄁t󠄁s󠄁 r󠄁e󠄁v󠄁i󠄁e󠄁w󠄁e󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁r󠄁e󠄁,󠄁 s󠄁t󠄁a󠄁g󠄁e󠄁d󠄁 C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 a󠄁n󠄁d󠄁 C󠄁o󠄁d󠄁e󠄁x󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁.󠄁 C󠄁o󠄁r󠄁e󠄁 t󠄁e󠄁s󠄁t󠄁s󠄁
-p󠄁a󠄁s󠄁s󠄁 o󠄁n󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 3󠄁.󠄁9󠄁.󠄁6󠄁 a󠄁n󠄁d󠄁 3󠄁.󠄁1󠄁3󠄁 (󠄁2󠄁5󠄁4󠄁 e󠄁a󠄁c󠄁h󠄁)󠄁;󠄁 C󠄁o󠄁d󠄁e󠄁x󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁 t󠄁e󠄁s󠄁t󠄁s󠄁 p󠄁a󠄁s󠄁s󠄁 o󠄁n󠄁 b󠄁o󠄁t󠄁h󠄁 (󠄁1󠄁6󠄁
-e󠄁a󠄁c󠄁h󠄁)󠄁.󠄁 S󠄁t󠄁a󠄁g󠄁e󠄁d󠄁 C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 p󠄁a󠄁s󠄁s󠄁e󠄁s󠄁 2󠄁5󠄁 e󠄁n󠄁g󠄁i󠄁n󠄁e󠄁 a󠄁n󠄁d󠄁 1󠄁4󠄁 b󠄁r󠄁i󠄁d󠄁g󠄁e󠄁 t󠄁e󠄁s󠄁t󠄁s󠄁,󠄁 t󠄁y󠄁p󠄁e󠄁c󠄁h󠄁e󠄁c󠄁k󠄁 a󠄁n󠄁d󠄁 v󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁o󠄁r󠄁.󠄁
+p󠄁a󠄁s󠄁s󠄁 o󠄁n󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 3󠄁.󠄁9󠄁.󠄁6󠄁 a󠄁n󠄁d󠄁 3󠄁.󠄁1󠄁3󠄁 (󠄁2󠄁4󠄁4󠄁 e󠄁a󠄁c󠄁h󠄁)󠄁;󠄁 C󠄁o󠄁d󠄁e󠄁x󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁 t󠄁e󠄁s󠄁t󠄁s󠄁 p󠄁a󠄁s󠄁s󠄁 o󠄁n󠄁 b󠄁o󠄁t󠄁h󠄁 (󠄁1󠄁8󠄁
+e󠄁a󠄁c󠄁h󠄁)󠄁.󠄁 S󠄁t󠄁a󠄁g󠄁e󠄁d󠄁 C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 p󠄁a󠄁s󠄁s󠄁e󠄁s󠄁 2󠄁8󠄁 e󠄁n󠄁g󠄁i󠄁n󠄁e󠄁 a󠄁n󠄁d󠄁 1󠄁5󠄁 b󠄁r󠄁i󠄁d󠄁g󠄁e󠄁 t󠄁e󠄁s󠄁t󠄁s󠄁,󠄁 t󠄁y󠄁p󠄁e󠄁c󠄁h󠄁e󠄁c󠄁k󠄁 a󠄁n󠄁d󠄁 v󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁o󠄁r󠄁.󠄁
 D󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 l󠄁i󠄁n󠄁k󠄁s󠄁 a󠄁n󠄁d󠄁 w󠄁h󠄁i󠄁t󠄁e󠄁s󠄁p󠄁a󠄁c󠄁e󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁s󠄁 p󠄁a󠄁s󠄁s󠄁.󠄁 A󠄁n󠄁 i󠄁s󠄁o󠄁l󠄁a󠄁t󠄁e󠄁d󠄁 w󠄁h󠄁e󠄁e󠄁l󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁
 c󠄁o󠄁r󠄁e󠄁 0󠄁.󠄁1󠄁.󠄁5󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁i󠄁n󠄁g󠄁 o󠄁n󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 i󠄁m󠄁p󠄁o󠄁r󠄁t󠄁 p󠄁a󠄁t󠄁h󠄁s󠄁.󠄁 I󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁-󠄁h󠄁o󠄁s󠄁t󠄁 l󠄁o󠄁a󠄁d󠄁i󠄁n󠄁g󠄁,󠄁
 i󠄁n󠄁t󠄁e󠄁r󠄁a󠄁c󠄁t󠄁i󠄁v󠄁e󠄁 p󠄁e󠄁r󠄁m󠄁i󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁r󠄁,󠄁 h󠄁o󠄁s󠄁t󠄁 U󠄁I󠄁 a󠄁n󠄁d󠄁 c󠄁l󠄁i󠄁p󠄁b󠄁o󠄁a󠄁r󠄁d󠄁 r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁.󠄁
@@ -64,3 +64,27 @@ c󠄁o󠄁n󠄁c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 e󠄁x󠄁t󠄁e󠄁r󠄁n�
 n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁 c󠄁l󠄁i󠄁p󠄁b󠄁o󠄁a󠄁r󠄁d󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 r󠄁e󠄁t󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁/󠄁d󠄁e󠄁l󠄁e󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 o󠄁u󠄁t󠄁s󠄁i󠄁d󠄁e󠄁
 t󠄁h󠄁i󠄁s󠄁 l󠄁o󠄁c󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁t󠄁o󠄁t󠄁y󠄁p󠄁e󠄁.󠄁 T󠄁h󠄁e󠄁s󠄁e󠄁 a󠄁r󠄁e󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁i󠄁e󠄁s󠄁,󠄁 n󠄁o󠄁t󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁s󠄁 o󠄁f󠄁 c󠄁o󠄁m󠄁p󠄁l󠄁e󠄁t󠄁e󠄁d󠄁
 c󠄁o󠄁v󠄁e󠄁r󠄁a󠄁g󠄁e󠄁.󠄁
+
+## Follow-through from the first installed-host trials
+
+T󠄁r󠄁i󠄁a󠄁l󠄁 1󠄁 s󠄁h󠄁o󠄁w󠄁e󠄁d󠄁 t󠄁h󠄁a󠄁t󠄁 C󠄁o󠄁d󠄁e󠄁x󠄁 0󠄁.󠄁1󠄁5󠄁9󠄁.󠄁2󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁 t󠄁h󠄁e󠄁 p󠄁o󠄁r󠄁t󠄁a󠄁b󠄁l󠄁e󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 a󠄁n󠄁d󠄁 i󠄁t󠄁s󠄁 s󠄁k󠄁i󠄁l󠄁l󠄁 b󠄁u󠄁t󠄁
+e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁l󠄁y󠄁 i󠄁g󠄁n󠄁o󠄁r󠄁e󠄁d󠄁 i󠄁t󠄁s󠄁 h󠄁o󠄁o󠄁k󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁 h󠄁o󠄁o󠄁k󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁a󠄁p󠄁t󠄁u󠄁r󠄁e󠄁d󠄁 s󠄁e󠄁v󠄁e󠄁n󠄁
+o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁 c󠄁o󠄁r󠄁r󠄁e󠄁c󠄁t󠄁 I󠄁D󠄁s󠄁 a󠄁n󠄁d󠄁 h󠄁a󠄁s󠄁h󠄁e󠄁s󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 a󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁 n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁 c󠄁o󠄁n󠄁f󠄁i󠄁g󠄁u󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁;󠄁
+t󠄁h󠄁a󠄁t󠄁 r󠄁e󠄁s󠄁u󠄁l󠄁t󠄁 d󠄁i󠄁d󠄁 n󠄁o󠄁t󠄁 v󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁e󠄁 t󠄁h󠄁e󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁-󠄁p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 r󠄁o󠄁u󠄁t󠄁e󠄁.󠄁 D󠄁e󠄁v󠄁e󠄁l󠄁o󠄁p󠄁m󠄁e󠄁n󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁
+s󠄁a󠄁v󠄁e󠄁d󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁d󠄁 t󠄁h󠄁e󠄁 p󠄁o󠄁r󠄁t󠄁a󠄁b󠄁l󠄁e󠄁 m󠄁a󠄁n󠄁i󠄁f󠄁e󠄁s󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁 s󠄁u󠄁p󠄁p󠄁o󠄁r󠄁t󠄁e󠄁d󠄁 C󠄁o󠄁d󠄁e󠄁x󠄁 m󠄁a󠄁n󠄁i󠄁f󠄁e󠄁s󠄁t󠄁 i󠄁n󠄁
+0󠄁.󠄁1󠄁.󠄁1󠄁.󠄁 T󠄁h󠄁e󠄁 n󠄁e󠄁w󠄁 n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁 d󠄁i󠄁s󠄁c󠄁o󠄁v󠄁e󠄁r󠄁y󠄁 r󠄁e󠄁g󠄁r󠄁e󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 s󠄁e󠄁e󠄁s󠄁 f󠄁i󠄁v󠄁e󠄁 u󠄁n󠄁t󠄁r󠄁u󠄁s󠄁t󠄁e󠄁d󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 h󠄁o󠄁o󠄁k󠄁s󠄁 i󠄁n󠄁 a󠄁
+f󠄁r󠄁e󠄁s󠄁h󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁 c󠄁a󠄁c󠄁h󠄁e󠄁.󠄁 A󠄁 n󠄁e󠄁w󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁d󠄁-󠄁r󠄁o󠄁u󠄁t󠄁e󠄁 c󠄁a󠄁p󠄁t󠄁u󠄁r󠄁e󠄁 t󠄁r󠄁i󠄁a󠄁l󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁n󠄁a󠄁l󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁.󠄁
+
+T󠄁r󠄁i󠄁a󠄁l󠄁 2󠄁 v󠄁e󠄁r󠄁i󠄁f󠄁i󠄁e󠄁d󠄁 C󠄁l󠄁a󠄁u󠄁d󠄁e󠄁 p󠄁e󠄁r󠄁m󠄁i󠄁s󠄁s󠄁i󠄁o󠄁n󠄁 d󠄁e󠄁n󠄁i󠄁a󠄁l󠄁/󠄁r󠄁e󠄁t󠄁r󠄁y󠄁,󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁d󠄁 s󠄁u󠄁b󠄁a󠄁g󠄁e󠄁n󠄁t󠄁 j󠄁o󠄁i󠄁n󠄁s󠄁 a󠄁n󠄁d󠄁 f󠄁a󠄁i󠄁l󠄁u󠄁r󠄁e󠄁
+p󠄁e󠄁r󠄁s󠄁i󠄁s󠄁t󠄁e󠄁n󠄁c󠄁e󠄁 a󠄁f󠄁t󠄁e󠄁r󠄁 r󠄁e󠄁s󠄁u󠄁m󠄁e󠄁.󠄁 I󠄁t󠄁 a󠄁l󠄁s󠄁o󠄁 c󠄁o󠄁n󠄁f󠄁i󠄁r󠄁m󠄁e󠄁d󠄁 t󠄁h󠄁e󠄁 h󠄁o󠄁s󠄁t󠄁 w󠄁a󠄁r󠄁n󠄁i󠄁n󠄁g󠄁 g󠄁l󠄁y󠄁p󠄁h󠄁 i󠄁s󠄁 d󠄁e󠄁c󠄁o󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁,󠄁
+i󠄁n󠄁d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁e󠄁n󠄁t󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 p󠄁l󠄁u󠄁g󠄁i󠄁n󠄁'󠄁s󠄁 f󠄁a󠄁i󠄁l󠄁u󠄁r󠄁e󠄁 c󠄁o󠄁u󠄁n󠄁t󠄁s󠄁.󠄁 H󠄁o󠄁s󠄁t󠄁-󠄁g󠄁e󠄁n󠄁e󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 2󠄁.󠄁1󠄁.󠄁3󠄁1󠄁0󠄁 d󠄁e󠄁c󠄁l󠄁a󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁
+i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁f󠄁y󠄁 `origin.kind` s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁l󠄁y󠄁 f󠄁r󠄁o󠄁m󠄁 h󠄁i󠄁d󠄁d󠄁e󠄁n󠄁 `isMeta` i󠄁n󠄁p󠄁u󠄁t󠄁.󠄁 D󠄁e󠄁v󠄁e󠄁l󠄁o󠄁p󠄁m󠄁e󠄁n󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁
+t󠄁h󠄁a󠄁t󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁 a󠄁d󠄁d󠄁s󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁e󠄁d󠄁 `prompt_origin` m󠄁e󠄁t󠄁a󠄁d󠄁a󠄁t󠄁a󠄁 i󠄁n󠄁 0󠄁.󠄁1󠄁.󠄁3󠄁,󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁i󠄁n󠄁g󠄁 p󠄁a󠄁y󠄁l󠄁o󠄁a󠄁d󠄁s󠄁,󠄁
+t󠄁r󠄁a󠄁n󠄁s󠄁p󠄁o󠄁r󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁n󠄁e󠄁l󠄁s󠄁 a󠄁n󠄁d󠄁 k󠄁i󠄁n󠄁d󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 i󠄁n󠄁f󠄁e󠄁r󠄁r󠄁i󠄁n󠄁g󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁s󠄁h󠄁i󠄁p󠄁.󠄁 I󠄁t󠄁s󠄁 l󠄁i󠄁v󠄁e󠄁 v󠄁a󠄁l󠄁u󠄁e󠄁s󠄁 n󠄁e󠄁e󠄁d󠄁 a󠄁
+n󠄁e󠄁w󠄁 t󠄁r󠄁i󠄁a󠄁l󠄁.󠄁 S󠄁u󠄁c󠄁c󠄁e󠄁s󠄁s󠄁f󠄁u󠄁l󠄁 w󠄁i󠄁t󠄁h󠄁d󠄁r󠄁a󠄁w󠄁a󠄁l󠄁 o󠄁f󠄁 a󠄁 q󠄁u󠄁e󠄁u󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁m󠄁p󠄁t󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 u󠄁n󠄁v󠄁e󠄁r󠄁i󠄁f󠄁i󠄁e󠄁d󠄁 a󠄁f󠄁t󠄁e󠄁r󠄁 t󠄁w󠄁o󠄁
+d󠄁e󠄁l󠄁i󠄁v󠄁e󠄁r󠄁e󠄁d󠄁 a󠄁t󠄁t󠄁e󠄁m󠄁p󠄁t󠄁s󠄁;󠄁 n󠄁o󠄁 w󠄁i󠄁t󠄁h󠄁d󠄁r󠄁a󠄁w󠄁a󠄁l󠄁 p󠄁a󠄁s󠄁s󠄁 i󠄁s󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁e󠄁d󠄁.󠄁
+
+T󠄁h󠄁e󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁a󠄁l󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 a󠄁r󠄁e󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁e󠄁d󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁i󠄁b󠄁l󠄁i󠄁n󠄁g󠄁 t󠄁r󠄁i󠄁a󠄁l󠄁s󠄁 a󠄁r󠄁c󠄁h󠄁i󠄁v󠄁e󠄁 a󠄁s󠄁
+`2026-1023-1-codex-plugin-chronicle.md` a󠄁n󠄁d󠄁
+`2026-1023-2-claude-plugin-chronicle.md`,󠄁 w󠄁i󠄁t󠄁h󠄁 p󠄁r󠄁i󠄁v󠄁a󠄁t󠄁e󠄁 s󠄁y󠄁n󠄁t󠄁h󠄁e󠄁t󠄁i󠄁c󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁s󠄁.󠄁
+D󠄁e󠄁v󠄁e󠄁l󠄁o󠄁p󠄁m󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁d󠄁 f󠄁e󠄁e󠄁d󠄁b󠄁a󠄁c󠄁k󠄁-󠄁o󠄁n󠄁l󠄁y󠄁 t󠄁r󠄁i󠄁a󠄁l󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁.󠄁
