@@ -13,6 +13,7 @@ import time
 import uuid
 
 from .attribution import boundaries as _boundaries, match_passages, validate_options
+from .policy import TRANSFER_POLICY, project_claims, resolve_claims
 
 
 def _json(value):
@@ -102,6 +103,12 @@ class Chronicle:
             );
             CREATE TABLE IF NOT EXISTS claims (
                 id TEXT PRIMARY KEY, observation_id TEXT NOT NULL REFERENCES observations(id),
+                record TEXT NOT NULL
+            );
+            CREATE TABLE IF NOT EXISTS passage_relationships (
+                id TEXT PRIMARY KEY,
+                source_id TEXT NOT NULL REFERENCES observations(id),
+                target_id TEXT NOT NULL REFERENCES observations(id),
                 record TEXT NOT NULL
             );
         """)
@@ -254,6 +261,54 @@ class Chronicle:
                 max_bytes=self.max_bytes, ttl_seconds=self.ttl)
         return self._transaction(action)
 
+    def list_observations(self, provider, session_id, *, agent_id=None,
+                          cross_agent=False, limit=100, before_id=None):
+        """Page metadata newest first, scoped like matching and inspection.
+
+        Insertion order is deterministic within the project database; host
+        sequence numbers remain observations, not an inferred causal ordering.
+        """
+        _string(provider, "provider")
+        _string(session_id, "session_id")
+        if agent_id is not None:
+            _string(agent_id, "agent_id")
+        _validate_cross_agent(cross_agent)
+        if type(limit) is not int or not 1 <= limit <= 1000:
+            raise ValueError("limit must be an integer from 1 to 1000")
+        scope = _json([provider, session_id, agent_id])
+
+        def action():
+            before = None
+            if before_id is not None:
+                _string(before_id, "before_id")
+                previous = self._observation(before_id)
+                if not _scope_matches(scope, previous["scope"], cross_agent):
+                    raise ValueError("pagination observation is outside scope")
+                before = self.db.execute("SELECT rowid FROM observations WHERE id = ?",
+                                         (before_id,)).fetchone()[0]
+            clauses = ["json_extract(o.scope, '$[0]') = ?",
+                       "json_extract(o.scope, '$[1]') = ?"]
+            arguments = [provider, session_id]
+            if not cross_agent:
+                clauses.append("o.scope = ?")
+                arguments.append(scope)
+            if before is not None:
+                clauses.append("o.rowid < ?")
+                arguments.append(before)
+            arguments.append(limit + 1)
+            rows = self.db.execute("""SELECT o.id, o.record, o.captured_at, c.expires
+                FROM observations o LEFT JOIN cache c ON c.observation_id = o.id
+                WHERE """ + " AND ".join(clauses) + " ORDER BY o.rowid DESC LIMIT ?",
+                arguments).fetchall()
+            observations = [dict(json.loads(row["record"]), observation_id=row["id"],
+                                 captured_at=row["captured_at"],
+                                 content_available=row["expires"] is not None,
+                                 content_expires_at=row["expires"])
+                            for row in rows[:limit]]
+            return dict(observations=observations,
+                        next_before_id=rows[limit - 1]["id"] if len(rows) > limit else None)
+        return self._transaction(action)
+
     def inspect(self, observation_id, *, cross_agent=False):
         """Inspect metadata, typed ID joins and claims without returning raw text."""
         _validate_cross_agent(cross_agent)
@@ -269,6 +324,12 @@ class Chronicle:
                                        (observation_id,)).fetchone()
             claims = self.db.execute("SELECT record FROM claims WHERE observation_id = ? ORDER BY id",
                                      (observation_id,))
+            passages = self.db.execute("""SELECT p.record, s.scope AS source_scope,
+                t.scope AS target_scope FROM passage_relationships p
+                JOIN observations s ON s.id = p.source_id
+                JOIN observations t ON t.id = p.target_id
+                WHERE p.source_id = ? OR p.target_id = ? ORDER BY p.id""",
+                (observation_id, observation_id))
             metadata = json.loads(row["record"])
             return dict(metadata, observation_id=observation_id,
                         captured_at=row["captured_at"], content_available=retained is not None,
@@ -277,7 +338,133 @@ class Chronicle:
                             dict(observation_id=j["observation_id"], kind=j["kind"],
                                  value=j["value"], basis="host_id")
                             for j in joins if _scope_matches(row["scope"], j["scope"], cross_agent)],
-                        claims=[json.loads(c[0]) for c in claims])
+                        claims=[json.loads(c[0]) for c in claims],
+                        passage_relationships=[json.loads(p["record"]) for p in passages
+                            if _scope_matches(row["scope"], p["source_scope"], cross_agent)
+                            and _scope_matches(row["scope"], p["target_scope"], cross_agent)])
+        return self._transaction(action)
+
+    def _resolve(self, observation_id, content_hash=None):
+        """Resolve inside an existing transaction, without requiring cached text."""
+        row = self._observation(observation_id)
+        metadata = json.loads(row["record"])
+        if metadata["content_hash"] is None:
+            raise ValueError("observation has no captured content")
+        if content_hash is not None and metadata["content_hash"] != content_hash:
+            raise ValueError("content hash does not match observation")
+        claims = [json.loads(row[0]) for row in self.db.execute(
+            "SELECT record FROM claims WHERE observation_id = ? ORDER BY id", (observation_id,))]
+        if any(claim["content_hash"] != metadata["content_hash"] for claim in claims):
+            raise ValueError("claim content hash does not match observation")
+        return dict(observation_id=observation_id, content_hash=metadata["content_hash"],
+                    scalar_length=metadata["scalar_length"],
+                    ranges=resolve_claims(claims, metadata["scalar_length"]))
+
+    def resolve(self, observation_id, *, content_hash=None):
+        """Resolve supplied claims and unknown gaps; conflicting voices fail."""
+        return self._transaction(lambda: self._resolve(observation_id, content_hash))
+
+    def export(self, observation_id, *, content_hash, voice_states,
+               profile="experimental-vs-classification-v1", allow_lossy=False, markdown=True):
+        """Export retained text using an explicit, disclosed voice projection."""
+        from .export import project
+
+        _string(content_hash, "content_hash")
+
+        def action():
+            resolution = self._resolve(observation_id, content_hash)
+            text = self._text(observation_id)
+            if (len(text) != resolution["scalar_length"] or
+                    hashlib.sha256(text.encode("utf-8")).hexdigest() != content_hash):
+                raise ValueError("retained content integrity check failed")
+            return project(text, resolution, voice_states=voice_states, profile=profile,
+                           allow_lossy=allow_lossy, markdown=markdown)
+        return self._transaction(action)
+
+    def transfer(self, source_id, target_id, *, candidate_index, source_claim_ids,
+                 source_hash, target_hash, comparison_policy="exact-v1", partial=False,
+                 min_match_chars=16, cross_agent=False, policy=TRANSFER_POLICY):
+        """Atomically accept a selected passage and project selected source claims.
+
+        Selection is mandatory even for a single candidate. Repeated candidates
+        may be selected explicitly; no voice is inferred from channel or text.
+        Identical successful requests return durable evidence after cache expiry.
+        """
+        if policy != TRANSFER_POLICY:
+            raise ValueError("unknown attribution transfer policy")
+        if type(candidate_index) is not int or candidate_index < 0:
+            raise ValueError("candidate_index must be an explicit nonnegative integer")
+        if (not isinstance(source_claim_ids, list) or not source_claim_ids
+                or any(not isinstance(item, str) or not item for item in source_claim_ids)):
+            raise ValueError("source_claim_ids must be a nonempty list of claim IDs")
+        _string(source_hash, "source_hash")
+        _string(target_hash, "target_hash")
+        _validate_cross_agent(cross_agent)
+        validate_options(comparison_policy, partial, min_match_chars)
+        request = dict(source_id=source_id, target_id=target_id,
+                       candidate_index=candidate_index, source_claim_ids=sorted(set(source_claim_ids)),
+                       source_hash=source_hash, target_hash=target_hash,
+                       comparison_policy=comparison_policy, partial=partial,
+                       min_match_chars=min_match_chars, cross_agent=cross_agent, policy=policy)
+        relationship_id = hashlib.sha256(_json(request).encode("utf-8")).hexdigest()
+
+        def action():
+            source, target = self._observation(source_id), self._observation(target_id)
+            if source_id == target_id or not _scope_matches(source["scope"], target["scope"], cross_agent):
+                raise ValueError("transfer requires distinct observations in the same scope")
+            a, b = json.loads(source["record"]), json.loads(target["record"])
+            if a["content_hash"] != source_hash or b["content_hash"] != target_hash:
+                raise ValueError("transfer content hash does not match observation")
+            previous = self.db.execute("SELECT record FROM passage_relationships WHERE id = ?",
+                                       (relationship_id,)).fetchone()
+            if previous is not None:
+                return json.loads(previous[0])
+            if a["completeness"] != "complete":
+                raise ValueError("transfer source must be complete")
+            source_text, target_text = self._text(source_id), self._text(target_id)
+            for text, metadata in ((source_text, a), (target_text, b)):
+                if (len(text) != metadata["scalar_length"] or
+                        hashlib.sha256(text.encode("utf-8")).hexdigest() != metadata["content_hash"]):
+                    raise ValueError("retained content integrity check failed")
+            result = match_passages(source_text, target_text, policy=comparison_policy,
+                                    partial=partial, min_match_chars=min_match_chars)
+            if result["status"] not in {"searched", "ambiguous"}:
+                raise ValueError("passage matching unavailable: " + result["status"])
+            if candidate_index >= len(result["candidates"]):
+                raise ValueError("selected candidate does not exist")
+            candidate = dict(result["candidates"][candidate_index], source_id=source_id,
+                             target_id=target_id, target_completeness=b["completeness"], selected=True)
+            all_source_claims = [json.loads(row[0]) for row in self.db.execute(
+                "SELECT record FROM claims WHERE observation_id = ? ORDER BY id", (source_id,))]
+            # Existing conflicts cannot be hidden by selecting only one side.
+            resolve_claims(all_source_claims, len(source_text))
+            source_by_id = {claim["claim_id"]: claim for claim in all_source_claims}
+            if any(item not in source_by_id for item in request["source_claim_ids"]):
+                raise ValueError("supporting claim does not belong to source observation")
+            supplied = [source_by_id[item] for item in request["source_claim_ids"]]
+            projected = project_claims(source_text, target_text, candidate, supplied, comparison_policy)
+            existing = [json.loads(row[0]) for row in self.db.execute(
+                "SELECT record FROM claims WHERE observation_id = ? ORDER BY id", (target_id,))]
+            derived = []
+            for projection in projected:
+                record = dict(observation_id=target_id, range=projection["range"],
+                              content_hash=target_hash, voice_context=projection["voice_context"],
+                              voice_id=projection["voice_id"], voice_definition=projection["voice_definition"],
+                              basis="supplied_claim_transfer", policy_version=policy + "/" + comparison_policy,
+                              supporting_ids=[source_id],
+                              supporting_claim_ids=projection["supporting_claim_ids"],
+                              passage_relationship_id=relationship_id)
+                claim_id = hashlib.sha256(_json(record).encode("utf-8")).hexdigest()
+                derived.append(dict(record, claim_id=claim_id))
+            resolve_claims(existing + derived, len(target_text))
+            for record in derived:
+                self.db.execute("INSERT OR IGNORE INTO claims VALUES (?, ?, ?)",
+                                (record["claim_id"], target_id, _json(record)))
+            evidence = dict(request, relationship_id=relationship_id, candidate=candidate,
+                            source_claims=supplied, claim_ids=[record["claim_id"] for record in derived])
+            self.db.execute("INSERT INTO passage_relationships VALUES (?, ?, ?, ?)",
+                            (relationship_id, source_id, target_id, _json(evidence)))
+            return evidence
         return self._transaction(action)
 
     def match(self, source_id, target_id, *, cross_agent=False, policy="exact-v1",
@@ -363,7 +550,8 @@ def main(argv=None):
         if not isinstance(request, dict):
             raise ValueError("request must be an object")
         operation = request.pop("operation", None)
-        if operation not in {"observe", "inspect", "match", "claim", "session", "status"}:
+        if operation not in {"observe", "inspect", "match", "claim", "session", "status",
+                             "list_observations", "transfer", "resolve", "export"}:
             raise ValueError("unknown operation")
         with Chronicle(args.db) as chronicle:
             result = getattr(chronicle, operation)(**request)
