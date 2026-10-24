@@ -14,7 +14,7 @@ import sys
 import time
 
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 ADAPTER = "codex-hooks-v1"
 PROVIDER = "codex"
 MAX_INPUT_BYTES = 4 * 1024 * 1024

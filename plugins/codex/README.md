@@ -4,9 +4,22 @@ This plugin captures supported Codex hook payloads into the shared Python
 Chronicle. It provides metadata inspection, passage matching and explicit claims.
 It does not assign authorship from channels or change workspace files.
 
-Version: **0.1.0**, requiring the local **TextProv core 0.1.5** and Python 3.9+ on
+Version: **0.1.1**, requiring the local **TextProv core 0.1.5** and Python 3.9+ on
 macOS or Linux. Only local distribution is intended. The package contains a
-portable root manifest, hooks, a thin Python adapter and an inspection skill.
+native `.codex-plugin/plugin.json` manifest, hooks, a thin Python adapter and an
+inspection skill.
+
+The packaging target is **Codex CLI 0.159.2**. Native installation and hook
+discovery are verified on that version; newer CLI versions and the desktop
+runtime have not been verified. Full capture from this installed package still
+requires a separate recorded trial after native hook review and trust.
+
+The manifest location is required for that host: Codex 0.159.2 selects a root
+`plugin.json` as the portable Agent Plugins format, then
+[explicitly skips its hooks](https://github.com/openai/codex/blob/rust-v0.159.2/codex-rs/core-plugins/src/loader.rs#L950-L960).
+Adding a compatibility overlay alongside a portable root manifest does not
+change that selection. This package therefore uses the supported native
+manifest alone, with the same shared hook file and adapter.
 
 ## Prepare the Python runtime
 
@@ -31,7 +44,8 @@ working source package. This is separate from installed-plugin verification.
 ## Load and trust locally
 
 The [official plugin packaging guide](https://developers.openai.com/plugins/build/plugins)
-describes local marketplaces and the portable `plugin.json` entry point. For a
+describes local marketplaces and the `.codex-plugin/plugin.json` compatibility
+entry point. For a
 repository marketplace, merge this entry into the repository's
 `.agents/plugins/marketplace.json`, resolving `source.path` from the repository
 root:
@@ -50,10 +64,18 @@ root:
 }
 ```
 
-Restart the desktop app, find TextProv in the local marketplace, and install it
-for the intended project. Alternatively, a personal marketplace can point to an
-absolute local copy. Preserve any other marketplace entries when adding this
-one. This repository does not install that marketplace or modify host settings.
+With Codex CLI 0.159.2, register the local marketplace directory and install:
+
+```sh
+codex plugin marketplace add /absolute/path/to/marketplace --json
+codex plugin add textprov@textprov-local --json
+```
+
+The marketplace directory contains `.agents/plugins/marketplace.json` and the
+plugin source at the path declared in that file. A personal marketplace can
+point to an absolute local copy instead. Preserve any other marketplace entries
+when adding this one. This repository does not install that marketplace or
+modify host settings.
 
 Installing or enabling a plugin does not trust its hooks. Review and trust the
 current hook definition through the host's hooks review interface. Inspect
@@ -63,9 +85,11 @@ rewrite, allow/deny decision or additional model context. A changed hook
 definition needs host review again. The official [hooks reference](https://learn.chatgpt.com/docs/hooks)
 defines the payload fields, matching, trust and coverage used here.
 
-After changing the plugin, update the source folder registered in the marketplace
-and restart the app to refresh its installed copy. The package alone does not
-prove that the installed host discovered or trusted it.
+After changing the plugin, update the source folder registered in the marketplace,
+reinstall the changed version, and start a fresh host session. Verify the
+installed version and native `/plugins` details: TextProv must list all five
+hooks. Native `/hooks` must expose those definitions for review. An installed
+skill by itself does not establish hook discovery.
 
 ## Capture and storage
 
@@ -202,11 +226,28 @@ agent isolation, matching options, explicit claims, transfer/resolve/export
 forwarding and metadata pagination.
 They exercise the real shared core without reading its storage schema.
 
-These tests establish fixture behavior. Plugin discovery, hook trust review,
-runtime environment variables, host version compatibility, denied/retried calls,
-mid-turn steering, resume, native child event scope and host UI need a separate
-installed-host trial on a recorded build. No host config was changed and no such
-trial is included in this implementation session.
+Package changes also require the native discovery regression on the recorded
+CLI build. Set the explicit installed binary path:
+
+```sh
+TEXTPROV_CODEX_BINARY=/opt/homebrew/bin/codex PYTHONPATH=python \
+  python3 -m unittest discover -s plugins/codex/tests -v
+```
+
+That check creates an isolated local marketplace and `CODEX_HOME`, installs the
+package using native CLI commands, then calls native `plugin/read` and
+`hooks/list` through the app-server protocol. It requires all five hooks to come
+from the installed plugin cache, with no errors or warnings and with trust still
+`untrusted`. It copies no credentials, changes no user settings, trusts no hooks,
+executes no hook or model turn, and creates no Chronicle. Without the explicit
+binary path, the native regression is skipped; the remaining tests establish
+fixture and static package behavior only. This check passed on Codex CLI 0.159.2
+for plugin 0.1.1, including skill discovery and native plugin hook inventory.
+
+Hook trust review, runtime environment variables, denied/retried calls, mid-turn
+steering, resume, native child event scope and host UI still need a separate
+installed-host trial on a recorded build. Discovery is a prerequisite for that
+trial, not evidence of captured content.
 
 Hosted tools (including hosted web search), specialized tool paths that bypass
 hooks, reasoning, intermediate assistant messages, permission outcomes, full

@@ -62,8 +62,8 @@ class AdapterTests(unittest.TestCase):
             return chronicle.list_observations("codex", self.session, **options)["observations"]
 
     def test_packaged_hooks_use_documented_entries_and_wrapper(self):
-        manifest = json.loads((PLUGIN / "plugin.json").read_text())
-        self.assertEqual(manifest["extensions"]["com.openai"]["hooks"], "./hooks/hooks.json")
+        manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text())
+        self.assertEqual(manifest["hooks"], "./hooks/hooks.json")
         hooks = json.loads((PLUGIN / "hooks" / "hooks.json").read_text())["hooks"]
         self.assertEqual(set(hooks), adapter.EVENTS)
         for groups in hooks.values():
