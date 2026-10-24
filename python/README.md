@@ -36,6 +36,14 @@ The proposal's [model](../docs/model.md) defines unattributed text as `Voice0`.
 This experiment reports unmarked runs as `None`; its classification labels are
 not implementations of nonzero voice references.
 
+## Shared Chronicle and supplied attribution
+
+The [Chronicle guide](CHRONICLE.md) documents local observations, claims and query
+APIs. [Shared matching](ATTRIBUTION.md) defines original-coordinate policies.
+The [policy guide](POLICY.md) covers explicit supplied-claim transfers, durable
+evidence, experimental export and controlled exact Markdown edits. These APIs
+never infer authorship from a prompt, channel or matching passage.
+
 ## Editing and workspace helpers
 
 `textprov.editing` provides `remark`, `rewrite_edit`, `human_shingles`, and
