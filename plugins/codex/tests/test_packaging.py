@@ -11,6 +11,8 @@ import tempfile
 import threading
 import unittest
 
+from textprov import strip_marks
+
 
 PLUGIN = Path(__file__).resolve().parents[1]
 EXPECTED_EVENTS = {"preToolUse", "postToolUse", "userPromptSubmit", "subagentStop", "stop"}
@@ -33,7 +35,7 @@ class PackagingTests(unittest.TestCase):
                        and any(isinstance(target, ast.Name) and target.id == "VERSION"
                                for target in node.targets))
         self.assertEqual(manifest["version"], version)
-        self.assertIn("Version: **" + version + "**", (PLUGIN / "README.md").read_text())
+        self.assertIn("Version: **" + version + "**", strip_marks((PLUGIN / "README.md").read_text()))
 
     @unittest.skipUnless(os.environ.get("TEXTPROV_CODEX_BINARY"),
                          "set TEXTPROV_CODEX_BINARY for native plugin discovery")

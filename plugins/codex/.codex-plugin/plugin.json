@@ -1,7 +1,7 @@
 {
   "name": "textprov",
-  "version": "0.1.1",
-  "description": "Local, inspectable TextProv Chronicle capture for Codex.",
+  "version": "0.1.2",
+  "description": "Local TextProv chat export, AI document marking and Chronicle capture for Codex.",
   "license": "Apache-2.0",
   "skills": "./skills/",
   "hooks": "./hooks/hooks.json"

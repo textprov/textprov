@@ -15,6 +15,7 @@ import unittest
 
 PLUGIN = Path(__file__).resolve().parents[1]
 REPO = PLUGIN.parents[1]
+sys.path.insert(0, str(PLUGIN))
 spec = importlib.util.spec_from_file_location("codex_adapter", PLUGIN / "textprov_codex.py")
 adapter = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(adapter)
@@ -39,12 +40,16 @@ class AdapterTests(unittest.TestCase):
         result.update(changes)
         return result
 
-    def run_hook(self, payload, expected=0):
+    def run_hook(self, payload, expected=0, decision=None):
         raw = payload if isinstance(payload, str) else json.dumps(payload, ensure_ascii=False)
         result = subprocess.run([str(PLUGIN / "bin" / "textprov"), "hook"], input=raw,
                                 text=True, capture_output=True, env=self.env)
         self.assertEqual(result.returncode, expected, result.stderr)
-        self.assertEqual(result.stdout, "{}\n")
+        if decision is None:
+            self.assertEqual(result.stdout, "{}\n")
+        else:
+            output = json.loads(result.stdout)["hookSpecificOutput"]
+            self.assertEqual(output["permissionDecision"], decision)
         return result
 
     def cli(self, command, *arguments, session=True, expected=0, project=None, request=None):
@@ -146,7 +151,7 @@ class AdapterTests(unittest.TestCase):
     def test_json_string_tool_input_keeps_original_and_extracts_documented_command(self):
         command = "cat <<'EOF'\ncafé\n辻󠄀\nEOF"
         raw = '  { "command" : ' + json.dumps(command, ensure_ascii=False) + ' } '
-        self.run_hook(self.payload("pre", tool_input=raw, tool_name="apply_patch"))
+        self.run_hook(self.payload("pre", tool_input=raw, tool_name="apply_patch"), decision="deny")
         rows = self.observations()
         self.assertEqual(len(rows), 2)
         hashes = {row["attributes"]["payload_field"]: row["content_hash"] for row in rows}
@@ -228,6 +233,67 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(len(first["observations"]), 2)
         self.assertEqual(len(second["observations"]), 1)
         self.assertIsNone(second["next_before_id"])
+
+    def test_copy_chat_marks_actual_stdout_and_preserves_existing_marks(self):
+        from textprov import mark, mark_chat
+        human = "Hello " + mark("quoted AI", "ai")
+        assistant = "Reply " + mark("quoted human", "human")
+        self.run_hook(self.payload("prompt", prompt=human))
+        self.run_hook(self.payload("stop", last_assistant_message=assistant))
+        for row in self.observations():
+            role = "user" if row["event_kind"] == "submission" else "assistant"
+            raw = human if role == "user" else assistant
+            result = subprocess.run([str(PLUGIN / "bin/textprov"), "copy-chat", row["observation_id"],
+                                     "--project", self.project, "--session", self.session],
+                                    env=self.env, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout, mark_chat(raw, role))
+            self.assertEqual(self.cli("inspect", row["observation_id"])["claims"], [])
+        self.run_hook(self.payload("pre"))
+        tool = next(row for row in self.observations() if row["event_kind"] == "tool_input")
+        self.cli("copy-chat", tool["observation_id"], expected=1)
+        self.cli("copy-chat", self.observations()[0]["observation_id"],
+                 expected=1, project=self.project + "-other")
+
+    def test_mark_helper_needs_no_data_directory_or_claim(self):
+        from textprov import mark_chat, mark_document_edit
+        for request, desired in ((dict(operation="mark-chat", text="hello", role="user"), mark_chat("hello", "user")),
+                                 (dict(operation="mark-document", old_text="Old prose", text="Old prose and new"),
+                                  mark_document_edit("Old prose", "Old prose and new"))):
+            env = dict(self.env)
+            env.pop("PLUGIN_DATA", None)
+            result = subprocess.run([str(PLUGIN / "bin/textprov"), "mark"], input=json.dumps(request),
+                                    env=env, text=True, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(json.loads(result.stdout)["text"], desired)
+
+    def test_document_hook_rewrites_native_arguments_without_writing_file(self):
+        from textprov import mark, mark_document_edit
+        project = Path(self.project)
+        project.mkdir()
+        before = mark("Human words.", "human") + " Old ending.\n"
+        (project / "notes.md").write_text(before)
+        command = "*** Begin Patch\n*** Update File: notes.md\n@@\n-" + before.rstrip("\n") + "\n+Human words. New ending.\n*** End Patch\n"
+        payload = self.payload("pre", tool_name="apply_patch", tool_input={"command": command})
+        result = self.run_hook(payload, decision="allow")
+        updated = json.loads(result.stdout)["hookSpecificOutput"]["updatedInput"]["command"]
+        self.assertIn("+" + mark_document_edit(before, "Human words. New ending.\n").rstrip("\n"), updated)
+        self.assertEqual((project / "notes.md").read_text(), before)
+        original = next(row for row in self.observations() if row["event_kind"] == "tool_command")
+        self.assertEqual(original["content_hash"], hashlib.sha256(command.encode()).hexdigest())
+        self.run_hook(payload, decision="allow")
+        self.assertEqual(self.cli("status")["diagnostics"]["counts"], {})
+
+    def test_document_hook_denies_ambiguous_edits_and_keeps_capture_healthy(self):
+        project = Path(self.project)
+        project.mkdir()
+        (project / "notes.md").write_text("same\nsame\n")
+        payload = self.payload("pre", tool_name="apply_patch", tool_input={
+            "command": "*** Begin Patch\n*** Update File: notes.md\n@@\n-same\n+different\n*** End Patch\n"})
+        result = self.run_hook(payload, decision="deny")
+        self.assertNotIn("updatedInput", json.loads(result.stdout)["hookSpecificOutput"])
+        self.assertEqual((project / "notes.md").read_text(), "same\nsame\n")
+        self.assertEqual(self.cli("status")["diagnostics"]["counts"], {"document_marking_failed": 1})
 
     def test_query_forwards_transfer_resolve_export_with_scope(self):
         self.run_hook(self.payload("prompt", prompt="supplied text"))
