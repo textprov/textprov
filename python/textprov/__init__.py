@@ -39,6 +39,9 @@ __all__ = [
     "load_mapping",
     "mark",
     "mark_added",
+    "mark_chat",
+    "mark_document",
+    "mark_document_edit",
     "runs",
     "segments",
     "strip_marks",
@@ -46,3 +49,21 @@ __all__ = [
 ]
 
 from ._version import __version__
+
+
+def mark_chat(text, role):
+    """Apply the user-human/assistant-AI chat policy, preserving existing marks."""
+    from .marking import mark_chat as operation
+    return operation(text, role)
+
+
+def mark_document(text):
+    """Mark new AI document prose while preserving marks and protected syntax."""
+    from .marking import mark_document as operation
+    return operation(text)
+
+
+def mark_document_edit(old_text, new_text):
+    """Mark AI document changes and carry unchanged existing marks."""
+    from .marking import mark_document_edit as operation
+    return operation(old_text, new_text)
