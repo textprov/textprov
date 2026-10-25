@@ -384,6 +384,36 @@ class Chronicle:
                         source_completeness=metadata["completeness"], resolution=resolution)
         return self._transaction(action)
 
+    def export_chat(self, observation_id, *, content_hash):
+        """Return retained chat with speaker-policy marks, without adding claims.
+
+        Adapters must first check their own project/session/agent scope. Only
+        user submissions and assistant messages qualify. Metadata inspection
+        remains text-free; this explicit operation returns copyable content.
+        """
+        from .marking import mark_chat
+
+        _string(content_hash, "content_hash")
+
+        def action():
+            metadata = json.loads(self._observation(observation_id)["record"])
+            role = {("submission", "user"): "user",
+                    ("assistant_message", "assistant"): "assistant"}.get(
+                        (metadata["event_kind"], metadata["channel"]))
+            if role is None:
+                raise ValueError("observation is not a user or assistant chat message")
+            if metadata["content_hash"] != content_hash:
+                raise ValueError("content hash does not match observation")
+            text = self._text(observation_id)
+            if (len(text) != metadata["scalar_length"] or
+                    hashlib.sha256(text.encode("utf-8")).hexdigest() != content_hash):
+                raise ValueError("retained content integrity check failed")
+            return dict(text=mark_chat(text, role), role=role,
+                        policy="chat-speaker-v1", observation_id=observation_id,
+                        content_hash=content_hash,
+                        source_completeness=metadata["completeness"])
+        return self._transaction(action)
+
     def transfer(self, source_id, target_id, *, candidate_index, source_claim_ids,
                  source_hash, target_hash, comparison_policy="exact-v1", partial=False,
                  min_match_chars=16, cross_agent=False, policy=TRANSFER_POLICY):
@@ -554,7 +584,7 @@ def main(argv=None):
             raise ValueError("request must be an object")
         operation = request.pop("operation", None)
         if operation not in {"observe", "inspect", "match", "claim", "session", "status",
-                             "list_observations", "transfer", "resolve", "export"}:
+                             "list_observations", "transfer", "resolve", "export", "export_chat"}:
             raise ValueError("unknown operation")
         with Chronicle(args.db) as chronicle:
             result = getattr(chronicle, operation)(**request)
