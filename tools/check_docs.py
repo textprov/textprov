@@ -8,10 +8,13 @@ root = Path(__file__).resolve().parents[1]
 files = [root / 'README.md', *sorted((root / 'docs').rglob('*.md')),
          *(root / name / 'README.md' for name in ('python', 'ruby', 'js', 'site', 'ucd')),
          *sorted((root / 'experiments').rglob('*.md'))]
+files = [path for path in files if 'node_modules' not in path.relative_to(root).parts]
 errors = []
 for path in files:
     source = path.read_text()
-    marked_proposal = path in (root / 'README.md', root / 'python' / 'README.md') or root / 'docs' in path.parents
+    marked_proposal = (path in (root / 'README.md', root / 'python' / 'README.md')
+                       or root / 'docs' in path.parents
+                       or root / 'experiments' / 'loro-workspace' in path.parents)
     for cp in map(ord, source):
         if marked_proposal and cp in (0xE0100, 0xE0101):
             continue
