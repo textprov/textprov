@@ -1,0 +1,14 @@
+{
+  "name": "textprov-loro-boundary-prototype",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test boundary.test.mjs",
+    "demo": "node demo.mjs"
+  },
+  "dependencies": {
+    "loro-crdt": "1.17.1"
+  },
+  "engines": { "node": ">=22" }
+}
