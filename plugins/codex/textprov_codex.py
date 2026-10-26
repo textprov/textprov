@@ -7,6 +7,7 @@ from contextlib import contextmanager
 import fcntl
 import hashlib
 from importlib import metadata
+import inspect
 import json
 import os
 from pathlib import Path
@@ -15,7 +16,7 @@ import time
 
 from document_tools import rewrite_tool_input
 
-VERSION = "0.1.2"
+VERSION = "0.1.3"
 ADAPTER = "codex-hooks-v1"
 PROVIDER = "codex"
 MAX_INPUT_BYTES = 4 * 1024 * 1024
@@ -143,6 +144,8 @@ def core_class():
     if not all(hasattr(Chronicle, name) for name in ("observe", "session", "status", "inspect", "match", "claim",
                                                    "list_observations", "transfer", "resolve", "export", "export_chat")):
         raise ValueError("TextProv core lacks required Chronicle APIs")
+    if not {"scope", "plain"}.issubset(inspect.signature(Chronicle.export_chat).parameters):
+        raise ValueError("TextProv core 0.1.7 or newer with chat marking scopes is required")
     return Chronicle
 
 
@@ -320,8 +323,10 @@ def operate(args):
                               chronicle=chronicle.status(), diagnostics=state.diagnostic_summary(),
                               observed_sessions=state.sessions(),
                               unscoped_diagnostics=State(args.data).diagnostic_summary(), limitations=LIMITATIONS)
-                result["marking"] = dict(policy="chat-speaker-v1", existing_marks="preserved",
+                result["marking"] = dict(policy="chat-speaker-v2", default_scope="prose",
+                                         scopes=["prose", "all", "off"], existing_marks="preserved",
                                          chat_display=False, chat_copy_command="copy-chat",
+                                         plain_copy_option="--plain",
                                          documents="native apply_patch Markdown prose")
                 if args.session:
                     result["session"] = chronicle.session(PROVIDER, args.session)
@@ -358,7 +363,8 @@ def operate(args):
                     result = chronicle.inspect(args.observation, cross_agent=args.cross_agent)
                 elif args.command == "copy-chat":
                     info = chronicle.inspect(args.observation)
-                    result = chronicle.export_chat(args.observation, content_hash=info["content_hash"])
+                    result = chronicle.export_chat(args.observation, content_hash=info["content_hash"],
+                                                   scope=args.marks, plain=args.plain)
                 elif args.command == "match":
                     result = chronicle.match(args.source, args.target, cross_agent=args.cross_agent,
                                              policy=args.policy, partial=args.partial, min_match_chars=args.min_chars)
@@ -369,7 +375,7 @@ def operate(args):
                                              basis=args.basis, policy_version=args.policy_version,
                                              supporting_ids=args.support, cross_agent=args.cross_agent)
     if args.command == "copy-chat":
-        # No extra newline: stdout is the exact copyable marked message.
+        # No extra newline: stdout is the exact selected copy representation.
         sys.stdout.write(result["text"])
     else:
         print(json_text({"result": result}))
@@ -391,7 +397,7 @@ def main(argv=None):
     parser.add_argument("--data", default=os.environ.get("PLUGIN_DATA"), help="plugin data directory (default: PLUGIN_DATA)")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("hook", help="read one Codex hook JSON object from stdin")
-    commands.add_parser("mark", help="read a shared mark-chat/mark-document JSON request on stdin")
+    commands.add_parser("mark", help="read a shared chat/document marking or strip-marks JSON request on stdin")
     for name in ("status", "list", "inspect", "match", "claim", "query", "copy-chat"):
         cmd = commands.add_parser(name)
         cmd.add_argument("--project", required=True, help="absolute session cwd; namespaces the project database")
@@ -404,6 +410,12 @@ def main(argv=None):
             cmd.add_argument("--before", help="exclusive observation ID cursor from next_before_id")
         if name in {"inspect", "claim", "copy-chat"}:
             cmd.add_argument("observation")
+        if name == "copy-chat":
+            output = cmd.add_mutually_exclusive_group()
+            output.add_argument("--marks", choices=("prose", "all", "off"), default="prose",
+                                help="where to add marks (default: prose); existing marks survive")
+            output.add_argument("--plain", action="store_true",
+                                help="explicitly remove TextProv marks from the copied text")
         if name == "match":
             cmd.add_argument("source")
             cmd.add_argument("target")
