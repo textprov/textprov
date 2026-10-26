@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test boundary.test.mjs conversation.test.mjs draft.test.mjs ui.test.mjs",
+    "test": "node --test boundary.test.mjs conversation.test.mjs draft.test.mjs ui.test.mjs local-drafts.test.mjs responses.test.mjs",
     "demo": "node demo.mjs",
     "demo:draft": "node draft-demo.mjs",
     "ui": "node ui-server.mjs"
