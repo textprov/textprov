@@ -1,4 +1,4 @@
-"""Check proposal Markdown links and validate the deliberately VS-marked proposal prose."""
+"""Check Markdown links and the deliberately VS-marked documentation prose."""
 from pathlib import Path
 import re
 import sys
@@ -11,7 +11,7 @@ files = [root / 'README.md', *sorted((root / 'docs').rglob('*.md')),
 errors = []
 for path in files:
     source = path.read_text()
-    marked_proposal = path == root / 'README.md' or root / 'docs' in path.parents
+    marked_proposal = path in (root / 'README.md', root / 'python' / 'README.md') or root / 'docs' in path.parents
     for cp in map(ord, source):
         if marked_proposal and cp in (0xE0100, 0xE0101):
             continue

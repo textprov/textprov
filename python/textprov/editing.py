@@ -73,7 +73,7 @@ def line_offsets(lines):
     return offsets
 
 
-def merge(old_raw, new_raw, carry):
+def merge(old_raw, new_raw, carry, preserve_new_marks=False):
     """Align `new_raw` to `old_raw` and flag what is new.
 
     Lines are diffed on their unmarked text. Within a changed hunk the common
@@ -83,7 +83,9 @@ def merge(old_raw, new_raw, carry):
     Returns (text, flags), one flag per code point of text.
 
     With `carry`, unchanged text is taken from `old_raw`, so marks the agent
-    failed to retype survive. Without it `new_raw` is kept as found on disk.
+    failed to retype survive. `preserve_new_marks` additionally retains supplied
+    new marks where the unchanged old cluster had none; old marks win conflicts.
+    Without carry `new_raw` is kept as found on disk.
     """
     old_plain, old_index = plain_map(old_raw)
     new_plain, new_index = plain_map(new_raw)
@@ -106,7 +108,24 @@ def merge(old_raw, new_raw, carry):
         # can leave only whitespace with its old selector and no added text.
         emit(old_plain[start:left], True)
         if carry:
-            emit(raw_span(old_raw, old_index, left, right), False)
+            retained = raw_span(old_raw, old_index, left, right)
+            if preserve_new_marks and left < right:
+                position = left
+                pieces = []
+                for cluster in segments(old_plain[left:right]):
+                    stop = position + len(cluster)
+                    original = raw_span(old_raw, old_index, position, stop)
+                    offset = new_range[0] - start
+                    supplied = raw_span(new_raw, new_index,
+                                        position + offset, stop + offset)
+                    old_marked = any(ord(c) in SELECTORS or ord(c) in PUA
+                                     for c in original)
+                    new_marked = any(ord(c) in SELECTORS or ord(c) in PUA
+                                     for c in supplied)
+                    pieces.append(supplied if new_marked and not old_marked else original)
+                    position = stop
+                retained = "".join(pieces)
+            emit(retained, False)
         else:
             offset = new_range[0] - start
             emit(
@@ -384,6 +403,7 @@ def remark(
     carry=True,
     shingles=None,
     min_words=HUMAN_MIN_WORDS,
+    preserve_new_marks=False,
 ):
     """Mark added prose, preserving old marks when carry is true.
 
@@ -394,7 +414,7 @@ def remark(
         raise ValueError("min_words must be positive")
     if shingles is None:
         shingles = set()
-    text, flags = merge(old_raw, new_raw, carry)
+    text, flags = merge(old_raw, new_raw, carry, preserve_new_marks=preserve_new_marks)
     return finalize(text, flags, markdown, shingles, min_words)
 
 
@@ -426,6 +446,7 @@ def rewrite_edit(
     replace_all=False,
     shingles=None,
     min_words=HUMAN_MIN_WORDS,
+    preserve_new_marks=False,
 ):
     """Translate a replacement so it applies to a marked file and marks what it adds.
 
@@ -493,7 +514,8 @@ def rewrite_edit(
                 )
                 position = stop
             expanded = "".join(parts)
-        text, flags = merge(raw[first:last], expanded, carry=True)
+        text, flags = merge(raw[first:last], expanded, carry=True,
+                            preserve_new_marks=preserve_new_marks)
         tail = len(raw) - last
         whole = finalize(
             raw[:first] + text + raw[last:],

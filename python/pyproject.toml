@@ -2,7 +2,7 @@
 
 [project]
 name = "textprov"
-version = "0.1.4"
+dynamic = ["version"]
 description = "Experimental TextProv text attribution encoder and decoder."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -30,6 +30,9 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["textprov"]
+
+[tool.setuptools.dynamic]
+version = {attr = "textprov._version.__version__"}
 
 [tool.setuptools.package-data]
 textprov = ["mapping.json"]
