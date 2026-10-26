@@ -9,7 +9,7 @@ from textprov import mark
 from textprov.chronicle import Chronicle
 
 
-def fixture(path):
+def fixture(path, paged=True):
     now = time.time()
     clock = [now]
     ids = {}
@@ -29,7 +29,7 @@ def fixture(path):
         add("other-provider", provider="codex")
         add("other-agent", agent_id="worker")
         # Keep enough selected records to exercise the bridge's 100-row paging.
-        for n in range(105):
+        for n in range(105 if paged else 0):
             add("page-" + str(n), text="page " + str(n))
         c.claim(observation_id=ids["human"], start=0, end=5,
                 content_hash=c.inspect(ids["human"])["content_hash"],
@@ -43,4 +43,4 @@ def fixture(path):
 
 
 if __name__ == "__main__":
-    print(json.dumps(fixture(sys.argv[1])))
+    print(json.dumps(fixture(sys.argv[1], paged="--small" not in sys.argv[2:])))
