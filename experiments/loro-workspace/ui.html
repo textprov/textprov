@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="textprov-token" content="TOKEN_PLACEHOLDER"><title>TextProv · Local workspace</title><link rel="stylesheet" href="/ui.css"></head>
+<body><header><div><small>TEXTPROV / LOCAL EXPERIMENT</small><h1>A conversation, a shared draft.</h1><p>Select what matters. Keep its origins.</p></div><span class="badge">● Local only</span></header>
+<main><div class="notice"><strong id="source-label"></strong><span>Drafts live in memory. Download marked text before closing the server.</span></div>
+<div class="toolbar"><label><input type="checkbox" id="highlights" checked> Highlight recorded AI text</label><span class="legend">Tint: AI · dotted line: recorded human · plain: unmarked</span></div>
+<div class="layout"><section class="conversation"><h2>1. Choose passages</h2><p>Select text inside a message, then add it. Captures stay unchanged.</p><details id="source-passages" open><summary>Conversation and passage selection</summary><div id="messages"></div><ol id="selections"></ol><button id="create" disabled>Create shared draft</button></details></section>
+<section class="drafts"><div class="heading"><div><h2>2. Edit the shared draft</h2><p>Edit either replica, then exchange their changes.</p></div><button id="sync" disabled>Sync replicas</button></div><label>Or restore a private checkpoint <input id="restore" type="file" accept=".json"></label><div id="replicas"><p class="empty">Your selected passages will appear here.</p></div>
+<details><summary>Copy/paste attribution check</summary><p>Copy a selection from a draft using ⌘/Ctrl+C, then paste here. This field decodes the portable marks without changing them.</p><label>Paste marked text<textarea id="probe" placeholder="Paste marked text here…"></textarea></label><output id="probe-report"></output><div id="probe-preview" class="preview"></div></details>
+</section></div><p id="status" role="status" aria-live="polite">Loading local conversation…</p></main><script type="module" src="/ui.mjs"></script></body></html>
