@@ -4,12 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test boundary.test.mjs conversation.test.mjs draft.test.mjs",
+    "test": "node --test boundary.test.mjs conversation.test.mjs draft.test.mjs ui.test.mjs",
     "demo": "node demo.mjs",
-    "demo:draft": "node draft-demo.mjs"
+    "demo:draft": "node draft-demo.mjs",
+    "ui": "node ui-server.mjs"
   },
   "dependencies": {
     "loro-crdt": "1.17.1"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  }
 }
