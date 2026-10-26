@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test boundary.test.mjs",
+    "test": "node --test boundary.test.mjs conversation.test.mjs",
     "demo": "node demo.mjs"
   },
   "dependencies": {

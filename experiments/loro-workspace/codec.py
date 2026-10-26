@@ -34,6 +34,12 @@ def operate(request):
     operation = request["operation"]
     if operation == "decode":
         return decode(request["text"])
+    if operation == "revise-chat":
+        from textprov.editing import merge
+        decode(request["before"])
+        decode(request["text"])
+        retained, _ = merge(request["before"], request["text"], carry=True, preserve_new_marks=True)
+        return decode(mark_chat(retained, "user"))
     if operation == "edit":
         before, inserted, after = (request[k] for k in ("before", "inserted", "after"))
         # Validate even input that would be replaced, and pasted input, before

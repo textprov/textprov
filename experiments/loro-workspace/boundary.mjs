@@ -19,6 +19,8 @@ function codec(request) {
 }
 
 export const decode = text => codec({ operation: 'decode', text });
+export const reviseChat = (before, text) => codec({ operation: 'revise-chat', before, text })
+  .map(token => token.raw).join('');
 
 function delta(tokens) {
   return tokens.map(token => ({ insert: token.visible, attributes: { [key]: token } }));
