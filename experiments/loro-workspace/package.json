@@ -10,7 +10,8 @@
     "ui": "node ui-server.mjs"
   },
   "dependencies": {
-    "loro-crdt": "1.17.1"
+    "loro-crdt": "1.17.1",
+    "marked": "18.0.13"
   },
   "engines": {
     "node": ">=22"
