@@ -267,6 +267,57 @@ class AdapterTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(json.loads(result.stdout)["text"], desired)
 
+    def test_copy_chat_scopes_and_plain_copy_preserve_captured_evidence(self):
+        from textprov import mark
+        command = 'printf "%s\\n" "hello"'
+        raw = "Run this:\r\n\r\n```sh\r\n" + command + "\r\n```\r\n"
+        raw += "Already marked: `" + mark("git status", "human") + "`\r\n"
+        self.run_hook(self.payload("stop", last_assistant_message=raw))
+        row = self.observations()[0]
+        before = self.cli("inspect", row["observation_id"])
+        prefix = [str(PLUGIN / "bin/textprov"), "copy-chat", row["observation_id"],
+                  "--project", self.project, "--session", self.session]
+
+        def copied(*flags):
+            result = subprocess.run(prefix + list(flags), env=self.env, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            return result.stdout.decode("utf-8")
+
+        prose = copied()
+        self.assertTrue(prose.startswith(mark("Run this:") + "\r\n"))
+        self.assertIn("```sh\r\n" + command + "\r\n```", prose)
+        self.assertIn("`" + mark("git status", "human") + "`", prose)
+        self.assertEqual(prose, copied("--marks", "prose"))
+        self.assertEqual(mark(raw), copied("--marks", "all"))
+        self.assertEqual(raw, copied("--marks", "off"))
+        self.assertEqual(raw.replace(mark("git status", "human"), "git status"), copied("--plain"))
+        self.assertEqual(before, self.cli("inspect", row["observation_id"]))
+        result = subprocess.run(prefix + ["--marks", "all", "--plain"], env=self.env, capture_output=True)
+        self.assertNotEqual(result.returncode, 0)
+        result = subprocess.run(prefix + ["--marks", "shell"], env=self.env, capture_output=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.cli("status")["marking"]["default_scope"], "prose")
+
+    def test_mark_helper_accepts_scopes_and_explicit_clean_text_without_storage(self):
+        from textprov import mark
+        env = dict(self.env)
+        env.pop("PLUGIN_DATA", None)
+        raw = "Run `git status`."
+        cases = [
+            ({"operation": "mark-chat", "role": "assistant", "scope": "prose", "text": raw},
+             mark("Run ") + "`git status`" + mark(".")),
+            ({"operation": "mark-chat", "role": "assistant", "scope": "all", "text": raw}, mark(raw)),
+            ({"operation": "mark-chat", "role": "assistant", "scope": "off", "text": raw}, raw),
+            ({"operation": "strip-marks", "text": mark(raw)}, raw),
+        ]
+        for request, expected in cases:
+            with self.subTest(request=request):
+                result = subprocess.run([str(PLUGIN / "bin/textprov"), "mark"], input=json.dumps(request),
+                                        env=env, text=True, capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(json.loads(result.stdout)["text"], expected)
+        self.assertFalse(self.data.exists())
+
     def test_document_hook_rewrites_native_arguments_without_writing_file(self):
         from textprov import mark, mark_document_edit
         project = Path(self.project)

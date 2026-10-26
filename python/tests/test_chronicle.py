@@ -39,10 +39,53 @@ class TestChronicle(unittest.TestCase):
             exported = self.chronicle.export_chat(key, content_hash=before["content_hash"])
             self.assertEqual(mark_chat(original, role), exported["text"])
             self.assertEqual(role, exported["role"])
-            self.assertEqual("chat-speaker-v1", exported["policy"])
+            self.assertEqual("chat-speaker-v2", exported["policy"])
+            self.assertEqual("prose", exported["scope"])
+            self.assertFalse(exported["plain"])
             self.assertEqual(before, self.chronicle.inspect(key))
             self.assertEqual(original, self.chronicle._text(key))
             self.assertEqual([], self.chronicle.inspect(key)["claims"])
+
+    def test_export_chat_scope_and_plain_copy_preserve_original_evidence(self):
+        original = "Run `" + mark("git", "human") + " status`.\r\n"
+        key = self.chronicle.observe(**observation(text=original))
+        before = self.chronicle.inspect(key)
+        digest = before["content_hash"]
+        for scope in ("prose", "all", "off"):
+            with self.subTest(scope=scope):
+                result = self.chronicle.export_chat(key, content_hash=digest, scope=scope)
+                self.assertEqual(mark_chat(original, "user", scope=scope), result["text"])
+                self.assertEqual(scope, result["scope"])
+                self.assertFalse(result["plain"])
+                self.assertEqual("no-new-chat-marks-v1" if scope == "off" else "chat-speaker-v2",
+                                 result["policy"])
+                clean = self.chronicle.export_chat(key, content_hash=digest, scope=scope, plain=True)
+                self.assertEqual("Run `git status`.\r\n", clean["text"])
+                self.assertEqual("explicit-strip-marks-v1", clean["policy"])
+                self.assertEqual(scope, clean["scope"])
+                self.assertTrue(clean["plain"])
+                self.assertEqual(digest, clean["content_hash"])
+        self.assertEqual(before, self.chronicle.inspect(key))
+        self.assertEqual(original, self.chronicle._text(key))
+
+    def test_export_chat_controls_cannot_bypass_invalid_content_or_parameters(self):
+        key = self.chronicle.observe(**observation())
+        digest = self.chronicle.inspect(key)["content_hash"]
+        for scope in ("prose", "all", "off"):
+            for plain in (False, True):
+                with self.subTest(scope=scope, plain=plain):
+                    with self.assertRaisesRegex(ValueError, "hash"):
+                        self.chronicle.export_chat(key, content_hash="stale", scope=scope, plain=plain)
+        for changes in (dict(scope="safe"), dict(scope=None), dict(plain="true"), dict(plain=1)):
+            with self.subTest(changes=changes):
+                with self.assertRaises(ValueError):
+                    self.chronicle.export_chat(key, content_hash=digest, **changes)
+        self.now = 111
+        for scope in ("prose", "all", "off"):
+            for plain in (False, True):
+                with self.subTest(expired=True, scope=scope, plain=plain):
+                    with self.assertRaisesRegex(ValueError, "content unavailable"):
+                        self.chronicle.export_chat(key, content_hash=digest, scope=scope, plain=plain)
 
     def test_export_chat_refuses_nonchat_stale_missing_and_expired_content(self):
         key = self.chronicle.observe(**observation())

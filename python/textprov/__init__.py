@@ -40,6 +40,7 @@ __all__ = [
     "mark",
     "mark_added",
     "mark_chat",
+    "mark_chat_parts",
     "mark_document",
     "mark_document_edit",
     "runs",
@@ -51,10 +52,16 @@ __all__ = [
 from ._version import __version__
 
 
-def mark_chat(text, role):
-    """Apply the user-human/assistant-AI chat policy, preserving existing marks."""
+def mark_chat(text, role, scope="prose"):
+    """Apply the chat speaker policy at the selected scope, preserving marks."""
     from .marking import mark_chat as operation
-    return operation(text, role)
+    return operation(text, role, scope=scope)
+
+
+def mark_chat_parts(parts, role, scope="prose"):
+    """Mark complete chat text across parts, retaining their original boundaries."""
+    from .marking import mark_chat_parts as operation
+    return operation(parts, role, scope=scope)
 
 
 def mark_document(text):

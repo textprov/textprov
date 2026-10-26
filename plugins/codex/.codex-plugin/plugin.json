@@ -1,6 +1,6 @@
 {
   "name": "textprov",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Local TextProv chat export, AI document marking and Chronicle capture for Codex.",
   "license": "Apache-2.0",
   "skills": "./skills/",
