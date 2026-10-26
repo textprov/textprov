@@ -86,3 +86,103 @@ test('loopback UI requires session token, same origin and exact Host', async t =
     assert.equal((await fetch(base + '/ui.mjs')).headers.get('content-type'), 'text/javascript; charset=utf-8');
   } finally { await new Promise(resolve => server.close(resolve)); }
 });
+
+test('local library reopens both unsynchronized replicas after restart without reading captures', async t => {
+  const { LocalDraftStore } = await import('./local-drafts.mjs');
+  const { workspace, db } = fixture(t);
+  const directory = mkdtempSync(join(tmpdir(), 'textprov-ui-library-'));
+  let store = new LocalDraftStore(directory), session = new UISession(workspace, { store });
+  t.after(() => { session.close(); store.close(); rmSync(directory, { recursive: true, force: true }); });
+  const source = readFileSync(db), conversation = readFileSync(workspace.path);
+  let state = select(session);
+  for (const replica of [0, 1]) session.execute({ operation: 'edit', replica, expectedHash: session.state().replicas[replica].reviewHash,
+    start: 0, end: 0, text: replica ? 'AI addition ' : 'Human addition ', actor: replica ? 'assistant' : 'human' });
+  state = session.execute({ operation: 'save', title: 'My local draft' });
+  const { id } = state.persistence;
+  assert.equal(state.persistence.error, null); assert.equal(state.savedDrafts[0].title, 'My local draft');
+  const before = state.replicas;
+  session.close(); store.close();
+  store = new LocalDraftStore(directory); session = new UISession(workspace, { store });
+  assert.deepEqual(session.execute({ operation: 'open', id }).replicas, before);
+  const synced = session.execute({ operation: 'sync' });
+  assert.deepEqual(synced.replicas[0], synced.replicas[1]);
+  assert.deepEqual(readFileSync(db), source); assert.deepEqual(readFileSync(workspace.path), conversation);
+});
+test('save failure retains live edits, blocks switching and recovers on retry', async t => {
+  const { LocalDraftStore } = await import('./local-drafts.mjs');
+  const { workspace } = fixture(t), directory = mkdtempSync(join(tmpdir(), 'textprov-ui-save-fail-'));
+  let fail = false;
+  const store = new LocalDraftStore(directory, { beforeCommit: () => { if (fail) throw new Error('disk full'); } });
+  const session = new UISession(workspace, { store });
+  t.after(() => { session.close(); store.close(); rmSync(directory, { recursive: true, force: true }); });
+  let state = select(session); fail = true;
+  state = session.execute({ operation: 'edit', replica: 0, expectedHash: state.replicas[0].reviewHash, start: 0, end: 0, text: 'Retain me ' });
+  assert.match(state.persistence.error, /disk full/); assert.match(state.replicas[0].text, /^Retain me/);
+  assert.throws(() => session.execute({ operation: 'new' }), /could not be saved/);
+  fail = false; state = session.execute({ operation: 'save' });
+  assert.equal(state.persistence.error, null);
+  assert.match(store.read(state.persistence.id).payload.replicas[0].snapshot, /.+/);
+});
+
+async function until(condition) {
+  const end = Date.now() + 12000;
+  while (!condition()) {
+    if (Date.now() > end) throw new Error('local simulator did not reach expected state');
+    await new Promise(resolve => setTimeout(resolve, 10));
+  }
+}
+test('local stream cancellation, alternatives and original context survive saved reopening', async t => {
+  const { LocalDraftStore } = await import('./local-drafts.mjs');
+  const { workspace, db } = fixture(t), directory = mkdtempSync(join(tmpdir(), 'textprov-ui-stream-'));
+  const store = new LocalDraftStore(directory);
+  let session = new UISession(workspace, { store, simulationDelay: 5 });
+  t.after(() => { session.close(); store.close(); rmSync(directory, { recursive: true, force: true }); });
+  const capture = readFileSync(db), conversation = readFileSync(workspace.path);
+  let state = select(session);
+  state = session.execute({ operation: 'response-start', replica: 0, expectedHash: state.replicas[0].reviewHash,
+    prompt: 'Please explain this.', simulatedText: 'This is a longer response that can be cancelled after its first local chunk.' });
+  const first = state.responses[0].id;
+  await until(() => session.responses.inspect(first).nextSequence > 0);
+  state = session.execute({ operation: 'response-cancel', id: first });
+  const cancelled = state.responses[0]; assert.equal(cancelled.status, 'cancelled');
+  await new Promise(resolve => setTimeout(resolve, 30));
+  assert.equal(session.responses.inspect(first).portable, cancelled.portable);
+  assert.ok(cancelled.tokens.some(t => t.state === 'ai'));
+  state = session.execute({ operation: 'edit', replica: 0, expectedHash: state.replicas[0].reviewHash,
+    start: 0, end: 0, text: 'Changed context. ' });
+  state = session.execute({ operation: 'response-regenerate', id: first, replica: 0, expectedHash: state.replicas[0].reviewHash,
+    simulatedText: 'Alternative.', useCurrentContext: false });
+  const originalAlternative = state.responses[1].id;
+  await until(() => session.responses.inspect(originalAlternative).status === 'completed');
+  assert.deepEqual(session.responses.inspect(first).context, session.responses.inspect(originalAlternative).context);
+  assert.throws(() => session.execute({ operation: 'response-insert', id: originalAlternative, replica: 0,
+    expectedHash: session.state().replicas[0].reviewHash }), /context changed/);
+  state = session.execute({ operation: 'response-regenerate', id: first, replica: 0, expectedHash: session.state().replicas[0].reviewHash,
+    simulatedText: 'Current.', useCurrentContext: true });
+  const current = state.responses[2].id;
+  await until(() => session.responses.inspect(current).status === 'completed');
+  assert.notEqual(session.responses.inspect(first).context.reviewHash, session.responses.inspect(current).context.reviewHash);
+  session.execute({ operation: 'response-insert', id: current, replica: 0, expectedHash: session.state().replicas[0].reviewHash });
+  const savedId = session.savedId, before = session.responses.snapshot(); session.close();
+  session = new UISession(workspace, { store });
+  state = session.execute({ operation: 'open', id: savedId });
+  assert.deepEqual(session.responses.snapshot(), before); assert.equal(state.responses.length, 3);
+  assert.deepEqual(readFileSync(db), capture); assert.deepEqual(readFileSync(workspace.path), conversation);
+});
+test('reopening an unfinished local stream marks it interrupted and never schedules late chunks', async t => {
+  const { LocalDraftStore } = await import('./local-drafts.mjs');
+  const { workspace } = fixture(t), directory = mkdtempSync(join(tmpdir(), 'textprov-ui-interrupt-'));
+  const store = new LocalDraftStore(directory); let session = new UISession(workspace, { store, simulationDelay: 5 });
+  t.after(() => { session.close(); store.close(); rmSync(directory, { recursive: true, force: true }); });
+  const state = select(session);
+  session.execute({ operation: 'response-start', replica: 0, expectedHash: state.replicas[0].reviewHash,
+    prompt: 'A prompt', simulatedText: 'An unfinished answer to keep for later inspection and regeneration.' });
+  const id = session.savedId, attempt = session.responses.list()[0].id;
+  await until(() => session.responses.inspect(attempt).nextSequence === 1);
+  const partial = session.responses.inspect(attempt).portable;
+  session.close(); session = new UISession(workspace, { store });
+  session.execute({ operation: 'open', id });
+  assert.equal(session.responses.inspect(attempt).status, 'interrupted');
+  assert.equal(session.responses.inspect(attempt).portable, partial);
+  assert.equal(session.timers.size, 0);
+});

@@ -2,15 +2,16 @@
 import { createServer } from 'node:http';
 import { randomBytes } from 'node:crypto';
 import { mkdtempSync, readFileSync, copyFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { tmpdir, homedir } from 'node:os';
 import { join, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { ConversationWorkspace } from './conversation.mjs';
 import { UISession } from './ui-session.mjs';
+import { LocalDraftStore } from './local-drafts.mjs';
 
-export function createUI(workspace, { label = 'Disposable sample conversation' } = {}) {
-  const session = new UISession(workspace);
+export function createUI(workspace, { label = 'Disposable sample conversation', store } = {}) {
+  const session = new UISession(workspace, { store, label });
   const token = randomBytes(24).toString('hex');
   const assets = new Map([['/', ['ui.html', 'text/html']], ['/ui.mjs', ['ui.mjs', 'text/javascript']],
     ['/ui.css', ['ui.css', 'text/css']], ['/editor.mjs', ['editor.mjs', 'text/javascript']]]);
@@ -32,7 +33,8 @@ export function createUI(workspace, { label = 'Disposable sample conversation' }
         res.writeHead(200, { 'Content-Type': type + '; charset=utf-8' }); return res.end(body);
       }
       if (req.headers['x-textprov-token'] !== token) return send(403, { error: 'local session token required' });
-      if (req.method === 'GET' && req.url === '/api/state') return send(200, { ...session.state(), label });
+      if (req.method === 'GET' && req.url === '/api/responses') return send(200, { responses: session.responseState(), persistence: session.state().persistence });
+      if (req.method === 'GET' && req.url === '/api/state') return send(200, session.state());
       if (req.method !== 'POST' || req.url !== '/api/action') return send(404, { error: 'not found' });
       if (req.headers['content-type'] !== 'application/json') return send(415, { error: 'JSON required' });
       let size = 0; const chunks = [];
@@ -49,27 +51,34 @@ export function createUI(workspace, { label = 'Disposable sample conversation' }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
-  if (args.length && (args.length !== 2 || args[0] !== '--conversation' || !isAbsolute(args[1]))) {
-    throw new Error('usage: node ui-server.mjs [--conversation /absolute/saved-conversation.loro]');
+  const options = {};
+  for (let i = 0; i < args.length; i += 2) {
+    if (!['--conversation', '--data'].includes(args[i]) || !args[i + 1] || !isAbsolute(args[i + 1]) || options[args[i]]) {
+      throw new Error('usage: node ui-server.mjs [--conversation /absolute/conversation.loro] [--data /absolute/private-directory]');
+    }
+    options[args[i]] = args[i + 1];
   }
+  const conversation = options['--conversation'];
+  const directory = options['--data'] || join(process.env.XDG_DATA_HOME || join(homedir(), '.local', 'share'), 'textprov-workspace');
+  const store = new LocalDraftStore(directory);
   const dir = mkdtempSync(join(tmpdir(), 'textprov-ui-'));
   let workspace;
   try {
     const path = join(dir, 'conversation.loro');
-    if (args.length) copyFileSync(args[1], path);
+    if (conversation) copyFileSync(conversation, path);
     workspace = new ConversationWorkspace(path);
-    if (!args.length) {
+    if (!conversation) {
       const database = join(dir, 'fixture.sqlite');
       const created = spawnSync(process.env.TEXTPROV_PYTHON || 'python3',
         [fileURLToPath(new URL('fixture_chronicle.py', import.meta.url)), database, '--small'], { encoding: 'utf8' });
       if (created.status !== 0) throw new Error(created.stderr);
       workspace.importSelected({ database, provider: 'claude', session: 'selected', agent: null });
     }
-    const { server, session } = createUI(workspace, { label: args.length ? 'Private copy of selected saved conversation' : undefined });
-    const cleanup = () => { workspace.close(); rmSync(dir, { recursive: true, force: true }); };
+    const { server, session } = createUI(workspace, { label: conversation ? 'Private copy of selected saved conversation' : undefined, store });
+    const cleanup = () => { workspace.close(); store.close(); rmSync(dir, { recursive: true, force: true }); };
     server.on('close', cleanup);
     server.on('error', error => { session.close(); cleanup(); console.error(error.message); process.exitCode = 1; });
     for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => server.close());
-    server.listen(0, '127.0.0.1', () => console.log(`TextProv local workspace: http://127.0.0.1:${server.address().port}\nDrafts are in memory. Download marked text before closing. No capture records or settings changed.`));
-  } catch (error) { workspace?.close(); rmSync(dir, { recursive: true, force: true }); throw error; }
+    server.listen(0, '127.0.0.1', () => console.log(`TextProv local workspace: http://127.0.0.1:${server.address().port}\nApplied edits save locally in ${store.directory}. Reopen saved drafts in the UI. No capture records or settings changed.`));
+  } catch (error) { workspace?.close(); store.close(); rmSync(dir, { recursive: true, force: true }); throw error; }
 }

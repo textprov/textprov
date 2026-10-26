@@ -1,7 +1,7 @@
 import { portableRange, visibleEdit } from './editor.mjs';
 const $ = selector => document.querySelector(selector);
 const token = $('meta[name="textprov-token"]').content;
-let state, busy = false;
+let state, busy = false, titleDirty = false, revision = 0;
 const selections = [];
 const buffers = new Map();
 const status = text => { $('#status').textContent = text; };
@@ -41,7 +41,7 @@ function preview(parent, tokens, canCopy = () => true) {
   parent.oncopy = event => {
     event.preventDefault();
     try {
-      if (!canCopy()) throw new Error('Apply edits or review conflicts before copying.');
+      if (!canCopy()) throw new Error('Apply edits, review conflicts, or finish/cancel the response before copying.');
       const range = selectedRange(parent);
       if (!range) throw new Error('Select text within this preview.');
       event.clipboardData.setData('text/plain', portableRange(tokens, range.start, range.end));
@@ -73,17 +73,18 @@ async function action(command, message, focus) {
   if (busy) throw new Error('Wait for the current edit to finish.');
   if (['undo', 'redo'].includes(command.operation) && buffers.has(command.replica)) throw new Error('Apply typed edits before using draft history.');
   if (command.operation === 'sync' && buffers.size) throw new Error('Apply typed edits in both replicas before syncing.');
-  busy = true;
+  busy = true; revision++;
   document.querySelectorAll('#replicas textarea').forEach(el => { el.disabled = true; });
   try {
     const next = await api(command);
     if (command.operation === 'edit') buffers.delete(command.replica);
-    state = { ...state, ...next }; renderDrafts();
+    state = { ...state, ...next }; renderDrafts(); renderLibrary(); renderResponses();
+    if (['open', 'new'].includes(command.operation)) { titleDirty = false; renderLibrary(); selections.length = 0; $('#selections').replaceChildren(); renderMessages(); }
     if (focus) {
       const area = $(`#draft-${focus.replica}`);
       if (area && !area.disabled) { area.focus(); area.setSelectionRange(focus.at, focus.at); }
     }
-    status(message);
+    status(state.persistence?.error ? 'Local save failed: ' + state.persistence.error + '. Edits remain in memory. Retry Save draft.' : message);
   } catch (error) { renderDrafts(); throw error; }
   finally { busy = false; }
 }
@@ -119,7 +120,7 @@ function renderMessages() {
 }
 function renderDrafts() {
   $('#sync').disabled = state.replicas.length !== 2;
-  if (!state.replicas.length) return;
+  if (!state.replicas.length) { $('#replicas').replaceChildren(element('p', 'Your selected passages will appear here.', 'empty')); $('#create').disabled = true; $('#source-passages').open = true; return; }
   $('#create').disabled = true;
   $('#source-passages').open = false;
   $('#replicas').replaceChildren(...state.replicas.map((r, replica) => {
@@ -203,6 +204,117 @@ function renderDrafts() {
     return card;
   }));
 }
+function renderLibrary() {
+  const p = state.persistence;
+  if (!titleDirty) $('#draft-title').value = p?.title || 'Untitled draft';
+  $('#save-state').textContent = p?.error ? 'Save failed: ' + p.error : p?.savedAt ? 'Saved locally ' + new Date(p.savedAt).toLocaleTimeString() : 'Select passages to create a draft.';
+  $('#save-state').title = p?.directory || 'In-memory test session';
+  const selected = $('#saved-drafts').value;
+  const empty = element('option', 'Choose a saved draft'); empty.value = '';
+  $('#saved-drafts').replaceChildren(empty, ...(state.savedDrafts || []).map(saved => {
+    const option = element('option', saved.error ? 'Unreadable draft: ' + saved.id : saved.title + ' · ' + new Date(saved.savedAt).toLocaleString());
+    option.value = saved.id; option.disabled = !!saved.error; return option;
+  }));
+  $('#saved-drafts').value = selected;
+  $('#save-draft').disabled = !p?.enabled || !state.replicas.length;
+}
+$('#draft-title').oninput = () => { titleDirty = true; };
+async function saveTypedEdits() {
+  const title = $('#draft-title').value;
+  for (const [replica, buffer] of [...buffers]) {
+    const edit = visibleEdit(state.replicas[replica].text, buffer.text);
+    const actor = sessionStorage.getItem(`actor-${replica}`) || 'human';
+    await action({ operation: 'edit', replica, expectedHash: state.replicas[replica].reviewHash, ...edit, actor }, 'Typed edits applied and saved.');
+    if (state.persistence?.error) throw new Error(state.persistence.error);
+  }
+  if (titleDirty && state.replicas.length) {
+    await action({ operation: 'save', title }, 'Draft title saved locally.');
+    if (state.persistence?.error) throw new Error(state.persistence.error);
+    titleDirty = false;
+  }
+}
+$('#save-draft').onclick = async () => {
+  const title = $('#draft-title').value;
+  try { await saveTypedEdits(); await action({ operation: 'save', title }, 'Draft saved locally.'); }
+  catch (error) { status(error.message); }
+};
+$('#open-draft').onclick = async () => {
+  const id = $('#saved-drafts').value;
+  try {
+    if (!id) throw new Error('Choose a saved draft first.');
+    await saveTypedEdits(); await action({ operation: 'open', id }, 'Saved draft reopened with both replicas and original attribution.');
+  } catch (error) { status(error.message); }
+};
+$('#new-draft').onclick = async () => {
+  try { await saveTypedEdits(); await action({ operation: 'new' }, 'Current draft saved. Choose passages for a new draft.'); }
+  catch (error) { status(error.message); }
+};
+function renderResponses() {
+  $('#response-start').disabled = !state.replicas.length || !!state.replicas[0]?.conflicts.length || (state.responses || []).some(a => a.status === 'streaming');
+  $('#responses').replaceChildren(...(state.responses || []).map(attempt => {
+    const card = element('article'); card.dataset.responseId = attempt.id; card.dataset.responseStatus = attempt.status;
+    card.append(element('h3', `Response ${attempt.id.slice(0, 8)} · ${attempt.status}`));
+    card.append(element('p', `${attempt.parentId ? 'Alternative to ' + attempt.parentId.slice(0, 8) + ' · ' : ''}Context ${attempt.context.reviewHash.slice(0, 12)}${attempt.contextChanged ? ' · draft has changed since this context' : ''}`, 'stats'));
+    card.append(element('p', 'Prompt: ' + attempt.promptVisible));
+    const visual = element('div', undefined, 'preview response-text'); preview(visual, attempt.tokens, () => attempt.status !== 'streaming');
+    card.append(visual, element('p', report(attempt.tokens), 'stats response-counts'));
+    const pending = element('p', 'A trailing character is buffered until its boundary is complete.', 'stats response-pending');
+    pending.hidden = !attempt.pendingText; card.append(pending);
+    if (attempt.error) card.append(element('p', attempt.error, 'conflict'));
+    const context = element('details'); context.append(element('summary', 'Inspect the exact context answered'));
+    context.append(element('p', 'Pinned Loro version: ' + attempt.context.version));
+    const raw = element('textarea'); raw.readOnly = true; raw.value = attempt.context.portable;
+    raw.setAttribute('aria-label', `Context ${attempt.id.slice(0, 8)}`); context.append(raw); card.append(context);
+    if (attempt.status === 'streaming') card.append(button('Cancel response', () => action({ operation: 'response-cancel', id: attempt.id }, 'Response cancelled. Partial text retained.')));
+    else {
+      for (const [useCurrentContext, label] of [[false, 'Regenerate using original context'], [true, 'Regenerate using current draft']]) {
+        card.append(button(label, async () => {
+          await saveTypedEdits();
+          await action({ operation: 'response-regenerate', id: attempt.id, useCurrentContext, replica: 0,
+            expectedHash: state.replicas[0].reviewHash, simulatedText: $('#response-text').value }, 'New response alternative started. Earlier attempts retained.');
+        }, true));
+      }
+      if (attempt.status === 'completed') {
+        const insert = button('Append response to replica A', async () => {
+          await saveTypedEdits();
+          await action({ operation: 'response-insert', id: attempt.id, replica: 0, expectedHash: state.replicas[0].reviewHash }, 'Selected response appended with attribution preserved.');
+        }, true);
+        insert.disabled = attempt.contextChanged; card.append(insert);
+      }
+    }
+    return card;
+  }));
+}
+$('#response-start').onclick = async () => {
+  try {
+    await saveTypedEdits();
+    await action({ operation: 'response-start', replica: 0, expectedHash: state.replicas[0].reviewHash,
+      prompt: $('#response-prompt').value, simulatedText: $('#response-text').value }, 'Local response stream started against the pinned context.');
+  } catch (error) { status(error.message); }
+};
+function renderResponseProgress() {
+  for (const attempt of state.responses || []) {
+    const card = [...$('#responses').children].find(el => el.dataset.responseId === attempt.id);
+    if (!card || card.dataset.responseStatus !== attempt.status) { renderResponses(); return; }
+    if (attempt.status === 'streaming') {
+      preview(card.querySelector('.response-text'), attempt.tokens, () => false);
+      card.querySelector('.response-counts').textContent = report(attempt.tokens);
+      card.querySelector('.response-pending').hidden = !attempt.pendingText;
+    }
+  }
+}
+let polling = false;
+setInterval(async () => {
+  if (!state?.responses?.some(a => a.status === 'streaming') || busy || polling) return;
+  polling = true; const polledRevision = revision;
+  try {
+    const response = await fetch('/api/responses', { headers: { 'x-textprov-token': token } });
+    const next = await response.json(); if (!response.ok) throw new Error(next.error);
+    // Do not replace replica editors or pending typed buffers while a stream advances.
+    if (!busy && polledRevision === revision) { state.responses = next.responses; state.persistence = next.persistence; renderResponseProgress(); renderLibrary(); }
+  } catch (error) { status('Stream refresh failed: ' + error.message); }
+  finally { polling = false; }
+}, 700);
 $('#highlights').onchange = () => document.body.classList.toggle('highlight', $('#highlights').checked);
 document.body.classList.add('highlight');
 $('#restore').onchange = async event => {
@@ -227,6 +339,6 @@ $('#probe').addEventListener('input', async () => {
     $('#probe-report').textContent = error.message; $('#probe-preview').replaceChildren();
   }
 });
-window.addEventListener('beforeunload', event => { if (state?.replicas.length) { event.preventDefault(); event.returnValue = ''; } });
-try { state = await api(); renderMessages(); renderDrafts(); status('Select a message passage to begin.'); }
+window.addEventListener('beforeunload', event => { if (titleDirty || buffers.size || state?.persistence?.error) { event.preventDefault(); event.returnValue = ''; } });
+try { state = await api(); renderMessages(); renderDrafts(); renderLibrary(); renderResponses(); status(state.savedDrafts?.length ? 'Reopen a saved draft or select passages for a new one.' : 'Select a message passage to begin.'); }
 catch (error) { status(error.message); }
