@@ -1,4 +1,5 @@
 /** Local workspace controller; capture input and the private draft store stay separate. */
+import { createPublication, exportMarkedText } from './publication.mjs';
 import { DraftReplica } from './draft.mjs';
 import { ResponseAttempts } from './responses.mjs';
 import { randomUUID } from 'node:crypto';
@@ -6,12 +7,12 @@ import { decode } from './boundary.mjs';
 
 export class UISession {
   constructor(workspace, { store, simulationDelay = 500, label = 'Disposable sample conversation' } = {}) { this.workspace = workspace; this.replicas = [];
-    this.sourceLabel = label; this.initialLabel = label;
+    this.sourceLabel = label; this.initialLabel = label; this.publication = null;
     this.responses = new ResponseAttempts(); this.timers = new Map(); this.simulationDelay = simulationDelay;
     this.store = store; this.savedId = null; this.generation = 0; this.title = 'Untitled draft'; this.savedAt = null; this.saveError = null;
     this.messages = workspace.messages().map(m => ({ ...m, tokens: m.portable === null ? [] : decode(m.portable) })); }
   state() {
-    return { label: this.sourceLabel, messages: this.messages, replicas: this.replicas.map(r => r.inspect()),
+    return { draftId: this.replicas[0]?.header.id || null, versions: this.replicas.map(r => Buffer.from(r.version()).toString('base64')), label: this.sourceLabel, messages: this.messages, replicas: this.replicas.map(r => r.inspect()),
       sources: this.replicas[0]?.sources() || [], persistence: { enabled: !!this.store, id: this.savedId, title: this.title, savedAt: this.savedAt, error: this.saveError, directory: this.store?.directory }, savedDrafts: this.store?.list() || [], responses: this.responseState() };
   }
   checkpoint(replica) {
@@ -33,6 +34,12 @@ export class UISession {
   }
   changed() { this.save(); return this.state(); }
   execute(command) {
+    if (command.operation === 'publication-export') {
+      const snapshot = this.publication;
+      if (!snapshot || command.id !== snapshot.id || command.hash !== snapshot.hash) throw new Error('publication preview changed; create or refresh the preview');
+      return { format: 'textprov-marked-text-1', filename: 'textprov-publication.txt', mediaType: 'text/plain;charset=utf-8',
+        hash: snapshot.hash, portable: exportMarkedText(snapshot) };
+    }
     if (command.operation === 'save') {
       if (typeof command.title === 'string' && command.title.trim()) this.title = command.title.trim().slice(0, 200);
       return this.changed();
@@ -41,7 +48,7 @@ export class UISession {
       this.save();
       if (this.saveError) throw new Error('current draft could not be saved: ' + this.saveError);
       if (command.operation === 'new') {
-        this.stopTimers(); this.responses = new ResponseAttempts();
+        this.publication = null; this.stopTimers(); this.responses = new ResponseAttempts();
         this.replicas.forEach(r => r.close()); this.replicas = [];
         this.messages = this.workspace.messages().map(m => ({ ...m, tokens: m.portable === null ? [] : decode(m.portable) }));
         this.sourceLabel = this.initialLabel;
@@ -59,7 +66,7 @@ export class UISession {
         responses = new ResponseAttempts(record.payload.responses);
         messages = record.payload.messages.map(m => ({ ...m, tokens: m.portable === null ? [] : decode(m.portable) }));
       } catch (error) { next.forEach(r => r.close()); throw error; }
-      this.stopTimers(); this.responses = responses;
+      this.publication = null; this.stopTimers(); this.responses = responses;
       this.replicas.forEach(r => r.close()); this.replicas = next; this.messages = messages;
       this.sourceLabel = record.payload.label || 'Retained source conversation';
       this.savedId = record.id; this.generation = record.generation; this.title = record.title; this.savedAt = record.savedAt;
@@ -94,6 +101,11 @@ export class UISession {
     if (!r) throw new Error('select a valid draft replica');
     if (command.expectedHash !== r.inspect().reviewHash) throw new Error('draft changed; refresh before editing or copying');
     switch (command.operation) {
+      case 'publication-preview': {
+        const snapshot = createPublication(r, { title: command.title || this.title });
+        this.publication = structuredClone(snapshot);
+        return snapshot;
+      }
       case 'response-start':
       case 'response-regenerate': {
         if (typeof command.simulatedText !== 'string' || !command.simulatedText.length || command.simulatedText.length > 32000) throw new Error('provide 1–32000 simulated response characters');

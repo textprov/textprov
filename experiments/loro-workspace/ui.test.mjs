@@ -186,3 +186,52 @@ test('reopening an unfinished local stream marks it interrupted and never schedu
   assert.equal(session.responses.inspect(attempt).portable, partial);
   assert.equal(session.timers.size, 0);
 });
+
+test('publication previews and exports pin a selected replica without modifying saved work or captures', async t => {
+  const { LocalDraftStore } = await import('./local-drafts.mjs');
+  const { workspace, db } = fixture(t), directory = mkdtempSync(join(tmpdir(), 'textprov-ui-publication-'));
+  const store = new LocalDraftStore(directory), session = new UISession(workspace, { store });
+  t.after(() => { session.close(); store.close(); rmSync(directory, { recursive: true, force: true }); });
+  let state = select(session);
+  state = session.execute({ operation: 'edit', replica: 1, expectedHash: state.replicas[1].reviewHash,
+    start: 0, end: 0, text: '# Reader title\n\nA human introduction.\n\n' });
+  const privateAttempt = session.responses.start(session.replicas[0], { prompt: 'PRIVATE_PROMPT_NOT_FOR_PUBLICATION' });
+  session.responses.appendChunk(privateAttempt.id, 0, 'PRIVATE_ALTERNATIVE_NOT_FOR_PUBLICATION');
+  session.save();
+  const dbBytes = readFileSync(db), conversation = readFileSync(workspace.path), library = readFileSync(store.path(session.savedId));
+  const live = session.state();
+  const snapshot = session.execute({ operation: 'publication-preview', replica: 1, expectedHash: live.replicas[1].reviewHash, title: 'Reader draft' });
+  assert.equal(snapshot.portable, session.replicas[1].portable());
+  assert.equal(snapshot.hash, live.replicas[1].reviewHash);
+  assert.equal(snapshot.counts.total, snapshot.counts.ai + snapshot.counts.human + snapshot.counts.unmarked);
+  assert.ok(snapshot.preview.html.includes('<h1>'));
+  assert.deepEqual(Object.keys(snapshot).sort(), ['format', 'id', 'draftId', 'title', 'version', 'hash', 'portable', 'text', 'tokens', 'counts', 'preview'].sort());
+  assert.ok(!JSON.stringify(snapshot).includes('PRIVATE_PROMPT')); assert.ok(!JSON.stringify(snapshot).includes('PRIVATE_ALTERNATIVE'));
+  assert.ok(!('sources' in snapshot)); assert.ok(!('responses' in snapshot));
+  assert.deepEqual(readFileSync(db), dbBytes); assert.deepEqual(readFileSync(workspace.path), conversation);
+  assert.deepEqual(readFileSync(store.path(session.savedId)), library);
+  const original = snapshot.portable;
+  snapshot.portable = 'client mutation';
+  const exported = session.execute({ operation: 'publication-export', id: snapshot.id, hash: snapshot.hash });
+  assert.deepEqual(Buffer.from(exported.portable, 'utf8'), Buffer.from(original, 'utf8'));
+  assert.equal(exported.mediaType, 'text/plain;charset=utf-8');
+  session.execute({ operation: 'edit', replica: 1, expectedHash: session.state().replicas[1].reviewHash,
+    start: 0, end: 0, text: 'Later draft change.\n' });
+  assert.equal(session.execute({ operation: 'publication-export', id: snapshot.id, hash: snapshot.hash }).portable, original,
+    'export uses the reviewed revision rather than a changed live draft');
+  assert.throws(() => session.execute({ operation: 'publication-export', id: snapshot.id, hash: 'wrong' }), /preview changed/);
+  session.execute({ operation: 'new' });
+  assert.throws(() => session.execute({ operation: 'publication-export', id: snapshot.id, hash: snapshot.hash }), /preview changed/);
+});
+test('publication selection refuses stale hashes, conflicts and superseded preview IDs', t => {
+  const { workspace } = fixture(t), session = new UISession(workspace); t.after(() => session.close());
+  const state = select(session);
+  assert.throws(() => session.execute({ operation: 'publication-preview', replica: 0, expectedHash: 'stale' }), /changed/);
+  const first = session.execute({ operation: 'publication-preview', replica: 0, expectedHash: state.replicas[0].reviewHash });
+  session.execute({ operation: 'publication-preview', replica: 1, expectedHash: state.replicas[1].reviewHash });
+  assert.throws(() => session.execute({ operation: 'publication-export', id: first.id, hash: first.hash }), /preview changed/);
+  for (const replica of [0, 1]) session.execute({ operation: 'edit', replica,
+    expectedHash: session.state().replicas[replica].reviewHash, start: 0, end: 5, text: replica ? 'Second' : 'First' });
+  const conflicted = session.execute({ operation: 'sync' });
+  assert.throws(() => session.execute({ operation: 'publication-preview', replica: 0, expectedHash: conflicted.replicas[0].reviewHash }), /review/);
+});
