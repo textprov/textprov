@@ -384,16 +384,20 @@ class Chronicle:
                         source_completeness=metadata["completeness"], resolution=resolution)
         return self._transaction(action)
 
-    def export_chat(self, observation_id, *, content_hash):
-        """Return retained chat with speaker-policy marks, without adding claims.
+    def export_chat(self, observation_id, *, content_hash, scope="prose", plain=False):
+        """Return chat with selected marks or explicit clean text, adding no claims.
 
         Adapters must first check their own project/session/agent scope. Only
         user submissions and assistant messages qualify. Metadata inspection
         remains text-free; this explicit operation returns copyable content.
         """
-        from .marking import mark_chat
+        from .marking import _validate_scope, mark_chat
+        from ._core import strip_marks
 
         _string(content_hash, "content_hash")
+        _validate_scope(scope)
+        if type(plain) is not bool:
+            raise ValueError("plain must be a boolean")
 
         def action():
             metadata = json.loads(self._observation(observation_id)["record"])
@@ -408,8 +412,11 @@ class Chronicle:
             if (len(text) != metadata["scalar_length"] or
                     hashlib.sha256(text.encode("utf-8")).hexdigest() != content_hash):
                 raise ValueError("retained content integrity check failed")
-            return dict(text=mark_chat(text, role), role=role,
-                        policy="chat-speaker-v1", observation_id=observation_id,
+            policy = ("explicit-strip-marks-v1" if plain else
+                      "no-new-chat-marks-v1" if scope == "off" else "chat-speaker-v2")
+            return dict(text=strip_marks(text) if plain else mark_chat(text, role, scope=scope),
+                        role=role, scope=scope, plain=plain,
+                        policy=policy, observation_id=observation_id,
                         content_hash=content_hash,
                         source_completeness=metadata["completeness"])
         return self._transaction(action)
