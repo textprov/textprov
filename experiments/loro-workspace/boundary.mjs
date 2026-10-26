@@ -38,7 +38,18 @@ export class AttributedText {
     this.text = this.doc.getText('body');
     this.text.applyDelta(delta(tokens));
     this.doc.commit();
+    this.ownsDoc = true;
     this.history = new UndoManager(this.doc, { mergeInterval: 0 });
+  }
+
+  static bind(doc, text) {
+    const value = Object.create(AttributedText.prototype);
+    value.doc = doc;
+    value.text = text;
+    value.ownsDoc = false;
+    value.tokens();
+    value.history = new UndoManager(doc, { mergeInterval: 0 });
+    return value;
   }
 
   tokens() {
@@ -108,5 +119,5 @@ export class AttributedText {
 
   undo() { return this.history.undo(); }
   redo() { return this.history.redo(); }
-  close() { this.history.free(); this.doc.free(); }
+  close() { this.history.free(); if (this.ownsDoc) this.doc.free(); }
 }
