@@ -1,4 +1,4 @@
-"""Check proposal Markdown links and validate the deliberately VS-marked proposal prose."""
+"""Check Markdown links and deliberately VS-marked proposal and SDK prose."""
 from pathlib import Path
 import re
 import sys
@@ -9,9 +9,12 @@ files = [root / 'README.md', *sorted((root / 'docs').rglob('*.md')),
          *(root / name / 'README.md' for name in ('python', 'ruby', 'js', 'site', 'ucd')),
          *sorted((root / 'experiments').rglob('*.md'))]
 errors = []
+# SDK guides use the same deliberate prose marking as the proposal documents.
+marked_guides = {root / name / 'README.md' for name in ('python', 'ruby', 'js')}
 for path in files:
     source = path.read_text()
-    marked_proposal = path == root / 'README.md' or root / 'docs' in path.parents
+    marked_proposal = (path == root / 'README.md' or root / 'docs' in path.parents
+                       or path in marked_guides)
     for cp in map(ord, source):
         if marked_proposal and cp in (0xE0100, 0xE0101):
             continue

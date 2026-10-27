@@ -55,9 +55,13 @@ arbitrary proposal prose. Read the [baseline limitations](../experiments/baselin
 | `prefix` | `"prov"` | Use `<prefix> <prefix>-<state>` CSS classes and skip their descendants on another render |
 
 The default renderer preserves stored text code points. Optional `textprov.css`
-adds a wavy underline for `ai` and a tint for `human`. These display choices do
-not implement source identity or prescribe the proposal's presentation. The
-replacement-PUA mode is distinct from the [additive-PUA candidate](../docs/encodings/additive-pua.md).
+r󠄁e󠄁v󠄁e󠄁a󠄁l󠄁s󠄁 b󠄁o󠄁t󠄁h󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 c󠄁l󠄁a󠄁s󠄁s󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁 g󠄁r󠄁a󠄁d󠄁i󠄁e󠄁n󠄁t󠄁 m󠄁i󠄁s󠄁t󠄁 a󠄁n󠄁d󠄁 a󠄁 d󠄁o󠄁t󠄁t󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁
+a󠄁t󠄁 6󠄁0󠄁%󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁-󠄁c󠄁o󠄁l󠄁o󠄁r󠄁 o󠄁p󠄁a󠄁c󠄁i󠄁t󠄁y󠄁.󠄁 T󠄁h󠄁e󠄁 f󠄁o󠄁r󠄁m󠄁e󠄁r󠄁 w󠄁a󠄁v󠄁y󠄁/󠄁s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁 i󠄁s󠄁
+d󠄁e󠄁f󠄁u󠄁n󠄁c󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 [d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁](../docs/development/provenance-display.md)
+d󠄁e󠄁f󠄁i󠄁n󠄁e󠄁s󠄁 d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁s󠄁,󠄁 n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁 a󠄁n󠄁n󠄁o󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 h󠄁o󠄁o󠄁k󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 m󠄁o󠄁n󠄁o󠄁c󠄁h󠄁r󠄁o󠄁m󠄁e󠄁 P󠄁+󠄁 f󠄁o󠄁n󠄁t󠄁 f󠄁a󠄁l󠄁l󠄁b󠄁a󠄁c󠄁k󠄁.󠄁
+T󠄁h󠄁e󠄁s󠄁e󠄁 d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 c󠄁h󠄁o󠄁i󠄁c󠄁e󠄁s󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 i󠄁d󠄁e󠄁n󠄁t󠄁i󠄁t󠄁y󠄁 o󠄁r󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁 s󠄁t󠄁o󠄁r󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁
+T󠄁h󠄁e󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁m󠄁e󠄁n󠄁t󠄁-󠄁P󠄁U󠄁A󠄁 m󠄁o󠄁d󠄁e󠄁 i󠄁s󠄁 d󠄁i󠄁s󠄁t󠄁i󠄁n󠄁c󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁
+[additive-PUA candidate](../docs/encodings/additive-pua.md).
 
 ## Checks
 
