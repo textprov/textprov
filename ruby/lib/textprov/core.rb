@@ -130,8 +130,23 @@ module Textprov
     merged.map { |state, out| [state, out] }
   end
 
-  def _to_html(text, selectors, pua2base, strip: false, merge_whitespace: true,
-               class_prefix: "prov")
+  def _to_html(text, selectors, pua2base, strip: false, merge_whitespace: false,
+               class_prefix: "prov", display: "passage")
+    raise ArgumentError, "display must be 'passage' or 'exact'" unless ["passage", "exact"].include?(display)
+    if display == "passage"
+      return text.split(/((?:\r?\n[ \t]*){2,}|\u2029)/, -1).map do |paragraph|
+        exact = _runs(paragraph, selectors, pua2base, strip: strip, merge_whitespace: false)
+        states = exact.map(&:first).compact.uniq.sort
+        content = _to_html(paragraph, selectors, pua2base, strip: strip,
+                           merge_whitespace: false, class_prefix: class_prefix, display: "exact")
+        if states.empty?
+          content
+        else
+          kind = states.length == 1 ? states.first : "mixed"
+          %(<span class="#{class_prefix}-passage" data-prov-passage="#{kind}">#{content}</span>)
+        end
+      end.join
+    end
     parts = []
     _runs(text, selectors, pua2base, strip: strip,
                                      merge_whitespace: merge_whitespace).each do |state, out|
@@ -158,15 +173,15 @@ module Textprov
   end
 
   def to_html(text, mapping: nil, strip: false, merge_whitespace: nil, mergeWhitespace: nil,
-              class_prefix: "prov")
+              class_prefix: "prov", display: "passage")
     mw = if merge_whitespace.nil?
-           mergeWhitespace.nil? || mergeWhitespace
+           mergeWhitespace.nil? ? false : mergeWhitespace
          else
            merge_whitespace
          end
     m = mapping || default_mapping
     _to_html(text, m.selectors, m.pua2base, strip: strip, merge_whitespace: mw,
-                                            class_prefix: class_prefix)
+                                            class_prefix: class_prefix, display: display)
   end
 
   def strip_marks(text, mapping: nil)

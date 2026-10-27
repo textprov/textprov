@@ -3,7 +3,7 @@
 """TextProv: put provenance marks in text, and read them back out.
 
     >>> import textprov
-    >>> textprov.to_html("f\U000e0101")
+    >>> textprov.to_html("f\U000e0101", display="exact")
     '<span class="prov prov-ai" data-prov="ai">f\U000e0101</span>'
 
     >>> textprov.mark("hi", state="ai") == "h\U000e0101i\U000e0101"

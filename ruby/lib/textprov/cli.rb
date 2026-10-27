@@ -44,7 +44,7 @@ module Textprov
           mark-added [--human|--ai] [--mode vs|pua] OLD NEW
           convert --from vs|pua --to vs|pua FILE
           strip FILE
-          render [--strip] [--no-merge-whitespace] [--class-prefix P] FILE
+          render [--display passage|exact] [--strip] [--no-merge-whitespace] [--class-prefix P] FILE
           inspect FILE
 
         FILE may be '-' for stdin. Text is read and written as UTF-8 verbatim.
@@ -143,16 +143,20 @@ module Textprov
           Textprov.strip_marks(read_input(argv[0]))
         when "render"
           strip = false
-          merge_ws = true
+          merge_ws = false
           class_prefix = "prov"
+          display = "passage"
           rest = []
           i = 0
           while i < argv.length
             case argv[i]
             when "--strip" then strip = true
             when "--no-merge-whitespace" then merge_ws = false
+            when "--merge-whitespace" then merge_ws = true
             when "--class-prefix" then class_prefix = argv[i + 1]
                                        i += 1
+            when "--display" then display = argv[i + 1]
+                                  i += 1
             else rest << argv[i]
             end
             i += 1
@@ -160,7 +164,8 @@ module Textprov
           raise ArgumentError, "render: FILE required" if rest.empty?
 
           Textprov.to_html(read_input(rest[0]),
-                           strip: strip, merge_whitespace: merge_ws, class_prefix: class_prefix)
+                           strip: strip, merge_whitespace: merge_ws, class_prefix: class_prefix,
+                           display: display)
         when "inspect"
           raise ArgumentError, "inspect: FILE required" if argv.empty?
 

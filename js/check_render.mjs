@@ -91,7 +91,7 @@ t("custom prefix rewrites class and skip marker", () => {
   const body2 = setBody(`x${AI}`);
   const n = textprov.render(body2, { prefix: "mark" });
   if (n !== 1) throw new Error(`custom-prefix span count: got ${n}`);
-  const s = body2.querySelector("span");
+  const s = body2.querySelector("span.mark");
   if (s.className !== "mark mark-ai") throw new Error(`custom-prefix class: got "${s.className}"`);
 });
 
@@ -127,7 +127,7 @@ t("script, style, textarea contents are not walked", () => {
 t("strip option removes selector from span text but keeps state", () => {
   const body = setBody(`hi${AI}`);
   textprov.render(body, { strip: true });
-  const s = body.querySelector("span");
+  const s = body.querySelector("span.prov");
   if (s.textContent !== "i") throw new Error(`strip text: got ${JSON.stringify(s.textContent)}`);
   if (s.dataset.prov !== "ai") throw new Error(`strip state: got "${s.dataset.prov}"`);
 });
@@ -136,7 +136,7 @@ t("PUA input is re-emitted as base + selector in the span", () => {
   const H_PUA = String.fromCodePoint(0x100048);
   const body = setBody(H_PUA);
   textprov.render(body);
-  const s = body.querySelector("span");
+  const s = body.querySelector("span.prov");
   if (s.textContent !== `H${AI}`)
     throw new Error(`pua re-emit: got ${JSON.stringify(s.textContent)}, want "H${AI}"`);
   if (s.dataset.prov !== "ai") throw new Error(`pua state: got "${s.dataset.prov}"`);
@@ -148,6 +148,51 @@ t("nested elements: text nodes at multiple depths are walked", () => {
   if (n !== 2) throw new Error(`nested spans: got ${n}, want 2`);
   const provs = Array.from(body.querySelectorAll(".prov")).map((s) => s.dataset.prov);
   if (provs.join(",") !== "ai,human") throw new Error(`states: ${provs.join(",")}`);
+});
+
+t("passages group partial marks without changing exact attribution or text", () => {
+  const source = `C${AI}ho${AI}o${AI}s${AI}e a${AI} g${AI}u${AI}i${AI}de for what you want to do next.`;
+  const body = setBody(`<p>${source}</p><p>Wholly unmarked paragraph.</p>`);
+  textprov.render(body, { strip: true });
+  assert.equal(body.dataset.provDisplay, "passage");
+  const passage = body.querySelector("[data-prov-passage]");
+  assert.equal(passage.dataset.provPassage, "ai");
+  assert.equal(passage.textContent, "Choose a guide for what you want to do next.");
+  assert.equal(body.querySelectorAll("[data-prov-passage]").length, 1);
+  assert.equal(Array.from(body.querySelectorAll("[data-prov]"), el => el.textContent).join(""), "Coosagui");
+  const text = body.textContent, exact = body.innerHTML;
+  textprov.setDisplay(body, "exact");
+  assert.equal(body.dataset.provDisplay, "exact");
+  assert.equal(body.textContent, text);
+  assert.equal(body.innerHTML, exact);
+  textprov.setDisplay(body, "passage");
+  assert.equal(body.innerHTML, exact);
+  assert.throws(() => textprov.setDisplay(body, "word"), /display/);
+});
+
+t("grouping follows block/blank-line boundaries and keeps mixed states explicit", () => {
+  const body = setBody(`<p>AI a${AI} plus <em>human b${HUMAN}</em> remains mixed.</p><p>Plain.</p>`);
+  textprov.render(body);
+  assert.deepEqual(Array.from(body.querySelectorAll("[data-prov-passage]"), el => el.dataset.provPassage), ["mixed", "mixed", "mixed"]);
+  assert.deepEqual(Array.from(body.querySelectorAll("[data-prov]"), el => el.dataset.prov), ["ai", "human"]);
+  const plain = setBody(`a${AI} fragment\n\nUnmarked paragraph.\n\nb${HUMAN} end`);
+  textprov.render(plain);
+  assert.deepEqual(Array.from(plain.querySelectorAll("[data-prov-passage]"), el => el.dataset.provPassage), ["ai", "human"]);
+  assert.equal(plain.textContent, `a${AI} fragment\n\nUnmarked paragraph.\n\nb${HUMAN} end`);
+});
+
+t("a marked code sample does not turn its enclosing prose into a passage", () => {
+  const body = setBody(`<p>Unmarked prose <code>a${AI}</code> stays ungrouped.</p>`);
+  textprov.render(body);
+  assert.equal(body.querySelector("[data-prov-passage]"), null);
+});
+
+t("initial exact view leaves unmarked whitespace unassigned by default", () => {
+  const body = setBody(`a${AI} b${AI}`);
+  textprov.render(body, { display: "exact", strip: true });
+  assert.equal(body.dataset.provDisplay, "exact");
+  assert.deepEqual(Array.from(body.querySelectorAll("[data-prov]"), el => el.textContent), ["a", "b"]);
+  assert.deepEqual(textprov.runs(`a${AI} b${AI}`, { strip: true }), [{ state: "ai", text: "a b" }]);
 });
 
 for (const c of cases) {

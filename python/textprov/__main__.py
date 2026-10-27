@@ -6,7 +6,7 @@
     textprov mark-added [--human|--ai] [--mode vs|pua] OLD NEW
     textprov convert --from vs|pua --to vs|pua FILE
     textprov strip FILE
-    textprov render [--strip] [--no-merge-whitespace] [--class-prefix P] FILE
+    textprov render [--display passage|exact] [--strip] [--no-merge-whitespace] [--class-prefix P] FILE
     textprov inspect FILE
 
 FILE may be '-' for stdin. Output goes to stdout unless -o/--output is given.
@@ -110,9 +110,12 @@ def build_parser():
         "--no-merge-whitespace",
         dest="merge_whitespace",
         action="store_false",
+        default=False,
         help="do not join same-state runs across whitespace",
     )
+    p.add_argument("--merge-whitespace", action="store_true", help="legacy exact-output whitespace merging")
     p.add_argument("--class-prefix", default="prov")
+    p.add_argument("--display", choices=("passage", "exact"), default="passage")
 
     p = subs.add_parser("inspect", help="report the states present in the text")
     p.add_argument("file")
@@ -140,6 +143,7 @@ def main(argv=None):
                 strip=args.strip,
                 merge_whitespace=args.merge_whitespace,
                 class_prefix=args.class_prefix,
+                display=args.display,
             )
         else:
             out = inspect(text)
