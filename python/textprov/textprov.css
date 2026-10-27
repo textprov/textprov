@@ -1,0 +1,123 @@
+/* js/textprov.css */
+
+/*
+ * Optional styles for the TextProv baseline demonstration.
+ * Classifications are human and ai; these styles do not implement voice references.
+ * Mapping: ../experiments/baseline/mapping.json (experimental version 0.2).
+ * Applications may choose other presentation without changing the stored text.
+ * The reveal treatment is gradient mist with a 60%-strength dotted underline.
+ * The former wavy/sawtooth provenance underline is obsolete.
+ */
+
+/* Native application annotations remain above the optional reveal layer. */
+@layer textprov {
+
+:root {
+  --prov-human-bg: rgba(46, 160, 67, 0.12);
+  --prov-human-line: #2ea043;
+  --prov-ai-bg: rgba(199, 125, 0, 0.12);
+  --prov-ai-line: #c77d00;
+  --prov-tint: 9%;
+  --prov-dot-strength: 60%;
+  --prov-glow-opacity: 18%;
+  --prov-glow-blur: 9.8px;
+  --prov-glow-spread: 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --prov-human-bg: rgba(63, 185, 80, 0.16);
+    --prov-human-line: #3fb950;
+    --prov-ai-bg: rgba(227, 152, 33, 0.16);
+    --prov-ai-line: #e39821;
+    --prov-glow-opacity: 11.7%;
+  }
+}
+
+.prov,
+.prov-human,
+.prov-ai,
+[data-prov="human"],
+[data-prov="ai"] {
+  /* No border/padding/margin/line-height: marks must not affect layout. */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  border-radius: 3px;
+}
+
+.prov-human,
+[data-prov="human"] {
+  --prov-color: var(--prov-human-line);
+  --prov-fallback-bg: var(--prov-human-bg);
+}
+
+.prov-ai,
+[data-prov="ai"] {
+  --prov-color: var(--prov-ai-line);
+  --prov-fallback-bg: var(--prov-ai-bg);
+}
+
+.prov-human,
+.prov-ai,
+[data-prov="human"],
+[data-prov="ai"] {
+  /* The solid tint is a fallback for engines without color-mix(). */
+  background: var(--prov-fallback-bg);
+}
+
+:is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]):not(a) {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--prov-color);
+  text-decoration-thickness: 1.5px;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 5px;
+}
+
+@supports (background: color-mix(in srgb, currentColor 50%, transparent)) {
+  .prov-human,
+  .prov-ai,
+  [data-prov="human"],
+  [data-prov="ai"] {
+    background: linear-gradient(
+      115deg,
+      color-mix(in srgb, var(--prov-color) calc(var(--prov-tint) * 0.45), transparent),
+      color-mix(in srgb, var(--prov-color) calc(var(--prov-tint) * 1.6), transparent) 55%,
+      color-mix(in srgb, var(--prov-color) calc(var(--prov-tint) * 0.6), transparent)
+    );
+    box-shadow: 0 0 var(--prov-glow-blur) var(--prov-glow-spread)
+      color-mix(in srgb, var(--prov-color) var(--prov-glow-opacity), transparent);
+  }
+
+  :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]):not(a) {
+    text-decoration-color: color-mix(in srgb, var(--prov-color) var(--prov-dot-strength), transparent);
+  }
+}
+
+/* Existing link underlines keep their channel. For spelling/grammar cues,
+ * put data-prov-decoration="native" on the enclosing proofing range. */
+a :is(.prov, [data-prov="human"], [data-prov="ai"]),
+[data-prov-decoration="native"] :is(.prov, [data-prov="human"], [data-prov="ai"]):not(a),
+:is(.prov, [data-prov="human"], [data-prov="ai"])[data-prov-decoration="native"]:not(a) {
+  text-decoration: none;
+}
+
+/* Comment anchors and other native fills can retain their own background. */
+[data-prov-background="native"] :is(.prov, [data-prov="human"], [data-prov="ai"]),
+:is(.prov, [data-prov="human"], [data-prov="ai"])[data-prov-background="native"] {
+  background: none;
+  box-shadow: none;
+}
+
+@media (forced-colors: active) {
+  .prov-human,
+  .prov-ai,
+  [data-prov="human"],
+  [data-prov="ai"] {
+    background: none;
+    box-shadow: none;
+    text-decoration-color: currentColor;
+  }
+}
+
+}
