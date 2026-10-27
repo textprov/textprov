@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { test } from "node:test";
-import { HIDDEN, SHOWN, STORAGE_KEY, initProvenanceDisplay } from "./provenance.js";
+import { DISPLAY_KEY, HIDDEN, SHOWN, STORAGE_KEY, initProvenanceDisplay } from "./provenance.js";
 
 const textprov = createRequire(import.meta.url)("../js/textprov.js");
 const HUMAN = "\u{E0100}";
@@ -40,6 +40,7 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
       this.listeners[event] = callback;
     },
   };
+  const mode = { value: "passage", disabled: false, listeners: {}, addEventListener(event, callback) { this.listeners[event] = callback; } };
   const elements = { "prov-legend": { hidden: true } };
   const regionElements = regions.map((textContent) => ({ textContent }));
   const rendered = [];
@@ -48,6 +49,7 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
     querySelectorAll(selector) {
       if (selector === "[data-prov-document]") return regionElements;
       if (selector === "[data-prov-toggle]") return [toggle];
+      if (selector === "[data-prov-display-control]") return [mode];
       return [];
     },
     getElementById: (id) => elements[id] ?? null,
@@ -61,7 +63,7 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
     },
   };
   const counts = initProvenanceDisplay({ document, textprov: api, storage });
-  return { counts, root, toggle, elements, rendered, storage };
+  return { counts, root, toggle, mode, elements, rendered, storage };
 }
 
 test("pages without a document region are left alone", () => {
@@ -111,4 +113,20 @@ test("unknown stored values and blocked storage fall back to shown", () => {
 test("the simple legend is revealed after display initialization", () => {
   const { elements } = page();
   assert.equal(elements["prov-legend"].hidden, false);
+});
+
+
+test("passages are the default and exact display persists without changing source", () => {
+  const source = "x" + AI + " plain";
+  const { root, mode, storage, rendered, toggle } = page({ regions: [source] });
+  assert.equal(root.dataset.provDisplay, "passage");
+  assert.equal(mode.disabled, false);
+  mode.value = "exact"; mode.listeners.change();
+  assert.equal(root.dataset.provDisplay, "exact");
+  assert.equal(storage.store.get(DISPLAY_KEY), "exact");
+  assert.equal(rendered[0].region.textContent, source);
+  toggle.listeners.click();
+  assert.equal(mode.disabled, true);
+  assert.equal(page({ storage }).root.dataset.provDisplay, "exact");
+  assert.equal(page({ storage: memoryStorage({ [DISPLAY_KEY]: "word" }) }).root.dataset.provDisplay, "passage");
 });
