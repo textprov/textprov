@@ -40,6 +40,10 @@ __all__ = [
     "load_mapping",
     "mark",
     "mark_added",
+    "mark_chat",
+    "mark_chat_parts",
+    "mark_document",
+    "mark_document_edit",
     "runs",
     "segments",
     "strip_marks",
@@ -47,10 +51,28 @@ __all__ = [
     "to_html",
 ]
 
-from importlib.metadata import PackageNotFoundError
-from importlib.metadata import version as _pkg_version
+from ._version import __version__
 
-try:
-    __version__ = _pkg_version("textprov")
-except PackageNotFoundError:
-    __version__ = "0.0.0+unknown"
+
+def mark_chat(text, role, scope="prose"):
+    """Apply the chat speaker policy at the selected scope, preserving marks."""
+    from .marking import mark_chat as operation
+    return operation(text, role, scope=scope)
+
+
+def mark_chat_parts(parts, role, scope="prose"):
+    """Mark complete chat text across parts, retaining their original boundaries."""
+    from .marking import mark_chat_parts as operation
+    return operation(parts, role, scope=scope)
+
+
+def mark_document(text):
+    """Mark new AI document prose while preserving marks and protected syntax."""
+    from .marking import mark_document as operation
+    return operation(text)
+
+
+def mark_document_edit(old_text, new_text):
+    """Mark AI document changes and carry unchanged existing marks."""
+    from .marking import mark_document_edit as operation
+    return operation(old_text, new_text)

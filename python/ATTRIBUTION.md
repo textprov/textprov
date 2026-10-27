@@ -189,6 +189,12 @@ I󠄁f󠄁 t󠄁e󠄁x󠄁t󠄁 e󠄁x󠄁p󠄁i󠄁r󠄁e󠄁s󠄁 b󠄁e󠄁t�
 a󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁 o󠄁r󠄁 r󠄁e󠄁s󠄁t󠄁o󠄁r󠄁e󠄁 p󠄁a󠄁y󠄁l󠄁o󠄁a󠄁d󠄁s󠄁 b󠄁y󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁i󠄁n󠄁g󠄁 d󠄁e󠄁l󠄁i󠄁v󠄁e󠄁r󠄁y󠄁 k󠄁e󠄁y󠄁s󠄁. C󠄁l󠄁a󠄁i󠄁m󠄁s󠄁 c󠄁a󠄁n󠄁 c󠄁o󠄁n󠄁f󠄁l󠄁i󠄁c󠄁t󠄁, a󠄁n󠄁d󠄁
 t󠄁h󠄁i󠄁s󠄁 m󠄁o󠄁d󠄁u󠄁l󠄁e󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 c󠄁h󠄁o󠄁o󠄁s󠄁e󠄁 a󠄁 w󠄁i󠄁n󠄁n󠄁e󠄁r󠄁 o󠄁r󠄁 p󠄁e󠄁r󠄁s󠄁i󠄁s󠄁t󠄁 t󠄁h󠄁e󠄁 c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁 l󠄁i󠄁s󠄁t󠄁.
 
+For an atomic transfer of existing supplied source claims, use the shared
+`transfer()` policy instead of assembling separate claims. It requires explicit
+candidate and source-claim selection, recomputes the mapped match, refuses
+conflicts and retains accepted evidence. `resolve()` and explicit classification
+export use the same claims. See [the policy guide](POLICY.md).
+
 ## P󠄁l󠄁u󠄁g󠄁i󠄁n󠄁 a󠄁d󠄁o󠄁p󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁l󠄁i󠄁s󠄁t󠄁
 
 - K󠄁e󠄁e󠄁p󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁a󠄁l󠄁 c󠄁a󠄁p󠄁t󠄁u󠄁r󠄁e󠄁, v󠄁i󠄁s󠄁i󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁, c󠄁o󠄁m󠄁p󠄁l󠄁e󠄁t󠄁e󠄁n󠄁e󠄁s󠄁s󠄁, t󠄁y󠄁p󠄁e󠄁d󠄁 I󠄁D󠄁s󠄁 a󠄁n󠄁d󠄁 d󠄁e󠄁l󠄁i󠄁v󠄁e󠄁r󠄁y󠄁 k󠄁e󠄁y󠄁s󠄁.

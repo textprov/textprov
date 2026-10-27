@@ -1,0 +1,7 @@
+{
+  "prompt": {"hook_event_name": "UserPromptSubmit", "session_id": "fixture-session", "cwd": "/fixture/project", "turn_id": "turn-1", "model": "fixture-model", "permission_mode": "default", "prompt": "Quoted café\r\n辻󠄀 👩‍💻"},
+  "pre": {"hook_event_name": "PreToolUse", "session_id": "fixture-session", "cwd": "/fixture/project", "turn_id": "turn-1", "tool_use_id": "call-1", "tool_name": "Bash", "tool_input": {"command": "printf '%s\\n' 'Quoted café'", "timeout_ms": 1000}},
+  "post": {"hook_event_name": "PostToolUse", "session_id": "fixture-session", "cwd": "/fixture/project", "turn_id": "turn-1", "tool_use_id": "call-1", "tool_name": "Bash", "tool_input": {"command": "printf '%s\\n' 'Quoted café'", "timeout_ms": 1000}, "tool_response": {"output": "Quoted café\n", "exit_code": 0}},
+  "stop": {"hook_event_name": "Stop", "session_id": "fixture-session", "cwd": "/fixture/project", "turn_id": "turn-1", "stop_hook_active": false, "last_assistant_message": "The command completed."},
+  "subagent": {"hook_event_name": "SubagentStop", "session_id": "fixture-session", "cwd": "/fixture/project", "turn_id": "turn-1", "agent_id": "child-1", "agent_type": "fixture-reviewer", "stop_hook_active": false, "last_assistant_message": "I checked the fixture."}
+}
