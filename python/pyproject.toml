@@ -32,4 +32,4 @@ build-backend = "setuptools.build_meta"
 packages = ["textprov"]
 
 [tool.setuptools.package-data]
-textprov = ["mapping.json"]
+textprov = ["mapping.json", "textprov.css"]

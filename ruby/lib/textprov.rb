@@ -5,3 +5,4 @@
 require_relative "textprov/version"
 require_relative "textprov/core"
 require_relative "textprov/encode"
+require_relative "textprov/display"

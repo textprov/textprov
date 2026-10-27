@@ -14,6 +14,8 @@ jobs:
         with:
           python-version: '3.13'
       - run: python tools/check_docs.py
+      - name: Shared reveal stylesheet
+        run: python tools/sync_display_styles.py --check
       - name: License copies
         run: |
           diff -q python/LICENSE js/LICENSE

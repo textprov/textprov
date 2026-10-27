@@ -27,6 +27,7 @@ from ._core import (
     to_html,
 )
 from ._encode import convert, inspect, mark, mark_added
+from ._display import stylesheet
 
 __all__ = [
     "SPEC_VERSION",
@@ -42,6 +43,7 @@ __all__ = [
     "runs",
     "segments",
     "strip_marks",
+    "stylesheet",
     "to_html",
 ]
 
