@@ -1,0 +1,73 @@
+{
+  "format_version": 1,
+  "date": "2026-10-27",
+  "variant": "P*",
+  "machine_suffix": "PStar",
+  "source": "installed dotted Agave P+; original registry preserved",
+  "builder": "tools/fonts/build_pstar.py",
+  "builder_sha256": "de75791b76112cca90dc5711074961d022e68dc5bfd404d370167925a02c9c86",
+  "feature": "rclt",
+  "fonts": [
+    {
+      "source_filename": "AgaveNerdFontMonoP+-Bold.ttf",
+      "source_sha256": "ded1c0e3ad52dbc07c8b35e7c1492a466111163c43346aafbd3cf142866ec9ea",
+      "filename": "AgaveNerdFontMonoPStar-Bold.ttf",
+      "sha256": "353fc3f1f7e5fb1e97904a11a882d73655e48a03c1785fe41d9c23478b120098",
+      "family": "Agave Nerd Font Mono P*",
+      "style": "Bold",
+      "postscript_name": "AgaveNFMPStar-Bold"
+    },
+    {
+      "source_filename": "AgaveNerdFontMonoP+-Regular.ttf",
+      "source_sha256": "734c7feea51f044e8ddcb58c3a8c90232aa69539db5166c7f6a961d76a41e8ec",
+      "filename": "AgaveNerdFontMonoPStar-Regular.ttf",
+      "sha256": "48671f77ce4eabd3a970d99a2859fee37e8cab951f842cdc39a9caab14f8d38c",
+      "family": "Agave Nerd Font Mono P*",
+      "style": "Regular",
+      "postscript_name": "AgaveNFMPStar-Regular"
+    },
+    {
+      "source_filename": "AgaveNerdFontP+-Bold.ttf",
+      "source_sha256": "1df7946bc5e4cc2591c3ba4f578cfea9c7e79f10e6f53409161aabbcd209a7e8",
+      "filename": "AgaveNerdFontPStar-Bold.ttf",
+      "sha256": "71d52662c26d3ae4668bb8a7e20e16a44e0edfd94ce5d954365faff5f7081c1f",
+      "family": "Agave Nerd Font P*",
+      "style": "Bold",
+      "postscript_name": "AgaveNFPStar-Bold"
+    },
+    {
+      "source_filename": "AgaveNerdFontP+-Regular.ttf",
+      "source_sha256": "43e646585b3612e676241a555d33b67f9b63f9dc506fe8cc5db7463cbe2aceac",
+      "filename": "AgaveNerdFontPStar-Regular.ttf",
+      "sha256": "3b4e033f5ac3238467ec50d44da874a77668d21f8cfd13a00f001b5a5f54c063",
+      "family": "Agave Nerd Font P*",
+      "style": "Regular",
+      "postscript_name": "AgaveNFPStar-Regular"
+    },
+    {
+      "source_filename": "AgaveNerdFontPropoP+-Bold.ttf",
+      "source_sha256": "660c8fa64fa9a0b1e97dbeb02bd993e21c4b2950c374b1c0d0122cbd7046e600",
+      "filename": "AgaveNerdFontPropoPStar-Bold.ttf",
+      "sha256": "a586163bdf766bc05aaa98585eb9d09e9c9106934d7a6a44cc277b84ba833422",
+      "family": "Agave Nerd Font Propo P*",
+      "style": "Bold",
+      "postscript_name": "AgaveNFPPStar-Bold"
+    },
+    {
+      "source_filename": "AgaveNerdFontPropoP+-Regular.ttf",
+      "source_sha256": "2ab508b8da089aa4989048f774544aca6cc9ef1bede3e385b8e41a7251e57a56",
+      "filename": "AgaveNerdFontPropoPStar-Regular.ttf",
+      "sha256": "0a4bbe479ff87f1a2dfc8b0dc6565369a82f54d798802f944ca7d1a89052b9ab",
+      "family": "Agave Nerd Font Propo P*",
+      "style": "Regular",
+      "postscript_name": "AgaveNFPPStar-Regular"
+    }
+  ],
+  "validation": {
+    "harfbuzz_samples_per_face": 1161,
+    "coretext_samples_per_face": 393,
+    "chromium_space_ink": "pass",
+    "chromium_and_webkit_layout": "identical at 375, 760, 1220px across all six pairs",
+    "webkit_space_ink": "not supported in tested Playwright WebKit; same pixels as P+"
+  }
+}
