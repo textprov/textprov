@@ -5,7 +5,7 @@
  * Classifications are human and ai; these styles do not implement voice references.
  * Mapping: ../experiments/baseline/mapping.json (experimental version 0.2).
  * Applications may choose other presentation without changing the stored text.
- * The reveal treatment is gradient mist with a 60%-strength dotted underline.
+ * The reveal treatment is gradient mist with an 80%-strength dotted underline.
  * The former wavy/sawtooth provenance underline is obsolete.
  */
 
@@ -13,15 +13,15 @@
 @layer textprov {
 
 :root {
-  --prov-human-bg: rgba(46, 160, 67, 0.12);
+  --prov-human-bg: rgba(46, 160, 67, 0.14);
   --prov-human-line: #2ea043;
-  --prov-ai-bg: rgba(199, 125, 0, 0.12);
+  --prov-ai-bg: rgba(199, 125, 0, 0.14);
   --prov-ai-line: #c77d00;
-  --prov-tint: 9%;
-  --prov-dot-strength: 60%;
-  --prov-glow-opacity: 18%;
-  --prov-glow-blur: 9.8px;
-  --prov-glow-spread: 3px;
+  --prov-tint: 14%;
+  --prov-dot-strength: 80%;
+  --prov-glow-opacity: 27%;
+  --prov-glow-blur: 11.2px;
+  --prov-glow-spread: 4px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,7 +30,7 @@
     --prov-human-line: #3fb950;
     --prov-ai-bg: rgba(227, 152, 33, 0.16);
     --prov-ai-line: #e39821;
-    --prov-glow-opacity: 11.7%;
+    --prov-glow-opacity: 17.55%;
   }
 }
 
