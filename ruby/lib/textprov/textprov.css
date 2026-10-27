@@ -17,6 +17,8 @@
   --prov-human-line: #2ea043;
   --prov-ai-bg: rgba(199, 125, 0, 0.14);
   --prov-ai-line: #c77d00;
+  --prov-mixed-line: #6e7781;
+  --prov-mixed-bg: rgba(110, 119, 129, 0.14);
   --prov-tint: 14%;
   --prov-dot-strength: 80%;
   --prov-glow-opacity: 27%;
@@ -30,6 +32,8 @@
     --prov-human-line: #3fb950;
     --prov-ai-bg: rgba(227, 152, 33, 0.16);
     --prov-ai-line: #e39821;
+    --prov-mixed-line: #a0a7b0;
+    --prov-mixed-bg: rgba(160, 167, 176, 0.16);
     --prov-glow-opacity: 17.55%;
   }
 }
@@ -38,7 +42,8 @@
 .prov-human,
 .prov-ai,
 [data-prov="human"],
-[data-prov="ai"] {
+[data-prov="ai"],
+[data-prov-passage] {
   /* No border/padding/margin/line-height: marks must not affect layout. */
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -46,13 +51,15 @@
 }
 
 .prov-human,
-[data-prov="human"] {
+[data-prov="human"],
+[data-prov-passage="human"] {
   --prov-color: var(--prov-human-line);
   --prov-fallback-bg: var(--prov-human-bg);
 }
 
 .prov-ai,
-[data-prov="ai"] {
+[data-prov="ai"],
+[data-prov-passage="ai"] {
   --prov-color: var(--prov-ai-line);
   --prov-fallback-bg: var(--prov-ai-bg);
 }
@@ -60,12 +67,13 @@
 .prov-human,
 .prov-ai,
 [data-prov="human"],
-[data-prov="ai"] {
+[data-prov="ai"],
+[data-prov-passage] {
   /* The solid tint is a fallback for engines without color-mix(). */
   background: var(--prov-fallback-bg);
 }
 
-:is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]):not(a) {
+:is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]):not(a) {
   text-decoration-line: underline;
   text-decoration-style: dotted;
   text-decoration-color: var(--prov-color);
@@ -78,7 +86,8 @@
   .prov-human,
   .prov-ai,
   [data-prov="human"],
-  [data-prov="ai"] {
+  [data-prov="ai"],
+  [data-prov-passage] {
     background: linear-gradient(
       115deg,
       color-mix(in srgb, var(--prov-color) calc(var(--prov-tint) * 0.45), transparent),
@@ -89,31 +98,50 @@
       color-mix(in srgb, var(--prov-color) var(--prov-glow-opacity), transparent);
   }
 
-  :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]):not(a) {
+  :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]):not(a) {
     text-decoration-color: color-mix(in srgb, var(--prov-color) var(--prov-dot-strength), transparent);
   }
 }
 
-/* Existing link underlines keep their channel. For spelling/grammar cues,
- * put data-prov-decoration="native" on the enclosing proofing range. */
-a :is(.prov, [data-prov="human"], [data-prov="ai"]),
-[data-prov-decoration="native"] :is(.prov, [data-prov="human"], [data-prov="ai"]):not(a),
-:is(.prov, [data-prov="human"], [data-prov="ai"])[data-prov-decoration="native"]:not(a) {
+/* A group describes a passage containing marks, not every character's origin. */
+[data-prov-passage="mixed"] {
+  --prov-color: var(--prov-mixed-line);
+  --prov-fallback-bg: var(--prov-mixed-bg);
+}
+
+/* Exact spans always remain in the DOM. Only the chosen display layer paints. */
+[data-prov-passage] [data-prov]:not([data-prov-display="exact"] *),
+[data-prov-display="exact"] [data-prov-passage] {
+  background: none;
+  box-shadow: none;
   text-decoration: none;
 }
 
+/* Existing link underlines keep their channel. For spelling/grammar cues,
+ * put data-prov-decoration="native" on the enclosing proofing range. */
+a :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]),
+[data-prov-decoration="native"] :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]):not(a),
+:is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage])[data-prov-decoration="native"]:not(a) {
+  text-decoration: none;
+}
+
+[data-prov-passage]:has([data-prov-decoration="native"]) { text-decoration: none; }
+
 /* Comment anchors and other native fills can retain their own background. */
-[data-prov-background="native"] :is(.prov, [data-prov="human"], [data-prov="ai"]),
-:is(.prov, [data-prov="human"], [data-prov="ai"])[data-prov-background="native"] {
+[data-prov-background="native"] :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]),
+:is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage])[data-prov-background="native"] {
   background: none;
   box-shadow: none;
 }
+
+[data-prov-passage]:has([data-prov-background="native"]) { background: none; box-shadow: none; }
 
 @media (forced-colors: active) {
   .prov-human,
   .prov-ai,
   [data-prov="human"],
-  [data-prov="ai"] {
+  [data-prov="ai"],
+  [data-prov-passage] {
     background: none;
     box-shadow: none;
     text-decoration-color: currentColor;
