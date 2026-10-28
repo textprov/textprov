@@ -115,7 +115,7 @@ class TestObsoleteSelectors(unittest.TestCase):
                         )
                         rendered = span(state, expected) if state else expected
                         self.assertEqual(
-                            textprov.to_html(text, strip=strip), rendered
+                            textprov.to_html(text, strip=strip, display="exact"), rendered
                         )
                     for from_mode, to_mode in (("vs", "pua"), ("pua", "vs")):
                         # No cluster here is a base and its ai selector alone.
@@ -230,6 +230,8 @@ class TestToHtml(unittest.TestCase):
     """The renderer: span shape, escaping, options."""
 
     def render(self, text, **options):
+        options.setdefault("display", "exact")
+        options.setdefault("merge_whitespace", True)
         return textprov.to_html(text, **options)
 
     def test_empty_and_plain(self):

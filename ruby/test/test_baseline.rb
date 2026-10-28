@@ -38,7 +38,7 @@ class TestObsoleteSelectors < Minitest::Test
           expected = strip && state ? text[0...-1] : text
           assert_equal [[state, expected]], Textprov.runs(text, strip: strip)
           rendered = state ? span(state, expected) : expected
-          assert_equal rendered, Textprov.to_html(text, strip: strip)
+          assert_equal rendered, Textprov.to_html(text, strip: strip, display: "exact")
         end
         [["vs", "pua"], ["pua", "vs"]].each do |from_mode, to_mode|
           # No cluster here is a base and its ai selector alone.
@@ -162,51 +162,56 @@ class TestSegments < Minitest::Test
 end
 
 class TestToHtml < Minitest::Test
+  def render(text, **options)
+    options[:merge_whitespace] = true unless options.key?(:merge_whitespace) || options.key?(:mergeWhitespace)
+    Textprov.to_html(text, display: "exact", **options)
+  end
+
   def test_empty_and_plain
-    assert_equal "", Textprov.to_html("")
-    assert_equal "plain", Textprov.to_html("plain")
+    assert_equal "", render("")
+    assert_equal "plain", render("plain")
   end
 
   def test_span_shape
-    assert_equal span("ai", "a#{AI}"), Textprov.to_html("a#{AI}")
+    assert_equal span("ai", "a#{AI}"), render("a#{AI}")
   end
 
   def test_escaping
-    assert_equal "&lt;&amp;&quot;", Textprov.to_html(%(<&"))
+    assert_equal "&lt;&amp;&quot;", render(%(<&"))
     assert_equal(
       span("ai", "&lt;#{AI}&amp;#{AI}&quot;#{AI}"),
-      Textprov.to_html("<#{AI}&#{AI}\"#{AI}")
+      render("<#{AI}&#{AI}\"#{AI}")
     )
     assert_equal(
       "#{span("ai", "a#{AI}")}&lt;b#{span("human", "&gt;#{HUMAN}")} &amp; x",
-      Textprov.to_html("a#{AI}<b>#{HUMAN} & x")
+      render("a#{AI}<b>#{HUMAN} & x")
     )
   end
 
   def test_class_prefix
-    out = Textprov.to_html("a#{AI}", class_prefix: "x")
+    out = render("a#{AI}", class_prefix: "x")
 
     assert_equal span("ai", "a#{AI}", prefix: "x"), out
     assert_includes out, 'data-prov="ai"'
   end
 
   def test_merge_whitespace
-    assert_equal span("ai", "a#{AI} b#{AI}"), Textprov.to_html("a#{AI} b#{AI}")
+    assert_equal span("ai", "a#{AI} b#{AI}"), render("a#{AI} b#{AI}")
     assert_equal(
       "#{span("ai", "a#{AI}")} #{span("ai", "b#{AI}")}",
-      Textprov.to_html("a#{AI} b#{AI}", merge_whitespace: false)
+      render("a#{AI} b#{AI}", merge_whitespace: false)
     )
   end
 
   def test_merge_whitespace_camelcase_alias
     assert_equal(
       "#{span("ai", "a#{AI}")} #{span("ai", "b#{AI}")}",
-      Textprov.to_html("a#{AI} b#{AI}", mergeWhitespace: false)
+      render("a#{AI} b#{AI}", mergeWhitespace: false)
     )
   end
 
   def test_strip
-    assert_equal span("ai", "a b"), Textprov.to_html("a#{AI} b#{AI}", strip: true)
+    assert_equal span("ai", "a b"), render("a#{AI} b#{AI}", strip: true)
   end
 
   def test_pua_input
@@ -214,14 +219,14 @@ class TestToHtml < Minitest::Test
 
     assert_equal "ai", pua_state
     assert_equal span("ai", pua_base.chr(Encoding::UTF_8) + AI),
-                 Textprov.to_html(pua_cp.chr(Encoding::UTF_8))
+                 render(pua_cp.chr(Encoding::UTF_8))
     assert_equal span("ai", pua_base.chr(Encoding::UTF_8)),
-                 Textprov.to_html(pua_cp.chr(Encoding::UTF_8), strip: true)
+                 render(pua_cp.chr(Encoding::UTF_8), strip: true)
   end
 
   def test_span_text_reproduces_the_input
     source = "x<y#{AI} & #{FAMILY}#{HUMAN}\n\"z\""
-    rendered = Textprov.to_html(source)
+    rendered = render(source)
     [span("ai", ""), span("human", "")].each do |tag|
       open_tag = tag.sub("</span>", "")
       rendered = rendered.sub(open_tag, "") while rendered.include?(open_tag)

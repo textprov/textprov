@@ -1,0 +1,65 @@
+{
+  "format_version": 1,
+  "patch": "nerd-fonts-dotted-provenance.patch",
+  "patch_sha256": "7f6cd7ee9ee58531a1dd3339c4c003295e7a672983b818ef075dbce1c6ef5c34",
+  "source_files": [
+    {
+      "path": "font-patcher",
+      "old_sha256": "c6bfced8dd657badbddda169839e41781303f4126133da03a31511d5793ac6f8",
+      "new_sha256": "731b3a799d7a20a7e53f253c0779055e2fc45a2d1fd35148c8a864711d3f4641"
+    },
+    {
+      "path": "src/glyphs/provenance/README.md",
+      "old_sha256": "16be1eee55d6f4b4721bf21a2d5a4c02f54754babaaa6394ba19cafab37c93fb",
+      "new_sha256": "deeacd82d78896b338c35cf38d844d3d924d7a11596c40a28c3438ff6e0bce75"
+    },
+    {
+      "path": "bin/scripts/refresh-provenance-dots.py",
+      "old_sha256": null,
+      "new_sha256": "c038a54633c15d0d86bfb0cdcf5a19616d57c6f686e495f7766c8420fac6333a"
+    },
+    {
+      "path": "bin/scripts/test-provenance-dots.py",
+      "old_sha256": null,
+      "new_sha256": "244266ba84392bff1ad4b9dd44e0d484abd305f6372c905e9909d8d5c1894696"
+    }
+  ],
+  "legacy_font_outputs": [
+    {
+      "filename": "AgaveNerdFontMonoP+-Bold.ttf",
+      "old_sha256": "328e1238cacb8b9f2865b3dbf8d1736f0dfcf8e94078714c8f73e696d0a713ca",
+      "new_sha256": "ded1c0e3ad52dbc07c8b35e7c1492a466111163c43346aafbd3cf142866ec9ea"
+    },
+    {
+      "filename": "AgaveNerdFontMonoP+-Regular.ttf",
+      "old_sha256": "3c92276a8d6a40115416f3b1e8187b2309f2a5b6f29a72ae90e31c6e7896924e",
+      "new_sha256": "734c7feea51f044e8ddcb58c3a8c90232aa69539db5166c7f6a961d76a41e8ec"
+    },
+    {
+      "filename": "AgaveNerdFontP+-Bold.ttf",
+      "old_sha256": "f9808ada755caf23589a4385f15784bb48f8d26cbcacf5ca74e163ad9e46ea2b",
+      "new_sha256": "1df7946bc5e4cc2591c3ba4f578cfea9c7e79f10e6f53409161aabbcd209a7e8"
+    },
+    {
+      "filename": "AgaveNerdFontP+-Regular.ttf",
+      "old_sha256": "f9fdca60e49a8ab9b8cfc36d298b1bf0ec43f2b675963ce8c138d645c02749cf",
+      "new_sha256": "43e646585b3612e676241a555d33b67f9b63f9dc506fe8cc5db7463cbe2aceac"
+    },
+    {
+      "filename": "AgaveNerdFontPropoP+-Bold.ttf",
+      "old_sha256": "254ac0211a0db59de4b81ffe5aeb39b3160af0e12642dec2885ccf2655651ff1",
+      "new_sha256": "660c8fa64fa9a0b1e97dbeb02bd993e21c4b2950c374b1c0d0122cbd7046e600"
+    },
+    {
+      "filename": "AgaveNerdFontPropoP+-Regular.ttf",
+      "old_sha256": "c8073d82f24915351fc0578b4a98c4795acadbd994d9fa383f23b82f38d45998",
+      "new_sha256": "2ab508b8da089aa4989048f774544aca6cc9ef1bede3e385b8e41a7251e57a56"
+    }
+  ],
+  "legacy_selectors": [
+    "U+E0100",
+    "U+E0101",
+    "U+E0102"
+  ],
+  "registry_note": "Existing installed binaries use E0100/E0101/E0102; current source uses unknown E0104. Geometry-only updates retain each original binary mapping."
+}

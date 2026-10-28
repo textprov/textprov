@@ -1,0 +1,425 @@
+--- a/font-patcher
++++ b/font-patcher
+@@ -9 +9 @@
+-script_version = "4.28.0"
++script_version = "4.28.1"
+@@ -381 +381 @@
+-        self.provenance_marks = {} # state -> the 'provenance.mark.<state>' glyph or None
++        self.provenance_marks = {} # (state, advance or None) -> mark glyph or None
+@@ -550 +550 @@
+-            self.derive_provenance_glyph(ai, base_glyph, self.create_provenance_mark("ai"))
++            self.derive_provenance_glyph(ai, base_glyph, self.create_provenance_mark("ai", base_glyph.width))
+@@ -585,0 +586,3 @@
++            elif self.args.provenance == 'explicit' and mark.glyphname.startswith('provenance.mark.ai.'):
++                # Dotted strips are built at the actual advance width, preserving round dots.
++                glyph.addReference(mark.glyphname)
+@@ -587 +590 @@
+-                # The canonical 'explicit' marks span 0 .. em, scale them onto the advance width
++                # The legacy explicit unknown bar spans 0 .. em; scale it to the advance width.
+@@ -595 +598 @@
+-    def create_provenance_mark(self, state):
++    def create_provenance_mark(self, state, advance=None):
+@@ -597,5 +600,7 @@
+-        # 'human' is never marked: unmarked text is assumed human, so an explicit
+-        # human mark would make the two states differ, which M1 forbids.
+-        if state in self.provenance_marks:
+-            return self.provenance_marks[state]
+-        self.provenance_marks[state] = None
++        # This legacy font profile leaves explicit human variants plain.
++        # That display choice makes no inference about unmarked text.
++        dotted = self.args.provenance == 'explicit' and state == 'ai'
++        cache_key = (state, advance if dotted else None)
++        if cache_key in self.provenance_marks:
++            return self.provenance_marks[cache_key]
++        self.provenance_marks[cache_key] = None
+@@ -622 +627,4 @@
+-        mark = self.sourceFont.createChar(-1, 'provenance.mark.' + state)
++        mark_name = 'provenance.mark.' + state
++        if dotted:
++            mark_name += '.' + str(int(advance if advance is not None else em))
++        mark = self.sourceFont.createChar(-1, mark_name)
+@@ -642,6 +650 @@
+-            # Canonical bar over 0 .. em, scaled per glyph in derive_provenance_glyph(),
+-            # so a marked run reads as one continuous underline. The bar is the
+-            # rarer 'unknown' mark, not the 'ai' one: on its own a plain
+-            # underline is too easily read as link or spell-check styling, and
+-            # unknown text mostly appears alongside AI text, where the sawtooth
+-            # has already established that these are provenance marks.
++            # Preserve the legacy unknown-state bar and its encoded reachability.
+@@ -654,25 +657,15 @@
+-            # 'ai', the mark people see most: a single triangle per cell. Both
+-            # ends sit in the valley, so consecutive cells join and a marked run
+-            # reads as one continuous sawtooth rather than a row of chevrons.
+-            # The shape is not an existing text-decoration convention, which is
+-            # the point.
+-            #
+-            # Nominally three times the weight of the bar. A horizontal bar
+-            # snaps into one pixel row and renders dark at any weight, whereas a
+-            # diagonal stroke is spread across rows and antialiased to grey:
+-            # at em/48 the wave was barely visible in CoreText at 14-16px, at
+-            # em/16 it has the same perceived weight as the bar.
+-            thickness = min(em / 16, usable)
+-            y0 = self.font_dim['ymin'] + margin
+-            amplitude = min(em / 8, usable - thickness)
+-            spine = ((0, y0), (em / 2, y0 + amplitude), (em, y0))
+-            # Stroked by offsetting the spine vertically: the outline stays a
+-            # straight-line polygon, and the apparent weight thins slightly on the
+-            # diagonals, which is what a drawn stroke would do anyway. Upper edge
+-            # first, left to right, so the contour runs clockwise like the bar.
+-            pen.moveTo((spine[0][0], spine[0][1] + thickness))
+-            for x, y in spine[1:]:
+-                pen.lineTo((x, y + thickness))
+-            for point in reversed(spine):
+-                pen.lineTo(point)
+-            pen.closePath()
++            # Explicit AI inspection uses a repeated dotted strip. The former
++            # sawtooth presentation is defunct. Build at the actual advance,
++            # rather than stretching an em-wide mark into narrow ellipses.
++            width = advance if advance is not None else em
++            count = max(1, int(round(width / (em / 6))))
++            pitch = width / count
++            radius = min(em / 32, usable / 2, pitch / 4)
++            cy = self.font_dim['ymin'] + margin + radius
++            for index in range(count):
++                cx = (index + 0.5) * pitch
++                pen.moveTo((cx, cy + radius))
++                for corner in range(1, 8):
++                    angle = corner * math.pi / 4
++                    pen.lineTo((cx + radius * math.sin(angle), cy + radius * math.cos(angle)))
++                pen.closePath()
+@@ -680 +673 @@
+-        mark.width = em
++        mark.width = (advance if advance is not None else em) if dotted else em
+@@ -683 +676 @@
+-        self.provenance_marks[state] = mark
++        self.provenance_marks[cache_key] = mark
+--- a/src/glyphs/provenance/README.md
++++ b/src/glyphs/provenance/README.md
+@@ -67,8 +67,6 @@
+-The patcher currently generates variants for human, AI, and unknown. The
+-protocol's Generated set is now human, AI, and mixed (see the states table
+-in [SPEC.md](https://github.com/textprov/textprov/blob/main/SPEC.md#states)):
+-the font-patcher lags one state behind the spec and still emits `.unknown`
+-where it should emit `.mixed`. The other two states (`edited`, and now
+-`unknown`) are Proposed in the registry and generated by no producer.
+-Unmarked text has no in-band state; the protocol takes no position on what
+-it means.
++The patcher r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 a󠄁 h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁i󠄁c󠄁a󠄁l󠄁 h󠄁u󠄁m󠄁a󠄁n󠄁,󠄁 A󠄁I󠄁,󠄁 a󠄁n󠄁d󠄁 u󠄁n󠄁k󠄁n󠄁o󠄁w󠄁n󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁 f󠄁o󠄁r󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁
++P󠄁+󠄁 f󠄁o󠄁n󠄁t󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁s󠄁 t󠄁h󠄁o󠄁s󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁e󠄁d󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁s󠄁 a󠄁n󠄁d󠄁
++v󠄁a󠄁r󠄁i󠄁a󠄁n󠄁t󠄁 r󠄁e󠄁a󠄁c󠄁h󠄁a󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁.󠄁 I󠄁t󠄁 d󠄁o󠄁e󠄁s󠄁 n󠄁o󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁 t󠄁h󠄁e󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁s󠄁a󠄁l󠄁'󠄁s󠄁
++v󠄁o󠄁i󠄁c󠄁e󠄁-󠄁r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁.󠄁 U󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁 s󠄁u󠄁p󠄁p󠄁l󠄁i󠄁e󠄁d󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁;󠄁 t󠄁h󠄁e󠄁s󠄁e󠄁 f󠄁o󠄁n󠄁t󠄁
++s󠄁t󠄁y󠄁l󠄁e󠄁s󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 i󠄁m󠄁p󠄁l󠄁y󠄁 h󠄁u󠄁m󠄁a󠄁n󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁.󠄁 T󠄁h󠄁e󠄁 T󠄁e󠄁x󠄁t󠄁P󠄁r󠄁o󠄁v󠄁 r󠄁e󠄁p󠄁o󠄁s󠄁i󠄁t󠄁o󠄁r󠄁y󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁
++f󠄁o󠄁r󠄁 t󠄁h󠄁e󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 a󠄁n󠄁d󠄁 S󠄁D󠄁K󠄁 i󠄁m󠄁p󠄁l󠄁e󠄁m󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁.󠄁
+@@ -203,45 +201,28 @@
+-| `explicit`  | Reference to base glyph | Base glyph plus a bar under the cell        | Base glyph plus a sawtooth under the cell   |
+-
+-`.human` is never marked, in any style. A visible mark on human text would
+-make explicitly-marked human differ visually from unmarked text, which M1
+-forbids.
+-
+-`subtle` marks with an octagonal dot of radius `em/12`, centred under the cell.
+-That is about the size of a typical period (Hack's is `em/6.3` wide): it reads
+-as punctuation up close, which is the cost of being visible at terminal sizes at
+-all. The earlier `em/24` dot did not register at 14px (issue #11). A hairline
+-rule was prototyped as an alternative and rejected: it differed from `explicit`
+-only in weight, and at terminal sizes both land in the same pixel row, so the
+-distinction survived only as a grey level.
+-
+-`explicit` carries state in the shape of a stroke below the baseline, not in
+-its position: `ai` is a single triangle of amplitude `em/8` with both ends in
+-the valley, so consecutive cells join and a run reads as one continuous
+-sawtooth, and `unknown` is a straight bar over the whole cell, so a run reads
+-as a continuous underline. The sawtooth outline is the spine offset vertically,
+-which keeps it a straight-line polygon and thins the apparent weight slightly
+-on the diagonals, as a drawn stroke would.
+-
+-The bar is `em/48` thick and the sawtooth `em/16`, three times as much. The
+-nominal weights differ so that the perceived weights match: a horizontal bar
+-snaps into a single pixel row and renders dark at any size, whereas a diagonal
+-stroke is spread across rows and antialiased to grey. At `em/48` the sawtooth
+-was barely visible in CoreText at 14 to 16px (it had been checked only through
+-FreeType, where the bar had been the `ai` mark); at `em/16` it reads at the
+-same weight as the bar in both rasterisers. Amplitudes of `em/10` and `em/8`
+-were compared at that weight; `em/8` was chosen because a heavier stroke needs
+-more height to still read as a wave rather than a smeared band.
+-
+-The assignment is deliberate. The `ai` mark is the one people will see most,
+-and inline provenance is not yet a convention readers recognise, so the mark
+-has to be distinctive without being distracting. A plain underline fails the
+-first half: on its own it reads as link or spell-check styling. The sawtooth
+-matches no existing text decoration, so it establishes "this is a provenance
+-mark" by itself. `unknown` text mostly appears in output that also contains
+-AI text, and once the sawtooth has set the vocabulary the bar beside it is
+-read as a second provenance state rather than as an underline.
+-
+-A dashed rule was tried for `unknown` first and rejected: at terminal sizes it
+-differed from the bar only in how much of each cell was inked. An earlier
+-build had the shapes the other way round (bar for `ai`, sawtooth for
+-`unknown`); it was swapped for the reason above.
++| `explicit`  | Reference to base glyph | Base glyph plus t󠄁h󠄁e󠄁 l󠄁e󠄁g󠄁a󠄁c󠄁y󠄁 b󠄁a󠄁r󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 c󠄁e󠄁l󠄁l󠄁 | B󠄁a󠄁s󠄁e󠄁 g󠄁l󠄁y󠄁p󠄁h󠄁 p󠄁l󠄁u󠄁s󠄁 a󠄁 r󠄁e󠄁p󠄁e󠄁a󠄁t󠄁e󠄁d󠄁 d󠄁o󠄁t󠄁t󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁 |
++
++T󠄁h󠄁e󠄁 f󠄁o󠄁r󠄁m󠄁e󠄁r󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 i󠄁s󠄁 d󠄁e󠄁f󠄁u󠄁n󠄁c󠄁t󠄁.󠄁 N󠄁e󠄁w󠄁l󠄁y󠄁 b󠄁u󠄁i󠄁l󠄁t󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 P󠄁+󠄁 f󠄁o󠄁n󠄁t󠄁s󠄁 u󠄁s󠄁e󠄁
++a󠄁 d󠄁o󠄁t󠄁t󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁.󠄁 E󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁 f󠄁o󠄁n󠄁t󠄁s󠄁 m󠄁u󠄁s󠄁t󠄁 b󠄁e󠄁 r󠄁e󠄁b󠄁u󠄁i󠄁l󠄁t󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁
++o󠄁u󠄁t󠄁l󠄁i󠄁n󠄁e󠄁s󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁;󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁 a󠄁p󠄁p󠄁l󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 s󠄁t󠄁y󠄁l󠄁e󠄁s󠄁h󠄁e󠄁e󠄁t󠄁 c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁 a󠄁 f󠄁o󠄁n󠄁t󠄁.󠄁
++
++T󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 a󠄁p󠄁p󠄁l󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 t󠄁r󠄁e󠄁a󠄁t󠄁m󠄁e󠄁n󠄁t󠄁 i󠄁s󠄁 g󠄁r󠄁a󠄁d󠄁i󠄁e󠄁n󠄁t󠄁 m󠄁i󠄁s󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 d󠄁o󠄁t󠄁t󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁 a󠄁t󠄁
++6󠄁0󠄁%󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁 s󠄁t󠄁r󠄁e󠄁n󠄁g󠄁t󠄁h󠄁.󠄁 P󠄁+󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 m󠄁o󠄁n󠄁o󠄁c󠄁h󠄁r󠄁o󠄁m󠄁e󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 f󠄁a󠄁l󠄁l󠄁b󠄁a󠄁c󠄁k󠄁:󠄁 i󠄁t󠄁s󠄁 d󠄁o󠄁t󠄁s󠄁 u󠄁s󠄁e󠄁 t󠄁h󠄁e󠄁
++a󠄁p󠄁p󠄁l󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁'󠄁s󠄁 t󠄁e󠄁x󠄁t󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁.󠄁 T󠄁h󠄁e󠄁s󠄁e󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 o󠄁u󠄁t󠄁l󠄁i󠄁n󠄁e󠄁 f󠄁o󠄁n󠄁t󠄁s󠄁 d󠄁o󠄁 n󠄁o󠄁t󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁e󠄁 o󠄁p󠄁a󠄁c󠄁i󠄁t󠄁y󠄁,󠄁
++s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁s󠄁,󠄁 b󠄁a󠄁c󠄁k󠄁g󠄁r󠄁o󠄁u󠄁n󠄁d󠄁s󠄁,󠄁 g󠄁r󠄁a󠄁d󠄁i󠄁e󠄁n󠄁t󠄁s󠄁,󠄁 o󠄁r󠄁 g󠄁l󠄁o󠄁w󠄁.󠄁 A󠄁p󠄁p󠄁l󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 f󠄁u󠄁l󠄁l󠄁
++t󠄁r󠄁e󠄁a󠄁t󠄁m󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁d󠄁 g󠄁i󠄁v󠄁e󠄁 s󠄁p󠄁e󠄁l󠄁l󠄁c󠄁h󠄁e󠄁c󠄁k󠄁,󠄁 l󠄁i󠄁n󠄁k󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁c󠄁h󠄁o󠄁r󠄁s󠄁 p󠄁r󠄁i󠄁o󠄁r󠄁i󠄁t󠄁y󠄁.󠄁 A󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁
++c󠄁o󠄁l󠄁o󠄁r󠄁-󠄁f󠄁o󠄁n󠄁t󠄁 p󠄁i󠄁p󠄁e󠄁l󠄁i󠄁n󠄁e󠄁 w󠄁o󠄁u󠄁l󠄁d󠄁 b󠄁e󠄁 n󠄁e󠄁e󠄁d󠄁e󠄁d󠄁 t󠄁o󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁e󠄁 g󠄁r󠄁a󠄁d󠄁i󠄁e󠄁n󠄁t󠄁s󠄁 a󠄁n󠄁d󠄁 a󠄁l󠄁p󠄁h󠄁a󠄁;󠄁 s󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁
++[O󠄁p󠄁e󠄁n󠄁T󠄁y󠄁p󠄁e󠄁 C󠄁O󠄁L󠄁R󠄁 s󠄁p󠄁e󠄁c󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁](https://learn.microsoft.com/en-us/typography/opentype/spec/colr).󠄁
++
++`explicit` d󠄁i󠄁s󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁s󠄁 s󠄁m󠄁a󠄁l󠄁l󠄁 o󠄁c󠄁t󠄁a󠄁g󠄁o󠄁n󠄁a󠄁l󠄁 d󠄁o󠄁t󠄁s󠄁 o󠄁v󠄁e󠄁r󠄁 e󠄁a󠄁c󠄁h󠄁 g󠄁l󠄁y󠄁p󠄁h󠄁'󠄁s󠄁 a󠄁c󠄁t󠄁u󠄁a󠄁l󠄁 a󠄁d󠄁v󠄁a󠄁n󠄁c󠄁e󠄁.󠄁
++T󠄁h󠄁e󠄁 r󠄁a󠄁d󠄁i󠄁u󠄁s󠄁 i󠄁s󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁e󠄁d󠄁 b󠄁y󠄁 `em/32`,󠄁 t󠄁h󠄁e󠄁 s󠄁p󠄁a󠄁c󠄁e󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 t󠄁h󠄁e󠄁 b󠄁a󠄁s󠄁e󠄁l󠄁i󠄁n󠄁e󠄁,󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 d󠄁o󠄁t󠄁
++p󠄁i󠄁t󠄁c󠄁h󠄁.󠄁 D󠄁o󠄁t󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 r󠄁o󠄁u󠄁n󠄁d󠄁 r󠄁a󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁n󠄁 s󠄁t󠄁r󠄁e󠄁t󠄁c󠄁h󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁 e󠄁m󠄁-󠄁w󠄁i󠄁d󠄁e󠄁 s󠄁t󠄁r󠄁i󠄁p󠄁 i󠄁n󠄁t󠄁o󠄁 n󠄁a󠄁r󠄁r󠄁o󠄁w󠄁
++e󠄁l󠄁l󠄁i󠄁p󠄁s󠄁e󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁i󠄁r󠄁 o󠄁u󠄁t󠄁l󠄁i󠄁n󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 g󠄁a󠄁p󠄁s󠄁 f󠄁i󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁i󠄁n󠄁 t󠄁h󠄁e󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 c󠄁e󠄁l󠄁l󠄁;󠄁 b󠄁a󠄁s󠄁e󠄁 a󠄁d󠄁v󠄁a󠄁n󠄁c󠄁e󠄁s󠄁
++a󠄁n󠄁d󠄁 v󠄁e󠄁r󠄁t󠄁i󠄁c󠄁a󠄁l󠄁 m󠄁e󠄁t󠄁r󠄁i󠄁c󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 u󠄁n󠄁c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁d󠄁.󠄁 T󠄁h󠄁i󠄁s󠄁 i󠄁s󠄁 a󠄁 r󠄁e󠄁p󠄁e󠄁a󠄁t󠄁e󠄁d󠄁 d󠄁o󠄁t󠄁t󠄁e󠄁d󠄁 c󠄁u󠄁e󠄁,󠄁 n󠄁o󠄁t󠄁 a󠄁
++s󠄁i󠄁m󠄁u󠄁l󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁f󠄁 6󠄁0󠄁%󠄁 o󠄁p󠄁a󠄁c󠄁i󠄁t󠄁y󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 i󠄁n󠄁k󠄁 c󠄁o󠄁v󠄁e󠄁r󠄁a󠄁g󠄁e󠄁.󠄁
++
++`.human` s󠄁t󠄁a󠄁y󠄁s󠄁 v󠄁i󠄁s󠄁u󠄁a󠄁l󠄁l󠄁y󠄁 p󠄁l󠄁a󠄁i󠄁n󠄁 i󠄁n󠄁 t󠄁h󠄁i󠄁s󠄁 h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁i󠄁c󠄁a󠄁l󠄁 p󠄁r󠄁o󠄁f󠄁i󠄁l󠄁e󠄁;󠄁 t󠄁h󠄁a󠄁t󠄁 i󠄁s󠄁 a󠄁 d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁
++c󠄁h󠄁o󠄁i󠄁c󠄁e󠄁,󠄁 n󠄁o󠄁t󠄁 a󠄁n󠄁 i󠄁n󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 a󠄁b󠄁o󠄁u󠄁t󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 u󠄁n󠄁r󠄁e󠄁l󠄁a󠄁t󠄁e󠄁d󠄁 l󠄁e󠄁g󠄁a󠄁c󠄁y󠄁 `.unknown`
++b󠄁a󠄁r󠄁 a󠄁n󠄁d󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 i󠄁n󠄁t󠄁a󠄁c󠄁t󠄁.󠄁 C󠄁h󠄁a󠄁n󠄁g󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 i󠄁s󠄁 o󠄁u󠄁t󠄁s󠄁i󠄁d󠄁e󠄁 t󠄁h󠄁i󠄁s󠄁
++p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 u󠄁p󠄁d󠄁a󠄁t󠄁e󠄁.󠄁
++
++`subtle` k󠄁e󠄁e󠄁p󠄁s󠄁 i󠄁t󠄁s󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁 o󠄁c󠄁t󠄁a󠄁g󠄁o󠄁n󠄁a󠄁l󠄁 d󠄁o󠄁t󠄁 o󠄁f󠄁 r󠄁a󠄁d󠄁i󠄁u󠄁s󠄁 `em/12`,󠄁 c󠄁e󠄁n󠄁t󠄁r󠄁e󠄁d󠄁
++u󠄁n󠄁d󠄁e󠄁r󠄁 t󠄁h󠄁e󠄁 c󠄁e󠄁l󠄁l󠄁.󠄁 I󠄁t󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 a󠄁n󠄁 i󠄁n󠄁d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁e󠄁n󠄁t󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁p󠄁t󠄁i󠄁o󠄁n󠄁.󠄁
+@@ -486 +467 @@
+-`hb-view` can be too faint to see there (the `em/48` sawtooth was). On macOS:
++`hb-view` can be too faint to see there (󠄁a󠄁s󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 t󠄁h󠄁i󠄁n󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 w󠄁e󠄁r󠄁e󠄁)󠄁.󠄁 On macOS:
+@@ -563,3 +544,31 @@
+-test. Compared with the previous install, the glyph count and the full name
+-table should be identical and only the `provenance.mark.*` outlines should
+-differ.
++test. R󠄁e󠄁b󠄁u󠄁i󠄁l󠄁t󠄁 f󠄁o󠄁n󠄁t󠄁s󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁e󠄁d󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁s󠄁,󠄁 b󠄁a󠄁s󠄁e󠄁 a󠄁d󠄁v󠄁a󠄁n󠄁c󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 l󠄁i󠄁n󠄁e󠄁 m󠄁e󠄁t󠄁r󠄁i󠄁c󠄁s󠄁.󠄁
++E󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 A󠄁I󠄁 s󠄁t󠄁r󠄁i󠄁p󠄁s󠄁 a󠄁r󠄁e󠄁 c󠄁a󠄁c󠄁h󠄁e󠄁d󠄁 b󠄁y󠄁 a󠄁d󠄁v󠄁a󠄁n󠄁c󠄁e󠄁 w󠄁i󠄁d󠄁t󠄁h󠄁,󠄁 s󠄁o󠄁 p󠄁r󠄁o󠄁p󠄁o󠄁r󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁s󠄁 c󠄁a󠄁n󠄁
++g󠄁a󠄁i󠄁n󠄁 m󠄁o󠄁r󠄁e󠄁 t󠄁h󠄁a󠄁n󠄁 o󠄁n󠄁e󠄁 `provenance.mark.ai.<width>` g󠄁l󠄁y󠄁p󠄁h󠄁.󠄁 C󠄁h󠄁e󠄁c󠄁k󠄁 t󠄁h󠄁e󠄁s󠄁e󠄁 i󠄁n󠄁v󠄁a󠄁r󠄁i󠄁a󠄁n󠄁t󠄁s󠄁
++w󠄁i󠄁t󠄁h󠄁 `bin/scripts/test-provenance.py` a󠄁n󠄁d󠄁
++`bin/scripts/test-provenance-dots.py --reference OLD_FONT NEW_FONT`.󠄁
++
++### Refreshing an existing P+ font without changing its registry
++
++```bash
++python3 bin/scripts/refresh-provenance-dots.py OLD.ttf NEW.ttf
++python3 bin/scripts/test-provenance-dots.py NEW.ttf --reference OLD.ttf
++```
++
++T󠄁h󠄁e󠄁 u󠄁p󠄁d󠄁a󠄁t󠄁e󠄁r󠄁 a󠄁c󠄁c󠄁e󠄁p󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 f󠄁o󠄁r󠄁m󠄁e󠄁r󠄁 e󠄁x󠄁p󠄁l󠄁i󠄁c󠄁i󠄁t󠄁 s󠄁i󠄁x󠄁-󠄁p󠄁o󠄁i󠄁n󠄁t󠄁 A󠄁I󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 a󠄁n󠄁d󠄁 w󠄁r󠄁i󠄁t󠄁e󠄁s󠄁 a󠄁
++s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁 f󠄁o󠄁n󠄁t󠄁.󠄁 I󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 A󠄁I󠄁 i󠄁n󠄁s󠄁p󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 o󠄁u󠄁t󠄁l󠄁i󠄁n󠄁e󠄁s󠄁,󠄁 c󠄁l󠄁e󠄁a󠄁r󠄁s󠄁 t󠄁h󠄁e󠄁 u󠄁n󠄁u󠄁s󠄁e󠄁d󠄁 o󠄁l󠄁d󠄁
++s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁 c󠄁o󠄁n󠄁t󠄁o󠄁u󠄁r󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁/󠄁P󠄁U󠄁A󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁s󠄁,󠄁 n󠄁a󠄁m󠄁e󠄁s󠄁,󠄁 l󠄁a󠄁y󠄁o󠄁u󠄁t󠄁
++t󠄁a󠄁b󠄁l󠄁e󠄁s󠄁,󠄁 a󠄁d󠄁v󠄁a󠄁n󠄁c󠄁e󠄁s󠄁,󠄁 l󠄁i󠄁n󠄁e󠄁 m󠄁e󠄁t󠄁r󠄁i󠄁c󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 n󠄁o󠄁n󠄁-󠄁A󠄁I󠄁 o󠄁u󠄁t󠄁l󠄁i󠄁n󠄁e󠄁s󠄁.󠄁 K󠄁e󠄁e󠄁p󠄁 t󠄁h󠄁e󠄁 o󠄁l󠄁d󠄁 f󠄁i󠄁l󠄁e󠄁 f󠄁o󠄁r󠄁
++v󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁 c󠄁o󠄁p󠄁y󠄁.󠄁
++
++T󠄁h󠄁e󠄁 s󠄁i󠄁x󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁e󠄁d󠄁 A󠄁g󠄁a󠄁v󠄁e󠄁 P󠄁+󠄁 f󠄁o󠄁n󠄁t󠄁s󠄁 u󠄁s󠄁e󠄁 u󠄁n󠄁k󠄁n󠄁o󠄁w󠄁n󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 U󠄁+󠄁E󠄁0󠄁1󠄁0󠄁2󠄁,󠄁 w󠄁h󠄁i󠄁l󠄁e󠄁
++t󠄁h󠄁i󠄁s󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁o󠄁u󠄁t󠄁'󠄁s󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 a󠄁s󠄁s󠄁i󠄁g󠄁n󠄁s󠄁 u󠄁n󠄁k󠄁n󠄁o󠄁w󠄁n󠄁 U󠄁+󠄁E󠄁0󠄁1󠄁0󠄁4󠄁.󠄁 A󠄁 f󠄁r󠄁e󠄁s󠄁h󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 b󠄁u󠄁i󠄁l󠄁d󠄁
++w󠄁o󠄁u󠄁l󠄁d󠄁 t󠄁h󠄁e󠄁r󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 r󠄁e󠄁a󠄁c󠄁h󠄁a󠄁b󠄁i󠄁l󠄁i󠄁t󠄁y󠄁.󠄁 U󠄁s󠄁e󠄁 t󠄁h󠄁e󠄁 g󠄁e󠄁o󠄁m󠄁e󠄁t󠄁r󠄁y󠄁-󠄁o󠄁n󠄁l󠄁y󠄁
++u󠄁p󠄁d󠄁a󠄁t󠄁e󠄁r󠄁 f󠄁o󠄁r󠄁 t󠄁h󠄁o󠄁s󠄁e󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 f󠄁i󠄁l󠄁e󠄁s󠄁;󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁 m󠄁o󠄁d󠄁e󠄁l󠄁 o󠄁r󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁 i󠄁s󠄁 a󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁
++m󠄁i󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.󠄁 T󠄁h󠄁e󠄁 r󠄁e󠄁f󠄁e󠄁r󠄁e󠄁n󠄁c󠄁e󠄁 c󠄁o󠄁m󠄁p󠄁a󠄁r󠄁i󠄁s󠄁o󠄁n󠄁 v󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁a󠄁l󠄁 b󠄁i󠄁n󠄁a󠄁r󠄁y󠄁'󠄁s󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁s󠄁,󠄁
++n󠄁o󠄁t󠄁 a󠄁 c󠄁l󠄁a󠄁i󠄁m󠄁 o󠄁f󠄁 c󠄁o󠄁n󠄁f󠄁o󠄁r󠄁m󠄁a󠄁n󠄁c󠄁e󠄁 t󠄁o󠄁 t󠄁h󠄁e󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 r󠄁e󠄁g󠄁i󠄁s󠄁t󠄁r󠄁y󠄁.󠄁
++
++U󠄁s󠄁e󠄁 o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 f󠄁o󠄁n󠄁t󠄁s󠄁 f󠄁o󠄁r󠄁 a󠄁p󠄁p󠄁l󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁-󠄁r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁e󠄁d󠄁 g󠄁r󠄁a󠄁d󠄁i󠄁e󠄁n󠄁t󠄁 m󠄁i󠄁s󠄁t󠄁.󠄁 S󠄁e󠄁l󠄁e󠄁c󠄁t󠄁i󠄁n󠄁g󠄁 a󠄁 P󠄁+󠄁
++f󠄁o󠄁n󠄁t󠄁 w󠄁h󠄁i󠄁l󠄁e󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁i󠄁n󠄁g󠄁 i󠄁t󠄁s󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁 d󠄁r󠄁a󠄁w󠄁i󠄁n󠄁g󠄁 C󠄁S󠄁S󠄁 d󠄁o󠄁t󠄁s󠄁 c󠄁a󠄁n󠄁 s󠄁h󠄁o󠄁w󠄁 b󠄁o󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁
++b󠄁a󠄁k󠄁e󠄁d󠄁 f󠄁o󠄁n󠄁t󠄁 d󠄁o󠄁t󠄁s󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 a󠄁p󠄁p󠄁l󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 d󠄁o󠄁t󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁 f󠄁o󠄁n󠄁t󠄁 c󠄁a󠄁n󠄁n󠄁o󠄁t󠄁 s󠄁u󠄁p󠄁p󠄁r󠄁e󠄁s󠄁s󠄁 i󠄁t󠄁s󠄁 c󠄁o󠄁n󠄁t󠄁o󠄁u󠄁r󠄁
++i󠄁n󠄁 r󠄁e󠄁s󠄁p󠄁o󠄁n󠄁s󠄁e󠄁 t󠄁o󠄁 C󠄁S󠄁S󠄁;󠄁 a󠄁n󠄁y󠄁 s󠄁t󠄁r󠄁i󠄁p󠄁p󠄁e󠄁d󠄁 d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 p󠄁r󠄁o󠄁j󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 m󠄁u󠄁s󠄁t󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁 t󠄁h󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁e󠄁d󠄁
++s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 a󠄁n󠄁d󠄁 c󠄁o󠄁p󠄁y󠄁 b󠄁e󠄁h󠄁a󠄁v󠄁i󠄁o󠄁r󠄁 s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁l󠄁y󠄁.󠄁
+@@ -567,0 +577,4 @@
++
++T󠄁h󠄁e󠄁 h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁i󠄁c󠄁a󠄁l󠄁 o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁 d󠄁e󠄁s󠄁c󠄁r󠄁i󠄁b󠄁e󠄁 e󠄁a󠄁r󠄁l󠄁i󠄁e󠄁r󠄁 b󠄁u󠄁i󠄁l󠄁d󠄁s󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁
++f󠄁o󠄁r󠄁m󠄁e󠄁r󠄁 s󠄁a󠄁w󠄁t󠄁o󠄁o󠄁t󠄁h󠄁.󠄁 R󠄁e󠄁c󠄁h󠄁e󠄁c󠄁k󠄁 a󠄁 r󠄁e󠄁b󠄁u󠄁i󠄁l󠄁t󠄁 d󠄁o󠄁t󠄁t󠄁e󠄁d󠄁 f󠄁o󠄁n󠄁t󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 a󠄁p󠄁p󠄁l󠄁y󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁o󠄁s󠄁e󠄁 v󠄁i󠄁s󠄁u󠄁a󠄁l󠄁
++o󠄁b󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 t󠄁o󠄁 i󠄁t󠄁.󠄁
+--- /dev/null
++++ b/bin/scripts/refresh-provenance-dots.py
+@@ -0,0 +1,100 @@
++#!/usr/bin/env python3
++"""Replace an existing explicit P+ sawtooth without migrating its registry.
++
++Usage: refresh-provenance-dots.py OLD.ttf NEW.ttf
++Updates only AI inspection geometry. It never installs the output. Existing
++cmap/UVS, layout tables, names, advances and unrelated outlines are retained.
++Full gradient mist and 60% dot alpha belong to the application stylesheet.
++"""
++import argparse
++import math
++from pathlib import Path
++from fontTools.pens.ttGlyphPen import TTGlyphPen
++from fontTools.ttLib import TTFont
++from fontTools.ttLib.tables._g_l_y_f import GlyphComponent
++
++
++def dotted_strip(advance, em, low, height):
++    count = max(1, int(round(advance / (em / 6))))
++    pitch = advance / count
++    radius = min(em / 32, height / 2, pitch / 4)
++    center_y = low + radius
++    pen = TTGlyphPen(None)
++    for index in range(count):
++        center_x = (index + .5) * pitch
++        pen.moveTo((center_x, center_y + radius))
++        for corner in range(1, 8):
++            angle = corner * math.pi / 4
++            pen.lineTo((center_x + radius * math.sin(angle), center_y + radius * math.cos(angle)))
++        pen.closePath()
++    return pen.glyph()
++
++
++def refresh(source, output):
++    if Path(source).resolve() == Path(output).resolve():
++        raise ValueError('write a separate output; keep the old font for comparison')
++    font = TTFont(source, recalcTimestamp=False, recalcBBoxes=False)
++    if 'glyf' not in font or 'fvar' in font or 'COLR' in font:
++        raise ValueError('expected a static monochrome TrueType P+ font')
++    table = next((table for table in font['cmap'].tables if table.format == 14), None)
++    if table is None or not table.uvsDict.get(0xE0101):
++        raise ValueError('font has no explicit AI selector mapping')
++    glyf, metrics = font['glyf'], font['hmtx']
++    old_mark = 'provenance.mark.ai'
++    if old_mark not in glyf or glyf[old_mark].isComposite() or glyf[old_mark].numberOfContours != 1:
++        raise ValueError('expected the legacy explicit AI sawtooth contour')
++    old = glyf[old_mark]
++    coordinates, ends, _ = old.getCoordinates(glyf)
++    if len(coordinates) != 6 or len(ends) != 1:
++        raise ValueError('AI mark is not the legacy six-point sawtooth; do not replace another style')
++    low, height = old.yMin, old.yMax - old.yMin
++    order = list(font.getGlyphOrder())
++    strips = {}
++    updated = set()
++    for _, variant in table.uvsDict[0xE0101]:
++        if variant in updated:
++            continue
++        glyph = glyf[variant]
++        if not glyph.isComposite():
++            raise ValueError(f'{variant}: expected a composite AI variant')
++        marks = [component for component in glyph.components if component.glyphName == old_mark]
++        if len(marks) != 1:
++            raise ValueError(f'{variant}: expected exactly one legacy AI mark reference')
++        advance = metrics[variant][0]
++        if advance <= 0:
++            raise ValueError(f'{variant}: expected a positive advance')
++        if advance not in strips:
++            name = f'provenance.mark.ai.{advance}'
++            if name in glyf:
++                raise ValueError(f'new strip name is already occupied: {name}')
++            strip = dotted_strip(advance, font['head'].unitsPerEm, low, height)
++            glyf[name] = strip
++            strip.recalcBounds(glyf)
++            metrics[name] = (advance, 0)
++            order.append(name)
++            strips[advance] = name
++        replacement = GlyphComponent()
++        replacement.glyphName = strips[advance]
++        replacement.x = replacement.y = 0
++        replacement.flags = 0
++        glyph.components = [replacement if component is marks[0] else component for component in glyph.components]
++        glyph.recalcBounds(glyf)
++        updated.add(variant)
++    # Leave the old glyph ID stable for layout tables, but remove its defunct
++    # contour. No unused sawtooth survives in the updated font.
++    glyf[old_mark] = TTGlyphPen(None).glyph()
++    font.setGlyphOrder(order)
++    font.save(output)
++    print(f'{Path(output).name}: refreshed {len(updated)} AI variants; {len(strips)} dotted strip(s); registry retained')
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('source')
++    parser.add_argument('output')
++    args = parser.parse_args()
++    refresh(args.source, args.output)
++
++
++if __name__ == '__main__':
++    main()
+--- /dev/null
++++ b/bin/scripts/test-provenance-dots.py
+@@ -0,0 +1,90 @@
++#!/usr/bin/env python3
++"""Check explicit P+ dotted outlines and unchanged mappings/metrics.
++
++Run after test-provenance.py: test-provenance-dots.py FONT [--reference OLD_FONT].
++The font fallback is monochrome; opacity and gradient mist belong to the app.
++"""
++import argparse
++from pathlib import Path
++from fontTools.ttLib import TTFont
++
++
++def check(path, reference=None):
++    font = TTFont(path)
++    glyf = font['glyf']
++    marks = [name for name in font.getGlyphOrder() if name.startswith('provenance.mark.ai.')]
++    assert marks, 'no explicit dotted strips found'
++    dots = 0
++    for name in marks:
++        glyph = glyf[name]
++        assert glyph.numberOfContours > 0, f'{name}: no dots'
++        coords, ends, _ = glyph.getCoordinates(glyf)
++        previous = -1
++        bounds = []
++        centers = []
++        for end in ends:
++            contour = list(coords[previous + 1:end + 1])
++            assert len(contour) == 8, f'{name}: expected an octagonal dot, got {len(contour)} points'
++            xs, ys = zip(*contour)
++            left, right, bottom, top = min(xs), max(xs), min(ys), max(ys)
++            assert right > left and top > bottom, f'{name}: empty dot'
++            assert abs((right-left)-(top-bottom)) <= 2, f'{name}: stretched dot'
++            bounds.append((left,right))
++            centers.append((bottom+top)/2)
++            previous = end
++            dots += 1
++        ordered = sorted(bounds)
++        assert all(left > previous_right for (_,previous_right),(left,_) in zip(ordered,ordered[1:])), f'{name}: joined dots'
++        assert max(centers)-min(centers) <= 1, f'{name}: dot baseline varies'
++        assert glyph.xMin >= 0 and glyph.xMax <= font['hmtx'][name][0], f'{name}: dot exceeds advance'
++
++    uvs = next(table for table in font['cmap'].tables if table.format == 14).uvsDict
++    ai_bases = 0
++    for base, variant in uvs[0xE0101]:
++        assert variant is not None, f'U+{base:04X}: missing explicit AI variant'
++        components = glyf[variant].components
++        assert len(components) == 2, f'{variant}: expected base and dotted strip'
++        strips = [component.getComponentInfo() for component in components if component.glyphName in marks]
++        assert len(strips) == 1, f'{variant}: still uses an obsolete mark'
++        strip, transform = strips[0]
++        assert transform == (1, 0, 0, 1, 0, 0), f'{variant}: dotted strip is stretched'
++        assert font['hmtx'][variant][0] == font['hmtx'][font.getBestCmap()[base]][0], f'{variant}: advance changed'
++        ai_bases += 1
++
++    if reference:
++        old = TTFont(reference)
++        assert font.getBestCmap() == old.getBestCmap(), 'encoded glyph mappings changed'
++        old_uvs = next(table for table in old['cmap'].tables if table.format == 14).uvsDict
++        assert {selector:dict(pairs) for selector,pairs in uvs.items()} == {selector:dict(pairs) for selector,pairs in old_uvs.items()}, 'variation-selector mappings changed'
++        for name in ('hhea', 'OS/2'):
++            fields = ('ascent', 'descent', 'lineGap') if name == 'hhea' else ('sTypoAscender', 'sTypoDescender', 'sTypoLineGap', 'usWinAscent', 'usWinDescent')
++            for field in fields:
++                assert getattr(font[name], field) == getattr(old[name], field), f'{name}.{field}: line metric changed'
++        for name in set(font['hmtx'].metrics) & set(old['hmtx'].metrics):
++            if name.startswith('provenance.mark.ai'):
++                continue
++            assert font['hmtx'][name] == old['hmtx'][name], f'{name}: horizontal metric changed'
++        ai_variants = {variant for _,variant in uvs[0xE0101]}
++        for name in old.getGlyphOrder():
++            if name in ai_variants or name.startswith('provenance.mark.ai'):
++                continue
++            assert glyf[name].getCoordinates(glyf) == old['glyf'][name].getCoordinates(old['glyf']), f'{name}: non-AI outline changed'
++        for tag in ('name', 'GSUB', 'GDEF', 'GPOS', 'kern'):
++            assert (tag in font) == (tag in old), f'{tag}: table presence changed'
++            if tag in old:
++                assert font.getTableData(tag) == old.getTableData(tag), f'{tag}: table changed'
++        assert glyf['provenance.mark.ai'].numberOfContours == 0, 'unused defunct contour survives'
++    scope = 'original mappings, names, layout, non-AI outlines and metrics preserved' if reference else 'AI advances match base glyphs'
++    print(f'PASS {Path(path).name}: {len(marks)} dotted strip(s), {dots} separate round dots, {ai_bases} AI bases; {scope}')
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('font')
++    parser.add_argument('--reference')
++    args = parser.parse_args()
++    check(args.font, args.reference)
++
++
++if __name__ == '__main__':
++    main()

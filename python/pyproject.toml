@@ -35,4 +35,4 @@ packages = ["textprov"]
 version = {attr = "textprov._version.__version__"}
 
 [tool.setuptools.package-data]
-textprov = ["mapping.json"]
+textprov = ["mapping.json", "textprov.css"]

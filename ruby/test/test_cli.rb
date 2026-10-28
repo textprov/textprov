@@ -85,6 +85,8 @@ class TestCli < Minitest::Test
     assert_equal Textprov.to_html("a#{AI}"), run_cli("render", path)
     assert_includes run_cli("render", "--class-prefix", "x", path), 'class="x x-ai"'
     assert_includes run_cli("inspect", path), "ai_vs: 1"
+    refute_includes run_cli("render", "--display", "exact", path), "data-prov-passage"
+    assert_includes run_cli("render", "--display", "passage", path), "data-prov-passage"
   end
 
   def test_stdout_is_used_when_no_output_file

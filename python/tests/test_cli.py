@@ -103,6 +103,8 @@ class TestCli(unittest.TestCase):
             self.run_cli("render", "--class-prefix", "x", path),
         )
         self.assertIn("ai_vs: 1", self.run_cli("inspect", path))
+        self.assertNotIn("data-prov-passage", self.run_cli("render", "--display", "exact", path))
+        self.assertIn("data-prov-passage", self.run_cli("render", "--display", "passage", path))
 
     def test_stdout_is_used_when_no_output_file(self):
         path = self.write("s.txt", "Hi")

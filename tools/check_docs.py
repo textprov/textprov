@@ -10,10 +10,12 @@ files = [root / 'README.md', *sorted((root / 'docs').rglob('*.md')),
          *sorted((root / 'experiments').rglob('*.md'))]
 files = [path for path in files if 'node_modules' not in path.relative_to(root).parts]
 errors = []
+# SDK guides use the same deliberate prose marking as the proposal documents.
+marked_guides = {root / name / 'README.md' for name in ('python', 'ruby', 'js')}
 for path in files:
     source = path.read_text()
-    marked_proposal = (path in (root / 'README.md', root / 'python' / 'README.md')
-                       or root / 'docs' in path.parents
+    marked_proposal = (path == root / 'README.md' or root / 'docs' in path.parents
+                       or path in marked_guides
                        or root / 'experiments' / 'loro-workspace' in path.parents)
     for cp in map(ord, source):
         if marked_proposal and cp in (0xE0100, 0xE0101):
