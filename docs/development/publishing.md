@@ -5,27 +5,31 @@ Ruby packages. Run commands from the repository root unless a section says
 otherwise.
 
 The packages have independent versions and release tags. This release prepares
-Python and JavaScript at **0.2.0**. Ruby remains at **0.1.0**, which is already
-published; bump `ruby/lib/textprov/version.rb` before its next release. For
-later Python and JavaScript releases, replace `0.2.0` in the commands with the
-version being released. Never reuse a published version.
+Python at **0.2.0**, JavaScript at **0.2.1**, and Ruby at **0.1.2**. For later
+releases, replace those versions in the commands with the version being
+released. Never reuse a published version, and never reuse a release tag: tags
+are immutable here, so a failed release is retried by bumping the package
+version and cutting a new tag, not by moving or recreating the old one.
 
 ## Release model and safety
 
-Tag pushes publish packages; they are not a post-publication bookkeeping step:
+Tag pushes publish packages; they are not a post-publication bookkeeping step.
+The npm release is staged rather than published directly: the workflow submits
+the tarball to the package's staged queue and a maintainer approves it with 2FA.
 
 | Tag | Version source | Workflow | GitHub environment |
 | --- | --- | --- | --- |
 | `python-v0.2.0` | `python/textprov/_version.py` | `publish-python.yml` | `pypi` |
-| `js-v0.2.0` | `js/package.json` and `js/package-lock.json` | `publish-js.yml` | `npm` |
-| `ruby-vX.Y.Z` | `ruby/lib/textprov/version.rb` | `publish-ruby.yml` | `rubygems` |
+| `js-v0.2.1` | `js/package.json` and `js/package-lock.json` | `publish-js.yml` | `npm` |
+| `ruby-v0.1.2` | `ruby/lib/textprov/version.rb` | `publish-ruby.yml` | `rubygems` |
 
 All three workflows reject a tag that does not exactly match its package version.
 The JavaScript workflow also checks both root version entries in the lockfile.
 Build/test jobs have only `contents: read`; checkout does not retain credentials.
 Only the separate publishing jobs have `id-token: write`. They download the
 artifacts tested by the build jobs rather than rebuilding them. No PyPI API
-token, npm write token, or long-lived RubyGems API key is required.
+token, npm write token, or long-lived RubyGems API key is required. The npm
+version is not public until a maintainer approves the staged package.
 
 Before a maintainer creates or pushes a release tag:
 
@@ -38,7 +42,8 @@ Before a maintainer creates or pushes a release tag:
 4. Protect release tags with GitHub rulesets. Restrict environment deployments
    to the corresponding release tags and require a maintainer approval.
 5. Push only the intended package tag. Review the build results before approving
-   its environment deployment.
+   its environment deployment. For npm, also approve the staged package after
+   the workflow finishes.
 
 Local preparation does not require any commit, tag, push, or publish operation.
 The commands in the final release section are for the maintainer who authorizes
@@ -75,8 +80,9 @@ in the existing `textprov` package's settings:
 - Repository: `textprov`
 - Workflow filename: `publish-js.yml` (filename only)
 - Environment: `npm`
-- Allow direct `npm publish`; stage-only authorization is not sufficient.
-  Separate `npm dist-tag` permissions are not needed by this workflow.
+- Allowed actions: `npm stage publish` only. Do not allow direct `npm publish`;
+  the workflow runs `npm stage publish` and a direct-publish permission is not
+  needed. Separate `npm dist-tag` permissions are not needed either.
 
 Create the `npm` environment in GitHub with deployment protections. Newly
 configured npm publishers must complete their first successful publication
@@ -85,12 +91,20 @@ package does not yet exist, a maintainer must bootstrap it through npm's
 interactive publication process before configuring its trusted publisher.
 Do not add a long-lived token as a silent fallback.
 
-npm OIDC requires **Node >=22.14.0 and npm >=11.5.1**. The release workflow uses
-Node 24 LTS and explicitly installs npm 11; do not rely on the npm version
-bundled with a runner. Use GitHub-hosted runners. The repository and package
-must be public for `--provenance`; `js/package.json`'s `repository.url` must
-match `https://github.com/textprov/textprov`. The workflow explicitly uses
-`npm publish --provenance --access public` on the tested tarball.
+npm OIDC requires **Node >=22.14.0 and npm >=11.5.1**, and staged publishing
+requires **npm >=11.15.0**. The release workflow uses Node 24 LTS and explicitly
+installs npm 11; do not rely on the npm version bundled with a runner. Use
+GitHub-hosted runners. The repository and package must be public for
+`--provenance`; `js/package.json`'s `repository.url` must match
+`https://github.com/textprov/textprov`. The workflow explicitly uses
+`npm stage publish --provenance --access public` on the tested tarball.
+`npm stage publish` accepts the same package spec as `npm publish`, so it
+submits the exact tarball the build job tested.
+
+A staged version occupies its version number: it cannot be staged or published
+again under the same version until it is rejected. Rejecting a staged package
+frees the version for re-staging. A staged tag cannot be changed after
+staging; reject and re-stage instead.
 
 Keep account 2FA enabled. Once trusted publishing is working, npm recommends
 "Require two-factor authentication and disallow tokens" in package publishing
@@ -199,14 +213,14 @@ npm test
 npm publish --dry-run
 mkdir -p node_modules/.release-artifacts
 npm pack --pack-destination node_modules/.release-artifacts
-npm install --prefix node_modules/.release-smoke --ignore-scripts --no-audit --no-fund ./node_modules/.release-artifacts/textprov-0.2.0.tgz
+npm install --prefix node_modules/.release-smoke --ignore-scripts --no-audit --no-fund ./node_modules/.release-artifacts/textprov-0.2.1.tgz
 node <<'JS'
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const root = './node_modules/.release-smoke/node_modules/textprov';
 const pkg = require(root + '/package.json');
 const textprov = require(root);
-assert.equal(pkg.version, '0.2.0');
+assert.equal(pkg.version, '0.2.1');
 assert.equal(textprov.specVersion, '0.2');
 assert.equal(typeof textprov.runs, 'function');
 assert.equal(typeof textprov.render, 'function');
@@ -244,11 +258,11 @@ checks the installed gem's version against the tag, confirms it loads from the
 isolated install directory, and exercises CLI marking and inspection.
 
 After bumping and committing the Ruby version, create an annotated
-`ruby-vX.Y.Z` tag matching `Textprov::VERSION` and push that tag to trigger
-publication. Replace `X.Y.Z` with the new version; do not push `ruby-v0.1.0`
-for the existing published version. After publication, install the new version
-from RubyGems.org into a fresh directory and repeat the smoke checks without
-`--local` or a source-checkout load path.
+`ruby-v0.1.2` tag matching `Textprov::VERSION` and push that tag to trigger
+publication. `ruby-v0.1.0` is already published and `ruby-v0.1.1` is a spent
+tag from a failed run; neither may be reused. After publication, install the
+new version from RubyGems.org into a fresh directory and repeat the smoke
+checks without `--local` or a source-checkout load path.
 
 ## Maintainer-authorized release
 
@@ -261,8 +275,12 @@ git tag -a python-v0.2.0 -m "textprov python 0.2.0"
 git push origin python-v0.2.0
 
 # Independent npm release:
-git tag -a js-v0.2.0 -m "textprov javascript 0.2.0"
-git push origin js-v0.2.0
+git tag -a js-v0.2.1 -m "textprov javascript 0.2.1"
+git push origin js-v0.2.1
+
+# Independent RubyGems release:
+git tag -a ruby-v0.1.2 -m "textprov ruby 0.1.2"
+git push origin ruby-v0.1.2
 ```
 
 Review the corresponding Actions run and approve the environment deployment.
@@ -270,6 +288,21 @@ Never move an already published release tag or rebuild a different commit
 under the same version. If publication fails or is interrupted, inspect the
 registry first: it may have accepted some or all artifacts. Do not blindly
 retry a partial PyPI upload or disable tests to force a release.
+
+The npm workflow ends with the version staged, not published. The workflow log
+prints the stage id. A maintainer with publish access and 2FA then reviews and
+approves it, from any machine with npm 11.15 or newer:
+
+```sh
+npm stage list textprov
+npm stage view <stage-id>
+npm stage download <stage-id>   # optional: inspect the tarball
+npm stage approve <stage-id>    # prompts for 2FA; the version goes public
+```
+
+The Staged Packages tab on npmjs.com offers the same review and approval.
+`npm stage reject <stage-id>` removes a staged version and frees its version
+number. The registry checks below require the approval to have completed.
 
 After successful publication, verify registry installs in new environments:
 
@@ -280,10 +313,10 @@ python/dist/registry-smoke/bin/textprov --version
 printf 'hello' | python/dist/registry-smoke/bin/textprov mark --human - | python/dist/registry-smoke/bin/textprov inspect -
 
 # From js/ after the local checks above:
-npm view textprov@0.2.0 version dist.attestations
+npm view textprov@0.2.1 version dist.attestations
 rm -rf node_modules/.registry-smoke
-npm install --prefix node_modules/.registry-smoke --ignore-scripts --no-audit --no-fund textprov@0.2.0
-node -e 'const assert = require("node:assert/strict"); const root = "./node_modules/.registry-smoke/node_modules/textprov"; assert.equal(require(root + "/package.json").version, "0.2.0"); assert.equal(require(root).specVersion, "0.2")'
+npm install --prefix node_modules/.registry-smoke --ignore-scripts --no-audit --no-fund textprov@0.2.1
+node -e 'const assert = require("node:assert/strict"); const root = "./node_modules/.registry-smoke/node_modules/textprov"; assert.equal(require(root + "/package.json").version, "0.2.1"); assert.equal(require(root).specVersion, "0.2")'
 ```
 
 Confirm npm's provenance attestation on the registry as well as the installed

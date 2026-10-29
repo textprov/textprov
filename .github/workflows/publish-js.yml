@@ -76,7 +76,11 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
-      - name: Install OIDC-capable npm
+      - name: Install npm with staged publishing support
         run: npm install --global npm@11
-      - name: Publish to npm with OIDC and provenance
-        run: npm publish ./npm-dist/textprov-*.tgz --provenance --access public
+      # The trusted publisher on npmjs.com is stage-only. This submits the
+      # tested tarball to the package's staged queue; a maintainer approves it
+      # with 2FA (`npm stage approve <stage-id>` or the Staged Packages tab)
+      # before the version becomes public.
+      - name: Stage on npm with OIDC and provenance
+        run: npm stage publish ./npm-dist/textprov-*.tgz --provenance --access public
