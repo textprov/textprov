@@ -3,6 +3,12 @@
 Profiles take unmarked text and return one bool per Python code point. True
 protects syntax from new marks; False leaves prose eligible for marking.
 These are conservative heuristics, not full document parsers.
+
+The Markdown profile protects CommonMark HTML blocks (types 1-6) whole, so a
+`<div>` body is not prose. Type 7 blocks and blocks inside blockquotes or list
+items are not recognised; see `editing`. The composed Markdown and Markdoc
+scanner treats HTML blocks like fenced code: `{% %}` inside them is literal
+and is not masked, so a tag-only line cannot end the block early.
 """
 
 import re
@@ -74,11 +80,16 @@ def _mask_tags(text, flags):
 
 
 def _markdown_markdoc_protected(text):
-    """Scan literal code and tags in source order; attributes are never Markdown."""
-    from .editing import FENCE, INLINE, LIST_ITEM
+    """Scan literal code and tags in source order; attributes are never Markdown.
+
+    Fenced code, indented code and HTML blocks are tracked with the same rules
+    as `editing.markdown_protected`, so the two scanners agree on where literal
+    text starts and ends. Tags inside them are literal and stay unmasked.
+    """
+    from .editing import FENCE, HTML_BLOCK_END, INLINE, LIST_ITEM, html_block_end
 
     flags = [False] * len(text)
-    fence = None
+    fence = html = None
     previous_blank, previous_code, in_list = True, False, False
     offset = skip_until = 0
     for line in text.splitlines(True):
@@ -96,6 +107,13 @@ def _markdown_markdoc_protected(text):
                 fence = None
             offset = end
             continue
+        if html is HTML_BLOCK_END and not line.strip():
+            html = None
+        elif html:
+            if html is not HTML_BLOCK_END and html.search(line):
+                html = None
+            offset = end
+            continue
         if offset >= skip_until and delimiter:
             fence = delimiter.group(1)
             previous_blank = previous_code = False
@@ -111,6 +129,14 @@ def _markdown_markdoc_protected(text):
             previous_code, previous_blank = True, False
             offset = end
             continue
+        if offset >= skip_until:
+            html = html_block_end(line)
+            if html:
+                previous_blank = previous_code = False
+                if html is not HTML_BLOCK_END and html.search(line):
+                    html = None
+                offset = end
+                continue
         cursor = max(offset, skip_until)
         while cursor < end:
             if text.startswith("{%", cursor):

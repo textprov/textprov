@@ -2,6 +2,14 @@
 
 These functions process text only: callers supply any recorded human passages.
 Markdown protection is a conservative heuristic, not a complete parser.
+
+HTML blocks follow CommonMark 4.6 start and end conditions 1-6: raw text
+elements (pre, script, style, textarea), comments, processing instructions,
+declarations, CDATA sections, and block-level tags up to the next blank line.
+Every line of the block is protected whole. Type 7 (any other complete open or
+closing tag alone on a line) is not implemented; such lines get tag-only
+protection and their prose is marked. Blocks that start inside a blockquote or
+list item are not recognised either, because container prefixes are not parsed.
 """
 
 from __future__ import annotations
@@ -170,6 +178,52 @@ RAW_BLOCKS = re.compile(
     r"<!--.*?-->|<(script|style|pre|code|textarea)\b.*?</\1\s*>",
     re.DOTALL | re.IGNORECASE,
 )
+# CommonMark 4.6 HTML block start conditions 1-6 and their end conditions.
+# Type 7 (a complete open or closing tag alone on a line) is not recognised.
+HTML_BLOCK_TAGS = frozenset((
+    "address", "article", "aside", "base", "basefont", "blockquote", "body",
+    "caption", "center", "col", "colgroup", "dd", "details", "dialog", "dir",
+    "div", "dl", "dt", "fieldset", "figcaption", "figure", "footer", "form",
+    "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header",
+    "hr", "html", "iframe", "legend", "li", "link", "main", "menu", "menuitem",
+    "nav", "noframes", "ol", "optgroup", "option", "p", "param", "search",
+    "section", "summary", "table", "tbody", "td", "tfoot", "th", "thead",
+    "title", "tr", "track", "ul",
+))
+# A type 6 block ends before the next blank line, which is not part of it.
+HTML_BLOCK_END = object()
+HTML_BLOCK_START = [
+    (
+        re.compile(
+            r" {0,3}<(?:pre|script|style|textarea)(?=[ \t>]|\r?\n|\r|$)",
+            re.IGNORECASE,
+        ),
+        re.compile(r"</(?:pre|script|style|textarea)>", re.IGNORECASE),
+    ),
+    (re.compile(r" {0,3}<!--"), re.compile(r"-->")),
+    (re.compile(r" {0,3}<\?"), re.compile(r"\?>")),
+    (re.compile(r" {0,3}<![A-Za-z]"), re.compile(r">")),
+    (re.compile(r" {0,3}<!\[CDATA\["), re.compile(r"\]\]>")),
+]
+HTML_BLOCK_TAG = re.compile(
+    r" {0,3}</?([A-Za-z][A-Za-z0-9]*)(?=[ \t>]|/>|\r?\n|\r|$)"
+)
+
+
+def html_block_end(line):
+    """The end condition of the HTML block that `line` opens, or None.
+
+    A compiled pattern ends the block on the first line it is found in, which
+    may be the start line itself. HTML_BLOCK_END (a block-level tag, type 6)
+    ends before the next blank line and never on its start line.
+    """
+    for start, end in HTML_BLOCK_START:
+        if start.match(line):
+            return end
+    tag = HTML_BLOCK_TAG.match(line)
+    if tag and tag.group(1).lower() in HTML_BLOCK_TAGS:
+        return HTML_BLOCK_END
+    return None
 # A CRLF is one line ending. Check escaped characters too, so an escaped
 # newline cannot bypass the blank-line limit.
 MATH_CHAR = r"(?!(?:\r\n|\r(?!\n)|\n)[^\S\r\n]*(?:\r\n|\r|\n))."
@@ -217,6 +271,7 @@ def markdown_protected(plain):
 
     labels = set()
     fence = None
+    html = None
     in_list = False
     previous_blank = True
     previous_code = False
@@ -243,6 +298,14 @@ def markdown_protected(plain):
             ):
                 fence = None
             continue
+        if html is HTML_BLOCK_END and blank:
+            # The blank line ends the block and is an ordinary blank line.
+            html = None
+        elif html:
+            whole[number] = True
+            if html is not HTML_BLOCK_END and html.search(line):
+                html = None
+            continue
         opening = FENCE.match(line)
         if opening:
             fence = opening.group(1)
@@ -253,6 +316,13 @@ def markdown_protected(plain):
         if indented and not in_list and (previous_blank or previous_code):
             whole[number] = True
             previous_code, previous_blank = True, False
+            continue
+        html = html_block_end(line)
+        if html:
+            whole[number] = True
+            previous_blank = previous_code = False
+            if html is not HTML_BLOCK_END and html.search(line):
+                html = None
             continue
         if not blank:
             previous_code = False
