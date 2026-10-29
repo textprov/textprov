@@ -138,6 +138,96 @@ b󠄁l󠄁o󠄁c󠄁k󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁i󠄁e󠄁s󠄁,�
 C󠄁a󠄁l󠄁l󠄁e󠄁r󠄁s󠄁 m󠄁u󠄁s󠄁t󠄁 n󠄁o󠄁t󠄁 t󠄁r󠄁a󠄁n󠄁s󠄁f󠄁o󠄁r󠄁m󠄁 i󠄁n󠄁d󠄁e󠄁p󠄁e󠄁n󠄁d󠄁e󠄁n󠄁t󠄁 s󠄁t󠄁r󠄁e󠄁a󠄁m󠄁i󠄁n󠄁g󠄁 c󠄁h󠄁u󠄁n󠄁k󠄁s󠄁:󠄁 d󠄁e󠄁l󠄁i󠄁m󠄁i󠄁t󠄁e󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁
 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁s󠄁 c󠄁a󠄁n󠄁 s󠄁p󠄁a󠄁n󠄁 c󠄁h󠄁u󠄁n󠄁k󠄁s󠄁.󠄁
 
+## D󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁 p󠄁r󠄁o󠄁f󠄁i󠄁l󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁s󠄁 (󠄁P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 0󠄁.󠄁3󠄁.󠄁0󠄁)󠄁
+
+`mark_document` a󠄁n󠄁d󠄁 `mark_document_edit` a󠄁c󠄁c󠄁e󠄁p󠄁t󠄁 a󠄁 `profile` a󠄁r󠄁g󠄁u󠄁m󠄁e󠄁n󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 d󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁
+i󠄁s󠄁 `"markdown"`.󠄁 I󠄁n󠄁 0󠄁.󠄁3󠄁.󠄁0󠄁,󠄁 h󠄁e󠄁a󠄁d󠄁i󠄁n󠄁g󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁c󠄁e󠄁i󠄁v󠄁e󠄁s󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁;󠄁 A󠄁T󠄁X󠄁 l󠄁e󠄁a󠄁d󠄁e󠄁r󠄁s󠄁,󠄁 c󠄁l󠄁o󠄁s󠄁i󠄁n󠄁g󠄁
+h󠄁a󠄁s󠄁h󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 s󠄁e󠄁t󠄁e󠄁x󠄁t󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁e󠄁d󠄁.󠄁 T󠄁h󠄁i󠄁s󠄁 a󠄁l󠄁s󠄁o󠄁 a󠄁f󠄁f󠄁e󠄁c󠄁t󠄁s󠄁 c󠄁a󠄁l󠄁l󠄁e󠄁r󠄁s󠄁 o󠄁f󠄁
+t󠄁h󠄁e󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁 M󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁 p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 h󠄁e󠄁l󠄁p󠄁e󠄁r󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁l󠄁a󠄁s󠄁s󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁s󠄁.󠄁
+
+C󠄁o󠄁m󠄁p󠄁o󠄁s󠄁e󠄁 `("markdown", "markdoc", "directives")` f󠄁o󠄁r󠄁 M󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁 w󠄁i󠄁t󠄁h󠄁 M󠄁a󠄁r󠄁k󠄁d󠄁o󠄁c󠄁 t󠄁a󠄁g󠄁s󠄁
+a󠄁n󠄁d󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁e󠄁r󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁i󠄁v󠄁e󠄁s󠄁.󠄁 `markdoc` p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁s󠄁 c󠄁o󠄁m󠄁p󠄁l󠄁e󠄁t󠄁e󠄁 t󠄁a󠄁g󠄁s󠄁 a󠄁n󠄁d󠄁 q󠄁u󠄁o󠄁t󠄁e󠄁d󠄁
+a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁s󠄁.󠄁 `directives` p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁s󠄁 f󠄁e󠄁n󠄁c󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁s󠄁 b󠄁u󠄁t󠄁 l󠄁e󠄁a󠄁v󠄁e󠄁s󠄁
+o󠄁p󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 l󠄁a󠄁b󠄁e󠄁l󠄁 t󠄁e󠄁x󠄁t󠄁 e󠄁l󠄁i󠄁g󠄁i󠄁b󠄁l󠄁e󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 n󠄁a󠄁m󠄁e󠄁 a󠄁d󠄁d󠄁s󠄁 o󠄁n󠄁l󠄁y󠄁 i󠄁t󠄁s󠄁 o󠄁w󠄁n󠄁 p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁;󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁e󠄁
+`markdown` t󠄁o󠄁 p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁 M󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁 a󠄁s󠄁 w󠄁e󠄁l󠄁l󠄁.󠄁 N󠄁a󠄁m󠄁e󠄁s󠄁 m󠄁a󠄁y󠄁 a󠄁l󠄁s󠄁o󠄁 b󠄁e󠄁 s󠄁u󠄁p󠄁p󠄁l󠄁i󠄁e󠄁d󠄁 a󠄁s󠄁 a󠄁
+c󠄁o󠄁m󠄁m󠄁a󠄁-󠄁s󠄁e󠄁p󠄁a󠄁r󠄁a󠄁t󠄁e󠄁d󠄁 s󠄁t󠄁r󠄁i󠄁n󠄁g󠄁.󠄁 `None` s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁s󠄁 p󠄁l󠄁a󠄁i󠄁n󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁 A󠄁 c󠄁u󠄁s󠄁t󠄁o󠄁m󠄁 c󠄁a󠄁l󠄁l󠄁a󠄁b󠄁l󠄁e󠄁 m󠄁u󠄁s󠄁t󠄁
+r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁 o󠄁n󠄁e󠄁 B󠄁o󠄁o󠄁l󠄁e󠄁a󠄁n󠄁 p󠄁e󠄁r󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 c󠄁o󠄁d󠄁e󠄁 p󠄁o󠄁i󠄁n󠄁t󠄁,󠄁 w󠄁i󠄁t󠄁h󠄁 `True` p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁i󠄁n󠄁g󠄁 i󠄁t󠄁.󠄁
+
+```python
+from textprov import check_text, mark_document_edit
+
+profile = ("markdown", "markdoc", "directives")
+before = "Legacy prose.\n"
+after = mark_document_edit(before, before + "\n## New heading\n", profile=profile)
+assert check_text(before, after, profile=profile) == []
+```
+
+`check_text(before, after, *, profile="markdown", require_marks=True)` r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁s󠄁
+`(line, column, message)` t󠄁u󠄁p󠄁l󠄁e󠄁s󠄁 a󠄁t󠄁 o󠄁n󠄁e󠄁-󠄁b󠄁a󠄁s󠄁e󠄁d󠄁 p󠄁o󠄁s󠄁i󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 r󠄁e󠄁s󠄁u󠄁l󠄁t󠄁.󠄁
+I󠄁t󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁s󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁e󠄁d󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁s󠄁,󠄁 r󠄁e󠄁j󠄁e󠄁c󠄁t󠄁s󠄁 n󠄁e󠄁w󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 o󠄁u󠄁t󠄁s󠄁i󠄁d󠄁e󠄁 e󠄁l󠄁i󠄁g󠄁i󠄁b󠄁l󠄁e󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁,󠄁 a󠄁n󠄁d󠄁
+r󠄁e󠄁q󠄁u󠄁i󠄁r󠄁e󠄁s󠄁 s󠄁u󠄁p󠄁p󠄁o󠄁r󠄁t󠄁e󠄁d󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁o󠄁r󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 o󠄁n󠄁 n󠄁e󠄁w󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁.󠄁 `require_marks=False` a󠄁l󠄁l󠄁o󠄁w󠄁s󠄁
+o󠄁r󠄁d󠄁i󠄁n󠄁a󠄁r󠄁y󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁i󠄁o󠄁n󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 a󠄁l󠄁l󠄁o󠄁w󠄁i󠄁n󠄁g󠄁 l󠄁o󠄁s󠄁s󠄁 o󠄁r󠄁 r󠄁e󠄁l󠄁a󠄁b󠄁e󠄁l󠄁l󠄁i󠄁n󠄁g󠄁 o󠄁f󠄁
+m󠄁a󠄁t󠄁c󠄁h󠄁e󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁.󠄁 R󠄁e󠄁m󠄁o󠄁v󠄁i󠄁n󠄁g󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁 f󠄁r󠄁o󠄁m󠄁 p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁 i󠄁s󠄁 a󠄁l󠄁l󠄁o󠄁w󠄁e󠄁d󠄁 a󠄁s󠄁 a󠄁 r󠄁e󠄁p󠄁a󠄁i󠄁r󠄁.󠄁
+D󠄁e󠄁l󠄁e󠄁t󠄁i󠄁n󠄁g󠄁 a󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁 i󠄁s󠄁 n󠄁o󠄁t󠄁 i󠄁t󠄁s󠄁e󠄁l󠄁f󠄁 a󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 e󠄁r󠄁r󠄁o󠄁r󠄁.󠄁
+
+```sh
+textprov check --before old.md --after new.md --profile markdown,markdoc,directives
+textprov check --before old.md --after new.md --preserve-only
+textprov check --before old.txt --after new.txt --profile plain
+```
+
+T󠄁h󠄁e󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁 r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁s󠄁 0󠄁 f󠄁o󠄁r󠄁 n󠄁o󠄁 p󠄁r󠄁o󠄁b󠄁l󠄁e󠄁m󠄁s󠄁,󠄁 1󠄁 f󠄁o󠄁r󠄁 r󠄁e󠄁p󠄁o󠄁r󠄁t󠄁e󠄁d󠄁 p󠄁r󠄁o󠄁b󠄁l󠄁e󠄁m󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 2󠄁 f󠄁o󠄁r󠄁
+i󠄁n󠄁p󠄁u󠄁t󠄁 o󠄁r󠄁 p󠄁r󠄁o󠄁f󠄁i󠄁l󠄁e󠄁 e󠄁r󠄁r󠄁o󠄁r󠄁s󠄁.󠄁 D󠄁i󠄁a󠄁g󠄁n󠄁o󠄁s󠄁t󠄁i󠄁c󠄁s󠄁 g󠄁o󠄁 t󠄁o󠄁 s󠄁t󠄁d󠄁o󠄁u󠄁t󠄁,󠄁 o󠄁r󠄁 t󠄁h󠄁e󠄁 g󠄁l󠄁o󠄁b󠄁a󠄁l󠄁 `-o` o󠄁u󠄁t󠄁p󠄁u󠄁t󠄁
+f󠄁i󠄁l󠄁e󠄁;󠄁 i󠄁n󠄁p󠄁u󠄁t󠄁 e󠄁r󠄁r󠄁o󠄁r󠄁s󠄁 g󠄁o󠄁 t󠄁o󠄁 s󠄁t󠄁d󠄁e󠄁r󠄁r󠄁.󠄁 F󠄁i󠄁l󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁 r󠄁e󠄁a󠄁d󠄁 a󠄁s󠄁 U󠄁T󠄁F󠄁-󠄁8󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 n󠄁e󠄁w󠄁l󠄁i󠄁n󠄁e󠄁
+c󠄁o󠄁n󠄁v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁.󠄁 A󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁 c󠄁o󠄁m󠄁m󠄁a󠄁n󠄁d󠄁s󠄁,󠄁 `-` r󠄁e󠄁a󠄁d󠄁s󠄁 s󠄁t󠄁d󠄁i󠄁n󠄁;󠄁 u󠄁s󠄁e󠄁 i󠄁t󠄁 f󠄁o󠄁r󠄁 o󠄁n󠄁l󠄁y󠄁 o󠄁n󠄁e󠄁 i󠄁n󠄁p󠄁u󠄁t󠄁.󠄁
+
+T󠄁h󠄁e󠄁 J󠄁S󠄁O󠄁N󠄁 a󠄁d󠄁a󠄁p󠄁t󠄁e󠄁r󠄁 a󠄁c󠄁c󠄁e󠄁p󠄁t󠄁s󠄁 `profile` o󠄁n󠄁 `mark-document`,󠄁 a󠄁n󠄁d󠄁 a󠄁d󠄁d󠄁s󠄁 t󠄁h󠄁e󠄁 o󠄁p󠄁e󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁
+`{"operation":"check","before":"old","after":"new","preserve_only":true}`.󠄁
+C󠄁h󠄁e󠄁c󠄁k󠄁 r󠄁e󠄁s󠄁p󠄁o󠄁n󠄁s󠄁e󠄁s󠄁 u󠄁s󠄁e󠄁 `{"problems":[[1,1,"message"]]}` a󠄁n󠄁d󠄁 e󠄁x󠄁i󠄁t󠄁 1󠄁 w󠄁h󠄁e󠄁n󠄁 p󠄁r󠄁o󠄁b󠄁l󠄁e󠄁m󠄁s󠄁
+e󠄁x󠄁i󠄁s󠄁t󠄁,󠄁 o󠄁t󠄁h󠄁e󠄁r󠄁w󠄁i󠄁s󠄁e󠄁 0󠄁.󠄁 J󠄁S󠄁O󠄁N󠄁 `null` s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 p󠄁l󠄁a󠄁i󠄁n󠄁-󠄁t󠄁e󠄁x󠄁t󠄁 p󠄁r󠄁o󠄁f󠄁i󠄁l󠄁e󠄁.󠄁
+
+T󠄁h󠄁e󠄁s󠄁e󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁s󠄁 i󠄁n󠄁f󠄁e󠄁r󠄁 c󠄁o󠄁r󠄁r󠄁e󠄁s󠄁p󠄁o󠄁n󠄁d󠄁e󠄁n󠄁c󠄁e󠄁,󠄁 n󠄁o󠄁t󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁s󠄁h󠄁i󠄁p󠄁.󠄁 `mark_document_edit` u󠄁s󠄁e󠄁s󠄁 l󠄁i󠄁n󠄁e󠄁/󠄁w󠄁o󠄁r󠄁d󠄁
+a󠄁l󠄁i󠄁g󠄁n󠄁m󠄁e󠄁n󠄁t󠄁;󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁i󠄁n󠄁g󠄁 u󠄁s󠄁e󠄁s󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 c󠄁o󠄁r󠄁r󠄁e󠄁s󠄁p󠄁o󠄁n󠄁d󠄁e󠄁n󠄁c󠄁e󠄁.󠄁 S󠄁o󠄁m󠄁e󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁i󠄁n󠄁g󠄁 r󠄁e󠄁s󠄁u󠄁l󠄁t󠄁s󠄁 f󠄁a󠄁i󠄁l󠄁
+t󠄁h󠄁e󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁.󠄁 B󠄁u󠄁i󠄁l󠄁t󠄁-󠄁i󠄁n󠄁 p󠄁r󠄁o󠄁f󠄁i󠄁l󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁 s󠄁y󠄁n󠄁t󠄁a󠄁x󠄁 h󠄁e󠄁u󠄁r󠄁i󠄁s󠄁t󠄁i󠄁c󠄁s󠄁,󠄁 n󠄁o󠄁t󠄁 Y󠄁A󠄁M󠄁L󠄁 o󠄁r󠄁
+M󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁 A󠄁S󠄁T󠄁 v󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁o󠄁r󠄁s󠄁.󠄁
+
+### P󠄁u󠄁b󠄁l󠄁i󠄁c󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 p󠄁r󠄁i󠄁m󠄁i󠄁t󠄁i󠄁v󠄁e󠄁s󠄁
+
+T󠄁h󠄁e󠄁 S󠄁D󠄁K󠄁 r󠄁o󠄁o󠄁t󠄁 e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 `clusters` a󠄁n󠄁d󠄁 `correspondence` f󠄁o󠄁r󠄁 c󠄁a󠄁l󠄁l󠄁e󠄁r󠄁s󠄁 c󠄁o󠄁m󠄁p󠄁o󠄁s󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁i󠄁r󠄁
+o󠄁w󠄁n󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁d󠄁 e󠄁d󠄁i󠄁t󠄁i󠄁n󠄁g󠄁 p󠄁o󠄁l󠄁i󠄁c󠄁y󠄁:󠄁
+
+```python
+from textprov import clusters, correspondence
+
+old = clusters(previous_raw_text)
+new = clusters(proposed_text)
+matches = correspondence(old, new)
+# matches[new_index] == old_index for each inferred retained cluster.
+```
+
+`clusters(source)` r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁s󠄁 a󠄁 l󠄁i󠄁s󠄁t󠄁 o󠄁f󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁s󠄁e󠄁 f󠄁i󠄁e󠄁l󠄁d󠄁s󠄁:󠄁
+
+- `raw`:󠄁 t󠄁h󠄁e󠄁 o󠄁r󠄁i󠄁g󠄁i󠄁n󠄁a󠄁l󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁y󠄁 e󠄁x󠄁i󠄁s󠄁t󠄁i󠄁n󠄁g󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁.󠄁
+- `text`:󠄁 t󠄁h󠄁e󠄁 u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁.󠄁
+- `state`:󠄁 `"human"`,󠄁 `"ai"`,󠄁 o󠄁r󠄁 `None` w󠄁h󠄁e󠄁n󠄁 n󠄁o󠄁 s󠄁u󠄁p󠄁p󠄁o󠄁r󠄁t󠄁e󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁 i󠄁s󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁n󠄁t󠄁.󠄁
+- `start` a󠄁n󠄁d󠄁 `end`:󠄁 z󠄁e󠄁r󠄁o󠄁-󠄁b󠄁a󠄁s󠄁e󠄁d󠄁,󠄁 h󠄁a󠄁l󠄁f󠄁-󠄁o󠄁p󠄁e󠄁n󠄁 P󠄁y󠄁t󠄁h󠄁o󠄁n󠄁 c󠄁o󠄁d󠄁e󠄁-󠄁p󠄁o󠄁i󠄁n󠄁t󠄁 o󠄁f󠄁f󠄁s󠄁e󠄁t󠄁s󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁
+  u󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁,󠄁 n󠄁o󠄁t󠄁 b󠄁y󠄁t󠄁e󠄁 o󠄁f󠄁f󠄁s󠄁e󠄁t󠄁s󠄁 o󠄁r󠄁 o󠄁f󠄁f󠄁s󠄁e󠄁t󠄁s󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁.󠄁
+
+`correspondence(old, new)` t󠄁a󠄁k󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁 l󠄁i󠄁s󠄁t󠄁s󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁s󠄁 a󠄁 d󠄁i󠄁c󠄁t󠄁i󠄁o󠄁n󠄁a󠄁r󠄁y󠄁
+m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁 **n󠄁e󠄁w󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁 i󠄁n󠄁d󠄁i󠄁c󠄁e󠄁s󠄁 t󠄁o󠄁 o󠄁l󠄁d󠄁 c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁 i󠄁n󠄁d󠄁i󠄁c󠄁e󠄁s󠄁**.󠄁 U󠄁n󠄁m󠄁a󠄁t󠄁c󠄁h󠄁e󠄁d󠄁 n󠄁e󠄁w󠄁 i󠄁n󠄁d󠄁i󠄁c󠄁e󠄁s󠄁
+a󠄁r󠄁e󠄁 a󠄁b󠄁s󠄁e󠄁n󠄁t󠄁.󠄁 I󠄁t󠄁 i󠄁g󠄁n󠄁o󠄁r󠄁e󠄁s󠄁 r󠄁e󠄁f󠄁l󠄁o󠄁w󠄁 w󠄁h󠄁i󠄁t󠄁e󠄁s󠄁p󠄁a󠄁c󠄁e󠄁,󠄁 a󠄁n󠄁c󠄁h󠄁o󠄁r󠄁s󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁s󠄁,󠄁 a󠄁l󠄁i󠄁g󠄁n󠄁s󠄁 v󠄁i󠄁s󠄁i󠄁b󠄁l󠄁e󠄁
+g󠄁r󠄁a󠄁p󠄁h󠄁e󠄁m󠄁e󠄁s󠄁 i󠄁n󠄁 g󠄁a󠄁p󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁c󠄁o󠄁g󠄁n󠄁i󠄁z󠄁e󠄁s󠄁 u󠄁n󠄁i󠄁q󠄁u󠄁e󠄁 u󠄁n󠄁m󠄁a󠄁t󠄁c󠄁h󠄁e󠄁d󠄁 m󠄁o󠄁v󠄁e󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁 m󠄁a󠄁p󠄁p󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁f󠄁e󠄁r󠄁s󠄁
+r󠄁e󠄁t󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 n󠄁o󠄁t󠄁 a󠄁u󠄁t󠄁h󠄁o󠄁r󠄁s󠄁h󠄁i󠄁p󠄁;󠄁 s󠄁i󠄁n󠄁g󠄁l󠄁e󠄁t󠄁o󠄁n󠄁 m󠄁o󠄁v󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 c󠄁u󠄁m󠄁u󠄁l󠄁a󠄁t󠄁i󠄁v󠄁e󠄁 e󠄁d󠄁i󠄁t󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 a󠄁m󠄁b󠄁i󠄁g󠄁u󠄁o󠄁u󠄁s󠄁.󠄁
+
+T󠄁h󠄁e󠄁 d󠄁o󠄁c󠄁s󠄁 s󠄁i󠄁t󠄁e󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 i󠄁t󠄁s󠄁 s󠄁c󠄁o󠄁p󠄁e󠄁d󠄁,󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁-󠄁a󠄁w󠄁a󠄁r󠄁e󠄁 `mark_edit`,󠄁 c󠄁o󠄁m󠄁p󠄁o󠄁s󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁s󠄁e󠄁
+p󠄁r󠄁i󠄁m󠄁i󠄁t󠄁i󠄁v󠄁e󠄁s󠄁 t󠄁o󠄁 p󠄁r󠄁e󠄁s󠄁e󠄁r󠄁v󠄁e󠄁 m󠄁a󠄁t󠄁c󠄁h󠄁e󠄁d󠄁 r󠄁a󠄁w󠄁 e󠄁n󠄁c󠄁o󠄁d󠄁i󠄁n󠄁g󠄁s󠄁 a󠄁n󠄁d󠄁 m󠄁a󠄁r󠄁k󠄁 i󠄁n󠄁t󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁d󠄁 e󠄁l󠄁i󠄁g󠄁i󠄁b󠄁l󠄁e󠄁
+c󠄁l󠄁u󠄁s󠄁t󠄁e󠄁r󠄁s󠄁.󠄁 I󠄁t󠄁 c󠄁a󠄁l󠄁l󠄁s󠄁 S󠄁D󠄁K󠄁 `check_text` w󠄁i󠄁t󠄁h󠄁 a󠄁 c󠄁a󠄁l󠄁l󠄁a󠄁b󠄁l󠄁e󠄁 p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 m󠄁a󠄁s󠄁k󠄁 d󠄁e󠄁r󠄁i󠄁v󠄁e󠄁d󠄁 f󠄁r󠄁o󠄁m󠄁
+i󠄁t󠄁s󠄁 p󠄁a󠄁r󠄁s󠄁e󠄁r󠄁’󠄁s󠄁 `eligible_offsets`,󠄁 a󠄁n󠄁d󠄁 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 i󠄁t󠄁s󠄁 p󠄁a󠄁r󠄁s󠄁e󠄁r󠄁/󠄁A󠄁S󠄁T󠄁 v󠄁a󠄁l󠄁i󠄁d󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 w󠄁r󠄁a󠄁p󠄁p󠄁e󠄁r󠄁.󠄁
+T󠄁h󠄁i󠄁s󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 c󠄁o󠄁m󠄁p󠄁o󠄁s󠄁i󠄁t󠄁i󠄁o󠄁n󠄁 p󠄁a󠄁s󠄁s󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁c󠄁o󠄁r󠄁d󠄁e󠄁d󠄁 d󠄁o󠄁c󠄁s󠄁 m󠄁i󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 t󠄁e󠄁s󠄁t󠄁s󠄁;󠄁
+`mark_document_edit` i󠄁s󠄁 **n󠄁o󠄁t󠄁 a󠄁 d󠄁r󠄁o󠄁p󠄁-󠄁i󠄁n󠄁 r󠄁e󠄁p󠄁l󠄁a󠄁c󠄁e󠄁m󠄁e󠄁n󠄁t󠄁** f󠄁o󠄁r󠄁 t󠄁h󠄁a󠄁t󠄁 e󠄁d󠄁i󠄁t󠄁i󠄁n󠄁g󠄁 p󠄁o󠄁l󠄁i󠄁c󠄁y󠄁.󠄁
+S󠄁e󠄁e󠄁 [h󠄁i󠄁s󠄁t󠄁o󠄁r󠄁i󠄁c󠄁a󠄁l󠄁 a󠄁l󠄁i󠄁g󠄁n󠄁m󠄁e󠄁n󠄁t󠄁 e󠄁v󠄁i󠄁d󠄁e󠄁n󠄁c󠄁e󠄁 a󠄁n󠄁d󠄁 c󠄁u󠄁r󠄁r󠄁e󠄁n󠄁t󠄁 m󠄁i󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁i󠄁e󠄁s󠄁](../docs/development/alignment.md).󠄁
+N󠄁e󠄁i󠄁t󠄁h󠄁e󠄁r󠄁 a󠄁p󠄁p󠄁r󠄁o󠄁a󠄁c󠄁h󠄁 s󠄁h󠄁o󠄁u󠄁l󠄁d󠄁 r󠄁e󠄁t󠄁r󠄁o󠄁a󠄁c󠄁t󠄁i󠄁v󠄁e󠄁l󠄁y󠄁 m󠄁a󠄁r󠄁k󠄁 l󠄁e󠄁g󠄁a󠄁c󠄁y󠄁 t󠄁e󠄁x󠄁t󠄁 o󠄁r󠄁 c󠄁o󠄁p󠄁i󠄁e󠄁d󠄁 h󠄁u󠄁m󠄁a󠄁n󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁.󠄁
+
 ## CLI
 
 ```sh

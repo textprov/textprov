@@ -13,7 +13,6 @@ from ._core import segments, strip_marks
 from ._encode import mark
 from .editing import INLINE, markdown_protected, plain_map, remark
 
-
 CHAT_SCOPES = ("prose", "all", "off")
 _ATX_HEADING = re.compile(r" {0,3}(#{1,6})(?=\s|$)")
 _LIST_PREFIX = re.compile(r"(?:[-+*]|\d{1,9}[.)])(?=[ \t])")
@@ -83,7 +82,9 @@ def _chat_protected(plain):
             headings.append((offset + start, offset + end))
             closing = re.search(r"(?<=\s)#+[ \t]*(?:\r\n|\r|\n)?$", line)
             if closing:
-                headings.append((offset + closing.start(), offset + closing.end()))
+                headings.append(
+                    (offset + closing.start(), offset + closing.end())
+                )
         else:
             masked.append(line)
         offset += len(line)
@@ -103,41 +104,47 @@ def _chat_protected(plain):
     for line in lines:
         marker = _container_fence(line)
         quoted = _quote_content(line)
-        indentation = quoted[:len(quoted) - len(quoted.lstrip(" \t"))]
+        indentation = quoted[: len(quoted) - len(quoted.lstrip(" \t"))]
         indented = len(indentation.expandtabs(4)) >= 4
         if fence:
-            protected[offset:offset + len(line)] = [True] * len(line)
-            literal_context[offset:offset + len(line)] = [True] * len(line)
-            if (marker and marker.group(1)[0] == fence[0]
-                    and len(marker.group(1)) >= len(fence)
-                    and not line[marker.end():].strip()):
+            protected[offset : offset + len(line)] = [True] * len(line)
+            literal_context[offset : offset + len(line)] = [True] * len(line)
+            if (
+                marker
+                and marker.group(1)[0] == fence[0]
+                and len(marker.group(1)) >= len(fence)
+                and not line[marker.end() :].strip()
+            ):
                 fence = None
         elif marker:
             fence = marker.group(1)
-            protected[offset:offset + len(line)] = [True] * len(line)
-            literal_context[offset:offset + len(line)] = [True] * len(line)
+            protected[offset : offset + len(line)] = [True] * len(line)
+            literal_context[offset : offset + len(line)] = [True] * len(line)
         elif indented:
             # Nested list code has indentation that the document heuristic may
             # interpret as wrapped list prose. Chat errs toward literal bytes.
-            protected[offset:offset + len(line)] = [True] * len(line)
-            literal_context[offset:offset + len(line)] = [True] * len(line)
+            protected[offset : offset + len(line)] = [True] * len(line)
+            literal_context[offset : offset + len(line)] = [True] * len(line)
         offset += len(line)
 
     # Closed code spans are already protected. An unprotected backtick run may
     # be an incomplete code span: leave its paragraph alone until it is closed.
     closed_spans = [False] * len(plain)
     for span in INLINE[0].finditer(plain):
-        closed_spans[span.start():span.end()] = [True] * (span.end() - span.start())
+        closed_spans[span.start() : span.end()] = [True] * (
+            span.end() - span.start()
+        )
     literal_until = 0
     for marker in re.finditer(r"`+", plain):
         if marker.start() < literal_until:
             continue
-        if (any(literal_context[marker.start():marker.end()])
-                or all(closed_spans[marker.start():marker.end()])):
+        if any(literal_context[marker.start() : marker.end()]) or all(
+            closed_spans[marker.start() : marker.end()]
+        ):
             continue
         boundary = _PARAGRAPH_END.search(plain, marker.end())
         end = boundary.start() if boundary else len(plain)
-        protected[marker.start():end] = [True] * (end - marker.start())
+        protected[marker.start() : end] = [True] * (end - marker.start())
         literal_until = end
     return protected
 
@@ -149,11 +156,15 @@ def _chat_clusters(text, role, scope):
     _validate_scope(scope)
     text = _text(text)
     state = "human" if role == "user" else "ai"
-    protected = _chat_protected(plain_map(text)[0]) if scope == "prose" else None
+    protected = (
+        _chat_protected(plain_map(text)[0]) if scope == "prose" else None
+    )
     offset = 0
     for cluster in segments(text):
         end = offset + len(plain_map(cluster)[0])
-        literal = scope == "off" or (protected is not None and any(protected[offset:end]))
+        literal = scope == "off" or (
+            protected is not None and any(protected[offset:end])
+        )
         yield cluster, cluster if literal else mark(cluster, state=state)
         offset = end
 
@@ -178,7 +189,9 @@ def mark_chat_parts(parts, role, scope="prose"):
     its newly added selector follows its last source scalar in that scalar's
     part. The caller must supply all text parts, not unrelated stream batches.
     """
-    if not isinstance(parts, list) or any(not isinstance(part, str) for part in parts):
+    if not isinstance(parts, list) or any(
+        not isinstance(part, str) for part in parts
+    ):
         raise ValueError("parts must be a list of strings")
     out = [[] for _ in parts]
     part = 0
@@ -192,16 +205,16 @@ def mark_chat_parts(parts, role, scope="prose"):
                 position = 0
             out[part].append(character)
             position += 1
-        out[part].append(marked[len(cluster):])
+        out[part].append(marked[len(cluster) :])
     return ["".join(value) for value in out]
 
 
-def mark_document(text):
+def mark_document(text, profile="markdown"):
     """Mark new AI document prose, preserving supplied marks and Markdown code."""
-    return mark_document_edit("", text)
+    return mark_document_edit("", text, profile=profile)
 
 
-def mark_document_edit(old_text, new_text):
+def mark_document_edit(old_text, new_text, profile="markdown"):
     """Mark AI additions and replacements, carrying unchanged source marks.
 
     Uses the existing whole-line/whole-word editing alignment. Existing marks
@@ -210,8 +223,15 @@ def mark_document_edit(old_text, new_text):
     code are protected by the same conservative rules as other document edits.
     No prompt matching or manual claims are required.
     """
-    return remark(_text(old_text), _text(new_text), markdown=True,
-                  carry=True, shingles=set(), preserve_new_marks=True)
+    return remark(
+        _text(old_text),
+        _text(new_text),
+        markdown=True,
+        carry=True,
+        shingles=set(),
+        preserve_new_marks=True,
+        profile=profile,
+    )
 
 
 def main(argv=None):
@@ -224,19 +244,42 @@ def main(argv=None):
             raise ValueError("request must be an object")
         operation = request.get("operation")
         if operation == "mark-chat":
-            result = mark_chat(request["text"], request["role"],
-                               scope=request.get("scope", "prose"))
+            result = mark_chat(
+                request["text"],
+                request["role"],
+                scope=request.get("scope", "prose"),
+            )
         elif operation == "mark-chat-parts":
-            result = mark_chat_parts(request["parts"], request["role"],
-                                     scope=request.get("scope", "prose"))
+            result = mark_chat_parts(
+                request["parts"],
+                request["role"],
+                scope=request.get("scope", "prose"),
+            )
             print(json.dumps({"parts": result}, ensure_ascii=False))
             return 0
         elif operation == "mark-document":
-            result = mark_document_edit(request.get("old_text", ""), request["text"])
+            result = mark_document_edit(
+                request.get("old_text", ""),
+                request["text"],
+                profile=request.get("profile", "markdown"),
+            )
+        elif operation == "check":
+            from .check import check_text
+
+            problems = check_text(
+                _text(request["before"]),
+                _text(request["after"]),
+                profile=request.get("profile", "markdown"),
+                require_marks=not request.get("preserve_only", False),
+            )
+            print(json.dumps({"problems": problems}, ensure_ascii=False))
+            return 1 if problems else 0
         elif operation == "strip-marks":
             result = strip_marks(_text(request["text"]))
         else:
-            raise ValueError("operation must be mark-chat, mark-chat-parts, mark-document or strip-marks")
+            raise ValueError(
+                "operation must be mark-chat, mark-chat-parts, mark-document, check or strip-marks"
+            )
         print(json.dumps({"text": result}, ensure_ascii=False))
         return 0
     except (KeyError, ValueError, TypeError) as error:
