@@ -2,6 +2,17 @@
 
 These functions process text only: callers supply any recorded human passages.
 Markdown protection is a conservative heuristic, not a complete parser.
+
+HTML blocks follow CommonMark 4.6 start and end conditions 1-6: raw text
+elements (pre, script, style, textarea), comments, processing instructions,
+declarations, CDATA sections, and block-level tags up to the next blank line.
+Every line of the block is protected whole. Type 7 (any other complete open or
+closing tag alone on a line) is not implemented; such lines get tag-only
+protection and their prose is marked. List items are tracked by content indent
+(CommonMark 5.2), so fences, HTML blocks and indented code inside an item are
+recognised relative to it, and a block at a lower indent ends the item.
+Blockquote prefixes are not parsed, so blocks inside a blockquote are not
+recognised.
 """
 
 from __future__ import annotations
@@ -165,11 +176,60 @@ DEFINITION = re.compile(r" {0,3}\[([^\]]+)\]:")
 LEADER = re.compile(
     r"(\s*>)*(\s*(?:[-+*]|\d{1,9}[.)])(?=\s))*(\s+\[[ xX]\](?=\s))?\s*"
 )
-LIST_ITEM = re.compile(r"\s*(?:[-+*]|\d{1,9}[.)])\s")
+# CommonMark 5.2 list marker: up to three spaces, the marker, then the spaces
+# that set the item's content indent (group 3) if any content follows.
+LIST_MARKER = re.compile(r"( {0,3})([-+*]|\d{1,9}[.)])(?=\s|$)([ \t]*)")
+BLOCKQUOTE = re.compile(r" {0,3}>")
 RAW_BLOCKS = re.compile(
     r"<!--.*?-->|<(script|style|pre|code|textarea)\b.*?</\1\s*>",
     re.DOTALL | re.IGNORECASE,
 )
+# CommonMark 4.6 HTML block start conditions 1-6 and their end conditions.
+# Type 7 (a complete open or closing tag alone on a line) is not recognised.
+HTML_BLOCK_TAGS = frozenset((
+    "address", "article", "aside", "base", "basefont", "blockquote", "body",
+    "caption", "center", "col", "colgroup", "dd", "details", "dialog", "dir",
+    "div", "dl", "dt", "fieldset", "figcaption", "figure", "footer", "form",
+    "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header",
+    "hr", "html", "iframe", "legend", "li", "link", "main", "menu", "menuitem",
+    "nav", "noframes", "ol", "optgroup", "option", "p", "param", "search",
+    "section", "summary", "table", "tbody", "td", "tfoot", "th", "thead",
+    "title", "tr", "track", "ul",
+))
+# A type 6 block ends before the next blank line, which is not part of it.
+HTML_BLOCK_END = object()
+HTML_BLOCK_START = [
+    (
+        re.compile(
+            r" {0,3}<(?:pre|script|style|textarea)(?=[ \t>]|\r?\n|\r|$)",
+            re.IGNORECASE,
+        ),
+        re.compile(r"</(?:pre|script|style|textarea)>", re.IGNORECASE),
+    ),
+    (re.compile(r" {0,3}<!--"), re.compile(r"-->")),
+    (re.compile(r" {0,3}<\?"), re.compile(r"\?>")),
+    (re.compile(r" {0,3}<![A-Za-z]"), re.compile(r">")),
+    (re.compile(r" {0,3}<!\[CDATA\["), re.compile(r"\]\]>")),
+]
+HTML_BLOCK_TAG = re.compile(
+    r" {0,3}</?([A-Za-z][A-Za-z0-9]*)(?=[ \t>]|/>|\r?\n|\r|$)"
+)
+
+
+def html_block_end(line):
+    """The end condition of the HTML block that `line` opens, or None.
+
+    A compiled pattern ends the block on the first line it is found in, which
+    may be the start line itself. HTML_BLOCK_END (a block-level tag, type 6)
+    ends before the next blank line and never on its start line.
+    """
+    for start, end in HTML_BLOCK_START:
+        if start.match(line):
+            return end
+    tag = HTML_BLOCK_TAG.match(line)
+    if tag and tag.group(1).lower() in HTML_BLOCK_TAGS:
+        return HTML_BLOCK_END
+    return None
 # A CRLF is one line ending. Check escaped characters too, so an escaped
 # newline cannot bypass the blank-line limit.
 MATH_CHAR = r"(?!(?:\r\n|\r(?!\n)|\n)[^\S\r\n]*(?:\r\n|\r|\n))."
@@ -204,6 +264,232 @@ INLINE = [
 ]
 
 
+def _indentation(text, column=0):
+    """Width in columns and length in characters of the leading whitespace.
+
+    Tabs advance to the next multiple of four from `column` (CommonMark 2.2).
+    """
+    width = column
+    for count, char in enumerate(text):
+        if char == " ":
+            width += 1
+        elif char == "\t":
+            width += 4 - width % 4
+        else:
+            return width - column, count
+    return width - column, len(text)
+
+
+def _relative(line, columns):
+    """The line relative to a container whose content indent is `columns`.
+
+    Returns (offset, view). Leading whitespace covering `columns` is removed.
+    A tab that straddles the boundary is consumed and the columns it reaches
+    beyond the boundary are padded with spaces, so block syntax that accepts
+    only spaces still matches (CommonMark 2.2). Index `i` of the view, for
+    any `i` at or past the padding, is character `offset + i` of the line;
+    every block match used for offsets ends past the padding.
+    """
+    width = count = 0
+    for char in line:
+        if char == " ":
+            width += 1
+        elif char == "\t":
+            width += 4 - width % 4
+        else:
+            break
+        count += 1
+        if width >= columns:
+            break
+    pad = max(width - columns, 0)
+    return count - pad, " " * pad + line[count:]
+
+
+def _starts_block(view):
+    """Whether a line, seen relative to its container, begins a new block.
+
+    Indented code is excluded: it cannot interrupt a paragraph.
+    """
+    return bool(
+        FENCE.match(view)
+        or HEADING.match(view)
+        or RULE.match(view)
+        or TABLE_RULE.match(view)
+        or DEFINITION.match(view)
+        or LIST_MARKER.match(view)
+        or BLOCKQUOTE.match(view)
+        or html_block_end(view)
+    )
+
+
+def _list_item(view, base):
+    """(content indent, rest of the line, rest's relative indent) or None.
+
+    `view` is the line relative to the enclosing container whose content
+    indent is `base`. The content indent is the marker column plus marker
+    width plus the spaces after it; five or more spaces, or no content, count
+    as one and leave the rest as indented code (CommonMark 5.2).
+    """
+    marker = LIST_MARKER.match(view)
+    if not marker or RULE.match(view):
+        return None
+    column = base + marker.end(2)
+    spaces, chars = _indentation(view[marker.end(2) :], column)
+    rest = view[marker.end(2) + chars :]
+    if spaces >= 5 or not rest.strip():
+        spaces, rest, relative = 1, view[marker.end(2) + 1 :], spaces - 1
+    else:
+        relative = 0
+    return column + spaces, rest, max(relative, 0)
+
+
+def _list_items(view, base):
+    """Content indents of the items a line opens, the rest, and its indent.
+
+    Several items may open on one line (`- - x`). Without a marker the rest
+    is the whole view and its relative indent is None.
+    """
+    contents = []
+    relative = None
+    while True:
+        item = _list_item(view, base)
+        if not item:
+            return contents, view, relative
+        base, view, relative = item
+        contents.append(base)
+
+
+class BlockState:
+    """Line-by-line CommonMark block state shared by the Markdown scanners.
+
+    `scan` classifies a line as part of fenced code (FENCED), an HTML block
+    (HTML), indented code (CODE) or anything else (TEXT) and records the
+    literal kinds. The caller then passes every TEXT line to `text`, which
+    records paragraph and list state. The split lets the Markdoc pre-scan mask
+    tags on the line first, so a tag-only line counts as blank there exactly
+    as it does when `markdown_protected` later sees the masked text.
+
+    List items are tracked by content indent (CommonMark 5.2), outermost
+    first. A non-blank line indented less than the innermost item's content
+    indent closes that item, unless it is a lazy paragraph continuation: plain
+    text directly after paragraph text, not starting any block. Fenced code and
+    HTML blocks that open inside an item stay inside it. Their content is not
+    checked against the item's indent; a closing fence is accepted at the
+    item's content indent or at up to three absolute spaces.
+    """
+
+    FENCED, HTML, CODE, TEXT = "fenced", "html", "code", "text"
+
+    def __init__(self):
+        self.fence = None
+        self.html = None
+        self.items = []
+        self.paragraph = False
+
+    def _open_items(self, line):
+        """Items still open for a non-blank line, and its syntax offset and view.
+
+        The view skips the innermost open item's content indent, so block
+        syntax is matched relative to the container. A lazy continuation keeps
+        every item open and has no block syntax, so its view is the line.
+        """
+        indent, _ = _indentation(line)
+        items = self.items
+        while items and indent < items[-1]:
+            items = items[:-1]
+        start, view = _relative(line, items[-1] if items else 0)
+        if (
+            len(items) < len(self.items)
+            and self.paragraph
+            and not _starts_block(view)
+        ):
+            return self.items, 0, line
+        return items, start, view
+
+    def _open(self, items, view, relative, allow_code):
+        """Open a fence, HTML block or indented code at `view`, or return None."""
+        opening = FENCE.match(view)
+        if opening:
+            self.items = list(items)
+            self.fence = opening.group(1)
+            self.paragraph = False
+            return self.FENCED
+        if relative >= 4 and allow_code:
+            self.items = list(items)
+            self.paragraph = False
+            return self.CODE
+        html = html_block_end(view)
+        if html:
+            self.items = list(items)
+            self.paragraph = False
+            if html is not HTML_BLOCK_END and html.search(view):
+                html = None
+            self.html = html
+            return self.HTML
+        return None
+
+    def scan(self, line, may_open=True):
+        """Classify a line, recording fence, HTML-block and code state.
+
+        A TEXT line changes no state until it is passed to `text`. With
+        `may_open` false, no literal block may start on the line.
+        """
+        blank = not line.strip()
+        if self.fence:
+            view = _relative(line, self.items[-1])[1] if self.items else line
+            closing = FENCE.match(view)
+            if not closing:
+                view, closing = line, FENCE.match(line)
+            if (
+                closing
+                and closing.group(1)[0] == self.fence[0]
+                and len(closing.group(1)) >= len(self.fence)
+                and not view[closing.end() :].strip()
+            ):
+                # A code block is not a paragraph: indented code may follow.
+                self.fence = None
+            return self.FENCED
+        if self.html is HTML_BLOCK_END and blank:
+            # The blank line ends the block and is an ordinary blank line.
+            self.html = None
+        elif self.html:
+            if self.html is not HTML_BLOCK_END and self.html.search(line):
+                self.html = None
+            return self.HTML
+        if blank or not may_open:
+            return self.TEXT
+        items, _, view = self._open_items(line)
+        base = items[-1] if items else 0
+        contents, rest, relative = _list_items(view, base)
+        if contents:
+            # A new item starts outside any paragraph, so code may open.
+            kind = self._open(list(items) + contents, rest, relative, True)
+        else:
+            indent, _ = _indentation(line)
+            kind = self._open(items, view, indent - base, not self.paragraph)
+        return kind or self.TEXT
+
+    def text(self, line):
+        """Record a TEXT line; return (offset, view) of its block syntax.
+
+        Block syntax matched on the view ends at character `offset + end` of
+        the line (see `_relative`).
+        """
+        if not line.strip():
+            self.paragraph = False
+            return 0, line
+        items, start, view = self._open_items(line)
+        self.items = list(items)
+        if RULE.match(view) or HEADING.match(view):
+            self.paragraph = False
+            return start, view
+        contents, rest, _ = _list_items(view, items[-1] if items else 0)
+        self.items.extend(contents)
+        # An empty item (`-` alone) opens no paragraph; nothing can be lazy.
+        self.paragraph = bool(rest.strip())
+        return start, view
+
+
 def markdown_protected(plain):
     """One flag per code point: true where a mark could change how it parses."""
     protected = [False] * len(plain)
@@ -216,74 +502,44 @@ def markdown_protected(plain):
     whole = [False] * len(lines)
 
     labels = set()
-    fence = None
-    in_list = False
-    previous_blank = True
-    previous_code = False
+    state = BlockState()
     front_matter = (
         bool(lines)
         and lines[0].strip() == "---"
         and any(line.strip() in ("---", "...") for line in lines[1:])
     )
     for number, line in enumerate(lines):
-        blank = not line.strip()
         if front_matter:
             whole[number] = True
             if number and line.strip() in ("---", "..."):
                 front_matter = False
             continue
-        if fence:
+        if state.scan(line) is not BlockState.TEXT:
             whole[number] = True
-            closing = FENCE.match(line)
-            if (
-                closing
-                and closing.group(1)[0] == fence[0]
-                and len(closing.group(1)) >= len(fence)
-                and not line[closing.end() :].strip()
-            ):
-                fence = None
             continue
-        opening = FENCE.match(line)
-        if opening:
-            fence = opening.group(1)
+        start, view = state.text(line)
+        definition = DEFINITION.match(view)
+        if RULE.match(view):
             whole[number] = True
-            previous_blank = previous_code = False
-            continue
-        indented = line.startswith(("    ", "\t")) and not blank
-        if indented and not in_list and (previous_blank or previous_code):
-            whole[number] = True
-            previous_code, previous_blank = True, False
-            continue
-        if not blank:
-            previous_code = False
-            if LIST_ITEM.match(line):
-                in_list = True
-            elif not line[0].isspace():
-                in_list = False
-        definition = DEFINITION.match(line)
-        rule = RULE.match(line)
-        if rule:
-            whole[number] = True
-        elif HEADING.match(line):
-            heading = HEADING.match(line)
-            protect(at[number], at[number] + heading.end())
+        elif HEADING.match(view):
+            heading = HEADING.match(view)
+            protect(at[number], at[number] + start + heading.end())
             closing = re.search(r"[ \t]+#+[ \t]*(?:\r?\n)?$", line)
             if closing:
                 protect(
                     at[number] + closing.start(), at[number] + closing.end()
                 )
-        elif TABLE_RULE.match(line):
+        elif TABLE_RULE.match(view):
             whole[number] = True
         elif definition and not definition.group(1).startswith("^"):
             labels.add(definition.group(1).strip().lower())
             whole[number] = True
         elif definition:
-            protect(at[number], at[number] + definition.end())
+            protect(at[number], at[number] + start + definition.end())
         else:
             leader = LEADER.match(line)
             if leader:
                 protect(at[number], at[number] + leader.end())
-        previous_blank = blank
 
     for number, flag in enumerate(whole):
         if flag:

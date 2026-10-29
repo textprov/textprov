@@ -147,6 +147,20 @@ i󠄁s󠄁 `"markdown"`.󠄁 I󠄁n󠄁 0󠄁.󠄁3󠄁.󠄁0󠄁,󠄁 h󠄁e�
 h󠄁a󠄁s󠄁h󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁 s󠄁e󠄁t󠄁e󠄁x󠄁t󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁s󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁 p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁e󠄁d󠄁.󠄁 T󠄁h󠄁i󠄁s󠄁 a󠄁l󠄁s󠄁o󠄁 a󠄁f󠄁f󠄁e󠄁c󠄁t󠄁s󠄁 c󠄁a󠄁l󠄁l󠄁e󠄁r󠄁s󠄁 o󠄁f󠄁
 t󠄁h󠄁e󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁 M󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁 p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁i󠄁o󠄁n󠄁 h󠄁e󠄁l󠄁p󠄁e󠄁r󠄁,󠄁 i󠄁n󠄁c󠄁l󠄁u󠄁d󠄁i󠄁n󠄁g󠄁 c󠄁l󠄁a󠄁s󠄁s󠄁i󠄁f󠄁i󠄁c󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁s󠄁.󠄁
 
+The Markdown profile also protects CommonMark HTML blocks of types 1 through 6:
+`<pre>`, `<script>`, `<style>`, and `<textarea>` blocks, comments, processing
+instructions, declarations, CDATA sections, and block-level tags such as `<div>`
+or `<table>` at line start, through the next blank line. The whole block is
+protected, including the line that ends it and any text after `</pre>` or `-->`
+on that line. As a result, HTML block bodies no longer receive marks in document
+marking, chat marking, or exports, and `ProseEditor` rejects edits inside them.
+Type 7 blocks (an arbitrary complete tag alone on a line, such as `<span>` or a
+custom element) and HTML blocks nested inside blockquotes are not detected. List
+items are tracked by their content indent, so fences, HTML blocks and indented
+code inside an item are recognised relative to it, and a block at a lower indent
+ends the item. Inline HTML within a paragraph is unchanged: tags are protected
+and the surrounding prose still receives marks.
+
 C󠄁o󠄁m󠄁p󠄁o󠄁s󠄁e󠄁 `("markdown", "markdoc", "directives")` f󠄁o󠄁r󠄁 M󠄁a󠄁r󠄁k󠄁d󠄁o󠄁w󠄁n󠄁 w󠄁i󠄁t󠄁h󠄁 M󠄁a󠄁r󠄁k󠄁d󠄁o󠄁c󠄁 t󠄁a󠄁g󠄁s󠄁
 a󠄁n󠄁d󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁e󠄁r󠄁 d󠄁i󠄁r󠄁e󠄁c󠄁t󠄁i󠄁v󠄁e󠄁s󠄁.󠄁 `markdoc` p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁s󠄁 c󠄁o󠄁m󠄁p󠄁l󠄁e󠄁t󠄁e󠄁 t󠄁a󠄁g󠄁s󠄁 a󠄁n󠄁d󠄁 q󠄁u󠄁o󠄁t󠄁e󠄁d󠄁
 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁s󠄁.󠄁 `directives` p󠄁r󠄁o󠄁t󠄁e󠄁c󠄁t󠄁s󠄁 f󠄁e󠄁n󠄁c󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁r󠄁s󠄁 a󠄁n󠄁d󠄁 a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁s󠄁 b󠄁u󠄁t󠄁 l󠄁e󠄁a󠄁v󠄁e󠄁s󠄁

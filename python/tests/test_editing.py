@@ -238,6 +238,363 @@ class TestMarkdown(unittest.TestCase):
         self.unmarked("<!-- note\nmore -->\ntext\n", "<!-- note\nmore -->")
         self.unmarked("a <b>bold</b> &amp; b\n", "<b>")
 
+    def test_html_block_type_6_is_protected_whole(self):
+        # CommonMark 4.6 type 6: a block-level tag opens a block that runs to,
+        # but does not include, the next blank line. Issue #39.
+        for block in (
+            '<div class="x">HTML block</div>',
+            "<div>\n```\n*em* text\n</div>",
+            "<div>\ncontent on the next line",
+            "<DIV>\ncontent",
+            "   <div>\ncontent",
+            "<div/>\ncontent",
+            "</div>\ncontent",
+            "<table>\n<tr><td>*cell*</td></tr>\n</table>",
+        ):
+            with self.subTest(block=block):
+                source = block + "\n\nAfter prose.\n"
+                self.assertEqual(
+                    remark("", source),
+                    block + "\n\n" + ai("After prose.") + "\n",
+                )
+
+    def test_html_block_type_6_does_not_close_on_its_start_line(self):
+        # A single-line <div>...</div> is still open until a blank line.
+        self.assertEqual(
+            remark("", "<div>x</div>\nstill in the block\n\nAfter.\n"),
+            "<div>x</div>\nstill in the block\n\n" + ai("After.") + "\n",
+        )
+
+    def test_html_block_types_1_to_5_end_on_their_marker_line(self):
+        # The end line is protected whole, including text after the marker.
+        for same_line, multiline in (
+            ("<pre>raw *x*</pre>", "<pre>\nraw *x*\n</pre> tail *text*"),
+            ("<!-- c -->", "<!-- c\nmore\n--> tail *text*"),
+            ("<?php ?>", "<?php\necho *x*;\n?> tail *text*"),
+            ("<!DOCTYPE html>", "<!DOCTYPE\nhtml> tail *text*"),
+            ("<![CDATA[x]]>", "<![CDATA[\n*x*\n]]> tail *text*"),
+        ):
+            for block in (same_line, multiline):
+                with self.subTest(block=block):
+                    source = block + "\nAfter.\n"
+                    self.assertEqual(
+                        remark("", source), block + "\n" + ai("After.") + "\n"
+                    )
+
+    def test_html_block_type_1_tag_variants(self):
+        for block in (
+            "<script>\nvar x = *y*;\n</script>",
+            "<SCRIPT>\nvar x;\n</SCRIPT>",
+            "<Script type=module>\nvar x;\n</script>",
+            "<style>\n.a { *b* }\n</style>",
+            "<textarea>\n*raw*\n</textarea>",
+            '<pre\tclass="x">raw</pre>',
+            "<pre\nraw\n</pre>",
+        ):
+            with self.subTest(block=block):
+                source = block + "\nAfter.\n"
+                self.assertEqual(
+                    remark("", source), block + "\n" + ai("After.") + "\n"
+                )
+        # A tag name that merely starts with a type 1 name is not type 1.
+        self.assertEqual(
+            remark("", "<preface>\nprose\n"),
+            "<preface>\n" + ai("prose") + "\n",
+        )
+
+    def test_html_block_indent_limit(self):
+        # Up to three spaces open a block; four make indented code when a
+        # blank line precedes, and a paragraph continuation otherwise.
+        self.assertEqual(
+            remark("", "   <div>\ncontent\n\nAfter.\n"),
+            "   <div>\ncontent\n\n" + ai("After.") + "\n",
+        )
+        self.assertEqual(
+            remark("", "x\n\n    <div>\ncontent\n"),
+            ai("x") + "\n\n    <div>\n" + ai("content") + "\n",
+        )
+        self.assertEqual(
+            remark("", "x\n    <div>\ncontent\n"),
+            ai("x") + "\n    <div>\n" + ai("content") + "\n",
+        )
+
+    def test_html_blocks_and_code_blocks_do_not_open_inside_each_other(self):
+        for source, expected in (
+            # A tag inside a fence does not start a block; the fence closes.
+            ("```\n<div>\n```\nAfter.\n", "```\n<div>\n```\n" + ai("After.") + "\n"),
+            # A tag inside indented code does not swallow the next line.
+            ("\n    <div>\nAfter.\n", "\n    <div>\n" + ai("After.") + "\n"),
+            # A fence inside a block does not open; the blank line ends it.
+            (
+                "<div>\n```\ninside\n\nAfter.\n",
+                "<div>\n```\ninside\n\n" + ai("After.") + "\n",
+            ),
+            # Indented text inside a block is part of the block, not code.
+            (
+                "<div>\n</div>\n    inside\n\nAfter.\n",
+                "<div>\n</div>\n    inside\n\n" + ai("After.") + "\n",
+            ),
+        ):
+            with self.subTest(source=source):
+                self.assertEqual(remark("", source), expected)
+
+    def test_indented_code_may_follow_a_closed_block(self):
+        # An HTML block or fenced code block is not a paragraph, so a 4-space
+        # line right after one closes is indented code, not a continuation.
+        for source, expected in (
+            # Type 2 block that closes on its start line.
+            (
+                "<!-- c -->\n    *code*\nAfter.\n",
+                "<!-- c -->\n    *code*\n" + ai("After.") + "\n",
+            ),
+            # Type 1 block that closes on a later line.
+            (
+                "<pre>\nraw\n</pre>\n    *code*\nAfter.\n",
+                "<pre>\nraw\n</pre>\n    *code*\n" + ai("After.") + "\n",
+            ),
+            # Closing fence.
+            (
+                "```\nx\n```\n    *code*\nAfter.\n",
+                "```\nx\n```\n    *code*\n" + ai("After.") + "\n",
+            ),
+        ):
+            with self.subTest(source=source):
+                self.assertEqual(remark("", source), expected)
+        # A prose line after the closed block resets the gate, so the indented
+        # line that follows it is still a paragraph continuation, not code.
+        self.assertEqual(
+            remark("", "<!-- c -->\nprose\n    more\n"),
+            "<!-- c -->\n" + ai("prose") + "\n    " + ai("more") + "\n",
+        )
+
+    def test_column_zero_fence_ends_a_list_item(self):
+        # CommonMark 5.2: a fence indented less than the item's content indent
+        # is not a continuation, so the list ends and the 4-space line after
+        # the closed fence is indented code, not list prose.
+        self.assertEqual(
+            remark("", "- item\n\n```\nx\n```\n    *code*\nAfter.\n"),
+            "- " + ai("item") + "\n\n```\nx\n```\n    *code*\n" + ai("After.") + "\n",
+        )
+        # A fence may interrupt the item's paragraph; no blank line is needed.
+        self.assertEqual(
+            remark("", "- item\n```\nx\n```\n    *code*\n"),
+            "- " + ai("item") + "\n```\nx\n```\n    *code*\n",
+        )
+
+    def test_column_zero_fence_ends_a_list_item_crlf(self):
+        self.assertEqual(
+            remark("", "- item\r\n\r\n```\r\nx\r\n```\r\n    *code*\r\nAfter.\r\n"),
+            "- "
+            + ai("item")
+            + "\r\n\r\n```\r\nx\r\n```\r\n    *code*\r\n"
+            + ai("After.")
+            + "\r\n",
+        )
+
+    def test_column_zero_html_block_ends_a_list_item(self):
+        for block in ("<!-- c -->", "<pre>\nraw *x*\n</pre>"):
+            with self.subTest(block=block):
+                self.assertEqual(
+                    remark("", "- item\n\n" + block + "\n    *code*\nAfter.\n"),
+                    "- "
+                    + ai("item")
+                    + "\n\n"
+                    + block
+                    + "\n    *code*\n"
+                    + ai("After.")
+                    + "\n",
+                )
+
+    def test_fence_at_the_content_indent_stays_inside_the_item(self):
+        # The item survives a fence at its content indent: prose after the
+        # fence is still list prose, and 4 spaces there is still not code.
+        self.assertEqual(
+            remark("", "- item\n  ```\n  x\n  ```\n  more\n\n    *para*\n"),
+            "- "
+            + ai("item")
+            + "\n  ```\n  x\n  ```\n  "
+            + ai("more")
+            + "\n\n    *"
+            + ai("para")
+            + "*\n",
+        )
+        # A fence on the marker line opens inside the item and closes at the
+        # content indent.
+        self.assertEqual(
+            remark("", "- ```\n  x\n  ```\nAfter.\n"),
+            "- ```\n  x\n  ```\n" + ai("After.") + "\n",
+        )
+
+    def test_lazy_continuation_keeps_the_item_open(self):
+        # Paragraph text directly after the item's paragraph continues it, so
+        # a later 4-space line is still inside the item (content indent 2).
+        self.assertEqual(
+            remark("", "- item\nlazy line\n\n    *para*\n"),
+            "- " + ai("item") + "\n" + ai("lazy line") + "\n\n    *" + ai("para") + "*\n",
+        )
+        # After a blank line the text is a new paragraph outside the list, so
+        # the same 4-space line is indented code.
+        self.assertEqual(
+            remark("", "- item\n\nnot lazy\n\n    *code*\n"),
+            "- " + ai("item") + "\n\n" + ai("not lazy") + "\n\n    *code*\n",
+        )
+
+    def test_nested_list_ends_at_a_column_zero_fence(self):
+        self.assertEqual(
+            remark("", "- a\n  - b\n\n```\nx\n```\n    *code*\n"),
+            "- " + ai("a") + "\n  - " + ai("b") + "\n\n```\nx\n```\n    *code*\n",
+        )
+
+    def test_ordered_list_content_indent(self):
+        # `1.` gives content indent 3 and `10)` gives 4: a line at that indent
+        # after a blank is item prose, and four more columns is indented code.
+        for marker, para, code in (
+            ("1.", "    ", "       "),
+            ("10)", "    ", "        "),
+        ):
+            with self.subTest(marker=marker):
+                source = marker + " item\n\n" + para + "*para*\n\n" + code + "*code*\n"
+                self.assertEqual(
+                    remark("", source),
+                    marker
+                    + " "
+                    + ai("item")
+                    + "\n\n"
+                    + para
+                    + "*"
+                    + ai("para")
+                    + "*\n\n"
+                    + code
+                    + "*code*\n",
+                )
+
+    def test_indented_code_inside_a_list_item(self):
+        # Inside an item, indented code needs the content indent plus four.
+        self.assertEqual(
+            remark("", "- item\n\n      *code*\n"),
+            "- " + ai("item") + "\n\n      *code*\n",
+        )
+        self.assertEqual(
+            remark("", "- item\n\n    *para*\n"),
+            "- " + ai("item") + "\n\n    *" + ai("para") + "*\n",
+        )
+        # Five or more spaces after the marker start the item with code.
+        self.assertEqual(
+            remark("", "-     *code*\nAfter.\n"),
+            "-     *code*\n" + ai("After.") + "\n",
+        )
+
+    def test_tab_indented_nested_list_item(self):
+        # A tab is column 4 (CommonMark 2.2): `\t- b` nests at relative
+        # indent 2 with content indent 6, so a tab plus two spaces after a
+        # blank line is item prose, not indented code.
+        self.assertEqual(
+            remark("", "- a\n\t- b\n\n\t  *para*\n"),
+            "- " + ai("a") + "\n\t- " + ai("b") + "\n\n\t  *" + ai("para") + "*\n",
+        )
+        # The nested item's content indent is 6, so two tabs are relative
+        # indent 2: a fence, not code, and the closing fence is found.
+        self.assertEqual(
+            remark("", "- a\n\t- b\n\n\t\t```\n\t*x*\n\t\t```\n\tafter\n"),
+            "- "
+            + ai("a")
+            + "\n\t- "
+            + ai("b")
+            + "\n\n\t\t```\n\t*x*\n\t\t```\n\t"
+            + ai("after")
+            + "\n",
+        )
+
+    def test_tab_indented_fence_inside_a_list_item(self):
+        # The tab straddles the content indent (2): the remaining two columns
+        # are relative indent 2, so the line is a fence inside the item and
+        # the text after the blank line inside it is literal.
+        for newline in ("\n", "\r\n"):
+            with self.subTest(newline=newline):
+                source = "- a¶¶\t```¶\tfoo¶¶\tbar¶\t```¶After.¶".replace("¶", newline)
+                self.assertEqual(
+                    remark("", source),
+                    source.replace("- a", "- " + ai("a")).replace(
+                        "After.", ai("After.")
+                    ),
+                )
+        # A straddling tab before a heading: the heading marker and the space
+        # after it are protected at their real offsets.
+        self.assertEqual(
+            remark("", "- a\n\t# h\n"), "- " + ai("a") + "\n\t# " + ai("h") + "\n"
+        )
+
+    def test_two_tabs_inside_a_list_item_are_indented_code(self):
+        # Content indent 2, two tabs are column 8: relative indent 6 is code.
+        self.assertEqual(
+            remark("", "- a\n\n\t\t*code*\nAfter.\n"),
+            "- " + ai("a") + "\n\n\t\t*code*\n" + ai("After.") + "\n",
+        )
+
+    def test_inline_html_mid_paragraph_is_unchanged(self):
+        self.assertEqual(
+            remark("", "<b>bold</b> &amp; text\n"),
+            "<b>" + ai("bold") + "</b> &amp; " + ai("text") + "\n",
+        )
+        self.assertEqual(
+            remark("", "a <code>x</code> b\n"),
+            ai("a") + " <code>x</code> " + ai("b") + "\n",
+        )
+
+    def test_type_7_html_is_not_a_block(self):
+        # Documented limitation: a lone tag not in the block-level list gets
+        # tag-only protection and its following prose is marked.
+        for tag in ("<span>", '<a href="x">', "</span>"):
+            with self.subTest(tag=tag):
+                self.assertEqual(
+                    remark("", tag + "\nprose here\n\nAfter.\n"),
+                    tag
+                    + "\n"
+                    + ai("prose here")
+                    + "\n\n"
+                    + ai("After.")
+                    + "\n",
+                )
+
+    def test_html_block_line_endings_and_offsets_are_preserved(self):
+        for newline in ("\r\n", "\r"):
+            with self.subTest(newline=repr(newline)):
+                block = newline.join(("<div>", "```", "*em*", "</div>"))
+                source = block + newline * 2 + "After." + newline
+                marked = remark("", source)
+                self.assertEqual(
+                    marked, block + newline * 2 + ai("After.") + newline
+                )
+                self.assertEqual(textprov.strip_marks(marked), source)
+                self.assertEqual(
+                    states(marked),
+                    [
+                        (None, block + newline * 2),
+                        ("ai", "After."),
+                        (None, newline),
+                    ],
+                )
+            with self.subTest(newline=repr(newline), kind="type 1"):
+                block = newline.join(("<pre>", "*raw*", "</pre> tail"))
+                self.assertEqual(
+                    remark("", block + newline + "After." + newline),
+                    block + newline + ai("After.") + newline,
+                )
+
+    def test_html_block_keeps_existing_marks(self):
+        human = textprov.mark("Human intro", state="human")
+        old = human + "\n\n<div>\nbody\n</div>\n\n" + ai("agent") + "\n"
+        plain = textprov.strip_marks(old)
+        self.assertEqual(remark(old, plain), old)
+        self.assertEqual(
+            remark(old, plain.replace("body", "body *more*")),
+            old.replace("body", "body *more*"),
+        )
+        self.assertEqual(
+            remark(old, plain[:-1] + " words\n"),
+            old[:-1] + ai(" words") + "\n",
+        )
+
     def test_prose_is_marked(self):
         self.assertEqual(
             states(remark("", "Hello, world.\n")),

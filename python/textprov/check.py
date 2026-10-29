@@ -18,7 +18,8 @@ MAPPING = default_mapping()
 STATES = {value: key for key, value in MAPPING.selectors.items()}
 # Smallest move threshold that excludes the reported one-cluster coincidence
 # while still checking mark changes on two-cluster moves. Not a confidence score
-# or a minimum for primary equal runs; see docs/TEXTPROV.md alignment limitations.
+# or a minimum for primary equal runs; see docs/development/alignment.md for the
+# alignment limitations.
 MIN_MOVE_CLUSTERS = 2
 
 
@@ -54,7 +55,8 @@ def correspondence(old, new):
     Unique exact unmatched blocks are then paired as moves: mark changes are
     checked only at MIN_MOVE_CLUSTERS or above, while shorter blocks must keep
     identical bytes. Short moves and cumulative edits remain ambiguous; see
-    docs/TEXTPROV.md for examples, historical exceptions, and follow-up scope.
+    docs/development/alignment.md for examples, historical exceptions, and
+    follow-up scope.
     """
     a = [
         i for i, item in enumerate(old) if item.text and not item.text.isspace()
