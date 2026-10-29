@@ -21,6 +21,32 @@ SELECTOR = "new prose cluster must have one selector mark"
 OUTSIDE = "new mark is outside eligible prose or attached to whitespace"
 
 
+class PublicAlignmentTests(unittest.TestCase):
+    def test_clusters_export_preserves_encoding_state_and_offsets(self):
+        from textprov import clusters
+        from textprov.check import clusters as implementation
+
+        source = mark("e\u0301", state="human") + " " + mark("x", mode="pua")
+        result = clusters(source)
+        self.assertIn("clusters", textprov.__all__)
+        self.assertEqual(result, implementation(source))
+        self.assertEqual("".join(item.raw for item in result), source)
+        self.assertEqual(
+            [(item.start, item.end, item.text, item.state) for item in result],
+            [(0, 2, "e\u0301", "human"), (2, 3, " ", None), (3, 4, "x", "ai")],
+        )
+
+    def test_correspondence_export_maps_new_indices_to_old(self):
+        from textprov import clusters, correspondence
+        from textprov.check import correspondence as implementation
+
+        old = clusters(mark("ab", state="human"))
+        new = clusters(mark("X") + " " + mark("ab", state="human"))
+        self.assertIn("correspondence", textprov.__all__)
+        self.assertEqual(correspondence(old, new), implementation(old, new))
+        self.assertEqual(correspondence(old, new), {2: 0, 3: 1})
+
+
 class CheckerTests(unittest.TestCase):
     def messages(self, old, new, suffix=".txt", **kwargs):
         profile = None if suffix == ".txt" else DOCS

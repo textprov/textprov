@@ -235,11 +235,7 @@ def install_adapter(root, mode):
     module.__file__ = str(path)
     sys.modules["dogfood"] = module
     source = path.read_text()
-    # Keep the required-version diagnostic and the -S dependency subprocesses
-    # unchanged. Only accept the phase-2 SDK in normal adapted processes.
-    source = source.replace(
-        "!= REQUIRED_TEXTPROV_VERSION:", 'not in ("0.2.0", "0.3.0"):'
-    )
+
     exec(compile(source, str(path), "exec"), module.__dict__)
     original_edit = module.mark_edit
     original_check = module.check_text

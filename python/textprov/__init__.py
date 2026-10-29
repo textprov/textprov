@@ -35,7 +35,9 @@ __all__ = [
     "UNICODE_VERSION",
     "Mapping",
     "check_text",
+    "clusters",
     "convert",
+    "correspondence",
     "default_mapping",
     "inspect",
     "load_mapping",
@@ -81,6 +83,20 @@ def mark_document_edit(old_text, new_text, profile="markdown"):
     from .marking import mark_document_edit as operation
 
     return operation(old_text, new_text, profile=profile)
+
+
+def clusters(source):
+    """Return graphemes with original encodings, states, and unmarked offsets."""
+    from .check import clusters as operation
+
+    return operation(source)
+
+
+def correspondence(old, new):
+    """Map new cluster indices to old ones using preservation correspondence."""
+    from .check import correspondence as operation
+
+    return operation(old, new)
 
 
 def check_text(before, after, *, profile="markdown", require_marks=True):
