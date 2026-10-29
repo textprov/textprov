@@ -26,7 +26,7 @@ from ._core import (
     strip_marks,
     to_html,
 )
-from ._display import stylesheet
+from ._display import display_family, display_version, stylesheet
 from ._encode import convert, inspect, mark, mark_added
 
 __all__ = [
@@ -50,6 +50,8 @@ __all__ = [
     "runs",
     "segments",
     "strip_marks",
+    "display_family",
+    "display_version",
     "stylesheet",
     "to_html",
 ]

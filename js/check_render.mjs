@@ -9,6 +9,7 @@ import path from "path";
 import { createRequire } from "module";
 import { fileURLToPath } from "url";
 import { JSDOM } from "jsdom";
+import { readFileSync } from "node:fs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const target = path.resolve(process.argv[2] || path.join(here, "textprov.js"));
@@ -193,6 +194,15 @@ t("initial exact view leaves unmarked whitespace unassigned by default", () => {
   assert.equal(body.dataset.provDisplay, "exact");
   assert.deepEqual(Array.from(body.querySelectorAll("[data-prov]"), el => el.textContent), ["a", "b"]);
   assert.deepEqual(textprov.runs(`a${AI} b${AI}`, { strip: true }), [{ state: "ai", text: "a b" }]);
+});
+
+t("displayVersion matches --prov-display-version in textprov.css and is spec-version-family", () => {
+  const css = readFileSync(path.join(path.dirname(target), "textprov.css"), "utf8");
+  const m = css.match(/--prov-display-version:\s*"([^"]+)"/);
+  assert.ok(m, "textprov.css declares --prov-display-version");
+  assert.equal(textprov.displayVersion, m[1]);
+  assert.match(textprov.displayVersion, /^v\d+\.\d+\.\d+-[a-z]+$/);
+  assert.ok(textprov.displayVersion.endsWith("-" + textprov.displayFamily));
 });
 
 for (const c of cases) {

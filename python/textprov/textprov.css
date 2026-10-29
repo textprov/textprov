@@ -7,12 +7,20 @@
  * Applications may choose other presentation without changing the stored text.
  * The reveal treatment is gradient mist with an 80%-strength dotted underline.
  * The former wavy/sawtooth provenance underline is obsolete.
+ *
+ * Display version: v0.3.0-asterisk (recommended): the spec version the
+ * treatment was designed against, then the family name. The spec version is
+ * the proposal's, not the 0.2 baseline experiment identifier (tag v0.2-final)
+ * and not any SDK package version. The --prov-display-version property below
+ * is the single source of this value; the SDKs read it from here. Scheme and
+ * register: ../docs/development/display-versions.md.
  */
 
 /* Native application annotations remain above the optional reveal layer. */
 @layer textprov {
 
 :root {
+  --prov-display-version: "v0.3.0-asterisk";
   --prov-human-bg: rgba(46, 160, 67, 0.14);
   --prov-human-line: #2ea043;
   --prov-ai-bg: rgba(199, 125, 0, 0.14);
