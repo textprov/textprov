@@ -19,9 +19,17 @@ the tarball to the package's staged queue and a maintainer approves it with 2FA.
 
 | Tag | Version source | Workflow | GitHub environment |
 | --- | --- | --- | --- |
-| `python-v0.2.0` | `python/textprov/_version.py` | `publish-python.yml` | `pypi` |
-| `js-v0.2.1` | `js/package.json` and `js/package-lock.json` | `publish-js.yml` | `npm` |
-| `ruby-v0.1.2` | `ruby/lib/textprov/version.rb` | `publish-ruby.yml` | `rubygems` |
+| `python-v0.y.z` | `python/textprov/_version.py` | `publish-python.yml` | `pypi` |
+| `js-v0.y.z` | `js/package.json` and `js/package-lock.json` | `publish-js.yml` | `npm` |
+| `ruby-v0.y.z` | `ruby/lib/textprov/version.rb` | `publish-ruby.yml` | `rubygems` |
+
+### Example commands
+
+```bash
+gh release create python-v0.2.0 --target main --title "python 0.2.0" --generate-notes
+gh release create js-v0.2.1 --target main --title "javascript 0.2.1" --generate-notes
+gh release create ruby-v0.1.2 --target main --title "ruby 0.1.2" --generate-notes
+```
 
 All three workflows reject a tag that does not exactly match its package version.
 The JavaScript workflow also checks both root version entries in the lockfile.
