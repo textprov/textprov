@@ -1,4 +1,6 @@
+.DS_Store
 __pycache__/
+.agent-telemetry
 *.egg-info/
 build/
 dist/
@@ -7,3 +9,6 @@ node_modules/
 .agent-worktrees/
 .font-cache/
 .venv-fonts/
+.textprov/
+.textprov
+*.txt
