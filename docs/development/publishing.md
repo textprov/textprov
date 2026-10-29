@@ -1,12 +1,14 @@
 # Publishing packages
 
-Maintainers use this guide to prepare and release the Python and JavaScript
-packages. Ruby gem releases are outside this guide's scope. Run commands from
-the repository root unless a section says otherwise.
+Maintainers use this guide to prepare and release the Python, JavaScript, and
+Ruby packages. Run commands from the repository root unless a section says
+otherwise.
 
 The packages have independent versions and release tags. This release prepares
-both packages at **0.2.0**. For later releases, replace `0.2.0` in the commands
-with the version being released. Never reuse a published version.
+Python and JavaScript at **0.2.0**. Ruby remains at **0.1.0**, which is already
+published; bump `ruby/lib/textprov/version.rb` before its next release. For
+later Python and JavaScript releases, replace `0.2.0` in the commands with the
+version being released. Never reuse a published version.
 
 ## Release model and safety
 
@@ -16,13 +18,14 @@ Tag pushes publish packages; they are not a post-publication bookkeeping step:
 | --- | --- | --- | --- |
 | `python-v0.2.0` | `python/textprov/_version.py` | `publish-python.yml` | `pypi` |
 | `js-v0.2.0` | `js/package.json` and `js/package-lock.json` | `publish-js.yml` | `npm` |
+| `ruby-vX.Y.Z` | `ruby/lib/textprov/version.rb` | `publish-ruby.yml` | `rubygems` |
 
-Both workflows reject a tag that does not exactly match its package version.
+All three workflows reject a tag that does not exactly match its package version.
 The JavaScript workflow also checks both root version entries in the lockfile.
 Build/test jobs have only `contents: read`; checkout does not retain credentials.
 Only the separate publishing jobs have `id-token: write`. They download the
 artifacts tested by the build jobs rather than rebuilding them. No PyPI API
-token or npm write token is required.
+token, npm write token, or long-lived RubyGems API key is required.
 
 Before a maintainer creates or pushes a release tag:
 
@@ -94,6 +97,23 @@ Keep account 2FA enabled. Once trusted publishing is working, npm recommends
 access settings, then revoking obsolete automation tokens. `npm whoami` does
 not validate OIDC trust. Registry setup cannot be proven by a local dry run.
 
+### RubyGems trusted publisher
+
+A `textprov` gem owner must configure a
+[trusted publisher](https://guides.rubygems.org/trusted-publishing/) on RubyGems.org:
+
+- Repository owner: `textprov`
+- Repository name: `textprov`
+- Workflow filename: `publish-ruby.yml`
+- Environment: `rubygems`
+
+Create the matching GitHub environment with deployment protections. The workflow
+exchanges its GitHub OIDC identity for short-lived gem-push credentials, then
+pushes the same `.gem` artifact that passed the build job's installed-gem smoke
+test. It does not create commits or tags and does not require repository write
+permission. Registry authentication must be verified by a real authorized release;
+local tests do not validate trusted-publisher setup.
+
 ## Local checks
 
 Use Python 3.13 and Node 24 LTS for release preparation, with npm 11. The
@@ -121,7 +141,7 @@ PYTHONPATH=python python3 -m unittest discover -s plugins/codex/tests -v
 ```
 
 The remaining Ruby and site jobs in `checks.yml` are still required before a
-release, but this guide does not describe their packaging or publication.
+release. Ruby packaging is described below; site deployment is separate.
 The license check compares the package copies with each other, not with the
 root `LICENSE` (which is a repository license overview).
 
@@ -202,6 +222,33 @@ TextProv specification version (`0.2`).
 
 The [JavaScript release workflow](../../.github/workflows/publish-js.yml)
 performs the same tests and tarball smoke check before its publishing job.
+
+## Build and smoke-test the Ruby gem
+
+Use Ruby 3.4, matching `checks.yml` and the release workflow. From `ruby/`:
+
+```sh
+bundle install
+bundle exec rake test
+mkdir -p pkg/release
+gem build textprov.gemspec --output pkg/release/textprov.gem
+gem install --local pkg/release/textprov.gem --no-document --install-dir pkg/smoke
+GEM_HOME="$PWD/pkg/smoke" GEM_PATH="$PWD/pkg/smoke" ruby -r textprov -e 'abort unless Textprov.strip_marks(Textprov.mark("hello", state: "ai")) == "hello"; abort if Textprov.stylesheet.empty?'
+GEM_HOME="$PWD/pkg/smoke" GEM_PATH="$PWD/pkg/smoke" pkg/smoke/bin/textprov --version
+```
+
+Use an empty `pkg/release` and `pkg/smoke` for each release check. The gem must
+include `LICENSE`, `README.md`, the executable, Ruby modules, mapping, and CSS.
+The [Ruby release workflow](../../.github/workflows/publish-ruby.yml) additionally
+checks the installed gem's version against the tag, confirms it loads from the
+isolated install directory, and exercises CLI marking and inspection.
+
+After bumping and committing the Ruby version, create an annotated
+`ruby-vX.Y.Z` tag matching `Textprov::VERSION` and push that tag to trigger
+publication. Replace `X.Y.Z` with the new version; do not push `ruby-v0.1.0`
+for the existing published version. After publication, install the new version
+from RubyGems.org into a fresh directory and repeat the smoke checks without
+`--local` or a source-checkout load path.
 
 ## Maintainer-authorized release
 
