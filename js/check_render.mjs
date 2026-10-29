@@ -196,12 +196,13 @@ t("initial exact view leaves unmarked whitespace unassigned by default", () => {
   assert.deepEqual(textprov.runs(`a${AI} b${AI}`, { strip: true }), [{ state: "ai", text: "a b" }]);
 });
 
-t("displayVersion matches --prov-display-version in textprov.css and is date.family", () => {
+t("displayVersion matches --prov-display-version in textprov.css and is spec-version-family", () => {
   const css = readFileSync(path.join(path.dirname(target), "textprov.css"), "utf8");
   const m = css.match(/--prov-display-version:\s*"([^"]+)"/);
   assert.ok(m, "textprov.css declares --prov-display-version");
   assert.equal(textprov.displayVersion, m[1]);
-  assert.match(textprov.displayVersion, /^\d{4}-\d{2}-\d{2}\.[a-z]+$/);
+  assert.match(textprov.displayVersion, /^v\d+\.\d+\.\d+-[a-z]+$/);
+  assert.ok(textprov.displayVersion.endsWith("-" + textprov.displayFamily));
 });
 
 for (const c of cases) {

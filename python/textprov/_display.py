@@ -12,13 +12,21 @@ def stylesheet():
 
 
 def display_version():
-    """Return the reveal treatment version, ``YYYY-MM-DD.family``.
+    """Return the reveal treatment version, ``v<spec version>-<family>``.
 
     The value is read from ``--prov-display-version`` in the packaged
-    stylesheet, which is the single source for it. The scheme is described in
-    docs/development/display-versions.md.
+    stylesheet, which is the single source for it. The prefix is the spec
+    (proposal) version the treatment was designed against: not the ``0.2``
+    baseline experiment identifier in :data:`SPEC_VERSION` and not this
+    package's version. The family names the visual model. The scheme is
+    described in docs/development/display-versions.md.
     """
     match = _VERSION_PROPERTY.search(stylesheet())
     if match is None:
         raise ValueError("packaged stylesheet declares no --prov-display-version")
     return match.group(1)
+
+
+def display_family():
+    """Return the family part of :func:`display_version`."""
+    return display_version().rsplit("-", 1)[1]

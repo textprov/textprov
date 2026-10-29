@@ -99,7 +99,7 @@ D󠄁O󠄁M󠄁 p󠄁a󠄁s󠄁s󠄁a󠄁g󠄁e󠄁s󠄁 f󠄁o󠄁l󠄁l󠄁o�
 r󠄁e󠄁t󠄁a󠄁i󠄁n󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁l󠄁i󠄁n󠄁e󠄁 f󠄁o󠄁r󠄁m󠄁a󠄁t󠄁t󠄁i󠄁n󠄁g󠄁.󠄁 P󠄁l󠄁a󠄁i󠄁n󠄁-󠄁t󠄁e󠄁x󠄁t󠄁 H󠄁T󠄁M󠄁L󠄁 e󠄁x󠄁p󠄁o󠄁r󠄁t󠄁s󠄁 u󠄁s󠄁e󠄁 b󠄁l󠄁a󠄁n󠄁k󠄁 l󠄁i󠄁n󠄁e󠄁s󠄁 a󠄁s󠄁 p󠄁a󠄁r󠄁a󠄁g󠄁r󠄁a󠄁p󠄁h󠄁
 b󠄁o󠄁u󠄁n󠄁d󠄁a󠄁r󠄁i󠄁e󠄁s󠄁.󠄁 T󠄁h󠄁e󠄁 o󠄁p󠄁t󠄁i󠄁o󠄁n󠄁a󠄁l󠄁 s󠄁h󠄁a󠄁r󠄁e󠄁d󠄁 s󠄁t󠄁y󠄁l󠄁e󠄁s󠄁h󠄁e󠄁e󠄁t󠄁 p󠄁a󠄁i󠄁n󠄁t󠄁s󠄁 t󠄁h󠄁e󠄁 s󠄁e󠄁l󠄁e󠄁c󠄁t󠄁e󠄁d󠄁 l󠄁a󠄁y󠄁e󠄁r󠄁 o󠄁n󠄁l󠄁y󠄁.󠄁
 `textprov.displayVersion` n󠄁a󠄁m󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 t󠄁r󠄁e󠄁a󠄁t󠄁m󠄁e󠄁n󠄁t󠄁 i󠄁t󠄁 p󠄁a󠄁i󠄁n󠄁t󠄁s󠄁,󠄁 a󠄁s󠄁
-`YYYY-MM-DD.family`;󠄁 s󠄁e󠄁e󠄁 [d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁s󠄁](../docs/development/display-versions.md).󠄁
+`v<spec version>-<family>`;󠄁 s󠄁e󠄁e󠄁 [d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁s󠄁](../docs/development/display-versions.md).󠄁
 S󠄁w󠄁i󠄁t󠄁c󠄁h󠄁i󠄁n󠄁g󠄁 a󠄁n󠄁 a󠄁n󠄁c󠄁e󠄁s󠄁t󠄁o󠄁r󠄁'󠄁s󠄁 `data-prov-display` b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 `passage` a󠄁n󠄁d󠄁 `exact` c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁
 p󠄁a󠄁i󠄁n󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁o󠄁u󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁i󠄁n󠄁g󠄁 t󠄁e󠄁x󠄁t󠄁 o󠄁r󠄁 e󠄁x󠄁a󠄁c󠄁t󠄁 s󠄁p󠄁a󠄁n󠄁s󠄁.󠄁
 

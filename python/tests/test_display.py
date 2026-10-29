@@ -19,12 +19,14 @@ class TestStylesheet(unittest.TestCase):
             (ROOT / "js" / "textprov.css").read_text(encoding="utf-8"),
         )
 
-    def test_display_version_is_the_stylesheet_property_in_date_family_form(self):
+    def test_display_version_is_the_spec_version_then_the_family(self):
         version = textprov.display_version()
-        self.assertRegex(version, r"^\d{4}-\d{2}-\d{2}\.[a-z]+$")
+        self.assertRegex(version, r"^v\d+\.\d+\.\d+-[a-z]+$")
+        self.assertTrue(version.endswith("-" + textprov.display_family()))
+        self.assertNotEqual(version.split("-")[0], "v" + textprov.SPEC_VERSION)
         self.assertIn(f'--prov-display-version: "{version}";', textprov.stylesheet())
         js = (ROOT / "js" / "textprov.js").read_text(encoding="utf-8")
-        self.assertIn(f'var DISPLAY_VERSION = "{version}";', js)
+        self.assertIn(f'var DISPLAY_FAMILY = "{textprov.display_family()}";', js)
 
     def test_stylesheet_does_not_depend_on_the_working_directory(self):
         expected = textprov.stylesheet()

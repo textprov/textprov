@@ -9,9 +9,11 @@ class TestStylesheet < Minitest::Test
                  Textprov.stylesheet
   end
 
-  def test_display_version_is_the_stylesheet_property_in_date_family_form
+  def test_display_version_is_the_spec_version_then_the_family
     version = Textprov.display_version
-    assert_match(/\A\d{4}-\d{2}-\d{2}\.[a-z]+\z/, version)
+    assert_match(/\Av\d+\.\d+\.\d+-[a-z]+\z/, version)
+    assert version.end_with?("-#{Textprov.display_family}")
+    refute_equal "v#{Textprov::SPEC_VERSION}", version.split("-").first
     assert_includes Textprov.stylesheet, %(--prov-display-version: "#{version}";)
   end
 

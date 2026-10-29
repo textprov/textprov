@@ -52,7 +52,7 @@ html = Textprov.to_html(Textprov.mark("A draft", state: "ai"))
 
 S󠄁e󠄁r󠄁v󠄁e󠄁 t󠄁h󠄁a󠄁t󠄁 C󠄁S󠄁S󠄁 a󠄁s󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁i󠄁c󠄁 a󠄁s󠄁s󠄁e󠄁t󠄁 a󠄁n󠄁d󠄁 l󠄁i󠄁n󠄁k󠄁 i󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 H󠄁T󠄁M󠄁L󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁.󠄁 T󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁
 s󠄁t󠄁y󠄁l󠄁e󠄁s󠄁h󠄁e󠄁e󠄁t󠄁 s󠄁h󠄁i󠄁p󠄁s󠄁 i󠄁n󠄁 a󠄁l󠄁l󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 S󠄁D󠄁K󠄁s󠄁.󠄁 `Textprov.display_version` r󠄁e󠄁t󠄁u󠄁r󠄁n󠄁s󠄁 t󠄁h󠄁e󠄁
-t󠄁r󠄁e󠄁a󠄁t󠄁m󠄁e󠄁n󠄁t󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 i󠄁t󠄁 p󠄁a󠄁i󠄁n󠄁t󠄁s󠄁,󠄁 a󠄁s󠄁 `YYYY-MM-DD.family`;󠄁 s󠄁e󠄁e󠄁
+t󠄁r󠄁e󠄁a󠄁t󠄁m󠄁e󠄁n󠄁t󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁 i󠄁t󠄁 p󠄁a󠄁i󠄁n󠄁t󠄁s󠄁,󠄁 a󠄁s󠄁 `v<spec version>-<family>`;󠄁 s󠄁e󠄁e󠄁
 [d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 v󠄁e󠄁r󠄁s󠄁i󠄁o󠄁n󠄁s󠄁](../docs/development/display-versions.md).󠄁 S󠄁e󠄁e󠄁 t󠄁h󠄁e󠄁
 [d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁 c󠄁o󠄁n󠄁v󠄁e󠄁n󠄁t󠄁i󠄁o󠄁n󠄁](../docs/development/provenance-display.md) f󠄁o󠄁r󠄁 n󠄁a󠄁t󠄁i󠄁v󠄁e󠄁
 l󠄁i󠄁n󠄁k󠄁,󠄁 p󠄁r󠄁o󠄁o󠄁f󠄁i󠄁n󠄁g󠄁,󠄁 a󠄁n󠄁d󠄁 c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁t󠄁 i󠄁n󠄁t󠄁e󠄁g󠄁r󠄁a󠄁t󠄁i󠄁o󠄁n󠄁.󠄁 U󠄁n󠄁m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 r󠄁e󠄁m󠄁a󠄁i󠄁n󠄁s󠄁 u󠄁n󠄁a󠄁t󠄁t󠄁r󠄁i󠄁b󠄁u󠄁t󠄁e󠄁d󠄁.󠄁
