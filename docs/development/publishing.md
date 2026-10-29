@@ -100,7 +100,7 @@ interactive publication process before configuring its trusted publisher.
 Do not add a long-lived token as a silent fallback.
 
 npm OIDC requires **Node >=22.14.0 and npm >=11.5.1**, and staged publishing
-requires **npm >=11.15.0**. The release workflow uses Node 24 LTS and explicitly
+requires **npm >=11.15.0**. The release workflow uses Node 26 LTS and explicitly
 installs npm 11; do not rely on the npm version bundled with a runner. Use
 GitHub-hosted runners. The repository and package must be public for
 `--provenance`; `js/package.json`'s `repository.url` must match
@@ -138,9 +138,9 @@ local tests do not validate trusted-publisher setup.
 
 ## Local checks
 
-Use Python 3.13 and Node 24 LTS for release preparation, with npm 11. The
+Use Python 3.13 and Node 26 LTS for release preparation, with npm 11. The
 Python package supports Python >=3.9; the existing checks run 3.9 and 3.13.
-The existing JavaScript checks use Node 22. The published JavaScript package's
+The JavaScript checks also run on Node 26. The published JavaScript package's
 `node >=18` engine declaration is not the release tooling requirement; its
 current development dependencies require a newer Node version.
 
