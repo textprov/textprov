@@ -9,6 +9,12 @@ class TestStylesheet < Minitest::Test
                  Textprov.stylesheet
   end
 
+  def test_display_version_is_the_stylesheet_property_in_date_family_form
+    version = Textprov.display_version
+    assert_match(/\A\d{4}-\d{2}-\d{2}\.[a-z]+\z/, version)
+    assert_includes Textprov.stylesheet, %(--prov-display-version: "#{version}";)
+  end
+
   def test_stylesheet_does_not_depend_on_the_working_directory
     expected = Textprov.stylesheet
     Dir.mktmpdir do |directory|

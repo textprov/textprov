@@ -37,6 +37,9 @@
   // Tables from mapping.json. The registry is not loaded at runtime; these
   // constants are checked against it by check_fixtures.mjs.
   var REGISTRY_VERSION = "0.2";
+  // Reveal treatment version (date.family), mirrored from --prov-display-version in
+  // textprov.css; check_render.mjs verifies the two agree.
+  var DISPLAY_VERSION = "2026-10-27.asterisk";
   var SELECTORS = {
     human: 0xe0100,
     ai: 0xe0101,
@@ -665,6 +668,7 @@
     specVersion: "0.2",
     unicodeVersion: UNICODE_VERSION,
     registryVersion: REGISTRY_VERSION,
+    displayVersion: DISPLAY_VERSION,
     mapping: { version: REGISTRY_VERSION, selectors: SELECTORS, puaRanges: PUA_RANGES },
   };
 
