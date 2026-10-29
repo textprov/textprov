@@ -1,14 +1,20 @@
 """Speaker policy, document preservation, and Unicode copy/paste transport."""
 
 import json
-from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 
-from textprov import (mark, mark_chat, mark_chat_parts, mark_document, mark_document_edit,
-                      strip_marks)
+from textprov import (
+    mark,
+    mark_chat,
+    mark_chat_parts,
+    mark_document,
+    mark_document_edit,
+    strip_marks,
+)
 from textprov.editing import rewrite_edit
 
 
@@ -29,20 +35,28 @@ class TestMarking(unittest.TestCase):
             with self.subTest(role=role):
                 pasted = human + " " + ai
                 self.assertEqual(pasted, mark_chat(pasted, role))
-                self.assertEqual(mark_chat(pasted + " new", role),
-                                 pasted + " " + mark_chat("new", role))
+                self.assertEqual(
+                    mark_chat(pasted + " new", role),
+                    pasted + " " + mark_chat("new", role),
+                )
 
     def test_default_chat_scope_keeps_commands_literals_and_urls_copyable(self):
-        source = ("Run `git status --short` in `/tmp/repo`.\r\n\r\n"
-                  "```sh\r\nprintf '%s\\n' \"hello\"\r\ngit status\r\n```\r\n\r\n"
-                  "See https://example.test/a?b=c and [help](https://example.test).\r\n")
+        source = (
+            "Run `git status --short` in `/tmp/repo`.\r\n\r\n"
+            "```sh\r\nprintf '%s\\n' \"hello\"\r\ngit status\r\n```\r\n\r\n"
+            "See https://example.test/a?b=c and [help](https://example.test).\r\n"
+        )
         for role, state in (("user", "human"), ("assistant", "ai")):
             with self.subTest(role=role):
                 result = mark_chat(source, role)
                 self.assertTrue(result.startswith(mark("Run", state)))
-                for literal in ("`git status --short`", "`/tmp/repo`",
-                                "```sh\r\nprintf '%s\\n' \"hello\"\r\ngit status\r\n```",
-                                "https://example.test/a?b=c", "](https://example.test)"):
+                for literal in (
+                    "`git status --short`",
+                    "`/tmp/repo`",
+                    "```sh\r\nprintf '%s\\n' \"hello\"\r\ngit status\r\n```",
+                    "https://example.test/a?b=c",
+                    "](https://example.test)",
+                ):
                     self.assertIn(literal, result)
                 self.assertEqual(source, strip_marks(result))
                 self.assertEqual(result, mark_chat(result, role))
@@ -53,11 +67,17 @@ class TestMarking(unittest.TestCase):
         for role, state in (("user", "human"), ("assistant", "ai")):
             with self.subTest(role=role):
                 self.assertEqual(source, mark_chat(source, role, scope="off"))
-                self.assertEqual(mark(source, state), mark_chat(source, role, scope="all"))
+                self.assertEqual(
+                    mark(source, state), mark_chat(source, role, scope="all")
+                )
                 self.assertIn("`" + pasted + "`", mark_chat(source, role))
-                self.assertTrue(mark_chat(source, role).startswith(mark("Use", state)))
+                self.assertTrue(
+                    mark_chat(source, role).startswith(mark("Use", state))
+                )
 
-    def test_container_fences_are_unmarked_in_list_and_blockquote_commands(self):
+    def test_container_fences_are_unmarked_in_list_and_blockquote_commands(
+        self,
+    ):
         samples = (
             "> ```sh\r\n> git status\r\n> ```\r\n",
             "- ```bash\n  git status\n  printf '%s' hello\n  ```\n",
@@ -96,13 +116,18 @@ class TestMarking(unittest.TestCase):
                 result = mark_chat(source, "assistant")
                 self.assertIn(literal, result)
                 self.assertEqual(source, strip_marks(result))
-        self.assertTrue(mark_chat("Run `git\n\nMore prose.", "assistant").endswith(
-            mark("More prose.")))
+        self.assertTrue(
+            mark_chat("Run `git\n\nMore prose.", "assistant").endswith(
+                mark("More prose.")
+            )
+        )
 
     def test_chat_marks_heading_prose_without_marking_its_syntax(self):
         source = "## Run `git status` now ##\r\n"
-        self.assertEqual("## " + mark("Run") + " `git status` " + mark("now") + " ##\r\n",
-                         mark_chat(source, "assistant"))
+        self.assertEqual(
+            "## " + mark("Run") + " `git status` " + mark("now") + " ##\r\n",
+            mark_chat(source, "assistant"),
+        )
         # A heading-looking line inside a fence still remains literal.
         code = "```sh\n## comment\ngit status\n```\n"
         self.assertEqual(code, mark_chat(code, "assistant"))
@@ -111,8 +136,10 @@ class TestMarking(unittest.TestCase):
         prose = "e\u0301 👩🏽‍💻 🇨🇦 ❤️ 辻\U000e0100"
         literal = "`e\u0301 👩🏽‍💻 🇨🇦 ❤️`"
         source = prose + "\r\n" + literal + "\r\n"
-        self.assertEqual(mark(prose) + "\r\n" + literal + "\r\n",
-                         mark_chat(source, "assistant"))
+        self.assertEqual(
+            mark(prose) + "\r\n" + literal + "\r\n",
+            mark_chat(source, "assistant"),
+        )
         self.assertEqual(source, mark_chat(source, "assistant", scope="off"))
 
     def test_chat_invalid_scopes_are_rejected_for_both_roles(self):
@@ -128,7 +155,13 @@ class TestMarking(unittest.TestCase):
 
     def test_chat_parts_share_fence_and_inline_context(self):
         samples = (
-            ["Commands:\n\n``", "`sh\n", "git ", "status\n`", "``\n\nFinished."],
+            [
+                "Commands:\n\n``",
+                "`sh\n",
+                "git ",
+                "status\n`",
+                "``\n\nFinished.",
+            ],
             ["Use `git", " status", "` now."],
             ["- > ```sh\n", "  > # note\n\n", "  > git status\n", "  > ```\n"],
         )
@@ -137,7 +170,9 @@ class TestMarking(unittest.TestCase):
                 with self.subTest(parts=parts, role=role):
                     result = mark_chat_parts(parts, role)
                     self.assertEqual(len(parts), len(result))
-                    self.assertEqual(mark_chat("".join(parts), role), "".join(result))
+                    self.assertEqual(
+                        mark_chat("".join(parts), role), "".join(result)
+                    )
                     for source_part, marked_part in zip(parts, result):
                         self.assertEqual(source_part, strip_marks(marked_part))
         self.assertEqual("git ", mark_chat_parts(samples[0], "assistant")[2])
@@ -146,10 +181,21 @@ class TestMarking(unittest.TestCase):
     def test_chat_parts_keep_cross_part_graphemes_and_empty_parts(self):
         selector = mark("x")[1:]
         parts = ["", "e", "\u0301", "", " 👩", "\u200d", "💻", " ❤️", ""]
-        expected = ["", "e", "\u0301" + selector, "", " 👩", "\u200d",
-                    "💻" + selector, " ❤️" + selector, ""]
+        expected = [
+            "",
+            "e",
+            "\u0301" + selector,
+            "",
+            " 👩",
+            "\u200d",
+            "💻" + selector,
+            " ❤️" + selector,
+            "",
+        ]
         self.assertEqual(expected, mark_chat_parts(parts, "assistant"))
-        self.assertEqual(mark_chat("".join(parts), "assistant"), "".join(expected))
+        self.assertEqual(
+            mark_chat("".join(parts), "assistant"), "".join(expected)
+        )
         self.assertEqual([], mark_chat_parts([], "assistant"))
         self.assertEqual(["", ""], mark_chat_parts(["", ""], "user"))
 
@@ -161,7 +207,10 @@ class TestMarking(unittest.TestCase):
             with self.subTest(scope=scope):
                 result = mark_chat_parts(parts, "user", scope=scope)
                 self.assertEqual(parts[:4], result[:4])
-                self.assertEqual(mark_chat("".join(parts), "user", scope=scope), "".join(result))
+                self.assertEqual(
+                    mark_chat("".join(parts), "user", scope=scope),
+                    "".join(result),
+                )
         self.assertEqual(parts, mark_chat_parts(parts, "user", scope="off"))
 
     def test_chat_parts_reject_invalid_inputs_and_empty_message_controls(self):
@@ -177,18 +226,33 @@ class TestMarking(unittest.TestCase):
     def test_long_list_like_prose_completes_without_backtracking_timeout(self):
         source = "-    " * 1000 + "tail"
         request = dict(operation="mark-chat", role="assistant", text=source)
-        result = subprocess.run([sys.executable, "-m", "textprov.marking"],
-                                input=json.dumps(request), capture_output=True,
-                                text=True, check=True, timeout=3)
+        result = subprocess.run(
+            [sys.executable, "-m", "textprov.marking"],
+            input=json.dumps(request),
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=3,
+        )
         self.assertEqual(source, strip_marks(json.loads(result.stdout)["text"]))
 
     def test_document_changes_preserve_unchanged_human_ai_and_unmarked(self):
-        original = (mark("Human passage.", "human") + "\n" +
-                    mark("AI passage.") + "\nEditor passage.\nOld conclusion.\n")
-        proposed = "Human passage.\nAI passage.\nEditor passage.\nNew conclusion.\n"
+        original = (
+            mark("Human passage.", "human")
+            + "\n"
+            + mark("AI passage.")
+            + "\nEditor passage.\nOld conclusion.\n"
+        )
+        proposed = (
+            "Human passage.\nAI passage.\nEditor passage.\nNew conclusion.\n"
+        )
         result = mark_document_edit(original, proposed)
-        self.assertEqual(original.rsplit("Old conclusion.", 1)[0] +
-                         mark("New") + " conclusion.\n", result)
+        self.assertEqual(
+            original.rsplit("Old conclusion.", 1)[0]
+            + mark("New")
+            + " conclusion.\n",
+            result,
+        )
         self.assertEqual(proposed, strip_marks(result))
         self.assertEqual(result, mark_document_edit(result, proposed))
 
@@ -204,16 +268,22 @@ class TestMarking(unittest.TestCase):
         ai = mark("Words", "ai")
         for supplied in (human, ai):
             self.assertEqual(supplied, mark_document_edit("Words", supplied))
-            self.assertEqual(supplied + " " + mark("added"),
-                             mark_document_edit("Words", supplied + " added"))
+            self.assertEqual(
+                supplied + " " + mark("added"),
+                mark_document_edit("Words", supplied + " added"),
+            )
         self.assertEqual(human, mark_document_edit(human, ai))
         self.assertEqual(ai, mark_document_edit(ai, human))
-        self.assertEqual(mark("Some", "human") + " " + mark("words", "ai"),
-                         mark_document_edit(mark("Some", "human") + " words",
-                                            mark("Some words", "ai")))
-        self.assertEqual(("Words", human),
-                         rewrite_edit("Words", "Words", human,
-                                      preserve_new_marks=True))
+        self.assertEqual(
+            mark("Some", "human") + " " + mark("words", "ai"),
+            mark_document_edit(
+                mark("Some", "human") + " words", mark("Some words", "ai")
+            ),
+        )
+        self.assertEqual(
+            ("Words", human),
+            rewrite_edit("Words", "Words", human, preserve_new_marks=True),
+        )
 
     def test_equal_pasted_combining_emoji_and_pua_marks_are_preserved(self):
         plain = "e\u0301 👩🏽‍💻 cafe"
@@ -224,9 +294,15 @@ class TestMarking(unittest.TestCase):
 
     def test_pasted_marks_and_markdown_syntax_survive_new_document(self):
         pasted = mark_chat("Copied answer.", "assistant")
-        source = "# Heading\n\n" + pasted + "\n\nUse `print(1)` and [link](https://example.test).\n"
+        source = (
+            "# Heading\n\n"
+            + pasted
+            + "\n\nUse `print(1)` and [link](https://example.test).\n"
+        )
         marked = mark_document(source)
-        self.assertTrue(marked.startswith("# Heading\n\n" + pasted))
+        self.assertTrue(
+            marked.startswith("# " + mark("Heading") + "\n\n" + pasted)
+        )
         self.assertIn("`print(1)`", marked)
         self.assertIn("](https://example.test)", marked)
         self.assertEqual(strip_marks(source), strip_marks(marked))
@@ -239,7 +315,9 @@ class TestMarking(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "pasted.md"
             # The clipboard's text payload crosses JSON and UTF-8 boundaries.
-            copied = json.loads(json.dumps({"text": source}, ensure_ascii=True))["text"]
+            copied = json.loads(
+                json.dumps({"text": source}, ensure_ascii=True)
+            )["text"]
             path.write_bytes(copied.encode("utf-8"))
             pasted = path.read_bytes().decode("utf-8")
             self.assertEqual(source, pasted)
@@ -247,29 +325,48 @@ class TestMarking(unittest.TestCase):
             editor_text = pasted + "Editor words.\n"
             path.write_bytes(editor_text.encode("utf-8"))
             self.assertEqual(editor_text, path.read_bytes().decode("utf-8"))
-            final = mark_document_edit(editor_text,
-                                       editor_text + "Agent words.\n")
+            final = mark_document_edit(
+                editor_text, editor_text + "Agent words.\n"
+            )
             self.assertEqual(editor_text + mark("Agent words.") + "\n", final)
 
     def test_json_cli_uses_the_same_policy(self):
         request = {"operation": "mark-chat", "role": "user", "text": "Hello 👋"}
-        result = subprocess.run([sys.executable, "-m", "textprov.marking"],
-                                input=json.dumps(request), capture_output=True,
-                                text=True, check=True)
-        self.assertEqual({"text": mark_chat(request["text"], "user")},
-                         json.loads(result.stdout))
-        request = {"operation": "mark-document", "old_text": mark("Keep", "human"),
-                   "text": "Keep this"}
-        result = subprocess.run([sys.executable, "-m", "textprov.marking"],
-                                input=json.dumps(request), capture_output=True,
-                                text=True, check=True)
-        self.assertEqual(mark("Keep", "human") + " " + mark("this"),
-                         json.loads(result.stdout)["text"])
+        result = subprocess.run(
+            [sys.executable, "-m", "textprov.marking"],
+            input=json.dumps(request),
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertEqual(
+            {"text": mark_chat(request["text"], "user")},
+            json.loads(result.stdout),
+        )
+        request = {
+            "operation": "mark-document",
+            "old_text": mark("Keep", "human"),
+            "text": "Keep this",
+        }
+        result = subprocess.run(
+            [sys.executable, "-m", "textprov.marking"],
+            input=json.dumps(request),
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertEqual(
+            mark("Keep", "human") + " " + mark("this"),
+            json.loads(result.stdout)["text"],
+        )
 
     def test_json_cli_rejects_unknown_operations(self):
-        result = subprocess.run([sys.executable, "-m", "textprov.marking"],
-                                input='{"operation":"claim"}', capture_output=True,
-                                text=True)
+        result = subprocess.run(
+            [sys.executable, "-m", "textprov.marking"],
+            input='{"operation":"claim"}',
+            capture_output=True,
+            text=True,
+        )
         self.assertEqual(1, result.returncode)
         self.assertIn("operation", json.loads(result.stderr)["error"])
 
@@ -277,36 +374,69 @@ class TestMarking(unittest.TestCase):
         source = mark("git", "human") + " `status`\r\n"
         for scope in ("prose", "all", "off"):
             with self.subTest(scope=scope):
-                request = dict(operation="mark-chat", role="assistant", text=source, scope=scope)
-                result = subprocess.run([sys.executable, "-m", "textprov.marking"],
-                                        input=json.dumps(request), capture_output=True,
-                                        text=True, check=True)
-                self.assertEqual(mark_chat(source, "assistant", scope=scope),
-                                 json.loads(result.stdout)["text"])
+                request = dict(
+                    operation="mark-chat",
+                    role="assistant",
+                    text=source,
+                    scope=scope,
+                )
+                result = subprocess.run(
+                    [sys.executable, "-m", "textprov.marking"],
+                    input=json.dumps(request),
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                )
+                self.assertEqual(
+                    mark_chat(source, "assistant", scope=scope),
+                    json.loads(result.stdout)["text"],
+                )
         # Explicit extraction uses the experimental registry, preserving unrelated
         # variation selectors and private-use text rather than sanitizing Unicode.
         source = mark("git status") + " ❤️ x\U000e0102 \ue000\r\n"
         request = dict(operation="strip-marks", text=source)
-        result = subprocess.run([sys.executable, "-m", "textprov.marking"],
-                                input=json.dumps(request), capture_output=True,
-                                text=True, check=True)
-        self.assertEqual("git status ❤️ x\U000e0102 \ue000\r\n",
-                         json.loads(result.stdout)["text"])
+        result = subprocess.run(
+            [sys.executable, "-m", "textprov.marking"],
+            input=json.dumps(request),
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertEqual(
+            "git status ❤️ x\U000e0102 \ue000\r\n",
+            json.loads(result.stdout)["text"],
+        )
 
     def test_json_cli_rejects_invalid_chat_scope_and_strip_text(self):
         for request in (
             dict(operation="mark-chat", role="user", text="hello", scope=None),
             dict(operation="strip-marks", text=None),
         ):
-            result = subprocess.run([sys.executable, "-m", "textprov.marking"],
-                                    input=json.dumps(request), capture_output=True, text=True)
+            result = subprocess.run(
+                [sys.executable, "-m", "textprov.marking"],
+                input=json.dumps(request),
+                capture_output=True,
+                text=True,
+            )
             self.assertEqual(1, result.returncode)
             self.assertIn("error", json.loads(result.stderr))
 
     def test_json_cli_chat_parts_preserves_complete_message_context(self):
         parts = ["Run `git", " status", "` now.", ""]
-        request = dict(operation="mark-chat-parts", role="assistant", parts=parts, scope="prose")
-        result = subprocess.run([sys.executable, "-m", "textprov.marking"],
-                                input=json.dumps(request), capture_output=True,
-                                text=True, check=True)
-        self.assertEqual({"parts": mark_chat_parts(parts, "assistant")}, json.loads(result.stdout))
+        request = dict(
+            operation="mark-chat-parts",
+            role="assistant",
+            parts=parts,
+            scope="prose",
+        )
+        result = subprocess.run(
+            [sys.executable, "-m", "textprov.marking"],
+            input=json.dumps(request),
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertEqual(
+            {"parts": mark_chat_parts(parts, "assistant")},
+            json.loads(result.stdout),
+        )

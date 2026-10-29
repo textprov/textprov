@@ -11,6 +11,7 @@ from bisect import bisect_left, bisect_right
 from difflib import SequenceMatcher
 
 from . import default_mapping, mark, runs, segments
+from .syntax import DEFAULT_PROFILE, resolve_profile
 
 MAPPING = default_mapping()
 SELECTORS = set(MAPPING.selectors.values())
@@ -116,13 +117,18 @@ def merge(old_raw, new_raw, carry, preserve_new_marks=False):
                     stop = position + len(cluster)
                     original = raw_span(old_raw, old_index, position, stop)
                     offset = new_range[0] - start
-                    supplied = raw_span(new_raw, new_index,
-                                        position + offset, stop + offset)
-                    old_marked = any(ord(c) in SELECTORS or ord(c) in PUA
-                                     for c in original)
-                    new_marked = any(ord(c) in SELECTORS or ord(c) in PUA
-                                     for c in supplied)
-                    pieces.append(supplied if new_marked and not old_marked else original)
+                    supplied = raw_span(
+                        new_raw, new_index, position + offset, stop + offset
+                    )
+                    old_marked = any(
+                        ord(c) in SELECTORS or ord(c) in PUA for c in original
+                    )
+                    new_marked = any(
+                        ord(c) in SELECTORS or ord(c) in PUA for c in supplied
+                    )
+                    pieces.append(
+                        supplied if new_marked and not old_marked else original
+                    )
                     position = stop
                 retained = "".join(pieces)
             emit(retained, False)
@@ -258,11 +264,15 @@ def markdown_protected(plain):
         rule = RULE.match(line)
         if rule:
             whole[number] = True
-            # Only a run of = or - underlines a setext heading; a thematic
-            # break (***, ___, - - -) leaves the line above it prose.
-            if number and not previous_blank and not rule.group(2):
-                whole[number - 1] = True  # setext heading text
-        elif HEADING.match(line) or TABLE_RULE.match(line):
+        elif HEADING.match(line):
+            heading = HEADING.match(line)
+            protect(at[number], at[number] + heading.end())
+            closing = re.search(r"[ \t]+#+[ \t]*(?:\r?\n)?$", line)
+            if closing:
+                protect(
+                    at[number] + closing.start(), at[number] + closing.end()
+                )
+        elif TABLE_RULE.match(line):
             whole[number] = True
         elif definition and not definition.group(1).startswith("^"):
             labels.add(definition.group(1).strip().lower())
@@ -358,11 +368,19 @@ def human_mask(plain, added, shingles, min_words):
 # --- marking ---------------------------------------------------------------
 
 
-def finalize(raw, flags, markdown, shingles, min_words):
+def finalize(
+    raw, flags, markdown, shingles, min_words, profile=DEFAULT_PROFILE
+):
     """Mark the flagged, unprotected clusters of `raw`; leave the rest alone."""
     plain, index = plain_map(raw)
     added = [flags[position] for position in index]
-    protected = markdown_protected(plain) if markdown else [False] * len(plain)
+    if profile is DEFAULT_PROFILE:
+        profile = "markdown" if markdown else None
+    protected = list(resolve_profile(profile)(plain))
+    if len(protected) != len(plain) or any(
+        type(flag) is not bool for flag in protected
+    ):
+        raise ValueError("profile must return one bool per text code point")
     human = human_mask(plain, added, shingles, min_words)
     out = []
     start = 0
@@ -404,18 +422,25 @@ def remark(
     shingles=None,
     min_words=HUMAN_MIN_WORDS,
     preserve_new_marks=False,
+    profile=DEFAULT_PROFILE,
 ):
     """Mark added prose, preserving old marks when carry is true.
 
     Without shingles, all new eligible text is AI-labelled. Supply windows
     from human_shingles to label verbatim human passages instead.
+
+    An explicit profile overrides markdown; None enables plain-text marking.
+    Names, compositions and callables use syntax.resolve_profile. If omitted,
+    the legacy markdown boolean selects Markdown protection or plain text.
     """
     if min_words < 1:
         raise ValueError("min_words must be positive")
     if shingles is None:
         shingles = set()
-    text, flags = merge(old_raw, new_raw, carry, preserve_new_marks=preserve_new_marks)
-    return finalize(text, flags, markdown, shingles, min_words)
+    text, flags = merge(
+        old_raw, new_raw, carry, preserve_new_marks=preserve_new_marks
+    )
+    return finalize(text, flags, markdown, shingles, min_words, profile=profile)
 
 
 class Ambiguous(Exception):
@@ -447,12 +472,16 @@ def rewrite_edit(
     shingles=None,
     min_words=HUMAN_MIN_WORDS,
     preserve_new_marks=False,
+    profile=DEFAULT_PROFILE,
+    markdown=True,
 ):
     """Translate a replacement so it applies to a marked file and marks what it adds.
 
     Returns (old_string, new_string) to apply to the raw text, or None when
     `old_string` is absent and the tool should report that itself. The pair may
     include neighbouring context so source and final graphemes stay whole.
+    Profile selection follows remark and is evaluated against the whole final
+    document, not just the replacement, so enclosing syntax stays protected.
     """
     if min_words < 1:
         raise ValueError("min_words must be positive")
@@ -514,15 +543,20 @@ def rewrite_edit(
                 )
                 position = stop
             expanded = "".join(parts)
-        text, flags = merge(raw[first:last], expanded, carry=True,
-                            preserve_new_marks=preserve_new_marks)
+        text, flags = merge(
+            raw[first:last],
+            expanded,
+            carry=True,
+            preserve_new_marks=preserve_new_marks,
+        )
         tail = len(raw) - last
         whole = finalize(
             raw[:first] + text + raw[last:],
             [False] * first + flags + [False] * tail,
-            True,
+            markdown,
             shingles,
             min_words,
+            profile=profile,
         )
         results.add((raw[first:last], whole[first : len(whole) - tail]))
     if len(results) > 1:

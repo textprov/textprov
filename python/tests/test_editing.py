@@ -184,11 +184,17 @@ class TestMarkdown(unittest.TestCase):
         self.assertEqual(remark(old, new), old[:-1] + " " + r"$\rho$" + "\n")
 
     def test_heading(self):
-        self.unmarked("## Producer rules\n\nbody\n", "## Producer rules\n")
+        self.assertEqual(
+            remark("", "## Producer rules\n\nbody\n"),
+            "## " + ai("Producer rules") + "\n\n" + ai("body") + "\n",
+        )
 
     def test_setext_heading(self):
-        self.unmarked("Title\n=====\n\nbody\n", "Title\n=====\n")
-        self.unmarked("Title\n---\n\nbody\n", "Title\n---\n")
+        for underline in ("=====", "---"):
+            self.assertEqual(
+                remark("", "Title\n" + underline + "\n\nbody\n"),
+                ai("Title") + "\n" + underline + "\n\n" + ai("body") + "\n",
+            )
 
     def test_prose_above_a_thematic_break_is_marked(self):
         for rule in ("***", "___", "- - -"):

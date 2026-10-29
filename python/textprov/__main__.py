@@ -8,6 +8,7 @@
     textprov strip FILE
     textprov render [--display passage|exact] [--strip] [--no-merge-whitespace] [--class-prefix P] FILE
     textprov inspect FILE
+    textprov check --before FILE --after FILE [--preserve-only] [--profile NAMES]
 
 FILE may be '-' for stdin. Output goes to stdout unless -o/--output is given.
 Text is read and written as UTF-8 verbatim; line endings are left alone.
@@ -113,18 +114,53 @@ def build_parser():
         default=False,
         help="do not join same-state runs across whitespace",
     )
-    p.add_argument("--merge-whitespace", action="store_true", help="legacy exact-output whitespace merging")
+    p.add_argument(
+        "--merge-whitespace",
+        action="store_true",
+        help="legacy exact-output whitespace merging",
+    )
     p.add_argument("--class-prefix", default="prov")
     p.add_argument("--display", choices=("passage", "exact"), default="passage")
 
     p = subs.add_parser("inspect", help="report the states present in the text")
     p.add_argument("file")
 
+    p = subs.add_parser(
+        "check", help="check provenance preservation and new prose"
+    )
+    p.add_argument("--before", required=True)
+    p.add_argument("--after", required=True)
+    p.add_argument("--preserve-only", action="store_true")
+    p.add_argument(
+        "--profile",
+        default="markdown",
+        help="comma-separated markdown,markdoc,directives; plain for no syntax",
+    )
+
     return parser
 
 
 def main(argv=None):
     args = build_parser().parse_args(argv)
+    if args.command == "check":
+        from .check import check_text
+
+        try:
+            problems = check_text(
+                read_input(args.before),
+                read_input(args.after),
+                profile=None if args.profile == "plain" else args.profile,
+                require_marks=not args.preserve_only,
+            )
+        except (OSError, ValueError, TypeError) as error:
+            print(f"{PROG}: {error}", file=sys.stderr)
+            return 2
+        out = "".join(
+            f"{args.after}:{line}:{column}: {message}\n"
+            for line, column, message in problems
+        )
+        write_output(out, args.output)
+        return 1 if problems else 0
     if args.command == "mark-added":
         out = mark_added(
             read_input(args.old), read_input(args.new), args.state, args.mode

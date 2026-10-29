@@ -15,9 +15,9 @@ proposal. See experiments/baseline/README.md and python/README.md.
 """
 
 from ._core import (
+    GENERATED_STATES,
     SPEC_VERSION,
     UNICODE_VERSION,
-    GENERATED_STATES,
     Mapping,
     default_mapping,
     load_mapping,
@@ -26,14 +26,15 @@ from ._core import (
     strip_marks,
     to_html,
 )
-from ._encode import convert, inspect, mark, mark_added
 from ._display import stylesheet
+from ._encode import convert, inspect, mark, mark_added
 
 __all__ = [
+    "GENERATED_STATES",
     "SPEC_VERSION",
     "UNICODE_VERSION",
-    "GENERATED_STATES",
     "Mapping",
+    "check_text",
     "convert",
     "default_mapping",
     "inspect",
@@ -57,22 +58,35 @@ from ._version import __version__
 def mark_chat(text, role, scope="prose"):
     """Apply the chat speaker policy at the selected scope, preserving marks."""
     from .marking import mark_chat as operation
+
     return operation(text, role, scope=scope)
 
 
 def mark_chat_parts(parts, role, scope="prose"):
     """Mark complete chat text across parts, retaining their original boundaries."""
     from .marking import mark_chat_parts as operation
+
     return operation(parts, role, scope=scope)
 
 
-def mark_document(text):
+def mark_document(text, profile="markdown"):
     """Mark new AI document prose while preserving marks and protected syntax."""
     from .marking import mark_document as operation
-    return operation(text)
+
+    return operation(text, profile=profile)
 
 
-def mark_document_edit(old_text, new_text):
+def mark_document_edit(old_text, new_text, profile="markdown"):
     """Mark AI document changes and carry unchanged existing marks."""
     from .marking import mark_document_edit as operation
-    return operation(old_text, new_text)
+
+    return operation(old_text, new_text, profile=profile)
+
+
+def check_text(before, after, *, profile="markdown", require_marks=True):
+    """Check preservation and new prose coverage at one-based text locations."""
+    from .check import check_text as operation
+
+    return operation(
+        before, after, profile=profile, require_marks=require_marks
+    )
