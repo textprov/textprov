@@ -1,0 +1,79 @@
+name: Publish Ruby gem
+
+on:
+  push:
+    tags: ['ruby-v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-ruby-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ruby
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+          working-directory: ruby
+      - name: Validate release tag
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          ruby -r ./lib/textprov/version -e 'abort "Release tag must be ruby-v#{Textprov::VERSION}" unless ENV.fetch("RELEASE_TAG") == "ruby-v#{Textprov::VERSION}"'
+      - run: bundle exec rake test
+      - name: Build the release artifact
+        run: |
+          mkdir -p pkg/release
+          gem build textprov.gemspec --output pkg/release/textprov.gem
+      - name: Smoke-test the installed gem
+        env:
+          GEM_HOME: ${{ github.workspace }}/ruby/pkg/smoke
+          GEM_PATH: ${{ github.workspace }}/ruby/pkg/smoke
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gem install --local pkg/release/textprov.gem --no-document --install-dir pkg/smoke
+          ruby <<'RUBY'
+          require 'textprov'
+          abort 'Installed version does not match release tag' unless ENV.fetch('RELEASE_TAG') == "ruby-v#{Textprov::VERSION}"
+          abort 'Gem loaded outside smoke environment' unless Gem.loaded_specs.fetch('textprov').full_gem_path.start_with?(ENV.fetch('GEM_HOME') + '/')
+          marked = Textprov.mark('hello', state: 'ai')
+          abort 'Marking round trip failed' unless marked != 'hello' && Textprov.strip_marks(marked) == 'hello'
+          abort 'Packaged stylesheet missing' if Textprov.stylesheet.empty?
+          RUBY
+          pkg/smoke/bin/textprov --version
+          printf 'hello' | pkg/smoke/bin/textprov mark --ai - | pkg/smoke/bin/textprov inspect -
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ruby-distribution
+          path: ruby/pkg/release/*.gem
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: rubygems
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ruby-distribution
+          path: dist
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+      - name: Configure RubyGems credentials with OIDC
+        uses: rubygems/configure-rubygems-credentials@f5a32efa94076b80b28556b2d3b04cb3707b6df1 # main
+      - name: Publish to RubyGems
+        run: gem push --host https://rubygems.org dist/textprov.gem

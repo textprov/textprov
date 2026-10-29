@@ -1,0 +1,82 @@
+name: Publish JavaScript package
+
+on:
+  push:
+    tags: ['js-v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-js-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: js
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validate release tag and lockfile
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          node <<'JS'
+          const assert = require('node:assert/strict');
+          const pkg = require('./package.json');
+          const lock = require('./package-lock.json');
+          assert.equal(process.env.RELEASE_TAG, `js-v${pkg.version}`);
+          assert.equal(lock.version, pkg.version);
+          assert.equal(lock.packages[''].version, pkg.version);
+          JS
+      - run: npm ci
+      - run: npm test
+      - name: Pack and smoke-test the release artifact
+        run: |
+          mkdir ../npm-dist
+          npm pack --pack-destination ../npm-dist
+          npm install --prefix ../npm-smoke --ignore-scripts --no-audit --no-fund ../npm-dist/textprov-*.tgz
+          node <<'JS'
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const pkg = require('./package.json');
+          const installed = require('../npm-smoke/node_modules/textprov/package.json');
+          const textprov = require('../npm-smoke/node_modules/textprov');
+          assert.equal(installed.version, pkg.version);
+          assert.equal(textprov.specVersion, '0.2');
+          assert.equal(typeof textprov.runs, 'function');
+          assert.equal(typeof textprov.render, 'function');
+          assert.ok(fs.readFileSync(require.resolve('textprov/textprov.css', { paths: ['../npm-smoke'] }), 'utf8').length);
+          JS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-distribution
+          path: npm-dist/*.tgz
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: npm-distribution
+          path: npm-dist
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Install OIDC-capable npm
+        run: npm install --global npm@11
+      - name: Publish to npm with OIDC and provenance
+        run: npm publish ./npm-dist/textprov-*.tgz --provenance --access public

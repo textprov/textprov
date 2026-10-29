@@ -1,0 +1,88 @@
+name: Publish Python package
+
+on:
+  push:
+    tags: ["python-v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-python-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Validate release tag
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python - <<'PY'
+          import os, runpy
+          version = runpy.run_path('python/textprov/_version.py')['__version__']
+          if os.environ['RELEASE_TAG'] != f'python-v{version}':
+              raise SystemExit(f'Release tag must be python-v{version}')
+          PY
+      - run: python -m unittest discover -s tests -t .
+        working-directory: python
+      - name: Codex adapter fixtures
+        run: python -m unittest discover -s plugins/codex/tests -v
+        env:
+          PYTHONPATH: python
+      - name: Installed package contract
+        run: |
+          python -m pip install ./python
+          python -c 'import importlib.metadata, textprov; from textprov.chronicle import Chronicle; from textprov.prose import ProseEditor; assert textprov.__version__ == importlib.metadata.version("textprov"); assert callable(Chronicle.transfer)'
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install --upgrade build twine
+      - run: python -m build --outdir dist python
+      - run: python -m twine check dist/*
+      - name: Smoke-test wheel and source distribution
+        run: |
+          for artifact in dist/*.whl dist/*.tar.gz; do
+            python -m venv --clear smoke
+            smoke/bin/python -m pip install "$artifact"
+            smoke/bin/python -c 'import importlib.metadata, runpy, textprov; from textprov.chronicle import Chronicle; from textprov.prose import ProseEditor; assert textprov.__version__ == importlib.metadata.version("textprov") == runpy.run_path("python/textprov/_version.py")["__version__"]; assert callable(Chronicle.transfer)'
+            smoke/bin/textprov --version
+            printf 'hello' | smoke/bin/textprov mark --human - | smoke/bin/textprov inspect -
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-distributions
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-distributions
+          path: dist
+      - name: Publish to PyPI with OIDC
+        uses: pypa/gh-action-pypi-publish@release/v1
