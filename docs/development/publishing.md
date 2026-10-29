@@ -19,9 +19,17 @@ the tarball to the package's staged queue and a maintainer approves it with 2FA.
 
 | Tag | Version source | Workflow | GitHub environment |
 | --- | --- | --- | --- |
-| `python-v0.2.0` | `python/textprov/_version.py` | `publish-python.yml` | `pypi` |
-| `js-v0.2.1` | `js/package.json` and `js/package-lock.json` | `publish-js.yml` | `npm` |
-| `ruby-v0.1.2` | `ruby/lib/textprov/version.rb` | `publish-ruby.yml` | `rubygems` |
+| `python-v0.y.z` | `python/textprov/_version.py` | `publish-python.yml` | `pypi` |
+| `js-v0.y.z` | `js/package.json` and `js/package-lock.json` | `publish-js.yml` | `npm` |
+| `ruby-v0.y.z` | `ruby/lib/textprov/version.rb` | `publish-ruby.yml` | `rubygems` |
+
+### Example commands
+
+```bash
+gh release create python-v0.2.0 --target main --title "python 0.2.0" --generate-notes
+gh release create js-v0.2.1 --target main --title "javascript 0.2.1" --generate-notes
+gh release create ruby-v0.1.2 --target main --title "ruby 0.1.2" --generate-notes
+```
 
 All three workflows reject a tag that does not exactly match its package version.
 The JavaScript workflow also checks both root version entries in the lockfile.
@@ -92,7 +100,7 @@ interactive publication process before configuring its trusted publisher.
 Do not add a long-lived token as a silent fallback.
 
 npm OIDC requires **Node >=22.14.0 and npm >=11.5.1**, and staged publishing
-requires **npm >=11.15.0**. The release workflow uses Node 24 LTS and explicitly
+requires **npm >=11.15.0**. The release workflow uses Node 26 LTS and explicitly
 installs npm 11; do not rely on the npm version bundled with a runner. Use
 GitHub-hosted runners. The repository and package must be public for
 `--provenance`; `js/package.json`'s `repository.url` must match
@@ -130,9 +138,9 @@ local tests do not validate trusted-publisher setup.
 
 ## Local checks
 
-Use Python 3.13 and Node 24 LTS for release preparation, with npm 11. The
+Use Python 3.13 and Node 26 LTS for release preparation, with npm 11. The
 Python package supports Python >=3.9; the existing checks run 3.9 and 3.13.
-The existing JavaScript checks use Node 22. The published JavaScript package's
+The JavaScript checks also run on Node 26. The published JavaScript package's
 `node >=18` engine declaration is not the release tooling requirement; its
 current development dependencies require a newer Node version.
 

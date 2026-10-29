@@ -18,7 +18,7 @@ jobs:
       run:
         working-directory: ruby
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - uses: ruby/setup-ruby@v1
@@ -53,7 +53,7 @@ jobs:
           RUBY
           pkg/smoke/bin/textprov --version
           printf 'hello' | pkg/smoke/bin/textprov mark --ai - | pkg/smoke/bin/textprov inspect -
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ruby-distribution
           path: ruby/pkg/release/*.gem
@@ -66,7 +66,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: ruby-distribution
           path: dist
