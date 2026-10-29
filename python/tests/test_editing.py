@@ -238,6 +238,170 @@ class TestMarkdown(unittest.TestCase):
         self.unmarked("<!-- note\nmore -->\ntext\n", "<!-- note\nmore -->")
         self.unmarked("a <b>bold</b> &amp; b\n", "<b>")
 
+    def test_html_block_type_6_is_protected_whole(self):
+        # CommonMark 4.6 type 6: a block-level tag opens a block that runs to,
+        # but does not include, the next blank line. Issue #39.
+        for block in (
+            '<div class="x">HTML block</div>',
+            "<div>\n```\n*em* text\n</div>",
+            "<div>\ncontent on the next line",
+            "<DIV>\ncontent",
+            "   <div>\ncontent",
+            "<div/>\ncontent",
+            "</div>\ncontent",
+            "<table>\n<tr><td>*cell*</td></tr>\n</table>",
+        ):
+            with self.subTest(block=block):
+                source = block + "\n\nAfter prose.\n"
+                self.assertEqual(
+                    remark("", source),
+                    block + "\n\n" + ai("After prose.") + "\n",
+                )
+
+    def test_html_block_type_6_does_not_close_on_its_start_line(self):
+        # A single-line <div>...</div> is still open until a blank line.
+        self.assertEqual(
+            remark("", "<div>x</div>\nstill in the block\n\nAfter.\n"),
+            "<div>x</div>\nstill in the block\n\n" + ai("After.") + "\n",
+        )
+
+    def test_html_block_types_1_to_5_end_on_their_marker_line(self):
+        # The end line is protected whole, including text after the marker.
+        for same_line, multiline in (
+            ("<pre>raw *x*</pre>", "<pre>\nraw *x*\n</pre> tail *text*"),
+            ("<!-- c -->", "<!-- c\nmore\n--> tail *text*"),
+            ("<?php ?>", "<?php\necho *x*;\n?> tail *text*"),
+            ("<!DOCTYPE html>", "<!DOCTYPE\nhtml> tail *text*"),
+            ("<![CDATA[x]]>", "<![CDATA[\n*x*\n]]> tail *text*"),
+        ):
+            for block in (same_line, multiline):
+                with self.subTest(block=block):
+                    source = block + "\nAfter.\n"
+                    self.assertEqual(
+                        remark("", source), block + "\n" + ai("After.") + "\n"
+                    )
+
+    def test_html_block_type_1_tag_variants(self):
+        for block in (
+            "<script>\nvar x = *y*;\n</script>",
+            "<SCRIPT>\nvar x;\n</SCRIPT>",
+            "<Script type=module>\nvar x;\n</script>",
+            "<style>\n.a { *b* }\n</style>",
+            "<textarea>\n*raw*\n</textarea>",
+            '<pre\tclass="x">raw</pre>',
+            "<pre\nraw\n</pre>",
+        ):
+            with self.subTest(block=block):
+                source = block + "\nAfter.\n"
+                self.assertEqual(
+                    remark("", source), block + "\n" + ai("After.") + "\n"
+                )
+        # A tag name that merely starts with a type 1 name is not type 1.
+        self.assertEqual(
+            remark("", "<preface>\nprose\n"),
+            "<preface>\n" + ai("prose") + "\n",
+        )
+
+    def test_html_block_indent_limit(self):
+        # Up to three spaces open a block; four make indented code when a
+        # blank line precedes, and a paragraph continuation otherwise.
+        self.assertEqual(
+            remark("", "   <div>\ncontent\n\nAfter.\n"),
+            "   <div>\ncontent\n\n" + ai("After.") + "\n",
+        )
+        self.assertEqual(
+            remark("", "x\n\n    <div>\ncontent\n"),
+            ai("x") + "\n\n    <div>\n" + ai("content") + "\n",
+        )
+        self.assertEqual(
+            remark("", "x\n    <div>\ncontent\n"),
+            ai("x") + "\n    <div>\n" + ai("content") + "\n",
+        )
+
+    def test_html_blocks_and_code_blocks_do_not_open_inside_each_other(self):
+        for source, expected in (
+            # A tag inside a fence does not start a block; the fence closes.
+            ("```\n<div>\n```\nAfter.\n", "```\n<div>\n```\n" + ai("After.") + "\n"),
+            # A tag inside indented code does not swallow the next line.
+            ("\n    <div>\nAfter.\n", "\n    <div>\n" + ai("After.") + "\n"),
+            # A fence inside a block does not open; the blank line ends it.
+            (
+                "<div>\n```\ninside\n\nAfter.\n",
+                "<div>\n```\ninside\n\n" + ai("After.") + "\n",
+            ),
+            # Indented text inside a block is part of the block, not code.
+            (
+                "<div>\n</div>\n    inside\n\nAfter.\n",
+                "<div>\n</div>\n    inside\n\n" + ai("After.") + "\n",
+            ),
+        ):
+            with self.subTest(source=source):
+                self.assertEqual(remark("", source), expected)
+
+    def test_inline_html_mid_paragraph_is_unchanged(self):
+        self.assertEqual(
+            remark("", "<b>bold</b> &amp; text\n"),
+            "<b>" + ai("bold") + "</b> &amp; " + ai("text") + "\n",
+        )
+        self.assertEqual(
+            remark("", "a <code>x</code> b\n"),
+            ai("a") + " <code>x</code> " + ai("b") + "\n",
+        )
+
+    def test_type_7_html_is_not_a_block(self):
+        # Documented limitation: a lone tag not in the block-level list gets
+        # tag-only protection and its following prose is marked.
+        for tag in ("<span>", '<a href="x">', "</span>"):
+            with self.subTest(tag=tag):
+                self.assertEqual(
+                    remark("", tag + "\nprose here\n\nAfter.\n"),
+                    tag
+                    + "\n"
+                    + ai("prose here")
+                    + "\n\n"
+                    + ai("After.")
+                    + "\n",
+                )
+
+    def test_html_block_line_endings_and_offsets_are_preserved(self):
+        for newline in ("\r\n", "\r"):
+            with self.subTest(newline=repr(newline)):
+                block = newline.join(("<div>", "```", "*em*", "</div>"))
+                source = block + newline * 2 + "After." + newline
+                marked = remark("", source)
+                self.assertEqual(
+                    marked, block + newline * 2 + ai("After.") + newline
+                )
+                self.assertEqual(textprov.strip_marks(marked), source)
+                self.assertEqual(
+                    states(marked),
+                    [
+                        (None, block + newline * 2),
+                        ("ai", "After."),
+                        (None, newline),
+                    ],
+                )
+            with self.subTest(newline=repr(newline), kind="type 1"):
+                block = newline.join(("<pre>", "*raw*", "</pre> tail"))
+                self.assertEqual(
+                    remark("", block + newline + "After." + newline),
+                    block + newline + ai("After.") + newline,
+                )
+
+    def test_html_block_keeps_existing_marks(self):
+        human = textprov.mark("Human intro", state="human")
+        old = human + "\n\n<div>\nbody\n</div>\n\n" + ai("agent") + "\n"
+        plain = textprov.strip_marks(old)
+        self.assertEqual(remark(old, plain), old)
+        self.assertEqual(
+            remark(old, plain.replace("body", "body *more*")),
+            old.replace("body", "body *more*"),
+        )
+        self.assertEqual(
+            remark(old, plain[:-1] + " words\n"),
+            old[:-1] + ai(" words") + "\n",
+        )
+
     def test_prose_is_marked(self):
         self.assertEqual(
             states(remark("", "Hello, world.\n")),

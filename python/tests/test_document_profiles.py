@@ -201,7 +201,7 @@ class DocumentProfileTests(unittest.TestCase):
             "&amp;",
             'print("code")',
             "    indented_code()",
-            '<div class="x">',
+            '<div class="x">HTML block</div>\n',
         ):
             self.assertIn(fragment, result)
         for prose in (
@@ -354,6 +354,53 @@ class DocumentProfileTests(unittest.TestCase):
                 self.assertEqual(
                     source.replace(*pair),
                     prefix + " old text " + mark("plus") + "\n",
+                )
+
+    def test_html_block_hides_markdoc_tags_and_fences(self):
+        # Issue #39: both scanners track the HTML block, so a fence line inside
+        # it does not desynchronise them and the later tag is still masked.
+        for profile in (("markdown", "markdoc"), ("markdoc", "markdown"), DOCS):
+            with self.subTest(profile=profile):
+                source = "<div>\n```\n</div>\n\n{% card %}\nProse here.\n"
+                result = self.render(source, profile)
+                self.assertEqual(
+                    result,
+                    "<div>\n```\n</div>\n\n{% card %}\n"
+                    + mark("Prose here.")
+                    + "\n",
+                )
+                self.assert_coverage(source, result)
+                # A tag-only line inside the block is literal and does not end
+                # the block; the blank line does.
+                source = "<div>\n{% tag %}\nstill in block\n\nProse here.\n"
+                self.assertEqual(
+                    self.render(source, profile),
+                    "<div>\n{% tag %}\nstill in block\n\n"
+                    + mark("Prose here.")
+                    + "\n",
+                )
+                # A tag that opens a type 6 line is still a tag for Markdoc alone.
+                self.assertEqual(
+                    self.render("<div>\n{% tag %}\nprose\n", "markdoc"),
+                    mark("<div>\n") + "{% tag %}" + mark("\nprose\n"),
+                )
+
+    def test_html_block_edits_keep_existing_marks(self):
+        human = mark("Human intro", state="human")
+        old = human + "\n\n<div>\nbody\n</div>\n\n" + mark("old") + "\n"
+        plain = textprov.strip_marks(old)
+        for new, expected in (
+            (plain, old),
+            (plain.replace("body", "body *more*"), old.replace("body", "body *more*")),
+            (plain[:-1] + " X\n", old[:-1] + " " + mark("X") + "\n"),
+            (
+                plain.replace("<div>", '<div class="x">\n{% tag %}'),
+                old.replace("<div>", '<div class="x">\n{% tag %}'),
+            ),
+        ):
+            with self.subTest(new=new):
+                self.assertEqual(
+                    textprov.mark_document_edit(old, new, profile=DOCS), expected
                 )
 
     def test_profiles_do_not_relabel_unchanged_or_delete_marks(self):

@@ -152,15 +152,20 @@ class DocumentAlignmentTests(unittest.TestCase):
             [(1, 2, "marked unchanged legacy text")],
         )
 
-    def test_html_body_is_eligible_to_heuristic_not_docs_ast(self):
-        source = '<div class="x">HTML block</div>\n'
+    def test_html_block_body_is_protected(self):
+        # Issue #39: the heuristic now agrees with the docs AST, which treats
+        # the entire raw HTML node as protected. Only the following paragraph
+        # is prose.
+        source = '<div class="x">HTML block</div>\n\nAfter.\n'
         result = textprov.mark_document(source, profile=DOCS)
-        self.assertEqual(
-            result, '<div class="x">' + mark("HTML block") + "</div>\n"
-        )
+        self.assertEqual(result, source[:-7] + mark("After.") + "\n")
         self.assertEqual(check_text("", result, profile=DOCS), [])
-        # The docs AST treats the entire raw HTML node as protected. Its checker
-        # rejects the nine nonspace body marks; AST-shape validation alone does not.
+        self.assertTrue(
+            any(
+                message == "new prose cluster has no supported origin mark"
+                for _, _, message in check_text("", source, profile=DOCS)
+            )
+        )
 
     def test_whole_document_and_declared_span_have_different_edit_context(self):
         old = "axy\nmiddle\n"
