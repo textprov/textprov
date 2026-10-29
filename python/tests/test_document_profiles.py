@@ -385,6 +385,23 @@ class DocumentProfileTests(unittest.TestCase):
                     mark("<div>\n") + "{% tag %}" + mark("\nprose\n"),
                 )
 
+    def test_indented_code_after_a_closed_block_hides_markdoc_tags(self):
+        # Both scanners let indented code open right after an HTML block or
+        # fence closes, so a tag in that code is literal and stays unmasked.
+        for profile in (("markdown", "markdoc"), ("markdoc", "markdown"), DOCS):
+            for source in (
+                "<!-- c -->\n    {% tag %} *x*\nProse here.\n",
+                "<pre>\nraw\n</pre>\n    {% tag %} *x*\nProse here.\n",
+                "```\nx\n```\n    {% tag %} *x*\nProse here.\n",
+                "<!-- c -->\r\n    {% tag %} *x*\r\nProse here.\r\n",
+            ):
+                with self.subTest(profile=profile, source=source):
+                    result = self.render(source, profile)
+                    self.assertEqual(
+                        result, source.replace("Prose here.", mark("Prose here."))
+                    )
+                    self.assert_coverage(source, result)
+
     def test_html_block_edits_keep_existing_marks(self):
         human = mark("Human intro", state="human")
         old = human + "\n\n<div>\nbody\n</div>\n\n" + mark("old") + "\n"

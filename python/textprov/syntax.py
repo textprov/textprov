@@ -105,6 +105,7 @@ def _markdown_markdoc_protected(text):
                 and not view[delimiter.end() :].strip()
             ):
                 fence = None
+                previous_blank = True
             offset = end
             continue
         if html is HTML_BLOCK_END and not line.strip():
@@ -112,6 +113,7 @@ def _markdown_markdoc_protected(text):
         elif html:
             if html is not HTML_BLOCK_END and html.search(line):
                 html = None
+                previous_blank = True
             offset = end
             continue
         if offset >= skip_until and delimiter:
@@ -135,6 +137,7 @@ def _markdown_markdoc_protected(text):
                 previous_blank = previous_code = False
                 if html is not HTML_BLOCK_END and html.search(line):
                     html = None
+                    previous_blank = True
                 offset = end
                 continue
         cursor = max(offset, skip_until)

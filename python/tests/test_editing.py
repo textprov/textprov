@@ -338,6 +338,35 @@ class TestMarkdown(unittest.TestCase):
             with self.subTest(source=source):
                 self.assertEqual(remark("", source), expected)
 
+    def test_indented_code_may_follow_a_closed_block(self):
+        # An HTML block or fenced code block is not a paragraph, so a 4-space
+        # line right after one closes is indented code, not a continuation.
+        for source, expected in (
+            # Type 2 block that closes on its start line.
+            (
+                "<!-- c -->\n    *code*\nAfter.\n",
+                "<!-- c -->\n    *code*\n" + ai("After.") + "\n",
+            ),
+            # Type 1 block that closes on a later line.
+            (
+                "<pre>\nraw\n</pre>\n    *code*\nAfter.\n",
+                "<pre>\nraw\n</pre>\n    *code*\n" + ai("After.") + "\n",
+            ),
+            # Closing fence.
+            (
+                "```\nx\n```\n    *code*\nAfter.\n",
+                "```\nx\n```\n    *code*\n" + ai("After.") + "\n",
+            ),
+        ):
+            with self.subTest(source=source):
+                self.assertEqual(remark("", source), expected)
+        # A prose line after the closed block resets the gate, so the indented
+        # line that follows it is still a paragraph continuation, not code.
+        self.assertEqual(
+            remark("", "<!-- c -->\nprose\n    more\n"),
+            "<!-- c -->\n" + ai("prose") + "\n    " + ai("more") + "\n",
+        )
+
     def test_inline_html_mid_paragraph_is_unchanged(self):
         self.assertEqual(
             remark("", "<b>bold</b> &amp; text\n"),

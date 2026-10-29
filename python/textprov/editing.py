@@ -296,7 +296,9 @@ def markdown_protected(plain):
                 and len(closing.group(1)) >= len(fence)
                 and not line[closing.end() :].strip()
             ):
+                # A code block is not a paragraph: indented code may follow.
                 fence = None
+                previous_blank = True
             continue
         if html is HTML_BLOCK_END and blank:
             # The blank line ends the block and is an ordinary blank line.
@@ -305,6 +307,7 @@ def markdown_protected(plain):
             whole[number] = True
             if html is not HTML_BLOCK_END and html.search(line):
                 html = None
+                previous_blank = True
             continue
         opening = FENCE.match(line)
         if opening:
@@ -323,6 +326,7 @@ def markdown_protected(plain):
             previous_blank = previous_code = False
             if html is not HTML_BLOCK_END and html.search(line):
                 html = None
+                previous_blank = True
             continue
         if not blank:
             previous_code = False
