@@ -5,8 +5,8 @@ protects syntax from new marks; False leaves prose eligible for marking.
 These are conservative heuristics, not full document parsers.
 
 The Markdown profile protects CommonMark HTML blocks (types 1-6) whole, so a
-`<div>` body is not prose. Type 7 blocks and blocks inside blockquotes or list
-items are not recognised; see `editing`. The composed Markdown and Markdoc
+`<div>` body is not prose. Type 7 blocks and blocks inside blockquotes are not
+recognised; see `editing`. The composed Markdown and Markdoc
 scanner treats HTML blocks like fenced code: `{% %}` inside them is literal
 and is not masked, so a tag-only line cannot end the block early.
 """
@@ -82,64 +82,23 @@ def _mask_tags(text, flags):
 def _markdown_markdoc_protected(text):
     """Scan literal code and tags in source order; attributes are never Markdown.
 
-    Fenced code, indented code and HTML blocks are tracked with the same rules
-    as `editing.markdown_protected`, so the two scanners agree on where literal
-    text starts and ends. Tags inside them are literal and stay unmasked.
+    Fenced code, indented code, HTML blocks and list items are tracked by the
+    same `editing.BlockState` that drives `editing.markdown_protected`, so the
+    two scanners agree on where literal text starts and ends. Tags inside
+    literal text stay unmasked. List and paragraph state is recorded after the
+    line's tags are masked, so a tag-only line counts as blank in both.
     """
-    from .editing import FENCE, HTML_BLOCK_END, INLINE, LIST_ITEM, html_block_end
+    from .editing import FENCE, INLINE, BlockState
 
     flags = [False] * len(text)
-    fence = html = None
-    previous_blank, previous_code, in_list = True, False, False
+    state = BlockState()
     offset = skip_until = 0
     for line in text.splitlines(True):
         end = offset + len(line)
         view = _mask_tag_line(line, flags[offset:end])
-        blank = not view.strip()
-        delimiter = FENCE.match(view)
-        if fence:
-            if (
-                delimiter
-                and delimiter.group(1)[0] == fence[0]
-                and len(delimiter.group(1)) >= len(fence)
-                and not view[delimiter.end() :].strip()
-            ):
-                fence = None
-                previous_blank = True
+        if state.scan(view, may_open=offset >= skip_until) is not BlockState.TEXT:
             offset = end
             continue
-        if html is HTML_BLOCK_END and not line.strip():
-            html = None
-        elif html:
-            if html is not HTML_BLOCK_END and html.search(line):
-                html = None
-                previous_blank = True
-            offset = end
-            continue
-        if offset >= skip_until and delimiter:
-            fence = delimiter.group(1)
-            previous_blank = previous_code = False
-            offset = end
-            continue
-        if (
-            offset >= skip_until
-            and view.startswith(("    ", "\t"))
-            and not blank
-            and not in_list
-            and (previous_blank or previous_code)
-        ):
-            previous_code, previous_blank = True, False
-            offset = end
-            continue
-        if offset >= skip_until:
-            html = html_block_end(line)
-            if html:
-                previous_blank = previous_code = False
-                if html is not HTML_BLOCK_END and html.search(line):
-                    html = None
-                    previous_blank = True
-                offset = end
-                continue
         cursor = max(offset, skip_until)
         while cursor < end:
             if text.startswith("{%", cursor):
@@ -159,15 +118,7 @@ def _markdown_markdoc_protected(text):
                     cursor += 1
             else:
                 cursor += 1
-        view = _mask_tag_line(line, flags[offset:end])
-        blank = not view.strip()
-        if not blank:
-            previous_code = False
-            if LIST_ITEM.match(view):
-                in_list = True
-            elif not view[0].isspace():
-                in_list = False
-        previous_blank = blank
+        state.text(_mask_tag_line(line, flags[offset:end]))
         offset = end
     return flags
 

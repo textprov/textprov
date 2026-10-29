@@ -402,6 +402,58 @@ class DocumentProfileTests(unittest.TestCase):
                     )
                     self.assert_coverage(source, result)
 
+    def test_list_ending_fence_hides_markdoc_tags_in_indented_code(self):
+        # Both scanners end the list at the column-0 fence, so the 4-space
+        # line after it is indented code and its tag is literal.
+        for profile in (("markdown", "markdoc"), ("markdoc", "markdown"), DOCS):
+            for source in (
+                "- item\n\n```\nx\n```\n    {% tag %} *x*\nProse here.\n",
+                "- item\r\n\r\n```\r\nx\r\n```\r\n    {% tag %} *x*\r\nProse here.\r\n",
+            ):
+                with self.subTest(profile=profile, source=source):
+                    result = self.render(source, profile)
+                    self.assertEqual(
+                        result,
+                        source.replace("item", mark("item")).replace(
+                            "Prose here.", mark("Prose here.")
+                        ),
+                    )
+                    self.assert_coverage(source, result)
+
+    def test_fence_inside_a_list_item_hides_markdoc_tags(self):
+        # A fence at the item's content indent stays inside the item; the tag
+        # in it is literal and the item's prose after it is still marked.
+        source = "- item\n  ```\n  {% tag %}\n  ```\n  More prose.\n"
+        for profile in (("markdown", "markdoc"), ("markdoc", "markdown"), DOCS):
+            with self.subTest(profile=profile):
+                result = self.render(source, profile)
+                self.assertEqual(
+                    result,
+                    "- "
+                    + mark("item")
+                    + "\n  ```\n  {% tag %}\n  ```\n  "
+                    + mark("More prose.")
+                    + "\n",
+                )
+                self.assert_coverage(source, result)
+
+    def test_tab_indented_fence_inside_a_list_item_hides_markdoc_tags(self):
+        # A tab straddling the item's content indent still opens a fence in
+        # both scanners, so the tag inside it is literal.
+        source = "- a\n\n\t```\n\t{% tag %}\n\t```\n\tMore prose.\n"
+        for profile in (("markdown", "markdoc"), ("markdoc", "markdown"), DOCS):
+            with self.subTest(profile=profile):
+                result = self.render(source, profile)
+                self.assertEqual(
+                    result,
+                    "- "
+                    + mark("a")
+                    + "\n\n\t```\n\t{% tag %}\n\t```\n\t"
+                    + mark("More prose.")
+                    + "\n",
+                )
+                self.assert_coverage(source, result)
+
     def test_html_block_edits_keep_existing_marks(self):
         human = mark("Human intro", state="human")
         old = human + "\n\n<div>\nbody\n</div>\n\n" + mark("old") + "\n"

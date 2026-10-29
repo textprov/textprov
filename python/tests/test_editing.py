@@ -367,6 +367,170 @@ class TestMarkdown(unittest.TestCase):
             "<!-- c -->\n" + ai("prose") + "\n    " + ai("more") + "\n",
         )
 
+    def test_column_zero_fence_ends_a_list_item(self):
+        # CommonMark 5.2: a fence indented less than the item's content indent
+        # is not a continuation, so the list ends and the 4-space line after
+        # the closed fence is indented code, not list prose.
+        self.assertEqual(
+            remark("", "- item\n\n```\nx\n```\n    *code*\nAfter.\n"),
+            "- " + ai("item") + "\n\n```\nx\n```\n    *code*\n" + ai("After.") + "\n",
+        )
+        # A fence may interrupt the item's paragraph; no blank line is needed.
+        self.assertEqual(
+            remark("", "- item\n```\nx\n```\n    *code*\n"),
+            "- " + ai("item") + "\n```\nx\n```\n    *code*\n",
+        )
+
+    def test_column_zero_fence_ends_a_list_item_crlf(self):
+        self.assertEqual(
+            remark("", "- item\r\n\r\n```\r\nx\r\n```\r\n    *code*\r\nAfter.\r\n"),
+            "- "
+            + ai("item")
+            + "\r\n\r\n```\r\nx\r\n```\r\n    *code*\r\n"
+            + ai("After.")
+            + "\r\n",
+        )
+
+    def test_column_zero_html_block_ends_a_list_item(self):
+        for block in ("<!-- c -->", "<pre>\nraw *x*\n</pre>"):
+            with self.subTest(block=block):
+                self.assertEqual(
+                    remark("", "- item\n\n" + block + "\n    *code*\nAfter.\n"),
+                    "- "
+                    + ai("item")
+                    + "\n\n"
+                    + block
+                    + "\n    *code*\n"
+                    + ai("After.")
+                    + "\n",
+                )
+
+    def test_fence_at_the_content_indent_stays_inside_the_item(self):
+        # The item survives a fence at its content indent: prose after the
+        # fence is still list prose, and 4 spaces there is still not code.
+        self.assertEqual(
+            remark("", "- item\n  ```\n  x\n  ```\n  more\n\n    *para*\n"),
+            "- "
+            + ai("item")
+            + "\n  ```\n  x\n  ```\n  "
+            + ai("more")
+            + "\n\n    *"
+            + ai("para")
+            + "*\n",
+        )
+        # A fence on the marker line opens inside the item and closes at the
+        # content indent.
+        self.assertEqual(
+            remark("", "- ```\n  x\n  ```\nAfter.\n"),
+            "- ```\n  x\n  ```\n" + ai("After.") + "\n",
+        )
+
+    def test_lazy_continuation_keeps_the_item_open(self):
+        # Paragraph text directly after the item's paragraph continues it, so
+        # a later 4-space line is still inside the item (content indent 2).
+        self.assertEqual(
+            remark("", "- item\nlazy line\n\n    *para*\n"),
+            "- " + ai("item") + "\n" + ai("lazy line") + "\n\n    *" + ai("para") + "*\n",
+        )
+        # After a blank line the text is a new paragraph outside the list, so
+        # the same 4-space line is indented code.
+        self.assertEqual(
+            remark("", "- item\n\nnot lazy\n\n    *code*\n"),
+            "- " + ai("item") + "\n\n" + ai("not lazy") + "\n\n    *code*\n",
+        )
+
+    def test_nested_list_ends_at_a_column_zero_fence(self):
+        self.assertEqual(
+            remark("", "- a\n  - b\n\n```\nx\n```\n    *code*\n"),
+            "- " + ai("a") + "\n  - " + ai("b") + "\n\n```\nx\n```\n    *code*\n",
+        )
+
+    def test_ordered_list_content_indent(self):
+        # `1.` gives content indent 3 and `10)` gives 4: a line at that indent
+        # after a blank is item prose, and four more columns is indented code.
+        for marker, para, code in (
+            ("1.", "    ", "       "),
+            ("10)", "    ", "        "),
+        ):
+            with self.subTest(marker=marker):
+                source = marker + " item\n\n" + para + "*para*\n\n" + code + "*code*\n"
+                self.assertEqual(
+                    remark("", source),
+                    marker
+                    + " "
+                    + ai("item")
+                    + "\n\n"
+                    + para
+                    + "*"
+                    + ai("para")
+                    + "*\n\n"
+                    + code
+                    + "*code*\n",
+                )
+
+    def test_indented_code_inside_a_list_item(self):
+        # Inside an item, indented code needs the content indent plus four.
+        self.assertEqual(
+            remark("", "- item\n\n      *code*\n"),
+            "- " + ai("item") + "\n\n      *code*\n",
+        )
+        self.assertEqual(
+            remark("", "- item\n\n    *para*\n"),
+            "- " + ai("item") + "\n\n    *" + ai("para") + "*\n",
+        )
+        # Five or more spaces after the marker start the item with code.
+        self.assertEqual(
+            remark("", "-     *code*\nAfter.\n"),
+            "-     *code*\n" + ai("After.") + "\n",
+        )
+
+    def test_tab_indented_nested_list_item(self):
+        # A tab is column 4 (CommonMark 2.2): `\t- b` nests at relative
+        # indent 2 with content indent 6, so a tab plus two spaces after a
+        # blank line is item prose, not indented code.
+        self.assertEqual(
+            remark("", "- a\n\t- b\n\n\t  *para*\n"),
+            "- " + ai("a") + "\n\t- " + ai("b") + "\n\n\t  *" + ai("para") + "*\n",
+        )
+        # The nested item's content indent is 6, so two tabs are relative
+        # indent 2: a fence, not code, and the closing fence is found.
+        self.assertEqual(
+            remark("", "- a\n\t- b\n\n\t\t```\n\t*x*\n\t\t```\n\tafter\n"),
+            "- "
+            + ai("a")
+            + "\n\t- "
+            + ai("b")
+            + "\n\n\t\t```\n\t*x*\n\t\t```\n\t"
+            + ai("after")
+            + "\n",
+        )
+
+    def test_tab_indented_fence_inside_a_list_item(self):
+        # The tab straddles the content indent (2): the remaining two columns
+        # are relative indent 2, so the line is a fence inside the item and
+        # the text after the blank line inside it is literal.
+        for newline in ("\n", "\r\n"):
+            with self.subTest(newline=newline):
+                source = "- a¶¶\t```¶\tfoo¶¶\tbar¶\t```¶After.¶".replace("¶", newline)
+                self.assertEqual(
+                    remark("", source),
+                    source.replace("- a", "- " + ai("a")).replace(
+                        "After.", ai("After.")
+                    ),
+                )
+        # A straddling tab before a heading: the heading marker and the space
+        # after it are protected at their real offsets.
+        self.assertEqual(
+            remark("", "- a\n\t# h\n"), "- " + ai("a") + "\n\t# " + ai("h") + "\n"
+        )
+
+    def test_two_tabs_inside_a_list_item_are_indented_code(self):
+        # Content indent 2, two tabs are column 8: relative indent 6 is code.
+        self.assertEqual(
+            remark("", "- a\n\n\t\t*code*\nAfter.\n"),
+            "- " + ai("a") + "\n\n\t\t*code*\n" + ai("After.") + "\n",
+        )
+
     def test_inline_html_mid_paragraph_is_unchanged(self):
         self.assertEqual(
             remark("", "<b>bold</b> &amp; text\n"),
