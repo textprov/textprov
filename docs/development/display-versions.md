@@ -81,6 +81,49 @@ w󠄁h󠄁a󠄁t󠄁 t󠄁h󠄁e󠄁 t󠄁o󠄁g󠄁g󠄁l󠄁e󠄁 s󠄁h󠄁o�
 | `v0.3.0-asterisk` | r󠄁e󠄁c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁d󠄁e󠄁d󠄁 | G󠄁r󠄁a󠄁d󠄁i󠄁e󠄁n󠄁t󠄁 m󠄁i󠄁s󠄁t󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 s󠄁t󠄁a󠄁t󠄁i󠄁c󠄁 d󠄁i󠄁f󠄁f󠄁u󠄁s󠄁e󠄁 g󠄁l󠄁o󠄁w󠄁 a󠄁n󠄁d󠄁 a󠄁n󠄁 8󠄁0󠄁%󠄁-󠄁s󠄁t󠄁r󠄁e󠄁n󠄁g󠄁t󠄁h󠄁 d󠄁o󠄁t󠄁t󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁.󠄁 D󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁s󠄁 i󠄁n󠄁 [p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 d󠄁i󠄁s󠄁p󠄁l󠄁a󠄁y󠄁](provenance-display.md).󠄁 |
 | `v0.3.0-bracket` | c󠄁a󠄁n󠄁d󠄁i󠄁d󠄁a󠄁t󠄁e󠄁 | T󠄁h󠄁r󠄁e󠄁e󠄁-󠄁t󠄁i󠄁e󠄁r󠄁 w󠄁a󠄁t󠄁e󠄁r󠄁m󠄁a󠄁r󠄁k󠄁.󠄁 L󠄁a󠄁t󠄁e󠄁n󠄁t󠄁:󠄁 a󠄁 f󠄁a󠄁i󠄁n󠄁t󠄁 p󠄁e󠄁r󠄁-󠄁l󠄁i󠄁n󠄁e󠄁 b󠄁a󠄁r󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁g󠄁i󠄁n󠄁 b󠄁e󠄁s󠄁i󠄁d󠄁e󠄁 l󠄁i󠄁n󠄁e󠄁s󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁i󠄁n󠄁g󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁;󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁 i󠄁s󠄁 u󠄁n󠄁t󠄁o󠄁u󠄁c󠄁h󠄁e󠄁d󠄁.󠄁 Q󠄁u󠄁i󠄁e󠄁t󠄁:󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 r󠄁u󠄁n󠄁 i󠄁s󠄁 s󠄁e󠄁t󠄁 a󠄁s󠄁 g󠄁h󠄁o󠄁s󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁 (󠄁b󠄁o󠄁d󠄁y󠄁 w󠄁e󠄁i󠄁g󠄁h󠄁t󠄁,󠄁 l󠄁o󠄁w󠄁-󠄁c󠄁o󠄁n󠄁t󠄁r󠄁a󠄁s󠄁t󠄁 g󠄁r󠄁a󠄁y󠄁)󠄁 w󠄁i󠄁t󠄁h󠄁 f󠄁a󠄁i󠄁n󠄁t󠄁 c󠄁o󠄁r󠄁n󠄁e󠄁r󠄁 s󠄁e󠄁a󠄁m󠄁s󠄁.󠄁 L󠄁o󠄁u󠄁d󠄁:󠄁 t󠄁h󠄁e󠄁 a󠄁s󠄁t󠄁e󠄁r󠄁i󠄁s󠄁k󠄁 m󠄁i󠄁s󠄁t󠄁 a󠄁n󠄁d󠄁 g󠄁l󠄁o󠄁w󠄁 o󠄁n󠄁 t󠄁h󠄁e󠄁 r󠄁u󠄁n󠄁,󠄁 w󠄁i󠄁t󠄁h󠄁 c󠄁o󠄁r󠄁n󠄁e󠄁r󠄁 s󠄁e󠄁a󠄁m󠄁s󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 f󠄁u󠄁l󠄁l󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁 s󠄁h󠄁a󠄁r󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁 g󠄁l󠄁o󠄁w󠄁;󠄁 n󠄁o󠄁 m󠄁a󠄁r󠄁g󠄁i󠄁n󠄁 b󠄁a󠄁r󠄁.󠄁 C󠄁o󠄁r󠄁n󠄁e󠄁r󠄁 s󠄁e󠄁a󠄁m󠄁s󠄁 a󠄁r󠄁e󠄁 h󠄁a󠄁l󠄁f󠄁-󠄁b󠄁r󠄁a󠄁c󠄁k󠄁e󠄁t󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁 a󠄁t󠄁 t󠄁h󠄁e󠄁 o󠄁p󠄁e󠄁n󠄁 a󠄁n󠄁d󠄁 c󠄁l󠄁o󠄁s󠄁e󠄁 o󠄁f󠄁 a󠄁 r󠄁u󠄁n󠄁,󠄁 d󠄁r󠄁a󠄁w󠄁n󠄁 a󠄁s󠄁 t󠄁h󠄁e󠄁 t󠄁o󠄁p󠄁-󠄁l󠄁e󠄁f󠄁t󠄁 a󠄁n󠄁d󠄁 b󠄁o󠄁t󠄁t󠄁o󠄁m󠄁-󠄁r󠄁i󠄁g󠄁h󠄁t󠄁 c󠄁o󠄁r󠄁n󠄁e󠄁r󠄁s󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 h󠄁i󠄁g󠄁h󠄁l󠄁i󠄁g󠄁h󠄁t󠄁 b󠄁o󠄁x󠄁 a󠄁n󠄁d󠄁 s󠄁i󠄁z󠄁e󠄁d󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁a󠄁t󠄁 b󠄁o󠄁x󠄁 r󠄁a󠄁t󠄁h󠄁e󠄁r󠄁 t󠄁h󠄁a󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 g󠄁l󠄁y󠄁p󠄁h󠄁s󠄁.󠄁 O󠄁n󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁 s󠄁t󠄁e󠄁p󠄁s󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 t󠄁h󠄁e󠄁 t󠄁i󠄁e󠄁r󠄁s󠄁.󠄁 |
 
+### `v0.3.0-bracket`:󠄁 d󠄁e󠄁f󠄁i󠄁n󠄁i󠄁t󠄁i󠄁o󠄁n󠄁
+
+B󠄁r󠄁a󠄁c󠄁k󠄁e󠄁t󠄁 p󠄁a󠄁i󠄁n󠄁t󠄁s󠄁 p󠄁r󠄁o󠄁v󠄁e󠄁n󠄁a󠄁n󠄁c󠄁e󠄁 i󠄁n󠄁 t󠄁h󠄁r󠄁e󠄁e󠄁 t󠄁i󠄁e󠄁r󠄁s󠄁.󠄁 O󠄁n󠄁e󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁o󠄁l󠄁 s󠄁t󠄁e󠄁p󠄁s󠄁 t󠄁h󠄁r󠄁o󠄁u󠄁g󠄁h󠄁 t󠄁h󠄁e󠄁m󠄁;󠄁
+n󠄁o󠄁t󠄁h󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁 b󠄁e󠄁t󠄁w󠄁e󠄁e󠄁n󠄁 t󠄁i󠄁e󠄁r󠄁s󠄁.󠄁 V󠄁a󠄁l󠄁u󠄁e󠄁s󠄁 a󠄁r󠄁e󠄁 t󠄁h󠄁o󠄁s󠄁e󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 m󠄁o󠄁c󠄁k󠄁u󠄁p󠄁s󠄁 a󠄁n󠄁d󠄁
+a󠄁r󠄁e󠄁 s󠄁t󠄁a󠄁t󠄁e󠄁d󠄁 f󠄁o󠄁r󠄁 d󠄁a󠄁r󠄁k󠄁 a󠄁p󠄁p󠄁e󠄁a󠄁r󠄁a󠄁n󠄁c󠄁e󠄁.󠄁
+
+**L󠄁a󠄁t󠄁e󠄁n󠄁t󠄁.󠄁** N󠄁o󠄁 p󠄁a󠄁i󠄁n󠄁t󠄁 o󠄁n󠄁 t󠄁h󠄁e󠄁 p󠄁r󠄁o󠄁s󠄁e󠄁.󠄁 A󠄁 v󠄁e󠄁r󠄁t󠄁i󠄁c󠄁a󠄁l󠄁 b󠄁a󠄁r󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁g󠄁i󠄁n󠄁 b󠄁e󠄁s󠄁i󠄁d󠄁e󠄁 e󠄁a󠄁c󠄁h󠄁
+l󠄁i󠄁n󠄁e󠄁 t󠄁h󠄁a󠄁t󠄁 c󠄁o󠄁n󠄁t󠄁a󠄁i󠄁n󠄁s󠄁 a󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 r󠄁u󠄁n󠄁:󠄁 3󠄁p󠄁x󠄁 w󠄁i󠄁d󠄁e󠄁,󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁 a󠄁t󠄁 5󠄁0󠄁%󠄁 o󠄁p󠄁a󠄁c󠄁i󠄁t󠄁y󠄁,󠄁 r󠄁o󠄁u󠄁n󠄁d󠄁e󠄁d󠄁
+e󠄁n󠄁d󠄁s󠄁,󠄁 i󠄁n󠄁s󠄁e󠄁t󠄁 a󠄁b󠄁o󠄁u󠄁t󠄁 o󠄁n󠄁e󠄁 t󠄁h󠄁i󠄁r󠄁d󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 l󠄁i󠄁n󠄁e󠄁 h󠄁e󠄁i󠄁g󠄁h󠄁t󠄁 f󠄁r󠄁o󠄁m󠄁 t󠄁h󠄁e󠄁 t󠄁o󠄁p󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 f󠄁i󠄁r󠄁s󠄁t󠄁 l󠄁i󠄁n󠄁e󠄁
+t󠄁o󠄁 t󠄁h󠄁e󠄁 b󠄁o󠄁t󠄁t󠄁o󠄁m󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 l󠄁a󠄁s󠄁t󠄁.󠄁 P󠄁r󠄁e󠄁c󠄁e󠄁d󠄁e󠄁n󠄁t󠄁:󠄁 t󠄁h󠄁e󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁 b󠄁a󠄁r󠄁 o󠄁f󠄁 s󠄁t󠄁a󠄁n󠄁d󠄁a󠄁r󠄁d󠄁s󠄁 d󠄁o󠄁c󠄁u󠄁m󠄁e󠄁n󠄁t󠄁s󠄁 a󠄁n󠄁d󠄁
+g󠄁i󠄁t󠄁 b󠄁l󠄁a󠄁m󠄁e󠄁.󠄁
+
+**Q󠄁u󠄁i󠄁e󠄁t󠄁.󠄁** T󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁k󠄁e󠄁d󠄁 r󠄁u󠄁n󠄁 i󠄁s󠄁 s󠄁e󠄁t󠄁 a󠄁s󠄁 g󠄁h󠄁o󠄁s󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁:󠄁 b󠄁o󠄁d󠄁y󠄁 w󠄁e󠄁i󠄁g󠄁h󠄁t󠄁,󠄁 a󠄁 n󠄁e󠄁u󠄁t󠄁r󠄁a󠄁l󠄁
+l󠄁o󠄁w󠄁-󠄁c󠄁o󠄁n󠄁t󠄁r󠄁a󠄁s󠄁t󠄁 g󠄁r󠄁a󠄁y󠄁 i󠄁n󠄁 p󠄁l󠄁a󠄁c󠄁e󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 t󠄁e󠄁x󠄁t󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁 (󠄁a󠄁b󠄁o󠄁u󠄁t󠄁 4󠄁:󠄁1󠄁 a󠄁g󠄁a󠄁i󠄁n󠄁s󠄁t󠄁 t󠄁h󠄁e󠄁 g󠄁r󠄁o󠄁u󠄁n󠄁d󠄁)󠄁.󠄁
+T󠄁h󠄁e󠄁 r󠄁u󠄁n󠄁 o󠄁p󠄁e󠄁n󠄁s󠄁 a󠄁n󠄁d󠄁 c󠄁l󠄁o󠄁s󠄁e󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁 a󠄁 c󠄁o󠄁r󠄁n󠄁e󠄁r󠄁 s󠄁e󠄁a󠄁m󠄁 a󠄁t󠄁 1󠄁.󠄁5󠄁p󠄁x󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁 a󠄁t󠄁
+a󠄁b󠄁o󠄁u󠄁t󠄁 4󠄁0󠄁%󠄁 o󠄁p󠄁a󠄁c󠄁i󠄁t󠄁y󠄁.󠄁 T󠄁h󠄁e󠄁 m󠄁a󠄁r󠄁g󠄁i󠄁n󠄁 b󠄁a󠄁r󠄁 s󠄁t󠄁a󠄁y󠄁s󠄁,󠄁 a󠄁t󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 s󠄁t󠄁r󠄁e󠄁n󠄁g󠄁t󠄁h󠄁 a󠄁s󠄁 L󠄁a󠄁t󠄁e󠄁n󠄁t󠄁.󠄁
+P󠄁r󠄁e󠄁c󠄁e󠄁d󠄁e󠄁n󠄁t󠄁:󠄁 a󠄁u󠄁t󠄁o󠄁s󠄁u󠄁g󠄁g󠄁e󠄁s󠄁t󠄁 g󠄁h󠄁o󠄁s󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁,󠄁 w󠄁h󠄁i󠄁c󠄁h󠄁 r󠄁e󠄁a󠄁d󠄁e󠄁r󠄁s󠄁 a󠄁l󠄁r󠄁e󠄁a󠄁d󠄁y󠄁 a󠄁s󠄁s󠄁o󠄁c󠄁i󠄁a󠄁t󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁
+m󠄁a󠄁c󠄁h󠄁i󠄁n󠄁e󠄁-󠄁p󠄁r󠄁o󠄁d󠄁u󠄁c󠄁e󠄁d󠄁 t󠄁e󠄁x󠄁t󠄁 t󠄁h󠄁a󠄁t󠄁 h󠄁a󠄁s󠄁 n󠄁o󠄁t󠄁 b󠄁e󠄁e󠄁n󠄁 a󠄁c󠄁c󠄁e󠄁p󠄁t󠄁e󠄁d󠄁.󠄁
+
+**L󠄁o󠄁u󠄁d󠄁.󠄁** T󠄁h󠄁e󠄁 r󠄁u󠄁n󠄁 t󠄁a󠄁k󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 a󠄁s󠄁t󠄁e󠄁r󠄁i󠄁s󠄁k󠄁 t󠄁r󠄁e󠄁a󠄁t󠄁m󠄁e󠄁n󠄁t󠄁 (󠄁g󠄁r󠄁a󠄁d󠄁i󠄁e󠄁n󠄁t󠄁 m󠄁i󠄁s󠄁t󠄁,󠄁 g󠄁l󠄁o󠄁w󠄁,󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁
+s󠄁a󠄁m󠄁e󠄁 t󠄁i󠄁n󠄁t󠄁,󠄁 a󠄁n󠄁g󠄁l󠄁e󠄁,󠄁 b󠄁l󠄁u󠄁r󠄁,󠄁 s󠄁p󠄁r󠄁e󠄁a󠄁d󠄁 a󠄁n󠄁d󠄁 o󠄁p󠄁a󠄁c󠄁i󠄁t󠄁y󠄁 v󠄁a󠄁l󠄁u󠄁e󠄁s󠄁)󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 c󠄁o󠄁r󠄁n󠄁e󠄁r󠄁 s󠄁e󠄁a󠄁m󠄁s󠄁 g󠄁o󠄁 t󠄁o󠄁
+2󠄁p󠄁x󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 f󠄁u󠄁l󠄁l󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁,󠄁 s󠄁h󠄁a󠄁r󠄁i󠄁n󠄁g󠄁 t󠄁h󠄁e󠄁 m󠄁i󠄁s󠄁t󠄁 f󠄁i󠄁l󠄁l󠄁 a󠄁n󠄁d󠄁 t󠄁h󠄁e󠄁 g󠄁l󠄁o󠄁w󠄁 s󠄁o󠄁 t󠄁h󠄁e󠄁y󠄁 r󠄁e󠄁a󠄁d󠄁 a󠄁s󠄁
+t󠄁h󠄁e󠄁 c󠄁o󠄁r󠄁n󠄁e󠄁r󠄁s󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 h󠄁i󠄁g󠄁h󠄁l󠄁i󠄁g󠄁h󠄁t󠄁 b󠄁o󠄁x󠄁.󠄁 N󠄁o󠄁 m󠄁a󠄁r󠄁g󠄁i󠄁n󠄁 b󠄁a󠄁r󠄁:󠄁 o󠄁n󠄁c󠄁e󠄁 t󠄁h󠄁e󠄁 r󠄁u󠄁n󠄁 i󠄁s󠄁 p󠄁l󠄁a󠄁i󠄁n󠄁l󠄁y󠄁
+p󠄁r󠄁o󠄁m󠄁i󠄁n󠄁e󠄁n󠄁t󠄁 t󠄁h󠄁e󠄁 b󠄁a󠄁r󠄁 a󠄁d󠄁d󠄁s󠄁 n󠄁o󠄁t󠄁h󠄁i󠄁n󠄁g󠄁.󠄁 T󠄁h󠄁e󠄁 d󠄁o󠄁t󠄁t󠄁e󠄁d󠄁 u󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁 o󠄁f󠄁 a󠄁s󠄁t󠄁e󠄁r󠄁i󠄁s󠄁k󠄁 i󠄁s󠄁 n󠄁o󠄁t󠄁 u󠄁s󠄁e󠄁d󠄁 i󠄁n󠄁
+a󠄁n󠄁y󠄁 t󠄁i󠄁e󠄁r󠄁.󠄁
+
+**C󠄁o󠄁r󠄁n󠄁e󠄁r󠄁 s󠄁e󠄁a󠄁m󠄁s󠄁.󠄁** A󠄁n󠄁 o󠄁p󠄁e󠄁n󠄁i󠄁n󠄁g󠄁 s󠄁e󠄁a󠄁m󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 t󠄁o󠄁p󠄁-󠄁l󠄁e󠄁f󠄁t󠄁 c󠄁o󠄁r󠄁n󠄁e󠄁r󠄁 o󠄁f󠄁 t󠄁h󠄁e󠄁 h󠄁i󠄁g󠄁h󠄁l󠄁i󠄁g󠄁h󠄁t󠄁 b󠄁o󠄁x󠄁
+(󠄁a󠄁 v󠄁e󠄁r󠄁t󠄁i󠄁c󠄁a󠄁l󠄁 s󠄁t󠄁r󠄁o󠄁k󠄁e󠄁 a󠄁n󠄁d󠄁 a󠄁 h󠄁o󠄁r󠄁i󠄁z󠄁o󠄁n󠄁t󠄁a󠄁l󠄁 s󠄁t󠄁r󠄁o󠄁k󠄁e󠄁)󠄁;󠄁 a󠄁 c󠄁l󠄁o󠄁s󠄁i󠄁n󠄁g󠄁 s󠄁e󠄁a󠄁m󠄁 i󠄁s󠄁 i󠄁t󠄁s󠄁 b󠄁o󠄁t󠄁t󠄁o󠄁m󠄁-󠄁r󠄁i󠄁g󠄁h󠄁t󠄁
+c󠄁o󠄁r󠄁n󠄁e󠄁r󠄁.󠄁 E󠄁a󠄁c󠄁h󠄁 i󠄁s󠄁 a󠄁n󠄁 i󠄁n󠄁l󠄁i󠄁n󠄁e󠄁 b󠄁o󠄁x󠄁 0󠄁.󠄁4󠄁e󠄁m󠄁 w󠄁i󠄁d󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 t󠄁h󠄁e󠄁 s󠄁a󠄁m󠄁e󠄁 v󠄁e󠄁r󠄁t󠄁i󠄁c󠄁a󠄁l󠄁 p󠄁a󠄁d󠄁d󠄁i󠄁n󠄁g󠄁 a󠄁s󠄁 t󠄁h󠄁e󠄁
+h󠄁i󠄁g󠄁h󠄁l󠄁i󠄁g󠄁h󠄁t󠄁e󠄁d󠄁 r󠄁u󠄁n󠄁 (󠄁0󠄁.󠄁0󠄁8󠄁e󠄁m󠄁)󠄁,󠄁 s󠄁o󠄁 i󠄁t󠄁s󠄁 h󠄁e󠄁i󠄁g󠄁h󠄁t󠄁 i󠄁s󠄁 t󠄁h󠄁e󠄁 r󠄁u󠄁n󠄁'󠄁s󠄁 h󠄁i󠄁g󠄁h󠄁l󠄁i󠄁g󠄁h󠄁t󠄁 b󠄁o󠄁x󠄁 b󠄁y󠄁
+c󠄁o󠄁n󠄁s󠄁t󠄁r󠄁u󠄁c󠄁t󠄁i󠄁o󠄁n󠄁,󠄁 i󠄁n󠄁 a󠄁n󠄁y󠄁 r󠄁e󠄁n󠄁d󠄁e󠄁r󠄁e󠄁r󠄁 a󠄁n󠄁d󠄁 f󠄁o󠄁n󠄁t󠄁.󠄁 N󠄁o󠄁t󠄁h󠄁i󠄁n󠄁g󠄁 i󠄁n󠄁s󠄁i󠄁d󠄁e󠄁 t󠄁h󠄁e󠄁 r󠄁u󠄁n󠄁 c󠄁h󠄁a󠄁n󠄁g󠄁e󠄁s󠄁,󠄁 a󠄁n󠄁d󠄁
+s󠄁p󠄁a󠄁c󠄁e󠄁s󠄁 a󠄁n󠄁d󠄁 l󠄁i󠄁n󠄁e󠄁 b󠄁r󠄁e󠄁a󠄁k󠄁s󠄁 i󠄁n󠄁s󠄁i󠄁d󠄁e󠄁 t󠄁h󠄁e󠄁 r󠄁u󠄁n󠄁 n󠄁e󠄁e󠄁d󠄁 n󠄁o󠄁 t󠄁r󠄁e󠄁a󠄁t󠄁m󠄁e󠄁n󠄁t󠄁.󠄁 P󠄁r󠄁e󠄁c󠄁e󠄁d󠄁e󠄁n󠄁t󠄁:󠄁 e󠄁d󠄁i󠄁t󠄁o󠄁r󠄁i󠄁a󠄁l󠄁
+h󠄁a󠄁l󠄁f󠄁-󠄁b󠄁r󠄁a󠄁c󠄁k󠄁e󠄁t󠄁s󠄁,󠄁 q󠄁u󠄁o󠄁t󠄁a󠄁t󠄁i󠄁o󠄁n󠄁 m󠄁a󠄁r󠄁k󠄁s󠄁,󠄁 t󠄁h󠄁e󠄁 d󠄁i󠄁p󠄁l󠄁é󠄁.󠄁
+
+| P󠄁r󠄁o󠄁p󠄁e󠄁r󠄁t󠄁y󠄁 | D󠄁e󠄁f󠄁a󠄁u󠄁l󠄁t󠄁 |
+| --- | --- |
+| M󠄁a󠄁r󠄁g󠄁i󠄁n󠄁 b󠄁a󠄁r󠄁 | 3󠄁p󠄁x󠄁 w󠄁i󠄁d󠄁e󠄁,󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁 a󠄁t󠄁 5󠄁0󠄁%󠄁,󠄁 L󠄁a󠄁t󠄁e󠄁n󠄁t󠄁 a󠄁n󠄁d󠄁 Q󠄁u󠄁i󠄁e󠄁t󠄁 o󠄁n󠄁l󠄁y󠄁 |
+| G󠄁h󠄁o󠄁s󠄁t󠄁 t󠄁e󠄁x󠄁t󠄁 | b󠄁o󠄁d󠄁y󠄁 w󠄁e󠄁i󠄁g󠄁h󠄁t󠄁,󠄁 n󠄁e󠄁u󠄁t󠄁r󠄁a󠄁l󠄁 g󠄁r󠄁a󠄁y󠄁 a󠄁t󠄁 a󠄁b󠄁o󠄁u󠄁t󠄁 4󠄁:󠄁1󠄁 (󠄁Q󠄁u󠄁i󠄁e󠄁t󠄁)󠄁 |
+| S󠄁e󠄁a󠄁m󠄁 s󠄁t󠄁r󠄁o󠄁k󠄁e󠄁 | 1󠄁.󠄁5󠄁p󠄁x󠄁 a󠄁t󠄁 a󠄁b󠄁o󠄁u󠄁t󠄁 4󠄁0󠄁%󠄁 s󠄁o󠄁u󠄁r󠄁c󠄁e󠄁 c󠄁o󠄁l󠄁o󠄁r󠄁 (󠄁Q󠄁u󠄁i󠄁e󠄁t󠄁)󠄁;󠄁 2󠄁p󠄁x󠄁 a󠄁t󠄁 1󠄁0󠄁0󠄁%󠄁 (󠄁L󠄁o󠄁u󠄁d󠄁)󠄁 |
+| S󠄁e󠄁a󠄁m󠄁 b󠄁o󠄁x󠄁 | 0󠄁.󠄁4󠄁e󠄁m󠄁 w󠄁i󠄁d󠄁e󠄁,󠄁 0󠄁.󠄁0󠄁8󠄁e󠄁m󠄁 v󠄁e󠄁r󠄁t󠄁i󠄁c󠄁a󠄁l󠄁 p󠄁a󠄁d󠄁d󠄁i󠄁n󠄁g󠄁 (󠄁m󠄁a󠄁t󠄁c󠄁h󠄁e󠄁s󠄁 t󠄁h󠄁e󠄁 h󠄁i󠄁g󠄁h󠄁l󠄁i󠄁g󠄁h󠄁t󠄁 b󠄁o󠄁x󠄁)󠄁 |
+| L󠄁o󠄁u󠄁d󠄁 f󠄁i󠄁l󠄁l󠄁 a󠄁n󠄁d󠄁 g󠄁l󠄁o󠄁w󠄁 | a󠄁s󠄁t󠄁e󠄁r󠄁i󠄁s󠄁k󠄁 v󠄁a󠄁l󠄁u󠄁e󠄁s󠄁 |
+| U󠄁n󠄁d󠄁e󠄁r󠄁l󠄁i󠄁n󠄁e󠄁 | n󠄁o󠄁n󠄁e󠄁 |
+
 ### `v0.3.0-bracket`:󠄁 o󠄁p󠄁e󠄁n󠄁 i󠄁t󠄁e󠄁m󠄁s󠄁 b󠄁e󠄁f󠄁o󠄁r󠄁e󠄁 r󠄁e󠄁c󠄁o󠄁m󠄁m󠄁e󠄁n󠄁d󠄁a󠄁t󠄁i󠄁o󠄁n󠄁
 
 - G󠄁h󠄁o󠄁s󠄁t󠄁-󠄁t󠄁e󠄁x󠄁t󠄁 c󠄁o󠄁n󠄁t󠄁r󠄁a󠄁s󠄁t󠄁 i󠄁n󠄁 t󠄁h󠄁e󠄁 q󠄁u󠄁i󠄁e󠄁t󠄁 t󠄁i󠄁e󠄁r󠄁 i󠄁s󠄁 a󠄁b󠄁o󠄁u󠄁t󠄁 4󠄁:󠄁1󠄁 i󠄁n󠄁 d󠄁a󠄁r󠄁k󠄁 a󠄁p󠄁p󠄁e󠄁a󠄁r󠄁a󠄁n󠄁c󠄁e󠄁,󠄁 b󠄁e󠄁l󠄁o󠄁w󠄁
