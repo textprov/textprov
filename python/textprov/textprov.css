@@ -96,14 +96,18 @@
   [data-prov="human"],
   [data-prov="ai"],
   [data-prov-passage] {
-    background: linear-gradient(
+    /* The mist and glow are named so the bracket candidate's loud tier can
+     * reuse them without restating the recipe. */
+    --prov-mist: linear-gradient(
       115deg,
       color-mix(in srgb, var(--prov-color) calc(var(--prov-tint) * 0.45), transparent),
       color-mix(in srgb, var(--prov-color) calc(var(--prov-tint) * 1.6), transparent) 55%,
       color-mix(in srgb, var(--prov-color) calc(var(--prov-tint) * 0.6), transparent)
     );
-    box-shadow: 0 0 var(--prov-glow-blur) var(--prov-glow-spread)
+    --prov-glow: 0 0 var(--prov-glow-blur) var(--prov-glow-spread)
       color-mix(in srgb, var(--prov-color) var(--prov-glow-opacity), transparent);
+    background: var(--prov-mist);
+    box-shadow: var(--prov-glow);
   }
 
   :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]):not(a) {
