@@ -28,6 +28,9 @@ const brokenStorage = {
   },
 };
 
+const legendLabel = ({ elements }) =>
+  elements["prov-legend"].children.find((child) => child.className === "prov-display-version")?.textContent;
+
 function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage(), search = "" } = {}) {
   const root = { dataset: {} };
   const toggle = {
@@ -42,7 +45,8 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
     },
   };
   const mode = { value: "passage", disabled: false, listeners: {}, addEventListener(event, callback) { this.listeners[event] = callback; } };
-  const elements = { "prov-legend": { hidden: true } };
+  const legend = { hidden: true, children: [], appendChild(child) { this.children.push(child); } };
+  const elements = { "prov-legend": legend };
   const regionElements = regions.map((textContent) => ({ textContent }));
   const rendered = [];
   const document = {
@@ -54,6 +58,8 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
       return [];
     },
     getElementById: (id) => elements[id] ?? null,
+    createElement: (tagName) => ({ tagName, className: "", textContent: "" }),
+    createTextNode: (textContent) => ({ textContent }),
   };
   // Record the preference each region was rendered under; DOM output is covered by js/check_render.mjs.
   const api = {
@@ -117,10 +123,12 @@ test("the simple legend is revealed after display initialization", () => {
 });
 
 test("the document root declares the display version the stylesheet paints", () => {
-  const { root } = page();
+  const shown = page();
+  const { root } = shown;
   assert.equal(root.dataset.provDisplayVersion, textprov.displayVersion);
   assert.match(root.dataset.provDisplayVersion, /^v\d+\.\d+\.\d+-[a-z]+$/);
   assert.equal(root.dataset.provTier, undefined);
+  assert.equal(legendLabel(shown), `Display ${textprov.displayVersion}`);
 });
 
 test("a registered candidate can be switched on for evaluation and is remembered", () => {
@@ -132,6 +140,7 @@ test("a registered candidate can be switched on for evaluation and is remembered
   assert.equal(first.root.dataset.provTier, "quiet");
   assert.equal(storage.store.get(VERSION_KEY), candidate);
   assert.equal(storage.store.get(TIER_KEY), "quiet");
+  assert.equal(legendLabel(first), `Display ${candidate} (quiet tier)`);
   // The choice persists without the query string; the tier alone changes nothing.
   const second = page({ storage });
   assert.equal(second.root.dataset.provDisplayVersion, candidate);
