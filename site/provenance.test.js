@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { test } from "node:test";
-import { DISPLAY_KEY, HIDDEN, SHOWN, STORAGE_KEY, initProvenanceDisplay } from "./provenance.js";
+import { CANDIDATES, DISPLAY_KEY, HIDDEN, SHOWN, STORAGE_KEY, TIER_KEY, TIERS, VERSION_KEY, initProvenanceDisplay } from "./provenance.js";
 
 const textprov = createRequire(import.meta.url)("../js/textprov.js");
 const HUMAN = "\u{E0100}";
@@ -15,6 +15,7 @@ function memoryStorage(entries = {}) {
     store,
     getItem: (key) => (store.has(key) ? store.get(key) : null),
     setItem: (key, value) => store.set(key, value),
+    removeItem: (key) => store.delete(key),
   };
 }
 
@@ -27,7 +28,7 @@ const brokenStorage = {
   },
 };
 
-function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage() } = {}) {
+function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage(), search = "" } = {}) {
   const root = { dataset: {} };
   const toggle = {
     hidden: true,
@@ -62,7 +63,7 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
       return 0;
     },
   };
-  const counts = initProvenanceDisplay({ document, textprov: api, storage });
+  const counts = initProvenanceDisplay({ document, textprov: api, storage, location: { search } });
   return { counts, root, toggle, mode, elements, rendered, storage };
 }
 
@@ -119,6 +120,40 @@ test("the document root declares the display version the stylesheet paints", () 
   const { root } = page();
   assert.equal(root.dataset.provDisplayVersion, textprov.displayVersion);
   assert.match(root.dataset.provDisplayVersion, /^v\d+\.\d+\.\d+-[a-z]+$/);
+  assert.equal(root.dataset.provTier, undefined);
+});
+
+test("a registered candidate can be switched on for evaluation and is remembered", () => {
+  const candidate = CANDIDATES[0];
+  assert.notEqual(candidate, textprov.displayVersion);
+  const storage = memoryStorage();
+  const first = page({ storage, search: `?prov-display-version=${candidate}&prov-display-tier=quiet` });
+  assert.equal(first.root.dataset.provDisplayVersion, candidate);
+  assert.equal(first.root.dataset.provTier, "quiet");
+  assert.equal(storage.store.get(VERSION_KEY), candidate);
+  assert.equal(storage.store.get(TIER_KEY), "quiet");
+  // The choice persists without the query string; the tier alone changes nothing.
+  const second = page({ storage });
+  assert.equal(second.root.dataset.provDisplayVersion, candidate);
+  assert.equal(second.root.dataset.provTier, "quiet");
+  const third = page({ storage, search: "?prov-display-tier=loud" });
+  assert.equal(third.root.dataset.provTier, "loud");
+  // An empty value clears the choice and the recommendation returns.
+  const fourth = page({ storage, search: "?prov-display-version=" });
+  assert.equal(fourth.root.dataset.provDisplayVersion, textprov.displayVersion);
+  assert.equal(fourth.root.dataset.provTier, undefined);
+  assert.equal(storage.store.has(VERSION_KEY), false);
+  assert.equal(page({ storage: memoryStorage({ [TIER_KEY]: "loud" }) }).root.dataset.provTier, undefined);
+});
+
+test("unregistered versions and tiers fall back to the recommendation", () => {
+  assert.ok(TIERS.includes("latent") && TIERS.includes("quiet") && TIERS.includes("loud"));
+  const { root, storage } = page({ search: "?prov-display-version=v9.9.9-dagger&prov-display-tier=shout" });
+  assert.equal(root.dataset.provDisplayVersion, textprov.displayVersion);
+  assert.equal(root.dataset.provTier, undefined);
+  assert.equal(storage.store.has(VERSION_KEY), false);
+  assert.equal(page({ storage: memoryStorage({ [VERSION_KEY]: "v9.9.9-dagger" }) }).root.dataset.provDisplayVersion, textprov.displayVersion);
+  assert.equal(page({ storage: brokenStorage, search: `?prov-display-version=${CANDIDATES[0]}` }).root.dataset.provDisplayVersion, CANDIDATES[0]);
 });
 
 

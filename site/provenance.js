@@ -5,8 +5,15 @@
 
 export const STORAGE_KEY = "textprov:provenance";
 export const DISPLAY_KEY = "textprov:display";
+export const VERSION_KEY = "textprov:display-version";
+export const TIER_KEY = "textprov:display-tier";
 export const SHOWN = "shown";
 export const HIDDEN = "hidden";
+// Candidate display versions the packaged stylesheet carries behind
+// data-prov-display-version, and their tiers (docs/development/display-versions.md).
+// The recommendation is textprov.displayVersion and needs no entry here.
+export const CANDIDATES = ["v0.3.0-bracket"];
+export const TIERS = ["latent", "quiet", "loud"];
 
 export function readPreference(storage) {
   try {
@@ -24,10 +31,44 @@ function writePreference(storage, value) {
   }
 }
 
+// An evaluation choice arrives as ?prov-display-version=<candidate> and
+// ?prov-display-tier=<tier>, is remembered for this browser, and is cleared by
+// an empty value. Anything not registered falls back to the recommendation.
+export function readEvaluation(location, storage) {
+  var choice = { version: null, tier: null };
+  var params = null;
+  try {
+    var search = location && typeof location.search === "string" ? location.search : "";
+    if (search && typeof URLSearchParams === "function") params = new URLSearchParams(search);
+  } catch (error) {
+    params = null;
+  }
+  [["prov-display-version", VERSION_KEY, CANDIDATES, "version"],
+   ["prov-display-tier", TIER_KEY, TIERS, "tier"]].forEach(function (entry) {
+    var value = null;
+    if (params && params.has(entry[0])) {
+      value = params.get(entry[0]);
+      try {
+        if (storage) {
+          if (entry[2].indexOf(value) >= 0) storage.setItem(entry[1], value);
+          else storage.removeItem(entry[1]);
+        }
+      } catch (error) {
+        // The choice still applies to this page view.
+      }
+    } else {
+      try { if (storage) value = storage.getItem(entry[1]); } catch (error) { value = null; }
+    }
+    if (entry[2].indexOf(value) >= 0) choice[entry[3]] = value;
+  });
+  return choice;
+}
+
 export function initProvenanceDisplay(options) {
   var document = options.document;
   var textprov = options.textprov;
   var storage = options.storage;
+  var location = options.location || (document.defaultView && document.defaultView.location) || null;
   var regions = Array.from(document.querySelectorAll("[data-prov-document]"));
   if (regions.length === 0) return null;
 
@@ -89,14 +130,20 @@ export function initProvenanceDisplay(options) {
   });
 
   // Declare the treatment the packaged stylesheet paints (docs/development/display-versions.md).
-  if (textprov.displayVersion) root.dataset.provDisplayVersion = textprov.displayVersion;
+  // The recommendation is the default; a registered candidate can be switched on
+  // for evaluation (readEvaluation), and the stylesheet keys on the same attribute.
+  var evaluation = readEvaluation(location, storage);
+  var version = evaluation.version || textprov.displayVersion;
+  if (version) root.dataset.provDisplayVersion = version;
+  if (evaluation.version && evaluation.tier) root.dataset.provTier = evaluation.tier;
+  else delete root.dataset.provTier;
   var legend = document.getElementById("prov-legend");
   if (legend) {
     legend.hidden = false;
-    if (textprov.displayVersion && document.createElement) {
+    if (version && document.createElement) {
       var note = document.createElement("span");
       note.className = "prov-display-version";
-      note.textContent = "Display " + textprov.displayVersion;
+      note.textContent = "Display " + version + (root.dataset.provTier ? " (" + root.dataset.provTier + " tier)" : "");
       legend.appendChild(document.createTextNode(" \u00b7 "));
       legend.appendChild(note);
     }
