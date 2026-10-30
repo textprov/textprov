@@ -5,7 +5,7 @@ Ruby packages. Run commands from the repository root unless a section says
 otherwise.
 
 The packages have independent versions and release tags. This release prepares
-Python at **0.2.0**, JavaScript at **0.2.1**, and Ruby at **0.1.2**. For later
+Python at **0.4.0**, JavaScript at **0.3.0**, and Ruby at **0.2.0**. For later
 releases, replace those versions in the commands with the version being
 released. Never reuse a published version, and never reuse a release tag: tags
 are immutable here, so a failed release is retried by bumping the package
@@ -26,9 +26,9 @@ the tarball to the package's staged queue and a maintainer approves it with 2FA.
 ### Example commands
 
 ```bash
-gh release create python-v0.2.0 --target main --title "python 0.2.0" --generate-notes
-gh release create js-v0.2.1 --target main --title "javascript 0.2.1" --generate-notes
-gh release create ruby-v0.1.2 --target main --title "ruby 0.1.2" --generate-notes
+gh release create python-v0.4.0 --target main --title "python 0.4.0" --generate-notes
+gh release create js-v0.3.0 --target main --title "javascript 0.3.0" --generate-notes
+gh release create ruby-v0.2.0 --target main --title "ruby 0.2.0" --generate-notes
 ```
 
 All three workflows reject a tag that does not exactly match its package version.
@@ -170,16 +170,16 @@ root `LICENSE` (which is a repository license overview).
 ## Build and smoke-test Python artifacts
 
 Use isolated tooling and output directories so old artifacts are not uploaded.
-The following commands prepare the current 0.2.0 release:
+The following commands prepare the current 0.4.0 release:
 
 ```sh
 python3 -m venv python/dist/release-tools
 python/dist/release-tools/bin/python -m pip install --upgrade build twine
-rm -rf python/dist/release-0.2.0
-python/dist/release-tools/bin/python -m build --outdir python/dist/release-0.2.0 python
-python/dist/release-tools/bin/python -m twine check python/dist/release-0.2.0/*
-python3 -m zipfile -l python/dist/release-0.2.0/textprov-0.2.0-py3-none-any.whl
-tar -tzf python/dist/release-0.2.0/textprov-0.2.0.tar.gz
+rm -rf python/dist/release-0.4.0
+python/dist/release-tools/bin/python -m build --outdir python/dist/release-0.4.0 python
+python/dist/release-tools/bin/python -m twine check python/dist/release-0.4.0/*
+python3 -m zipfile -l python/dist/release-0.4.0/textprov-0.4.0-py3-none-any.whl
+tar -tzf python/dist/release-0.4.0/textprov-0.4.0.tar.gz
 ```
 
 Inspect both archives. The sdist includes `README.md` and `LICENSE`; the wheel
@@ -191,16 +191,16 @@ directory so imports cannot accidentally resolve to the checkout. Installing
 the sdist also verifies that a wheel can be built from its contents:
 
 ```sh
-for artifact in python/dist/release-0.2.0/*.whl python/dist/release-0.2.0/*.tar.gz; do
+for artifact in python/dist/release-0.4.0/*.whl python/dist/release-0.4.0/*.tar.gz; do
   python3 -m venv --clear python/dist/release-smoke
   python/dist/release-smoke/bin/python -m pip install "$artifact"
-  python/dist/release-smoke/bin/python -c 'import importlib.metadata, textprov; from textprov.chronicle import Chronicle; from textprov.prose import ProseEditor; assert textprov.__version__ == importlib.metadata.version("textprov") == "0.2.0"; assert callable(Chronicle.transfer)'
+  python/dist/release-smoke/bin/python -c 'import importlib.metadata, textprov; from textprov.chronicle import Chronicle; from textprov.prose import ProseEditor; assert textprov.__version__ == importlib.metadata.version("textprov") == "0.4.0"; assert callable(Chronicle.transfer)'
   python/dist/release-smoke/bin/textprov --version
   printf 'hello' | python/dist/release-smoke/bin/textprov mark --human - | python/dist/release-smoke/bin/textprov inspect -
 done
 ```
 
-The version must print `0.2.0`. Inspecting the marked `hello` should report
+The version must print `0.4.0`. Inspecting the marked `hello` should report
 `human: 5` and `unmarked: 0`. The contract check mirrors the installed-package
 imports in CI.
 The [Python release workflow](../../.github/workflows/publish-python.yml)
@@ -221,14 +221,14 @@ npm test
 npm publish --dry-run
 mkdir -p node_modules/.release-artifacts
 npm pack --pack-destination node_modules/.release-artifacts
-npm install --prefix node_modules/.release-smoke --ignore-scripts --no-audit --no-fund ./node_modules/.release-artifacts/textprov-0.2.1.tgz
+npm install --prefix node_modules/.release-smoke --ignore-scripts --no-audit --no-fund ./node_modules/.release-artifacts/textprov-0.3.0.tgz
 node <<'JS'
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const root = './node_modules/.release-smoke/node_modules/textprov';
 const pkg = require(root + '/package.json');
 const textprov = require(root);
-assert.equal(pkg.version, '0.2.1');
+assert.equal(pkg.version, '0.3.0');
 assert.equal(textprov.specVersion, '0.2');
 assert.equal(typeof textprov.runs, 'function');
 assert.equal(typeof textprov.render, 'function');
@@ -266,8 +266,8 @@ checks the installed gem's version against the tag, confirms it loads from the
 isolated install directory, and exercises CLI marking and inspection.
 
 After bumping and committing the Ruby version, create an annotated
-`ruby-v0.1.2` tag matching `Textprov::VERSION` and push that tag to trigger
-publication. `ruby-v0.1.0` is already published and `ruby-v0.1.1` is a spent
+`ruby-v0.2.0` tag matching `Textprov::VERSION` and push that tag to trigger
+publication. `ruby-v0.1.0` and `ruby-v0.1.2` are already published and `ruby-v0.1.1` is a spent
 tag from a failed run; neither may be reused. After publication, install the
 new version from RubyGems.org into a fresh directory and repeat the smoke
 checks without `--local` or a source-checkout load path.
@@ -279,16 +279,16 @@ local preparation.** After committing and reviewing the release changes, tag
 the exact tested commit. Push each package tag separately, only when ready:
 
 ```sh
-git tag -a python-v0.2.0 -m "textprov python 0.2.0"
-git push origin python-v0.2.0
+git tag -a python-v0.4.0 -m "textprov python 0.4.0"
+git push origin python-v0.4.0
 
 # Independent npm release:
-git tag -a js-v0.2.1 -m "textprov javascript 0.2.1"
-git push origin js-v0.2.1
+git tag -a js-v0.3.0 -m "textprov javascript 0.3.0"
+git push origin js-v0.3.0
 
 # Independent RubyGems release:
-git tag -a ruby-v0.1.2 -m "textprov ruby 0.1.2"
-git push origin ruby-v0.1.2
+git tag -a ruby-v0.2.0 -m "textprov ruby 0.2.0"
+git push origin ruby-v0.2.0
 ```
 
 Review the corresponding Actions run and approve the environment deployment.
@@ -316,15 +316,15 @@ After successful publication, verify registry installs in new environments:
 
 ```sh
 python3 -m venv --clear python/dist/registry-smoke
-python/dist/registry-smoke/bin/python -m pip install --no-cache-dir textprov==0.2.0
+python/dist/registry-smoke/bin/python -m pip install --no-cache-dir textprov==0.4.0
 python/dist/registry-smoke/bin/textprov --version
 printf 'hello' | python/dist/registry-smoke/bin/textprov mark --human - | python/dist/registry-smoke/bin/textprov inspect -
 
 # From js/ after the local checks above:
-npm view textprov@0.2.1 version dist.attestations
+npm view textprov@0.3.0 version dist.attestations
 rm -rf node_modules/.registry-smoke
-npm install --prefix node_modules/.registry-smoke --ignore-scripts --no-audit --no-fund textprov@0.2.1
-node -e 'const assert = require("node:assert/strict"); const root = "./node_modules/.registry-smoke/node_modules/textprov"; assert.equal(require(root + "/package.json").version, "0.2.1"); assert.equal(require(root).specVersion, "0.2")'
+npm install --prefix node_modules/.registry-smoke --ignore-scripts --no-audit --no-fund textprov@0.3.0
+node -e 'const assert = require("node:assert/strict"); const root = "./node_modules/.registry-smoke/node_modules/textprov"; assert.equal(require(root + "/package.json").version, "0.3.0"); assert.equal(require(root).specVersion, "0.2")'
 ```
 
 Confirm npm's provenance attestation on the registry as well as the installed
