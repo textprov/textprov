@@ -88,7 +88,18 @@ export function initProvenanceDisplay(options) {
     });
   });
 
+  // Declare the treatment the packaged stylesheet paints (docs/development/display-versions.md).
+  if (textprov.displayVersion) root.dataset.provDisplayVersion = textprov.displayVersion;
   var legend = document.getElementById("prov-legend");
-  if (legend) legend.hidden = false;
+  if (legend) {
+    legend.hidden = false;
+    if (textprov.displayVersion && document.createElement) {
+      var note = document.createElement("span");
+      note.className = "prov-display-version";
+      note.textContent = "Display " + textprov.displayVersion;
+      legend.appendChild(document.createTextNode(" \u00b7 "));
+      legend.appendChild(note);
+    }
+  }
   return true;
 }

@@ -15,7 +15,7 @@ textprov.runs("f\u{E0101}oo");
 // [{ state: "ai", text: "f\u{E0101}" }, { state: null, text: "oo" }]
 ```
 
-Installable package identity remains `textprov`. It supports CommonJS,
+T󠄁h󠄁e󠄁 r󠄁e󠄁l󠄁e󠄁a󠄁s󠄁e󠄁d󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁s󠄁 w󠄁i󠄁t󠄁h󠄁 `npm install textprov`. It supports CommonJS,
 ESM default import, and browser scripts through `window.textprov`.
 
 ## Browser sample

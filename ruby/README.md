@@ -6,7 +6,7 @@ library only. Its package identity and version describe executable code, not a
 versioned proposal standard. It does not implement voice references or detect
 who wrote text.
 
-From `ruby/`, run with `ruby -Ilib`, or install this checkout as a gem:
+I󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁l󠄁e󠄁a󠄁s󠄁e󠄁d󠄁 g󠄁e󠄁m󠄁 w󠄁i󠄁t󠄁h󠄁 `gem install textprov`, r󠄁u󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 `ruby/` w󠄁i󠄁t󠄁h󠄁 `ruby -Ilib`, o󠄁r󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁 t󠄁h󠄁i󠄁s󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁o󠄁u󠄁t󠄁 a󠄁s󠄁 a󠄁 g󠄁e󠄁m󠄁:
 
 ```ruby
 require "textprov"

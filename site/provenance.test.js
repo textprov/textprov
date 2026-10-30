@@ -115,6 +115,12 @@ test("the simple legend is revealed after display initialization", () => {
   assert.equal(elements["prov-legend"].hidden, false);
 });
 
+test("the document root declares the display version the stylesheet paints", () => {
+  const { root } = page();
+  assert.equal(root.dataset.provDisplayVersion, textprov.displayVersion);
+  assert.match(root.dataset.provDisplayVersion, /^v\d+\.\d+\.\d+-[a-z]+$/);
+});
+
 
 test("passages are the default and exact display persists without changing source", () => {
   const source = "x" + AI + " plain";
