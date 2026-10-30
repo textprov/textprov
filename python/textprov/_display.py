@@ -14,8 +14,10 @@ def stylesheet():
 def display_version():
     """Return the reveal treatment version, ``v<spec version>-<family>``.
 
-    The value is read from ``--prov-display-version`` in the packaged
-    stylesheet, which is the single source for it. The prefix is the spec
+    The value is read from the first ``--prov-display-version`` in the
+    packaged stylesheet, which is the single source for it; a candidate
+    version declares its own value only inside rules gated on the
+    ``data-prov-display-version`` root attribute. The prefix is the spec
     (proposal) version the treatment was designed against: not the ``0.2``
     baseline experiment identifier in :data:`SPEC_VERSION` and not this
     package's version. The family names the visual model. The scheme is
