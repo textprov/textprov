@@ -178,10 +178,13 @@ a :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]),
  *   loud               the recommendation's mist and glow on the run, with
  *                      corner seams in the full source color; no bar.
  *
- * The tier applies to whichever display layer paints (passage or exact).
- * Nothing here changes text, encoded marks, or layout: the bar is a
- * pseudo-element outside the block, and the seams are paint on the run's
- * own box (see the seam rules). The seams derive their geometry from the
+ * The tiers paint the recorded runs: the exact spans the renderer emits.
+ * There is no passage view in this family and data-prov-display has no
+ * effect; the tier control is the only control.
+ * Nothing here changes text or encoded marks. The bar is a pseudo-element
+ * outside the block and takes no space; the seams reserve their width at the
+ * run ends (see the seam rules), the candidate's one departure from the rule
+ * that marks never affect layout. The seams derive their geometry from the
  * highlight box, not from an em height tuned to one font. Mockup: TextProv
  * marking mockups, board 6.
  *
@@ -196,6 +199,7 @@ a :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]),
   --prov-bar-gap: 0.7em;
   --prov-bar-opacity: 0.5;
   --prov-seam-width: 0.4em;
+  --prov-seam-rise: 0.08em;
   --prov-seam-stroke: 1.5px;
   --prov-seam-strength: 50%;
 }
@@ -206,11 +210,17 @@ a :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]),
   }
 }
 
-/* The recommendation's channels leave the run under every tier. */
+/* The recommendation's channels leave the run under every tier, and the
+ * passage wrapper never paints: the run is the exact span. */
 :root[data-prov-display-version="v0.3.0-bracket"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]) {
   background: none;
   box-shadow: none;
   text-decoration: none;
+}
+
+:root[data-prov-display-version="v0.3.0-bracket"] [data-prov-passage] {
+  color: inherit;
+  padding: 0;
 }
 
 /* Latent: the bar sits in the margin of the nearest block that contains marks.
@@ -243,26 +253,27 @@ a :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]),
 }
 
 /* Quiet: ghost text. Color only; a weight change would move the glyphs.
- * Links keep their own color. Tier paint uses :where() so the layer resets
- * and native hooks below outrank it. */
-:root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="quiet"] :where(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]) {
+ * Links keep their own color. */
+:root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="quiet"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
   color: var(--prov-ghost-color);
 }
 
-:root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="quiet"] a :where(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]) {
+:root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="quiet"] a :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
   color: inherit;
 }
 
 /* Quiet and loud: corner seams, half-brackets at the open and close of the
- * run, drawn inside the highlight box and flush with its edges. They are
- * background layers on the run's own box: generated content (even out of
- * flow) and start or end padding both split the text run, which costs a
- * kerning pair at the boundary and moves the next glyph. Paint is the only
- * channel that leaves layout alone, and paint cannot leave the box. The box
- * is sliced rather than cloned, so the open seam appears once at the start of
- * the run and the close seam once at its end, whatever the wrapping. The
- * strokes are sized from the box and are not snapped to whole pixels. */
-:root[data-prov-display-version="v0.3.0-bracket"]:is([data-prov-tier="quiet"], [data-prov-tier="loud"]) :where(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]) {
+ * run. As on the mockup, the run reserves a seam's width at each end and the
+ * seam is drawn there, clear of the glyphs; the rise above and below is
+ * padding too, which costs no line height on an inline box. This is the one
+ * place the candidate changes layout: switching the tier on or off moves the
+ * text after each run end by the seam width. (Paint alone cannot leave the
+ * box, and anything else at the boundary, generated content included, splits
+ * the text run.) The strokes are background layers sized from the padding
+ * box, so they are not snapped to whole pixels. The box is sliced rather than
+ * cloned, so the open seam appears once at the start of the run and the close
+ * seam once at its end, whatever the wrapping. */
+:root[data-prov-display-version="v0.3.0-bracket"]:is([data-prov-tier="quiet"], [data-prov-tier="loud"]) :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
   /* Solid fallback; color-mix() refines the color below. */
   --prov-seam-color: var(--prov-color);
   --prov-seam-open:
@@ -274,61 +285,43 @@ a :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]),
   box-decoration-break: slice;
   -webkit-box-decoration-break: slice;
   border-radius: 0;
+  padding: var(--prov-seam-rise) var(--prov-seam-width);
   background: var(--prov-seam-open), var(--prov-seam-close);
 }
 
 /* Loud: the recommendation's mist and glow on the same box, seams in the full
  * source color. The solid tint is the fallback for engines without color-mix(). */
-:root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="loud"] :where(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]) {
+:root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="loud"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
   --prov-seam-stroke: 2px;
   --prov-seam-strength: 100%;
   background: var(--prov-seam-open), var(--prov-seam-close), var(--prov-fallback-bg);
 }
 
 @supports (background: color-mix(in srgb, currentColor 50%, transparent)) {
-  :root[data-prov-display-version="v0.3.0-bracket"]:is([data-prov-tier="quiet"], [data-prov-tier="loud"]) :where(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]) {
+  :root[data-prov-display-version="v0.3.0-bracket"]:is([data-prov-tier="quiet"], [data-prov-tier="loud"]) :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
     --prov-seam-color: color-mix(in srgb, var(--prov-color) var(--prov-seam-strength), transparent);
   }
 
-  :root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="loud"] :where(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]) {
+  :root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="loud"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
     background: var(--prov-seam-open), var(--prov-seam-close), var(--prov-mist);
     box-shadow: var(--prov-glow);
   }
 }
 
-/* Only the chosen display layer paints, as above; the other layer also
- * drops its ghost color and seams. */
-:root[data-prov-display-version="v0.3.0-bracket"] [data-prov-passage] [data-prov]:not([data-prov-display="exact"] *),
-:root[data-prov-display-version="v0.3.0-bracket"] [data-prov-display="exact"] [data-prov-passage] {
-  color: inherit;
-  background: none;
-  box-shadow: none;
-}
-
-/* Passage paint is fragmented at inline element boundaries. Seams belong to
- * the run, not to each fragment, so a fragment that touches the next one
- * (directly, or across one inline wrapper such as a link or emphasis) closes
- * without a seam and the next opens without one. */
-:root[data-prov-display-version="v0.3.0-bracket"] [data-prov-passage]:has(+ [data-prov-passage], + :not([data-prov-passage]) > [data-prov-passage]:first-child),
-:root[data-prov-display-version="v0.3.0-bracket"] :has(+ [data-prov-passage], + :not([data-prov-passage]) > [data-prov-passage]:first-child) > [data-prov-passage]:last-child {
-  --prov-seam-close: none;
-}
-
-:root[data-prov-display-version="v0.3.0-bracket"] :is([data-prov-passage], :has(> [data-prov-passage]:last-child)) + [data-prov-passage],
-:root[data-prov-display-version="v0.3.0-bracket"] :is([data-prov-passage], :has(> [data-prov-passage]:last-child)) + :not([data-prov-passage]) > [data-prov-passage]:first-child {
-  --prov-seam-open: none;
-}
+/* A run split by inline markup (a link or emphasis inside it) renders as
+ * several exact spans and shows a seam at each split: the stylesheet cannot
+ * tell a split run from two runs with unmarked text between them. Joining
+ * them needs the renderer to mark the fragments. */
 
 /* Native fills keep their background under the loud tier; the seams stay. */
-:root[data-prov-display-version="v0.3.0-bracket"] [data-prov-background="native"] :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]),
-:root[data-prov-display-version="v0.3.0-bracket"] :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage])[data-prov-background="native"],
-:root[data-prov-display-version="v0.3.0-bracket"] [data-prov-passage]:has([data-prov-background="native"]) {
+:root[data-prov-display-version="v0.3.0-bracket"] [data-prov-background="native"] :is(.prov, [data-prov="human"], [data-prov="ai"]),
+:root[data-prov-display-version="v0.3.0-bracket"] :is(.prov, [data-prov="human"], [data-prov="ai"])[data-prov-background="native"] {
   background: var(--prov-seam-open, none), var(--prov-seam-close, none);
   box-shadow: none;
 }
 
 @media (forced-colors: active) {
-  :root[data-prov-display-version="v0.3.0-bracket"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]) {
+  :root[data-prov-display-version="v0.3.0-bracket"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
     --prov-seam-color: CanvasText;
     background: var(--prov-seam-open, none), var(--prov-seam-close, none);
     box-shadow: none;

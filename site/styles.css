@@ -66,12 +66,14 @@ pre { overflow:auto; padding:1rem; background:var(--surface); border:1px solid v
     background: none;
     box-shadow: none;
     color: inherit;
+    padding: 0;
   }
   :root[data-provenance="hidden"] [data-prov-document] :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]):not(a) {
     text-decoration: none;
   }
   /* The v0.3.0-bracket candidate's margin bar hides with the rest (its seams
-   * are backgrounds). The block list mirrors the stylesheet's latent-tier selector. */
+   * are backgrounds in reserved padding, so hiding them reflows by the seam
+   * width). The block list mirrors the stylesheet's latent-tier selector. */
   :root[data-provenance="hidden"] [data-prov-document] :is(p, dd, dt, h1, h2, h3, h4, h5, h6, td, th, figcaption, pre, li:not(:has(p))):has([data-prov-passage], [data-prov="human"], [data-prov="ai"])::before {
     content: none;
   }
