@@ -205,6 +205,21 @@ t("displayVersion matches --prov-display-version in textprov.css and is spec-ver
   assert.ok(textprov.displayVersion.endsWith("-" + textprov.displayFamily));
 });
 
+t("candidate display versions sit behind data-prov-display-version, after the recommendation", () => {
+  const css = readFileSync(path.join(path.dirname(target), "textprov.css"), "utf8");
+  const declared = Array.from(css.matchAll(/--prov-display-version:\s*"([^"]+)"/g), (m) => m[1]);
+  assert.equal(declared[0], textprov.displayVersion);
+  assert.ok(declared.length > 1, "at least one candidate is in the stylesheet");
+  for (const candidate of declared.slice(1)) {
+    assert.notEqual(candidate, textprov.displayVersion);
+    assert.match(candidate, /^v\d+\.\d+\.\d+-[a-z]+$/);
+    // The candidate's value is declared only inside its own root block.
+    assert.ok(css.includes(`:root[data-prov-display-version="${candidate}"] {\n  --prov-display-version: "${candidate}";`));
+  }
+  // The recommendation is never gated on the attribute.
+  assert.ok(!css.includes(`[data-prov-display-version="${textprov.displayVersion}"]`));
+});
+
 for (const c of cases) {
   try {
     c.fn();

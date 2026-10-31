@@ -2,6 +2,7 @@
 
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -27,6 +28,23 @@ class TestStylesheet(unittest.TestCase):
         self.assertIn(f'--prov-display-version: "{version}";', textprov.stylesheet())
         js = (ROOT / "js" / "textprov.js").read_text(encoding="utf-8")
         self.assertIn(f'var DISPLAY_FAMILY = "{textprov.display_family()}";', js)
+
+    def test_candidate_versions_sit_behind_the_root_attribute(self):
+        css = textprov.stylesheet()
+        declared = re.findall(r'--prov-display-version:\s*"([^"]+)"', css)
+        self.assertEqual(declared[0], textprov.display_version())
+        self.assertGreater(len(declared), 1)
+        for candidate in declared[1:]:
+            self.assertNotEqual(candidate, textprov.display_version())
+            self.assertRegex(candidate, r"^v\d+\.\d+\.\d+-[a-z]+$")
+            self.assertIn(
+                f':root[data-prov-display-version="{candidate}"] {{\n'
+                f'  --prov-display-version: "{candidate}";',
+                css,
+            )
+        self.assertNotIn(
+            f'[data-prov-display-version="{textprov.display_version()}"]', css
+        )
 
     def test_stylesheet_does_not_depend_on_the_working_directory(self):
         expected = textprov.stylesheet()

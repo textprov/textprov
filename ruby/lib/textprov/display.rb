@@ -11,9 +11,10 @@ module Textprov
   end
 
   # Return the reveal treatment version, "v<spec version>-<family>", read from
-  # --prov-display-version in the packaged stylesheet (its single source). The
-  # prefix is the spec (proposal) version, not the 0.2 baseline experiment
-  # identifier in SPEC_VERSION and not this gem's version.
+  # the first --prov-display-version in the packaged stylesheet (its single
+  # source; a candidate declares its own only behind the data-prov-display-version
+  # root attribute). The prefix is the spec (proposal) version, not the 0.2
+  # baseline experiment identifier in SPEC_VERSION and not this gem's version.
   # Scheme: docs/development/display-versions.md.
   def display_version
     match = DISPLAY_VERSION_PROPERTY.match(stylesheet)

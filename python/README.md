@@ -6,7 +6,7 @@ Python 3.9+. Package identity and version describe executable code, not a
 versioned proposal standard. It does not implement voice references or detect
 who wrote text.
 
-Run from `python/`, or install this checkout with `python3 -m pip install .`:
+I󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁 t󠄁h󠄁e󠄁 r󠄁e󠄁l󠄁e󠄁a󠄁s󠄁e󠄁d󠄁 p󠄁a󠄁c󠄁k󠄁a󠄁g󠄁e󠄁 w󠄁i󠄁t󠄁h󠄁 `python3 -m pip install textprov`, r󠄁u󠄁n󠄁 f󠄁r󠄁o󠄁m󠄁 `python/`, o󠄁r󠄁 i󠄁n󠄁s󠄁t󠄁a󠄁l󠄁l󠄁 t󠄁h󠄁i󠄁s󠄁 c󠄁h󠄁e󠄁c󠄁k󠄁o󠄁u󠄁t󠄁 w󠄁i󠄁t󠄁h󠄁 `python3 -m pip install .`:
 
 ```python
 import textprov

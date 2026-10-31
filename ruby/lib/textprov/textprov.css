@@ -11,9 +11,14 @@
  * Display version: v0.3.0-asterisk (recommended): the spec version the
  * treatment was designed against, then the family name. The spec version is
  * the proposal's, not the 0.2 baseline experiment identifier (tag v0.2-final)
- * and not any SDK package version. The --prov-display-version property below
- * is the single source of this value; the SDKs read it from here. Scheme and
- * register: ../docs/development/display-versions.md.
+ * and not any SDK package version. The first --prov-display-version
+ * declaration in this file is the single source of this value; the SDKs read
+ * it from here. Scheme and register: ../docs/development/display-versions.md.
+ *
+ * The v0.3.0-bracket candidate is also in this file, after the recommendation.
+ * It stays inert until the document root carries
+ * data-prov-display-version="v0.3.0-bracket"; any other value, or none, paints
+ * the recommendation.
  */
 
 /* Native application annotations remain above the optional reveal layer. */
@@ -96,14 +101,18 @@
   [data-prov="human"],
   [data-prov="ai"],
   [data-prov-passage] {
-    background: linear-gradient(
+    /* The mist and glow are named so the bracket candidate's loud tier can
+     * reuse them without restating the recipe. */
+    --prov-mist: linear-gradient(
       115deg,
       color-mix(in srgb, var(--prov-color) calc(var(--prov-tint) * 0.45), transparent),
       color-mix(in srgb, var(--prov-color) calc(var(--prov-tint) * 1.6), transparent) 55%,
       color-mix(in srgb, var(--prov-color) calc(var(--prov-tint) * 0.6), transparent)
     );
-    box-shadow: 0 0 var(--prov-glow-blur) var(--prov-glow-spread)
+    --prov-glow: 0 0 var(--prov-glow-blur) var(--prov-glow-spread)
       color-mix(in srgb, var(--prov-color) var(--prov-glow-opacity), transparent);
+    background: var(--prov-mist);
+    box-shadow: var(--prov-glow);
   }
 
   :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]):not(a) {
@@ -153,6 +162,174 @@ a :is(.prov, [data-prov="human"], [data-prov="ai"], [data-prov-passage]),
     background: none;
     box-shadow: none;
     text-decoration-color: currentColor;
+  }
+}
+
+/* ==========================================================================
+ * v0.3.0-bracket (candidate): three-tier watermark. For evaluation.
+ *
+ * Switch on with data-prov-display-version="v0.3.0-bracket" on the document
+ * root, and pick a tier with data-prov-tier on the same element:
+ *
+ *   latent  (default)  a faint bar in the margin of each block that contains
+ *                      marks; the prose itself is untouched.
+ *   quiet              the run is set as ghost text between faint corner
+ *                      seams (half-brackets at the open and close of the run).
+ *   loud               the recommendation's mist and glow on the run, with
+ *                      corner seams in the full source color; no bar.
+ *
+ * The tiers paint the recorded runs: the exact spans the renderer emits.
+ * There is no passage view in this family and data-prov-display has no
+ * effect; the tier control is the only control.
+ * Nothing here changes text or encoded marks. The bar is a pseudo-element
+ * outside the block and takes no space; the seams reserve their width at the
+ * run ends (see the seam rules), the candidate's one departure from the rule
+ * that marks never affect layout. The seams derive their geometry from the
+ * highlight box, not from an em height tuned to one font. Mockup: TextProv
+ * marking mockups, board 6.
+ *
+ * The latent bar is painted per block, not per line: CSS cannot see which
+ * lines of a wrapped run contain marks. Per-line bars need the renderer.
+ * ====================================================================== */
+
+:root[data-prov-display-version="v0.3.0-bracket"] {
+  --prov-display-version: "v0.3.0-bracket";
+  --prov-ghost-color: #6e7781;
+  --prov-bar-width: 3px;
+  --prov-bar-gap: 0.7em;
+  --prov-bar-opacity: 0.5;
+  --prov-seam-width: 0.4em;
+  --prov-seam-rise: 0.08em;
+  --prov-seam-stroke: 1.5px;
+  --prov-seam-strength: 50%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-prov-display-version="v0.3.0-bracket"] {
+    --prov-ghost-color: #6e7681;
+  }
+}
+
+/* The recommendation's channels leave the run under every tier, and the
+ * passage wrapper never paints: the run is the exact span. */
+:root[data-prov-display-version="v0.3.0-bracket"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"], [data-prov-passage]) {
+  background: none;
+  box-shadow: none;
+  text-decoration: none;
+}
+
+:root[data-prov-display-version="v0.3.0-bracket"] [data-prov-passage] {
+  color: inherit;
+  padding: 0;
+}
+
+/* Latent: the bar sits in the margin of the nearest block that contains marks.
+ * The block list is repeated by applications that need to hide the bar. */
+:root[data-prov-display-version="v0.3.0-bracket"]:not([data-prov-tier="quiet"], [data-prov-tier="loud"]) :is(p, dd, dt, h1, h2, h3, h4, h5, h6, td, th, figcaption, pre, li:not(:has(p))):has([data-prov-passage], [data-prov="human"], [data-prov="ai"]) {
+  /* No offsets: relative positioning only anchors the bar. */
+  position: relative;
+  --prov-bar-color: var(--prov-mixed-line);
+}
+
+:root[data-prov-display-version="v0.3.0-bracket"]:not([data-prov-tier="quiet"], [data-prov-tier="loud"]) :is(p, dd, dt, h1, h2, h3, h4, h5, h6, td, th, figcaption, pre, li:not(:has(p))):has([data-prov-passage="human"], [data-prov="human"]):not(:has([data-prov-passage="ai"], [data-prov-passage="mixed"], [data-prov="ai"])) {
+  --prov-bar-color: var(--prov-human-line);
+}
+
+:root[data-prov-display-version="v0.3.0-bracket"]:not([data-prov-tier="quiet"], [data-prov-tier="loud"]) :is(p, dd, dt, h1, h2, h3, h4, h5, h6, td, th, figcaption, pre, li:not(:has(p))):has([data-prov-passage="ai"], [data-prov="ai"]):not(:has([data-prov-passage="human"], [data-prov-passage="mixed"], [data-prov="human"])) {
+  --prov-bar-color: var(--prov-ai-line);
+}
+
+:root[data-prov-display-version="v0.3.0-bracket"]:not([data-prov-tier="quiet"], [data-prov-tier="loud"]) :is(p, dd, dt, h1, h2, h3, h4, h5, h6, td, th, figcaption, pre, li:not(:has(p))):has([data-prov-passage], [data-prov="human"], [data-prov="ai"])::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(-1 * (var(--prov-bar-gap) + var(--prov-bar-width)));
+  width: var(--prov-bar-width);
+  border-radius: 2px;
+  background: var(--prov-bar-color);
+  opacity: var(--prov-bar-opacity);
+  pointer-events: none;
+}
+
+/* Quiet: ghost text. Color only; a weight change would move the glyphs.
+ * Links keep their own color. */
+:root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="quiet"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
+  color: var(--prov-ghost-color);
+}
+
+:root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="quiet"] a :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
+  color: inherit;
+}
+
+/* Quiet and loud: corner seams, half-brackets at the open and close of the
+ * run. As on the mockup, the run reserves a seam's width at each end and the
+ * seam is drawn there, clear of the glyphs; the rise above and below is
+ * padding too, which costs no line height on an inline box. This is the one
+ * place the candidate changes layout: switching the tier on or off moves the
+ * text after each run end by the seam width. (Paint alone cannot leave the
+ * box, and anything else at the boundary, generated content included, splits
+ * the text run.) The strokes are background layers sized from the padding
+ * box, so they are not snapped to whole pixels. The box is sliced rather than
+ * cloned, so the open seam appears once at the start of the run and the close
+ * seam once at its end, whatever the wrapping. */
+:root[data-prov-display-version="v0.3.0-bracket"]:is([data-prov-tier="quiet"], [data-prov-tier="loud"]) :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
+  /* Solid fallback; color-mix() refines the color below. */
+  --prov-seam-color: var(--prov-color);
+  --prov-seam-open:
+    linear-gradient(var(--prov-seam-color), var(--prov-seam-color)) 0 0 / var(--prov-seam-stroke) 100% no-repeat,
+    linear-gradient(var(--prov-seam-color), var(--prov-seam-color)) 0 0 / var(--prov-seam-width) var(--prov-seam-stroke) no-repeat;
+  --prov-seam-close:
+    linear-gradient(var(--prov-seam-color), var(--prov-seam-color)) 100% 100% / var(--prov-seam-stroke) 100% no-repeat,
+    linear-gradient(var(--prov-seam-color), var(--prov-seam-color)) 100% 100% / var(--prov-seam-width) var(--prov-seam-stroke) no-repeat;
+  box-decoration-break: slice;
+  -webkit-box-decoration-break: slice;
+  border-radius: 0;
+  padding: var(--prov-seam-rise) var(--prov-seam-width);
+  background: var(--prov-seam-open), var(--prov-seam-close);
+}
+
+/* Loud: the recommendation's mist and glow on the same box, seams in the full
+ * source color. The solid tint is the fallback for engines without color-mix(). */
+:root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="loud"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
+  --prov-seam-stroke: 2px;
+  --prov-seam-strength: 100%;
+  background: var(--prov-seam-open), var(--prov-seam-close), var(--prov-fallback-bg);
+}
+
+@supports (background: color-mix(in srgb, currentColor 50%, transparent)) {
+  :root[data-prov-display-version="v0.3.0-bracket"]:is([data-prov-tier="quiet"], [data-prov-tier="loud"]) :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
+    --prov-seam-color: color-mix(in srgb, var(--prov-color) var(--prov-seam-strength), transparent);
+  }
+
+  :root[data-prov-display-version="v0.3.0-bracket"][data-prov-tier="loud"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
+    background: var(--prov-seam-open), var(--prov-seam-close), var(--prov-mist);
+    box-shadow: var(--prov-glow);
+  }
+}
+
+/* A run split by inline markup (a link or emphasis inside it) renders as
+ * several exact spans and shows a seam at each split: the stylesheet cannot
+ * tell a split run from two runs with unmarked text between them. Joining
+ * them needs the renderer to mark the fragments. */
+
+/* Native fills keep their background under the loud tier; the seams stay. */
+:root[data-prov-display-version="v0.3.0-bracket"] [data-prov-background="native"] :is(.prov, [data-prov="human"], [data-prov="ai"]),
+:root[data-prov-display-version="v0.3.0-bracket"] :is(.prov, [data-prov="human"], [data-prov="ai"])[data-prov-background="native"] {
+  background: var(--prov-seam-open, none), var(--prov-seam-close, none);
+  box-shadow: none;
+}
+
+@media (forced-colors: active) {
+  :root[data-prov-display-version="v0.3.0-bracket"] :is(.prov-human, .prov-ai, [data-prov="human"], [data-prov="ai"]) {
+    --prov-seam-color: CanvasText;
+    background: var(--prov-seam-open, none), var(--prov-seam-close, none);
+    box-shadow: none;
+  }
+
+  :root[data-prov-display-version="v0.3.0-bracket"]:not([data-prov-tier="quiet"], [data-prov-tier="loud"]) :is(p, dd, dt, h1, h2, h3, h4, h5, h6, td, th, figcaption, pre, li:not(:has(p))):has([data-prov-passage], [data-prov="human"], [data-prov="ai"])::before {
+    background: CanvasText;
+    opacity: 1;
   }
 }
 

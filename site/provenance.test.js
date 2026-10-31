@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { test } from "node:test";
-import { DISPLAY_KEY, HIDDEN, SHOWN, STORAGE_KEY, initProvenanceDisplay } from "./provenance.js";
+import { CANDIDATES, DISPLAY_KEY, HIDDEN, SHOWN, STORAGE_KEY, TIER_KEY, TIERS, VERSION_KEY, initProvenanceDisplay } from "./provenance.js";
 
 const textprov = createRequire(import.meta.url)("../js/textprov.js");
 const HUMAN = "\u{E0100}";
@@ -15,6 +15,7 @@ function memoryStorage(entries = {}) {
     store,
     getItem: (key) => (store.has(key) ? store.get(key) : null),
     setItem: (key, value) => store.set(key, value),
+    removeItem: (key) => store.delete(key),
   };
 }
 
@@ -27,7 +28,10 @@ const brokenStorage = {
   },
 };
 
-function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage() } = {}) {
+const legendLabel = ({ elements }) =>
+  elements["prov-legend"].children.find((child) => child.className === "prov-display-version")?.textContent;
+
+function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage(), search = "" } = {}) {
   const root = { dataset: {} };
   const toggle = {
     hidden: true,
@@ -40,8 +44,10 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
       this.listeners[event] = callback;
     },
   };
-  const mode = { value: "passage", disabled: false, listeners: {}, addEventListener(event, callback) { this.listeners[event] = callback; } };
-  const elements = { "prov-legend": { hidden: true } };
+  const mode = { value: "passage", disabled: false, hidden: false, listeners: {}, addEventListener(event, callback) { this.listeners[event] = callback; } };
+  const tier = { value: "latent", disabled: false, hidden: false, listeners: {}, addEventListener(event, callback) { this.listeners[event] = callback; } };
+  const legend = { hidden: true, children: [], appendChild(child) { this.children.push(child); } };
+  const elements = { "prov-legend": legend };
   const regionElements = regions.map((textContent) => ({ textContent }));
   const rendered = [];
   const document = {
@@ -50,20 +56,23 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
       if (selector === "[data-prov-document]") return regionElements;
       if (selector === "[data-prov-toggle]") return [toggle];
       if (selector === "[data-prov-display-control]") return [mode];
+      if (selector === "[data-prov-tier-control]") return [tier];
       return [];
     },
     getElementById: (id) => elements[id] ?? null,
+    createElement: (tagName) => ({ tagName, className: "", textContent: "" }),
+    createTextNode: (textContent) => ({ textContent }),
   };
   // Record the preference each region was rendered under; DOM output is covered by js/check_render.mjs.
   const api = {
     ...textprov,
-    render(region) {
-      rendered.push({ region, provenance: root.dataset.provenance });
+    render(region, options) {
+      rendered.push({ region, options, provenance: root.dataset.provenance });
       return 0;
     },
   };
-  const counts = initProvenanceDisplay({ document, textprov: api, storage });
-  return { counts, root, toggle, mode, elements, rendered, storage };
+  const counts = initProvenanceDisplay({ document, textprov: api, storage, location: { search } });
+  return { counts, root, toggle, mode, tier, elements, rendered, storage };
 }
 
 test("pages without a document region are left alone", () => {
@@ -113,6 +122,74 @@ test("unknown stored values and blocked storage fall back to shown", () => {
 test("the simple legend is revealed after display initialization", () => {
   const { elements } = page();
   assert.equal(elements["prov-legend"].hidden, false);
+});
+
+test("the document root declares the display version the stylesheet paints", () => {
+  const shown = page();
+  const { root } = shown;
+  assert.equal(root.dataset.provDisplayVersion, textprov.displayVersion);
+  assert.match(root.dataset.provDisplayVersion, /^v\d+\.\d+\.\d+-[a-z]+$/);
+  assert.equal(root.dataset.provTier, undefined);
+  assert.equal(legendLabel(shown), `Display ${textprov.displayVersion}`);
+});
+
+test("a registered candidate can be switched on for evaluation and is remembered", () => {
+  const candidate = CANDIDATES[0];
+  assert.notEqual(candidate, textprov.displayVersion);
+  const storage = memoryStorage();
+  const first = page({ storage, search: `?prov-display-version=${candidate}&prov-display-tier=quiet` });
+  assert.equal(first.root.dataset.provDisplayVersion, candidate);
+  assert.equal(first.root.dataset.provTier, "quiet");
+  assert.equal(storage.store.get(VERSION_KEY), candidate);
+  assert.equal(storage.store.get(TIER_KEY), "quiet");
+  assert.equal(legendLabel(first), `Display ${candidate} (quiet tier)`);
+  // The choice persists without the query string; the tier alone changes nothing.
+  const second = page({ storage });
+  assert.equal(second.root.dataset.provDisplayVersion, candidate);
+  assert.equal(second.root.dataset.provTier, "quiet");
+  const third = page({ storage, search: "?prov-display-tier=loud" });
+  assert.equal(third.root.dataset.provTier, "loud");
+  // An empty value clears the choice and the recommendation returns.
+  const fourth = page({ storage, search: "?prov-display-version=" });
+  assert.equal(fourth.root.dataset.provDisplayVersion, textprov.displayVersion);
+  assert.equal(fourth.root.dataset.provTier, undefined);
+  assert.equal(storage.store.has(VERSION_KEY), false);
+  assert.equal(page({ storage: memoryStorage({ [TIER_KEY]: "loud" }) }).root.dataset.provTier, undefined);
+});
+
+test("the candidate replaces the display modes with runs and a tier control", () => {
+  const candidate = CANDIDATES[0];
+  const on = page({ search: `?prov-display-version=${candidate}` });
+  // Runs are the recorded ranges with the whitespace between them merged.
+  assert.deepEqual(on.rendered.map((entry) => entry.options), [{ display: "exact", merge_whitespace: true }]);
+  // No passage/exact selection is made or shown; the tier control takes its place.
+  assert.equal(on.root.dataset.provDisplay, undefined);
+  assert.equal(on.mode.hidden, true);
+  assert.equal(on.tier.hidden, false);
+  assert.equal(on.tier.value, "latent");
+  assert.equal(on.root.dataset.provTier, "latent");
+  assert.equal(legendLabel(on), `Display ${candidate} (latent tier)`);
+  on.tier.value = "loud"; on.tier.listeners.change();
+  assert.equal(on.root.dataset.provTier, "loud");
+  assert.equal(on.storage.store.get(TIER_KEY), "loud");
+  on.toggle.listeners.click();
+  assert.equal(on.tier.disabled, true);
+  // The recommendation keeps its display modes and hides the tier control.
+  const off = page();
+  assert.deepEqual(off.rendered.map((entry) => entry.options), [{ display: "passage" }]);
+  assert.equal(off.mode.hidden, false);
+  assert.equal(off.tier.hidden, true);
+  assert.equal(off.root.dataset.provDisplay, "passage");
+});
+
+test("unregistered versions and tiers fall back to the recommendation", () => {
+  assert.ok(TIERS.includes("latent") && TIERS.includes("quiet") && TIERS.includes("loud"));
+  const { root, storage } = page({ search: "?prov-display-version=v9.9.9-dagger&prov-display-tier=shout" });
+  assert.equal(root.dataset.provDisplayVersion, textprov.displayVersion);
+  assert.equal(root.dataset.provTier, undefined);
+  assert.equal(storage.store.has(VERSION_KEY), false);
+  assert.equal(page({ storage: memoryStorage({ [VERSION_KEY]: "v9.9.9-dagger" }) }).root.dataset.provDisplayVersion, textprov.displayVersion);
+  assert.equal(page({ storage: brokenStorage, search: `?prov-display-version=${CANDIDATES[0]}` }).root.dataset.provDisplayVersion, CANDIDATES[0]);
 });
 
 

@@ -39,8 +39,9 @@
   var REGISTRY_VERSION = "0.2";
   // Reveal treatment version: the spec (proposal) version it was designed
   // against, then the family name. The prefix is not the 0.2 baseline experiment
-  // identifier above and not this package's version. Mirrored from
-  // --prov-display-version in textprov.css; check_render.mjs verifies they agree.
+  // identifier above and not this package's version. Mirrored from the first
+  // --prov-display-version in textprov.css (the recommendation; candidates are
+  // gated on data-prov-display-version); check_render.mjs verifies they agree.
   var DISPLAY_FAMILY = "asterisk";
   var DISPLAY_VERSION = "v0.3.0-" + DISPLAY_FAMILY;
   var SELECTORS = {
