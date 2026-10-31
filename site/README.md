@@ -12,6 +12,6 @@ npm run build
 npm run dev
 ```
 
-The ℗ switch hides the labels. Append `?prov-display-version=v0.3.0-bracket&prov-display-tier=quiet` to switch on the candidate display version for evaluation (`latent`, `quiet`, or `loud`); the choice is remembered in the browser, and `?prov-display-version=` returns to the recommendation. See [display versions](../docs/development/display-versions.md).
+The ℗ switch hides the labels. Append `?prov-display-version=v0.3.0-bracket&prov-display-tier=quiet` to switch on the candidate display version for evaluation; it replaces the passage/exact selector with a Latent / Quiet / Loud control, both choices are remembered in the browser, and `?prov-display-version=` returns to the recommendation. See [display versions](../docs/development/display-versions.md).
 
 The renderer and its display styles are retained experimental code in `../js/`. The tests check proposal rendering and toggle behavior. Deployment is managed by `.github/workflows/pages.yml`; building locally does not publish the site.

@@ -44,7 +44,8 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
       this.listeners[event] = callback;
     },
   };
-  const mode = { value: "passage", disabled: false, listeners: {}, addEventListener(event, callback) { this.listeners[event] = callback; } };
+  const mode = { value: "passage", disabled: false, hidden: false, listeners: {}, addEventListener(event, callback) { this.listeners[event] = callback; } };
+  const tier = { value: "latent", disabled: false, hidden: false, listeners: {}, addEventListener(event, callback) { this.listeners[event] = callback; } };
   const legend = { hidden: true, children: [], appendChild(child) { this.children.push(child); } };
   const elements = { "prov-legend": legend };
   const regionElements = regions.map((textContent) => ({ textContent }));
@@ -55,6 +56,7 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
       if (selector === "[data-prov-document]") return regionElements;
       if (selector === "[data-prov-toggle]") return [toggle];
       if (selector === "[data-prov-display-control]") return [mode];
+      if (selector === "[data-prov-tier-control]") return [tier];
       return [];
     },
     getElementById: (id) => elements[id] ?? null,
@@ -64,13 +66,13 @@ function page({ regions = [mark("Draft", AI) + " text"], storage = memoryStorage
   // Record the preference each region was rendered under; DOM output is covered by js/check_render.mjs.
   const api = {
     ...textprov,
-    render(region) {
-      rendered.push({ region, provenance: root.dataset.provenance });
+    render(region, options) {
+      rendered.push({ region, options, provenance: root.dataset.provenance });
       return 0;
     },
   };
   const counts = initProvenanceDisplay({ document, textprov: api, storage, location: { search } });
-  return { counts, root, toggle, mode, elements, rendered, storage };
+  return { counts, root, toggle, mode, tier, elements, rendered, storage };
 }
 
 test("pages without a document region are left alone", () => {
@@ -153,6 +155,31 @@ test("a registered candidate can be switched on for evaluation and is remembered
   assert.equal(fourth.root.dataset.provTier, undefined);
   assert.equal(storage.store.has(VERSION_KEY), false);
   assert.equal(page({ storage: memoryStorage({ [TIER_KEY]: "loud" }) }).root.dataset.provTier, undefined);
+});
+
+test("the candidate replaces the display modes with runs and a tier control", () => {
+  const candidate = CANDIDATES[0];
+  const on = page({ search: `?prov-display-version=${candidate}` });
+  // Runs are the recorded ranges with the whitespace between them merged.
+  assert.deepEqual(on.rendered.map((entry) => entry.options), [{ display: "exact", merge_whitespace: true }]);
+  // No passage/exact selection is made or shown; the tier control takes its place.
+  assert.equal(on.root.dataset.provDisplay, undefined);
+  assert.equal(on.mode.hidden, true);
+  assert.equal(on.tier.hidden, false);
+  assert.equal(on.tier.value, "latent");
+  assert.equal(on.root.dataset.provTier, "latent");
+  assert.equal(legendLabel(on), `Display ${candidate} (latent tier)`);
+  on.tier.value = "loud"; on.tier.listeners.change();
+  assert.equal(on.root.dataset.provTier, "loud");
+  assert.equal(on.storage.store.get(TIER_KEY), "loud");
+  on.toggle.listeners.click();
+  assert.equal(on.tier.disabled, true);
+  // The recommendation keeps its display modes and hides the tier control.
+  const off = page();
+  assert.deepEqual(off.rendered.map((entry) => entry.options), [{ display: "passage" }]);
+  assert.equal(off.mode.hidden, false);
+  assert.equal(off.tier.hidden, true);
+  assert.equal(off.root.dataset.provDisplay, "passage");
 });
 
 test("unregistered versions and tiers fall back to the recommendation", () => {
