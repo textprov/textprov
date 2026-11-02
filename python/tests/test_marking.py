@@ -263,6 +263,77 @@ class TestMarking(unittest.TestCase):
         self.assertTrue(result.startswith(mark("Keep these words", "human")))
         self.assertTrue(result.endswith(mark("new") + " ending"))
 
+    def test_separated_corrections_preserve_interior_words_and_marks(self):
+        frontmatter = '---\ntitle: "Original title"\n---\n\n'
+        plain_middle = " passing off longform AI-generated text "
+        for middle in (
+            plain_middle,
+            mark(plain_middle, "human"),
+            mark(plain_middle, "ai"),
+            (
+                " " + mark("passing off", "human") + " longform "
+                + mark("AI-generated", "ai") + " text "
+            ),
+            # More than 200 repeated tokens must not trigger diff autojunk.
+            " repeated words" * 150 + plain_middle,
+        ):
+            with self.subTest(middle=middle[:40]):
+                old = (
+                    frontmatter + "An old opening about" + middle
+                    + "and an old ending.\n"
+                )
+                new = strip_marks(old).replace(
+                    "old opening", "new opening"
+                ).replace("old ending", "new ending")
+                expected = (
+                    frontmatter + "An " + mark("new") + " opening about"
+                    + middle + "and an " + mark("new") + " ending.\n"
+                )
+                result = mark_document_edit(old, new)
+                self.assertEqual(expected, result)
+                self.assertEqual(new, strip_marks(result))
+                self.assertEqual(result, mark_document_edit(result, new))
+                prepared = rewrite_edit(
+                    old, strip_marks(old), new, preserve_new_marks=True
+                )
+                self.assertEqual(result, old.replace(*prepared))
+
+    def test_multiple_word_corrections_do_not_reuse_shared_letter_fragments(self):
+        old = "A beta word between a gamma word.\n"
+        new = "A delta word between a sigma word.\n"
+        self.assertEqual(
+            "A " + mark("delta") + " word between a "
+            + mark("sigma") + " word.\n",
+            mark_document_edit(old, new),
+        )
+
+    def test_interior_pasted_marks_survive_separated_corrections(self):
+        old = "An old opening and original words and an old ending."
+        new = (
+            "An new opening and " + mark("original words", "human")
+            + " and an new ending."
+        )
+        expected = (
+            "An " + mark("new") + " opening and "
+            + mark("original words", "human") + " and an "
+            + mark("new") + " ending."
+        )
+        self.assertEqual(expected, mark_document_edit(old, new))
+
+    def test_separated_deletions_do_not_mark_surviving_words(self):
+        old = "Keep extra original words and another extra ending.\n"
+        new = "Keep original words and another ending.\n"
+        self.assertEqual(new, mark_document_edit(old, new))
+
+    def test_spacing_changes_and_corrections_preserve_unchanged_words(self):
+        old = "An old opening with\noriginal words and an old ending.\n"
+        new = "An new opening with original words\nand an new ending.\n"
+        expected = (
+            "An " + mark("new") + " opening with original words\nand an "
+            + mark("new") + " ending.\n"
+        )
+        self.assertEqual(expected, mark_document_edit(old, new))
+
     def test_equal_pasted_marks_are_preserved_where_source_had_none(self):
         human = mark("Words", "human")
         ai = mark("Words", "ai")

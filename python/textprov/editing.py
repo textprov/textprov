@@ -88,10 +88,10 @@ def line_offsets(lines):
 def merge(old_raw, new_raw, carry, preserve_new_marks=False):
     """Align `new_raw` to `old_raw` and flag what is new.
 
-    Lines are diffed on their unmarked text. Within a changed hunk the common
-    prefix and suffix count as unchanged only for whole source clusters; the
-    middle and copied cluster fragments are flagged. A character diff would
-    call the letters a rewritten sentence happens to share unchanged.
+    Lines are diffed on their unmarked text, then changed hunks are aligned on
+    whole words and whitespace. Equal words count as unchanged only for whole
+    source clusters; replacements and copied cluster fragments are flagged.
+    A character diff would call shared letters in a rewritten word unchanged.
     Returns (text, flags), one flag per code point of text.
 
     With `carry`, unchanged text is taken from `old_raw`, so marks the agent
@@ -159,9 +159,26 @@ def merge(old_raw, new_raw, carry, preserve_new_marks=False):
         elif tag == "insert":
             emit(raw_span(new_raw, new_index, b1, b2), True)
         elif tag == "replace":
+            # Multiple corrections on one line must not relabel the unchanged
+            # words between them. Match whole whitespace-delimited words, not
+            # the coincidental letters shared by different words. Whitespace
+            # is separate so spacing edits do not relabel adjacent words.
             pre, suf = common_affixes(old_plain[a1:a2], new_plain[b1:b2])
             kept((a1, a1 + pre), (b1, b1 + pre))
-            emit(raw_span(new_raw, new_index, b1 + pre, b2 - suf), True)
+            old_words = re.findall(r"\s+|\S+", old_plain[a1 + pre : a2 - suf])
+            new_words = re.findall(r"\s+|\S+", new_plain[b1 + pre : b2 - suf])
+            old_word_at = line_offsets(old_words)
+            new_word_at = line_offsets(new_words)
+            words = SequenceMatcher(None, old_words, new_words, autojunk=False)
+            for kind, x1, x2, y1, y2 in words.get_opcodes():
+                left = a1 + pre + old_word_at[x1]
+                right = a1 + pre + old_word_at[x2]
+                start = b1 + pre + new_word_at[y1]
+                end = b1 + pre + new_word_at[y2]
+                if kind == "equal":
+                    kept((left, right), (start, end))
+                elif kind in ("insert", "replace"):
+                    emit(raw_span(new_raw, new_index, start, end), True)
             kept((a2 - suf, a2), (b2 - suf, b2))
     return "".join(out), flags
 
