@@ -85,13 +85,130 @@ def line_offsets(lines):
     return offsets
 
 
+def _word_edit_prefix(old, new, old_start, new_start, max_edits):
+    """Align a prefix within a bounded insertion/deletion budget."""
+    before, after = len(old) - old_start, len(new) - new_start
+    frontier = {1: 0}
+    history = []
+    for distance in range(min(before + after, max_edits) + 1):
+        history.append(frontier.copy())
+        for diagonal in range(-distance, distance + 1, 2):
+            if diagonal == -distance or (
+                diagonal != distance
+                and frontier[diagonal - 1] < frontier[diagonal + 1]
+            ):
+                left = frontier[diagonal + 1]
+            else:
+                left = frontier[diagonal - 1] + 1
+            right = left - diagonal
+            while (
+                left < before and right < after
+                and old[old_start + left] == new[new_start + right]
+            ):
+                left += 1
+                right += 1
+            frontier[diagonal] = left
+            if left >= before and right >= after:
+                break
+        else:
+            continue
+        break
+    else:
+        # A dense rewrite may need many small windows. Retain the path that
+        # made the most progress, preferring balanced progress on a tie and
+        # then a smaller source offset. Every equal token remains an actual
+        # source match; no common-word or whitespace frequency is discarded.
+        candidates = (
+            (left + left - diagonal, -abs(diagonal), -left, left, left - diagonal)
+            for diagonal, left in frontier.items()
+            if diagonal % 2 == max_edits % 2
+            and 0 <= left <= before and 0 <= left - diagonal <= after
+        )
+        _, _, _, before, after = max(candidates)
+
+    matches = []
+    left, right = before, after
+    for distance in range(len(history) - 1, -1, -1):
+        previous = history[distance]
+        diagonal = left - right
+        if diagonal == -distance or (
+            diagonal != distance
+            and previous[diagonal - 1] < previous[diagonal + 1]
+        ):
+            prior_diagonal = diagonal + 1
+        else:
+            prior_diagonal = diagonal - 1
+        prior_left = previous[prior_diagonal]
+        prior_right = prior_left - prior_diagonal
+        while left > prior_left and right > prior_right:
+            left -= 1
+            right -= 1
+            matches.append((left, right))
+        left, right = prior_left, prior_right
+
+    blocks = []
+    for left, right in reversed(matches):
+        if (
+            blocks and blocks[-1][0] + blocks[-1][2] == left
+            and blocks[-1][1] + blocks[-1][2] == right
+        ):
+            blocks[-1][2] += 1
+        else:
+            blocks.append([left, right, 1])
+    blocks.append([before, after, 0])
+    opcodes = []
+    left = right = 0
+    for next_left, next_right, size in blocks:
+        if left < next_left or right < next_right:
+            kind = (
+                "replace" if left < next_left and right < next_right
+                else "delete" if left < next_left else "insert"
+            )
+            opcodes.append((
+                kind, old_start + left, old_start + next_left,
+                new_start + right, new_start + next_right,
+            ))
+        if size:
+            opcodes.append((
+                "equal", old_start + next_left, old_start + next_left + size,
+                new_start + next_right, new_start + next_right + size,
+            ))
+        left, right = next_left + size, next_right + size
+    return opcodes, old_start + before, new_start + after
+
+
+def _bounded_word_opcodes(old, new, max_edits=64):
+    """Align whole tokens without quadratic repeated-token candidate searches.
+
+    A diagonal frontier skips equal runs. Sparse edits get a shortest edit path;
+    denser rewrites continue from a bounded prefix rather than retaining an
+    unbounded frontier history. Equal choices prefer deletion before insertion.
+    Like the line matcher, this is a deterministic heuristic, not evidence of
+    which occurrence a person intended when repeated or moved words align.
+    """
+    if max_edits < 1:
+        raise ValueError("edit budget must be positive")
+    old_start = new_start = 0
+    while old_start < len(old) or new_start < len(new):
+        if old_start == len(old):
+            yield "insert", old_start, old_start, new_start, len(new)
+            break
+        if new_start == len(new):
+            yield "delete", old_start, len(old), new_start, new_start
+            break
+        opcodes, old_start, new_start = _word_edit_prefix(
+            old, new, old_start, new_start, max_edits
+        )
+        yield from opcodes
+
+
 def merge(old_raw, new_raw, carry, preserve_new_marks=False):
     """Align `new_raw` to `old_raw` and flag what is new.
 
-    Lines are diffed on their unmarked text. Within a changed hunk the common
-    prefix and suffix count as unchanged only for whole source clusters; the
-    middle and copied cluster fragments are flagged. A character diff would
-    call the letters a rewritten sentence happens to share unchanged.
+    Lines are diffed on their unmarked text, then changed hunks are aligned on
+    whole words and whitespace. Equal words count as unchanged only for whole
+    source clusters; replacements and copied cluster fragments are flagged.
+    A character diff would call shared letters in a rewritten word unchanged.
     Returns (text, flags), one flag per code point of text.
 
     With `carry`, unchanged text is taken from `old_raw`, so marks the agent
@@ -159,9 +276,34 @@ def merge(old_raw, new_raw, carry, preserve_new_marks=False):
         elif tag == "insert":
             emit(raw_span(new_raw, new_index, b1, b2), True)
         elif tag == "replace":
+            # Multiple corrections on one line must not relabel the unchanged
+            # words between them. Match whole whitespace-delimited words, not
+            # the coincidental letters shared by different words. Whitespace
+            # is separate so spacing edits do not relabel adjacent words.
             pre, suf = common_affixes(old_plain[a1:a2], new_plain[b1:b2])
             kept((a1, a1 + pre), (b1, b1 + pre))
-            emit(raw_span(new_raw, new_index, b1 + pre, b2 - suf), True)
+            old_words = re.findall(r"\s+|\S+", old_plain[a1 + pre : a2 - suf])
+            new_words = re.findall(r"\s+|\S+", new_plain[b1 + pre : b2 - suf])
+            old_word_at = line_offsets(old_words)
+            new_word_at = line_offsets(new_words)
+            # Preserve the existing greedy alignment for small hunks, where
+            # repeated-token comparisons are cheap and tie choices can affect
+            # which source occurrence supplies an existing provenance mark.
+            if len(old_words) * len(new_words) > 65_536:
+                word_edits = _bounded_word_opcodes(old_words, new_words)
+            else:
+                word_edits = SequenceMatcher(
+                    None, old_words, new_words, autojunk=False
+                ).get_opcodes()
+            for kind, x1, x2, y1, y2 in word_edits:
+                left = a1 + pre + old_word_at[x1]
+                right = a1 + pre + old_word_at[x2]
+                start = b1 + pre + new_word_at[y1]
+                end = b1 + pre + new_word_at[y2]
+                if kind == "equal":
+                    kept((left, right), (start, end))
+                elif kind in ("insert", "replace"):
+                    emit(raw_span(new_raw, new_index, start, end), True)
             kept((a2 - suf, a2), (b2 - suf, b2))
     return "".join(out), flags
 

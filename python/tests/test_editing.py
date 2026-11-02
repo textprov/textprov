@@ -23,6 +23,35 @@ def states(text):
 
 
 class TestRemark(unittest.TestCase):
+    def test_bounded_word_alignment_reconstructs_small_and_dense_changes(self):
+        cases = (
+            ([], []),
+            ([], ["added"] * 80),
+            (["deleted"] * 80, []),
+            (["word", " "] * 90, ["word", "\n"] * 90),
+            (["a", "b", "a", "c"] * 30, ["c", "a", "b", "a"] * 30),
+            (list("abcdefghijklmnop"), list("abcdefghijklmnop")[::-1]),
+        )
+        for budget in (1, 2, 64):
+            for before, after in cases:
+                with self.subTest(budget=budget, before=before[:4]):
+                    edits = list(editing._bounded_word_opcodes(before, after, budget))
+                    old_at = new_at = 0
+                    for kind, i1, i2, j1, j2 in edits:
+                        self.assertEqual((i1, j1), (old_at, new_at))
+                        self.assertTrue(i2 > i1 or j2 > j1)
+                        if kind == "equal":
+                            self.assertEqual(before[i1:i2], after[j1:j2])
+                        elif kind == "insert":
+                            self.assertEqual(i1, i2)
+                        elif kind == "delete":
+                            self.assertEqual(j1, j2)
+                        else:
+                            self.assertEqual(kind, "replace")
+                        old_at, new_at = i2, j2
+                    self.assertEqual((old_at, new_at), (len(before), len(after)))
+                    self.assertEqual(edits, list(editing._bounded_word_opcodes(before, after, budget)))
+
     def test_plain_text_mode_does_not_protect_markdown(self):
         self.assertEqual(
             editing.remark("", "# Title\n`code`", markdown=False),

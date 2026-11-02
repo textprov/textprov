@@ -204,13 +204,12 @@ def at(line, columns, message=LEGACY):
 
 EXPECTED_PROBLEMS = {
     "separate_edits": at(
-        1, [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 19, 20, 21]
+        1, [2, 3, 4, 5, 18, 19, 20, 21]
     ),
     "inside_word": at(1, [1, 2, 4], CHANGED),
     "deletion": at(1, [1, 2, 3]),
     "reflow_move": at(1, [1, 3, 4, 5, 6, 7, 8, 9, 10, 11], CHANGED)
-    + at(2, [1, 2, 3, 4, 5, 6], CHANGED)
-    + at(3, [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16]),
+    + at(2, [1, 2, 3, 4, 5, 6], CHANGED),
     "outside_edit": at(1, [9]),
     "singleton": at(1, [2]),
     "two_cluster": at(1, [2, 3]),
