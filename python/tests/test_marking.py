@@ -334,6 +334,48 @@ class TestMarking(unittest.TestCase):
         )
         self.assertEqual(expected, mark_document_edit(old, new))
 
+    def test_large_dense_edits_preserve_unicode_and_source_marks(self):
+        fragment = (
+            " " + mark("e\u0301 👩🏽‍💻", "human") + " "
+            + mark("🇨🇦 가", "ai") + " \u0600 \u0301 stable "
+            + mark("pua", "ai", "pua") + " "
+        )
+        # Exercise both the small-hunk matcher and multiple bounded windows.
+        for count in (2, 100):
+            with self.subTest(count=count):
+                old = ("old" + fragment) * count + "old"
+                new = strip_marks(old).replace("old", "new")
+                expected = (mark("new") + fragment) * count + mark("new")
+                result = mark_document_edit(old, new)
+                self.assertEqual(expected, result)
+                self.assertEqual(new, strip_marks(result))
+                self.assertEqual(result, mark_document_edit(old, new))
+
+    def test_repetitive_sparse_and_dense_edits_fit_the_hook_budget(self):
+        # The old matcher exceeded the 10-second Codex hook timeout on the
+        # sparse 60KB paragraph alone. Allow a broad deadline for all cases;
+        # bounded alignment completes them together well below that budget.
+        program = r'''
+from textprov import mark, mark_document_edit
+for count, corrections in ((4000, 0), (1000, 80), (4000, 300)):
+    words = ["repeated", "words"] * count
+    original = "old start " + " ".join(words) + " old end"
+    expected = list(words)
+    if corrections:
+        for i in range(0, len(words), len(words) // corrections):
+            words[i] = "fresh" + str(i)
+            expected[i] = mark(words[i])
+    proposed = "new start " + " ".join(words) + " new end"
+    target = mark("new") + " start " + " ".join(expected) + " " + mark("new") + " end"
+    assert mark_document_edit(original, proposed) == target
+print("completed")
+'''
+        result = subprocess.run(
+            [sys.executable, "-c", program],
+            capture_output=True, text=True, check=True, timeout=8,
+        )
+        self.assertEqual(result.stdout, "completed\n")
+
     def test_equal_pasted_marks_are_preserved_where_source_had_none(self):
         human = mark("Words", "human")
         ai = mark("Words", "ai")
