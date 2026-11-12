@@ -74,6 +74,6 @@ jobs:
         with:
           ruby-version: '3.4'
       - name: Configure RubyGems credentials with OIDC
-        uses: rubygems/configure-rubygems-credentials@a3462e5c07dc676007e359eddef1949756fd3102 # main
+        uses: rubygems/configure-rubygems-credentials@17e51a8c9fcf6d5f709e04cc612fd105f9273170 # main
       - name: Publish to RubyGems
         run: gem push --host https://rubygems.org dist/textprov.gem
